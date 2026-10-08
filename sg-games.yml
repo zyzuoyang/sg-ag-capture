@@ -1,0 +1,220 @@
+schema: whole-ag-sg-manifest-v1
+games:
+  - provider: sg
+    gameId: '32752'
+    name: Acorn Pixie
+    dbName: sg_acorn_pixie
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 1001
+      - 2001
+      - 2500
+      - 5000
+      - 5001
+      - 10000
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: acornpixie
+        gameID: '20174'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        total: '100'
+        lines: '30'
+        fsOn: '1'
+        isBuyABonus: '0'
+      betRaw: 100
+      runtimeGameId: 32974
+      omitsBaseRemaining: true
+      runtimeSlug: acorn-pixie
+    backendId: acornpixie
+    serviceDir: sg_acorn-pixie
+  - provider: sg
+    gameId: '32759'
+    name: Crystal Forest
+    dbName: sg_crystal_forest
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 1001
+      - 2001
+      - 2500
+      - 5000
+      - 5001
+      - 10000
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: crystalforesthd_prt
+        gameID: '20142'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        total: '25'
+        lines: '25'
+      betRaw: 25
+      runtimeGameId: 32981
+      freeStake:
+        total: '25'
+        fsOn: '1'
+      runtimeSlug: crystal-forest
+    backendId: crystalforesthd_prt
+    serviceDir: sg_crystal-forest
+  - provider: sg
+    gameId: '32764'
+    name: Dragon Spin
+    dbName: sg_dragon_spin
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 1001
+      - 2001
+      - 2500
+      - 5000
+      - 5001
+      - 10000
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: dragonspin
+        gameID: '20117'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        total: '210'
+      betRaw: 210
+      runtimeGameId: 32986
+      passiveResultFields:
+        - BonusData
+        - MSReplacement
+      runtimeSlug: dragon-spin
+    backendId: dragonspin
+    serviceDir: sg_dragon-spin
+  - provider: sg
+    gameId: '32770'
+    name: Giant's Gold
+    dbName: sg_giants_gold
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 1001
+      - 2001
+      - 2500
+      - 5000
+      - 5001
+      - 10000
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: giantsgold_prt
+        gameID: '20129'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        total: '50'
+        paylineCount: '20'
+      betRaw: 50
+      runtimeGameId: 32992
+      runtimeSlug: giants-gold
+    backendId: giantsgold_prt
+    serviceDir: sg_giants-gold
+  - provider: sg
+    gameId: '32774'
+    name: Himalayas - Roof of the World
+    dbName: sg_himalayas_roof_of_the_world
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 1001
+      - 2001
+      - 2500
+      - 5000
+      - 5001
+      - 10000
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: himalayas
+        gameID: '20230'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        total: '200'
+        isBigBet: '0'
+      betRaw: 200
+      runtimeGameId: 32996
+      runtimeSlug: himalayas--roof-of-the-world
+    backendId: himalayas
+    serviceDir: sg_himalayas--roof-of-the-world
