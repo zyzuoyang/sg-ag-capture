@@ -132,6 +132,8 @@ games:
         - BonusData
         - MSReplacement
       runtimeSlug: dragon-spin
+      freeStake: {}
+      freeLogicCurrencyMultiplier: '1'
     backendId: dragonspin
     serviceDir: sg_dragon-spin
   - provider: sg
@@ -174,6 +176,9 @@ games:
       betRaw: 50
       runtimeGameId: 32992
       runtimeSlug: giants-gold
+      freeStake:
+        total: '50'
+        paylineCount: '20'
     backendId: giantsgold_prt
     serviceDir: sg_giants-gold
   - provider: sg
@@ -216,5 +221,8 @@ games:
       betRaw: 200
       runtimeGameId: 32996
       runtimeSlug: himalayas--roof-of-the-world
+      freeStake:
+        total: '200'
+        isBigBet: '0'
     backendId: himalayas
     serviceDir: sg_himalayas--roof-of-the-world

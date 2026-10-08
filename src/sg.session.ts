@@ -29,6 +29,7 @@ export class SGWmsSession {
     private lastRequest: {event:string;parameters:Record<string,any>|null} | undefined;
     private lastBase: unknown;
     private journal: number | null = null;
+    private journalPath: string | null = null;
     private ordinal = 0;
     private cookies = new Map<string,string>();
     constructor(private readonly game: AGGameConfig, private readonly transport?: WireTransport, initialBalance?: number) {
@@ -42,9 +43,17 @@ export class SGWmsSession {
         if(this.transport) return; // offline transport keeps its own supplied evidence
         if(this.journal === null) {
             const dir=path.resolve(process.env.SG_EVIDENCE_DIR || '.sg-evidence');fs.mkdirSync(dir,{recursive:true});
-            this.journal=fs.openSync(path.join(dir,`${this.game.gameId}-${process.pid}-${crypto.randomUUID()}.jsonl`),'wx',0o600);
+            if(this.journalPath===null) {
+                this.journalPath=path.join(dir,`${this.game.gameId}-${process.pid}-${crypto.randomUUID()}.jsonl`);
+                this.journal=fs.openSync(this.journalPath,'wx',0o600);
+            } else {
+                // A response already in flight can finish after AG closes this session.
+                // Keep it beside its original intent; closing never authorizes another request.
+                this.journal=fs.openSync(this.journalPath,'a',0o600);
+            }
         }
         fs.writeSync(this.journal, JSON.stringify({...value,at:new Date().toISOString()})+'\n');fs.fsyncSync(this.journal);
+        if(this.closed) {fs.closeSync(this.journal);this.journal=null;}
     }
     async connect(): Promise<void> {
         if(this.transport) { assert(Number.isSafeInteger(this.balance));return; }
@@ -69,7 +78,11 @@ export class SGWmsSession {
         const h={...this.game.sg.header,sessionID:this.session};
         const header='<Header '+Object.entries(h).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')+'/>';
         const stake=Object.keys(parameters).length?'<Stake '+Object.entries(parameters).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')+'/>':'';
-        return `<GameRequest type="${event}">${stake?'<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData>':''}${header}${stake}</GameRequest>`;
+        // Own Dragon client serializes AccountData for a stake-less free Logic too.
+        // This is an explicit per-game wire binding, never a guessed feature stake.
+        const freeAccount = event==='Logic' && !stake && this.game.sg.freeLogicCurrencyMultiplier !== undefined;
+        if(freeAccount) assert(this.game.sg.freeLogicCurrencyMultiplier==='1','AG integrity: SG own free currency binding');
+        return `<GameRequest type="${event}">${stake?'<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData>':''}${header}${freeAccount?'<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData>':''}${stake}</GameRequest>`;
     }
     private async exchange(event:string,parameters:Record<string,any>):Promise<WireStep> {
         assert(!this.closed,'AG integrity: SG session closed');const payload=this.payload(event,parameters);
@@ -138,12 +151,16 @@ export class SGWmsSession {
                 this.action='PLAY';
             }
         }
+        // AG retains every response in its own action sequence. Do not embed the
+        // entire growing SG prefix in each intermediate response (quadratic BSON).
+        // The terminal response still provides every exact SG request/response for playback.
+        const playbackSteps = this.action==='SPIN' ? this.steps : this.steps.slice(-1);
         return {NextActionInfo:{nextAction:this.action},PlayerBalanceInfo:{preWagerBalance:this.startBalance/100,balance:this.balance/100,wager:this.game.sg.betRaw/100,resultAmount:this.totalWin/100},
             ...(this.free?{FreeSpinsInfo:structuredClone(this.free)}:{}),SGWireResponse:step.responsePayload,
             // Data-only SG playback mapping. AG keeps all of its round/validation/storage fields.
             capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,
             startBalance:this.startBalance/100,endBalance:this.balance/100,totalWin:this.totalWin/100,
-            stepCount:this.steps.length,msgIds:this.steps.map(step=>step.msgId),steps:structuredClone(this.steps),
+            stepCount:playbackSteps.length,msgIds:playbackSteps.map(step=>step.msgId),steps:structuredClone(playbackSteps),
             money:{startBalanceRaw:this.startBalance,endBalanceRaw:this.balance,betRaw:this.game.sg.betRaw,totalWinRaw:this.totalWin}};
     }
     close() { if(this.closed)return;this.closed=true;this.cookies.clear();if(this.journal!==null){fs.fsyncSync(this.journal);fs.closeSync(this.journal);this.journal=null;} }
