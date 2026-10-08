@@ -43,6 +43,10 @@ games:
       runtimeGameId: 32974
       omitsBaseRemaining: true
       runtimeSlug: acorn-pixie
+      freeStake:
+        total: '100'
+        fsOn: '1'
+        isBuyABonus: '0'
     backendId: acornpixie
     serviceDir: sg_acorn-pixie
   - provider: sg
