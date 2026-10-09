@@ -109,7 +109,7 @@ export function validateHimalayaCompass(game:AGGameConfig,result:any,previousFre
     assert(game.gameId==='32774' && game.dbName==='sg_himalayas_roof_of_the_world'
         && game.sg?.header?.gameCodeRGI==='himalayas' && game.sg?.header?.gameID==='20230'
         && game.sg?.runtimeGameId===32996 && game.sg?.runtimeSlug==='himalayas--roof-of-the-world'
-        && game.sg?.compassContract==='himalaya-existing-free-compass-v3','AG integrity: SG Himalaya compass binding');
+        && game.sg?.compassContract==='himalaya-existing-free-compass-v4','AG integrity: SG Himalaya compass binding');
     const c=result.Compass,f=result.FSInfo;
     assert(c&&typeof c==='object'&&!Array.isArray(c)&&Object.keys(c).sort().join('|')==='compasPiecesFoundThisSpin|percentFull|pickChoices|pickValueAward|wonGamble','AG integrity: SG Himalaya compass schema');
     const percent=integer(c.percentFull,'Himalaya compass percent'),pieces=integer(c.compasPiecesFoundThisSpin,'Himalaya compass pieces');
@@ -122,15 +122,18 @@ export function validateHimalayaCompass(game:AGGameConfig,result:any,previousFre
     const pending=remaining>0&&c.wonGamble==='-1'&&c.pickValueAward==='-1'&&percent<=80;
     const lost=remaining===0&&c.wonGamble==='0'&&c.pickValueAward==='-2'&&percent<=80;
     // The exact SDK consumes the returned Compass award and continues Logic;
-    // all five awards and charged100 were returned naturally in this own run.
+    // Group-end awards and fully charged mid-group awards were returned naturally.
+    // The latter preserves unplayed old spins and adds the returned award once.
     // No pick HTTP request is sent, no free counters or money are invented.
     let won=false;
     if(c.wonGamble==='1') {
         const award=integer(c.pickValueAward,'Himalaya awarded free spins');
         const played=integer(f.freeSpinNumber,'Himalaya awarded played'),total=integer(f.freeSpinsTotal,'Himalaya awarded total');
         won=!!previousFree&&[5,7,10,12,20].includes(award)
-            &&played===previousFree.freeSpinsTotal&&played===previousFree.freeSpinsPlayed+1
-            &&total===previousFree.freeSpinsTotal+award&&remaining===award;
+            &&played===previousFree.freeSpinsPlayed+1&&played<=previousFree.freeSpinsTotal
+            &&(played===previousFree.freeSpinsTotal||percent===100)
+            &&total===previousFree.freeSpinsTotal+award
+            &&remaining===previousFree.freeSpinsTotal-played+award;
     }
     assert(pending||lost||won,'AG integrity: SG Himalaya compass transition not mapped');
     assert(integer(result.BGInfo.baseGameSpinsRemaining,'Himalaya base remaining')===0,'AG integrity: SG Himalaya base continuation not mapped');
