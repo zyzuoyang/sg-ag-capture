@@ -278,11 +278,233 @@ games:
       goldenChiefPaidContract: golden-chief-own-totem-v6
       goldenChiefFreeContract: golden-chief-own-free-state-v10
       goldenChiefTotemLifeContract: golden-chief-own-init-trails-lives-v11
-      goldenChiefTotemTrails: {"0":[[2,5,7,9,11,13,15,20,30,40,60,100,200,300,400],[3,6,8,10,12,14,18,25,35,50,75,150,250,350,500],[4,0,0,0,0,0,0,0,0,0,0,0,0,0,0]],"1":[[5,8,12,16,20,25,35,45,60,80,125,200,300,400,475],[6,10,14,18,22,30,40,50,75,100,150,250,350,450,500],[7,0,0,0,0,0,0,0,0,0,0,0,0,0,0]]}
+      goldenChiefTotemTrails:
+        '0':
+          - - 2
+            - 5
+            - 7
+            - 9
+            - 11
+            - 13
+            - 15
+            - 20
+            - 30
+            - 40
+            - 60
+            - 100
+            - 200
+            - 300
+            - 400
+          - - 3
+            - 6
+            - 8
+            - 10
+            - 12
+            - 14
+            - 18
+            - 25
+            - 35
+            - 50
+            - 75
+            - 150
+            - 250
+            - 350
+            - 500
+          - - 4
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+        '1':
+          - - 5
+            - 8
+            - 12
+            - 16
+            - 20
+            - 25
+            - 35
+            - 45
+            - 60
+            - 80
+            - 125
+            - 200
+            - 300
+            - 400
+            - 475
+          - - 6
+            - 10
+            - 14
+            - 18
+            - 22
+            - 30
+            - 40
+            - 50
+            - 75
+            - 100
+            - 150
+            - 250
+            - 350
+            - 450
+            - 500
+          - - 7
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
+            - 0
       goldenChiefUpgradeContract: golden-chief-own-init-symbol-upgrade-v7
-      goldenChiefUpgradeSymbolIds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-      goldenChiefWheelStrip: [1, 0, 1, 2, 1, 0, 1, 0, 1, 2, 1, 0]
-      goldenChiefGambleCounts: [0, 5, 10, 15, 20, 25, 30]
+      goldenChiefUpgradeSymbolIds:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9
+        - 10
+      goldenChiefWheelStrip:
+        - 1
+        - 0
+        - 1
+        - 2
+        - 1
+        - 0
+        - 1
+        - 0
+        - 1
+        - 2
+        - 1
+        - 0
+      goldenChiefGambleCounts:
+        - 0
+        - 5
+        - 10
+        - 15
+        - 20
+        - 25
+        - 30
       freeStake:
         total: '100'
         isBigBet: '0'
+  - provider: sg
+    gameId: '32767'
+    name: Fire Queen
+    backendId: firequeen_prt
+    dbName: sg_fire_queen
+    serviceDir: sg_fire-queen
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: firequeen_prt
+        gameID: '20192'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        totalStake: '50'
+      betRaw: 50
+      runtimeGameId: 32989
+      runtimeSlug: firequeen_prt
+      logicRequestNode: WagerInfo
+      fireQueenPaidContract: fire-queen-own-paid-v1
+  - provider: sg
+    gameId: '32750'
+    name: 88 Fortunes
+    backendId: eightyeightfortunes
+    dbName: sg_eightyeightfortunes
+    serviceDir: sg_eightyeightfortunes
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: eightyeightfortunes
+        gameID: '20077'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        creditBet: '88'
+        betMultiplier: '2'
+      betRaw: 176
+      runtimeGameId: 32972
+      runtimeSlug: eightyeightfortunes
+      logicRequestNode: SpinInfo
+      eightyFortunesContract: eighty-fortunes-own-remaining-budget-v1
+      freeStake: {}
+      eightyFortunesBaseReels:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+      eightyFortunesFreeReels:
+        - 5
+        - 6
+        - 7
+        - 8
+        - 9

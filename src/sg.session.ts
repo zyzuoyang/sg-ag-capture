@@ -95,6 +95,55 @@ const escape = (v: unknown) => String(v).replace(/&/g,'&amp;').replace(/"/g,'&qu
 
 // Golden Chief client parses these paid-spin display fields without requesting
 // another wager. Real gamble/totem/free fields still require their own mapping.
+export function validateEightyFortunesData(game:AGGameConfig,g:any,first:boolean,prior:any,paid:any,priorWin:number):any {
+ assert(game.gameId==='32750'&&game.dbName==='sg_eightyeightfortunes'&&game.sg?.runtimeGameId===32972&&game.sg?.header?.gameID==='20077'&&game.sg?.header?.gameCodeRGI==='eightyeightfortunes'&&game.sg?.eightyFortunesContract==='eighty-fortunes-own-remaining-budget-v1'&&game.sg?.betRaw===176,'AG integrity: SG 88 Fortunes binding');
+ const keys=(v:any,n:string)=>assert(v&&typeof v==='object'&&!Array.isArray(v)&&Object.keys(v).sort().join('|')===n.split('|').sort().join('|'),'AG integrity: SG 88 Fortunes schema');
+ keys(g,'stake|creditBet|betMultiplier|waysCount|totalWin|betID|ReelResults|GameWinInfo|GameRtpInfo'+(g.Feature?'|Feature':'')+(g.BaseGameRecoveryInfo?'|BaseGameRecoveryInfo':''));
+ assert(g.stake==='176'&&g.creditBet==='88'&&g.betMultiplier==='2'&&g.waysCount==='243','AG integrity: SG 88 Fortunes wager');
+ keys(g.GameWinInfo,'totalWagerWin|totalBaseGameWin|totalFreeSpinsWin|maxWinValue|isMaxWin');keys(g.GameRtpInfo,'targetedRtpValue');assert(g.GameWinInfo.maxWinValue==='25000000'&&g.GameWinInfo.isMaxWin==='N'&&g.GameRtpInfo.targetedRtpValue==='96.00','AG integrity: SG 88 Fortunes variant/cap');
+ keys(g.ReelResults,'ReelSpin|numSpins');const spins=list(g.ReelResults.ReelSpin);assert(g.ReelResults.numSpins==='1'&&spins.length===1,'AG integrity: SG 88 Fortunes reel count');const r=spins[0];
+ keys(r,'reelsetIndex|anywayWinCount|scatterWinCount|totalWayWin|totalScatterWin|totalSpinWin|freeSpin|bonusAwarded|ReelStops'+(r.AnywayWin?'|AnywayWin':'')+(r.ScatterWin?'|ScatterWin':''));
+ const sets=first?game.sg.eightyFortunesBaseReels:game.sg.eightyFortunesFreeReels;assert(Array.isArray(sets)&&sets.includes(integer(r.reelsetIndex,'88 reel set')),'AG integrity: SG 88 Fortunes advertised reel set');
+ assert(typeof r.ReelStops==='string'&&/^\d+(?:\|\d+){4}$/.test(r.ReelStops),'AG integrity: SG 88 Fortunes reel stops');r.ReelStops.split('|').forEach((v:string)=>integer(v,'88 reel stop'));
+ const way=list(r.AnywayWin),scatter=list(r.ScatterWin);assert(way.length===integer(r.anywayWinCount,'88 way count')&&scatter.length===integer(r.scatterWinCount,'88 scatter count'),'AG integrity: SG 88 Fortunes win count');
+ const sum=(rows:any[],isWay:boolean)=>{let total=0;const seen=new Set<number>();for(const w of rows){keys(w,'#text|winIndex|winVal|awardIndex'+(isWay?'|ways':''));const i=integer(w.winIndex,'88 win index');assert(!seen.has(i),'AG integrity: SG 88 Fortunes repeated win index');seen.add(i);integer(w.awardIndex,'88 award');if(isWay){const n=integer(w.ways,'88 ways');assert(n>0&&n<=243,'AG integrity: SG 88 Fortunes ways');}assert(typeof w['#text']==='string'&&/^\d+(?:\|\d+)*$/.test(w['#text'])&&w['#text'].split('|').every((v:string)=>integer(v,'88 position')<15),'AG integrity: SG 88 Fortunes positions');total+=integer(w.winVal,'88 win');}assert(Number.isSafeInteger(total),'AG integrity: SG 88 Fortunes money overflow');return total;};
+ const ways=sum(way,true),scatters=sum(scatter,false),current=integer(g.totalWin,'88 current'),win=integer(g.GameWinInfo.totalWagerWin,'88 wager win'),base=integer(g.GameWinInfo.totalBaseGameWin,'88 base win'),freeWin=integer(g.GameWinInfo.totalFreeSpinsWin,'88 free win');
+ let jackpot=0;const paidJackpot=first&&g.Feature?.index==='2'&&g.Feature.name==='BG_FuBat_Jackpot';
+ if(paidJackpot){
+  keys(g.Feature,'data|index|name');const f=g.Feature.data;keys(f,'#text|pickLength|jackpotWin|jackpotType');assert(typeof f['#text']==='string'&&/^[0-3](?:\|[0-3])*$/.test(f['#text']),'AG integrity: SG 88 precomputed jackpot picks');const picks=f['#text'].split('|').map(Number),type=integer(f.jackpotType,'88 jackpot type');assert(type<4&&picks.length===integer(f.pickLength,'88 jackpot pick length')&&picks.filter((v:number)=>v===type).length===3&&!prior&&g.BaseGameRecoveryInfo===undefined&&r.freeSpin==='N'&&r.bonusAwarded==='Y'&&freeWin===0,'AG integrity: SG 88 completed paid jackpot');jackpot=integer(f.jackpotWin,'88 jackpot amount');
+ }
+ assert(ways===integer(r.totalWayWin,'88 total ways')&&scatters===integer(r.totalScatterWin,'88 total scatter')&&ways+scatters===integer(r.totalSpinWin,'88 spin win')&&ways+scatters+jackpot===current&&base+freeWin===win&&Number.isSafeInteger(win),'AG integrity: SG 88 Fortunes monetary components');
+ if(paidJackpot){assert(base===current&&win===current,'AG integrity: SG 88 paid jackpot amount');return {win,free:undefined};}
+ if(!g.Feature){assert(first&&!prior&&g.BaseGameRecoveryInfo===undefined&&r.freeSpin==='N'&&r.bonusAwarded==='N'&&freeWin===0&&base===current,'AG integrity: SG 88 Fortunes unclassified state');return {win,free:undefined};}
+ keys(g.Feature,'data|index|name');assert(g.Feature.index==='1'&&g.Feature.name==='FreeGame','AG integrity: SG 88 Fortunes feature requires own mapping');const f=g.Feature.data;keys(f,'totalFreeSpinsWin|remainingFreeSpins|extraFreeSpinsAwarded|freeSpinTriggerWin|lastFreeSpin');
+ const remaining=integer(f.remainingFreeSpins,'88 remaining'),extra=integer(f.extraFreeSpinsAwarded,'88 extra'),trigger=integer(f.freeSpinTriggerWin,'88 trigger');assert(integer(f.totalFreeSpinsWin,'88 feature cumulative')===freeWin&&f.lastFreeSpin===(remaining===0?'Y':'N'),'AG integrity: SG 88 Fortunes free state');
+ let played,total;
+ if(first){assert(!prior&&g.BaseGameRecoveryInfo===undefined&&remaining>0&&extra===0&&trigger===freeWin&&base===current&&r.freeSpin==='Y'&&r.bonusAwarded==='Y','AG integrity: SG 88 Fortunes free introduction');played=0;total=remaining;}
+ else {assert(prior&&paid,'AG integrity: SG 88 Fortunes prior free state');keys(g.BaseGameRecoveryInfo,'GameResult');const recovered=g.BaseGameRecoveryInfo.GameResult;keys(recovered,'stake|creditBet|betMultiplier|waysCount|totalWin|betID|ReelResults');for(const k of Object.keys(recovered))assert(JSON.stringify(recovered[k])===JSON.stringify(paid[k]),'AG integrity: SG 88 Fortunes paid recovery changed');assert(base===integer(paid.GameWinInfo.totalBaseGameWin,'88 recovered base')&&remaining===prior.freeSpinsRemaining-1+extra&&win===priorWin+current+trigger,'AG integrity: SG 88 Fortunes free budget/money delta');played=prior.freeSpinsPlayed+1;total=prior.freeSpinsTotal+extra;assert(r.freeSpin===(extra>0?'Y':'N')&&r.bonusAwarded===(extra>0?'Y':'N'),'AG integrity: SG 88 Fortunes retrigger flags');}
+ assert(played+remaining===total&&Number.isSafeInteger(total),'AG integrity: SG 88 Fortunes total budget');return {win,free:{freeSpinsTotal:total,freeSpinsPlayed:played,freeSpinsRemaining:remaining,accumulativeWin:win/100}};
+}
+
+export function validateFireQueenPaidData(game:AGGameConfig,g:any):number {
+ assert(game.gameId==='32767'&&game.dbName==='sg_fire_queen'&&game.sg?.runtimeGameId===32989&&game.sg?.header?.gameID==='20192'&&game.sg?.header?.gameCodeRGI==='firequeen_prt'&&game.sg?.logicRequestNode==='WagerInfo'&&game.sg?.fireQueenPaidContract==='fire-queen-own-paid-v1'&&game.sg?.betRaw===50,'AG integrity: SG Fire Queen binding');
+ const keys=(v:any,n:string)=>assert(v&&typeof v==='object'&&!Array.isArray(v)&&Object.keys(v).sort().join('|')===n.split('|').sort().join('|'),'AG integrity: SG Fire Queen schema');
+ keys(g,'ReelResults|GameWinInfo|GameVariantInfo|stake|stakePerLine|paylineCount|totalWin|betID'+(g.WildTransformedReels!==undefined?'|WildTransformedReels':''));keys(g.ReelResults,'ReelSpin|numSpins');keys(g.GameWinInfo,'totalWagerWin|totalBGWin|totalFSWin|maxWinValue|isMaxWin|isEndGame');keys(g.GameVariantInfo,'rtp');
+ assert(g.stake==='50'&&g.stakePerLine==='1'&&g.paylineCount==='100'&&g.GameVariantInfo.rtp==='95.95','AG integrity: SG Fire Queen wager');
+ assert(g.GameWinInfo.isMaxWin==='N'&&g.GameWinInfo.isEndGame==='Y'&&g.GameWinInfo.totalFSWin==='0'&&g.GameWinInfo.maxWinValue==='25000000','AG integrity: SG Fire Queen actual feature requires mapping');
+ const spins=list(g.ReelResults.ReelSpin);assert(g.ReelResults.numSpins==='1'&&spins.length===1,'AG integrity: SG Fire Queen spin count');const r=spins[0];
+ keys(r,'ReelStops|spinIndex|reelsetIndex|winCountPL|winCountSC|spinWins|freeSpin|bonusAwarded'+(r.PaylineWin?'|PaylineWin':''));
+ integer(r.reelsetIndex,'Fire Queen reel set');assert(r.spinIndex==='0'&&r.freeSpin==='N'&&r.bonusAwarded==='N'&&r.winCountSC==='0','AG integrity: SG Fire Queen unclassified feature');
+ assert(typeof r.ReelStops==='string'&&/^\d+(?:\|\d+)*$/.test(r.ReelStops),'AG integrity: SG Fire Queen reel stops');r.ReelStops.split('|').forEach((v:string)=>integer(v,'Fire Queen reel stop'));
+ // Client parser consumes this paid-spin display list without another wager.
+ if(g.WildTransformedReels!==undefined){
+  assert(typeof g.WildTransformedReels==='string'&&(g.WildTransformedReels===''||/^\d+\|\d+(?:,\d+\|\d+)*$/.test(g.WildTransformedReels)),'AG integrity: SG Fire Queen transformed reel schema');
+  const transformed=new Set<number>();
+  for(const token of g.WildTransformedReels===''?[]:g.WildTransformedReels.split(',')){const [reel,symbol]=token.split('|').map((v:string)=>integer(v,'Fire Queen transformed display'));assert(reel<r.ReelStops.split('|').length&&!transformed.has(reel),'AG integrity: SG Fire Queen transformed reel range');transformed.add(reel);}
+ }
+ const wins=list(r.PaylineWin),seen=new Set<number>();assert(wins.length===integer(r.winCountPL,'Fire Queen line count'),'AG integrity: SG Fire Queen line count');let sum=0;
+ for(const w of wins){keys(w,'#text|index|winVal|awardIndex|awardTableIndex');const i=integer(w.index,'Fire Queen line');assert(i<100&&!seen.has(i),'AG integrity: SG Fire Queen duplicate line');seen.add(i);integer(w.awardIndex,'Fire Queen award');integer(w.awardTableIndex,'Fire Queen award table');assert(typeof w['#text']==='string'&&/^\d+(?:\|\d+)*$/.test(w['#text']),'AG integrity: SG Fire Queen win positions');w['#text'].split('|').forEach((v:string)=>integer(v,'Fire Queen win position'));sum+=integer(w.winVal,'Fire Queen win');}
+ assert(Number.isSafeInteger(sum)&&sum===integer(r.spinWins,'Fire Queen spin win')&&sum===integer(g.totalWin,'Fire Queen root win')&&sum===integer(g.GameWinInfo.totalBGWin,'Fire Queen paid win')&&sum===integer(g.GameWinInfo.totalWagerWin,'Fire Queen cumulative win'),'AG integrity: SG Fire Queen monetary components');return sum;
+}
+
 export function validateGoldenChiefPaidData(game:AGGameConfig,g:any):void {
  assert(game.gameId==='32771'&&game.dbName==='sg_golden_chief'&&game.sg?.runtimeGameId===32993&&game.sg?.header?.gameID==='20125'&&game.sg?.header?.gameCodeRGI==='goldenchief'&&game.sg?.betRaw===100&&['golden-chief-own-paid-v1','golden-chief-own-totem-v6'].includes(game.sg?.goldenChiefPaidContract),'AG integrity: SG Golden Chief binding');
  const known=new Set(['stake','stakePerLine','paylineCount','totalWin','betID','ReelResults','BGInfo','PaylineCountInfo','SymbolUpgrade','WildExpansion']);assert(g&&typeof g==='object'&&!Array.isArray(g)&&Object.keys(g).every(k=>known.has(k)),'AG integrity: SG Golden Chief unknown paid data');
@@ -317,6 +366,7 @@ export class SGWmsSession {
     private closed = false;
     private lastRequest: {event:string;parameters:Record<string,any>|null} | undefined;
     private lastBase: unknown;
+    private eightyBase: unknown;
     private journal: number | null = null;
     private journalPath: string | null = null;
     private ordinal = 0;
@@ -349,6 +399,10 @@ export class SGWmsSession {
         if(this.transport) { assert(Number.isSafeInteger(this.balance));return; }
         assert(process.env.SG_AG_ALLOW_SOURCE === '1', 'AG integrity: SG live source not enabled');
         try {const response=await this.exchange('Init',{});const r=this.readEnvelope(response,'Init');
+            if(this.game.sg.eightyFortunesContract){
+                const pools:any[]=[];const walk=(v:any)=>{if(!v||typeof v!=='object')return;for(const [k,value] of Object.entries(v)){if(k==='ReelInfo')pools.push(value);else walk(value);}};walk(r);assert(pools.length===1,'AG integrity: SG 88 own Init reels missing');
+                for(const [feature,expected] of [['0',this.game.sg.eightyFortunesBaseReels],['1',this.game.sg.eightyFortunesFreeReels]]){const sets=list(pools[0].ReelSet).filter((s:any)=>s.featIndex===feature);assert(sets.every((s:any)=>s.numReels==='5'),'AG integrity: SG 88 own Init geometry');const actual=sets.map((s:any)=>integer(s.reelSetIndex,'88 Init set')).sort((a:number,b:number)=>a-b);assert(JSON.stringify(actual)===JSON.stringify(expected),'AG integrity: SG 88 own Init declared sets changed');}
+            }
             if(this.game.sg.goldenChiefTotemLifeContract){
                 const pools:any[]=[];const walk=(v:any)=>{if(!v||typeof v!=='object')return;for(const [k,value] of Object.entries(v)){if(k==='TotemPoles')pools.push(value);else walk(value);}};walk(r);
                 assert(pools.length===1,'AG integrity: SG Golden own Init Totem data missing');
@@ -380,6 +434,11 @@ export class SGWmsSession {
     private payload(event:string,parameters:Record<string,any>) {
         const h={...this.game.sg.header,sessionID:this.session};
         const header='<Header '+Object.entries(h).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')+'/>';
+        if(event==='Logic'&&this.game.sg.eightyFortunesContract&&Object.keys(parameters).length){assert(this.action==='SPIN'&&this.game.gameId==='32750'&&JSON.stringify(parameters)===JSON.stringify({creditBet:'88',betMultiplier:'2'}),'AG integrity: SG 88 Fortunes own paid request');return `<GameRequest type="Logic">${header}<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData><SpinInfo creditBet="88" betMultiplier="2"/></GameRequest>`;}
+        if(event==='Logic'&&this.game.sg.logicRequestNode==='WagerInfo'){
+            assert(this.game.gameId==='32767'&&this.game.sg.fireQueenPaidContract==='fire-queen-own-paid-v1'&&this.action==='SPIN'&&Object.keys(parameters).join('|')==='totalStake'&&parameters.totalStake==='50','AG integrity: SG Fire Queen own request');
+            return `<GameRequest type="Logic">${header}<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData><WagerInfo totalStake="50"/></GameRequest>`;
+        }
         if(Object.prototype.hasOwnProperty.call(parameters,'__sgGoldenCollect')){assert(event==='Logic'&&this.action==='PICK_FREE_SPINS'&&this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6'&&Object.keys(parameters).length===1&&parameters.__sgGoldenCollect==='1','AG integrity: SG Golden Chief collect request');return `<GameRequest type="Logic">${header}<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData><Gamble collect="1"/></GameRequest>`;}
         const stake=Object.keys(parameters).length?'<Stake '+Object.entries(parameters).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')+'/>':'';
         // Own Dragon client serializes AccountData for a stake-less free Logic too.
@@ -448,7 +507,7 @@ export class SGWmsSession {
     }
     async callGameData(event:string,parameters:Record<string,any>|null) {
         const first=this.action==='SPIN';
-        if(first) {assert(event==='Logic','AG integrity: SG round start');this.startBalance=this.balance;this.totalWin=0;this.free=undefined;this.steps=[];this.lastBase=undefined;this.goldenPending=undefined;}
+        if(first) {assert(event==='Logic','AG integrity: SG round start');this.startBalance=this.balance;this.totalWin=0;this.free=undefined;this.steps=[];this.lastBase=undefined;this.eightyBase=undefined;this.goldenPending=undefined;}
         else assert(event===this.getExactFollowUpRequest(this.action).event,'AG integrity: SG request order');
         assert(Number.isSafeInteger(this.startBalance),'AG integrity: SG missing initial balance');
         const step=await this.exchange(event,parameters || {}),r=this.readEnvelope(step,event);
@@ -458,7 +517,11 @@ export class SGWmsSession {
             assert(this.balance===this.startBalance-this.game.sg.betRaw+this.totalWin,'AG integrity: SG final balance mismatch');
             this.action='SPIN';
         } else {
-            const g=r.GameResult;assert(g&&(g.BGInfo||g.FSInfo||(this.action==='PICK_FREE_SPINS'&&this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6')),'AG integrity: SG game result');
+            const g=r.GameResult;
+            if(this.game.sg.eightyFortunesContract){const mapped=validateEightyFortunesData(this.game,g,first,this.free,this.eightyBase,this.totalWin);if(first)this.eightyBase=structuredClone(g);this.totalWin=mapped.win;this.free=mapped.free;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
+            else if(first&&this.game.sg.fireQueenPaidContract){this.totalWin=validateFireQueenPaidData(this.game,g);this.action='PLAY';}
+            else {
+            assert(g&&(g.BGInfo||g.FSInfo||(this.action==='PICK_FREE_SPINS'&&this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6')),'AG integrity: SG game result');
             const known=new Set(['stake','stakePerLine','paylineCount','totalWin','betID','ReelResults','BGInfo','FSInfo','BaseGameRecoveryInfo',...(this.game.sg.goldenChiefPaidContract?['PaylineCountInfo','SymbolUpgrade','WildExpansion',...(this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6'?['BonusWheel','GambleInfo','CanyonBonus','TotemBonus']:[])]:[]),...(this.game.sg.passiveResultFields || []),...(this.game.sg.wildPositionContract ? ['WildInfo'] : []),...(this.game.sg.compassContract ? ['Compass'] : [])]);
             assert(Object.keys(g).every(k=>known.has(k)),'AG integrity: SG observed feature needs mapping');
             const ownGoldenFree=!first&&this.action==='FREE_SPIN'&&this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6'&&g.FSInfo!==undefined;
@@ -499,6 +562,7 @@ export class SGWmsSession {
                 assert(!this.free,'AG integrity: SG free state disappeared');
                 assert(list(g.ReelResults.ReelSpin).every(s=>s.freeSpin==='N'&&s.bonusAwarded==='N'),'AG integrity: SG unclassified feature');
                 this.action='PLAY';
+            }
             }
         }
         // AG retains every response in its own action sequence. Do not embed the
