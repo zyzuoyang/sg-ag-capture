@@ -209,7 +209,19 @@ export function validateGoldenChiefTotem(game:AGGameConfig,g:any):void {
  keys(g,'stake|stakePerLine|paylineCount|totalWin|betID|ReelResults|BGInfo|PaylineCountInfo|BonusWheel|TotemBonus'+(g.WildExpansion?'|WildExpansion':'')+(g.SymbolUpgrade?'|SymbolUpgrade':''));keys(g.TotemBonus,'gameMode|totemType|numLives|winAmount|steps');keys(g.BonusWheel,'stopPosition');keys(g.BGInfo,'totalWagerWin|bgWinnings|baseGameSpinsRemaining|isBigBet|isMaxWin|chiefWin');keys(g.PaylineCountInfo,'normalPaylineCount|bonusPaylineCount|activePaylineCount');
  const active=validateGoldenChiefBoardExtras(game,g);const stop=integer(g.BonusWheel.stopPosition,'Totem wheel stop');assert(stop<12&&game.sg.goldenChiefWheelStrip[stop]===1&&JSON.stringify(game.sg.goldenChiefWheelStrip)===JSON.stringify([1,0,1,2,1,0,1,0,1,2,1,0]),'AG integrity: SG Golden Totem wheel');
  assert(g.stake==='100'&&g.stakePerLine==='5'&&integer(g.paylineCount,'Golden current paylines')===active&&g.PaylineCountInfo.normalPaylineCount==='20'&&g.PaylineCountInfo.bonusPaylineCount==='100'&&integer(g.PaylineCountInfo.activePaylineCount,'Golden active')===active&&g.BGInfo.baseGameSpinsRemaining==='0'&&g.BGInfo.isBigBet==='0'&&g.BGInfo.isMaxWin==='0'&&g.BGInfo.chiefWin==='0','AG integrity: SG Golden Totem wager');
- assert(g.TotemBonus.gameMode==='1'&&g.TotemBonus.totemType==='0'&&g.TotemBonus.numLives==='0'&&typeof g.TotemBonus.steps==='string'&&/^[012](?:\|[012])*$/.test(g.TotemBonus.steps),'AG integrity: SG Golden completed Totem display scope');
+ assert(game.sg.goldenChiefTotemLifeContract==='golden-chief-own-init-trails-lives-v11'&&g.TotemBonus.gameMode==='1'&&['0','1'].includes(g.TotemBonus.totemType)&&typeof g.TotemBonus.steps==='string'&&/^(?:[012]|-2)(?:\|(?:[012]|-2))*$/.test(g.TotemBonus.steps),'AG integrity: SG Golden completed Totem display scope');
+ const trails=game.sg.goldenChiefTotemTrails?.[g.TotemBonus.totemType],lives=integer(g.TotemBonus.numLives,'Totem extra lives');
+ assert(Array.isArray(trails)&&trails.length===3&&trails.every((a:any)=>Array.isArray(a)&&a.length===15&&a.every((v:any)=>Number.isSafeInteger(v)&&v>=0))&&lives<=2,'AG integrity: SG Golden own Init Totem trail/life bounds');
+ const picks=g.TotemBonus.steps.split('|').map(Number);let position=-1,spent=0,displayWin=0,terminal=false;
+ for(let i=0;i<picks.length;i++){
+  const pick=picks[i];assert(!terminal,'AG integrity: SG Golden Totem data after terminal');
+  if(i===0||picks[i-1]>=0)position++;
+  assert(position>=0&&position<trails[0].length,'AG integrity: SG Golden Totem trail position');
+  if(pick<0){assert(i>0&&++spent<=lives,'AG integrity: SG Golden Totem life budget');}
+  else if(pick===2&&i>0)terminal=true;
+  else {displayWin=trails[pick][position]*game.sg.betRaw;assert(Number.isSafeInteger(displayWin),'AG integrity: SG Golden Totem prize overflow');terminal=position===trails[pick].length-1;}
+ }
+ assert(terminal&&displayWin===integer(g.TotemBonus.winAmount,'Totem declared prize'),'AG integrity: SG Golden Totem Init-derived prize');
  keys(g.ReelResults,'numSpins|ReelSpin');const spins=list(g.ReelResults.ReelSpin);assert(g.ReelResults.numSpins==='1'&&spins.length===1,'AG integrity: SG Golden Totem reel');const r=spins[0];assert(r.spinIndex==='0'&&r.reelsetIndex==='0'&&r.freeSpin==='N'&&r.bonusAwarded==='Y'&&r.winCountSC==='1'&&r.ScatterWin?.winVal==='0'&&r.ScatterWin?.awardIndex==='0','AG integrity: SG Golden Totem flags');
  const wins=list(r.PaylineWin);assert(wins.length===integer(r.winCountPL,'Totem line count'),'AG integrity: SG Golden Totem lines');let sum=0;const seen=new Set<number>();for(const w of wins){const i=integer(w.index,'Totem line');assert(i<active&&!seen.has(i),'AG integrity: SG Golden Totem line index');seen.add(i);sum+=integer(w.winVal,'Totem line win');}const prize=integer(g.TotemBonus.winAmount,'Totem prize');assert(Number.isSafeInteger(sum+prize)&&sum===integer(r.spinWins,'Totem spin money')&&sum+prize===integer(g.totalWin,'Totem total')&&sum+prize===integer(g.BGInfo.bgWinnings,'Totem base')&&sum+prize===integer(g.BGInfo.totalWagerWin,'Totem cumulative'),'AG integrity: SG Golden Totem monetary components');
 }
@@ -336,7 +348,13 @@ export class SGWmsSession {
     async connect(): Promise<void> {
         if(this.transport) { assert(Number.isSafeInteger(this.balance));return; }
         assert(process.env.SG_AG_ALLOW_SOURCE === '1', 'AG integrity: SG live source not enabled');
-        try {const response=await this.exchange('Init',{});this.readEnvelope(response,'Init');}
+        try {const response=await this.exchange('Init',{});const r=this.readEnvelope(response,'Init');
+            if(this.game.sg.goldenChiefTotemLifeContract){
+                const pools:any[]=[];const walk=(v:any)=>{if(!v||typeof v!=='object')return;for(const [k,value] of Object.entries(v)){if(k==='TotemPoles')pools.push(value);else walk(value);}};walk(r);
+                assert(pools.length===1,'AG integrity: SG Golden own Init Totem data missing');
+                for(const type of ['0','1']){const rows=list(pools[0].Pole).filter((p:any)=>p.gameMode==='1'&&p.totemType===type).sort((a:any,b:any)=>Number(a.id)-Number(b.id));assert(rows.length===3&&rows.every((p:any,i:number)=>p.id===String(i)&&Object.keys(p).sort().join('|')==='gameMode|id|prizes|totemType'),'AG integrity: SG Golden own Init Totem columns');const actual=rows.map((p:any)=>p.prizes.split('|').map((n:string)=>integer(n,'Totem Init prize')));assert(JSON.stringify(actual)===JSON.stringify(this.game.sg.goldenChiefTotemTrails[type]),'AG integrity: SG Golden own Init Totem trail changed');}
+            }
+        }
         catch(error) {this.close();throw error;}
     }
     getHandshakeData() { return null; } // no AG-format handshake is fabricated
