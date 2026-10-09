@@ -105,21 +105,34 @@ export function validateDragonWildInfo(game: AGGameConfig, result: any): void {
 // Himalaya's exact frontend sends the same Logic request while existing
 // free counters have remaining spins. Compass animation uses the already
 // returned result. Winning/fully charged branches need their own mapped data.
-export function validateHimalayaCompass(game:AGGameConfig,result:any):void {
+export function validateHimalayaCompass(game:AGGameConfig,result:any,previousFree?:Record<string,any>):void {
     assert(game.gameId==='32774' && game.dbName==='sg_himalayas_roof_of_the_world'
         && game.sg?.header?.gameCodeRGI==='himalayas' && game.sg?.header?.gameID==='20230'
         && game.sg?.runtimeGameId===32996 && game.sg?.runtimeSlug==='himalayas--roof-of-the-world'
-        && game.sg?.compassContract==='himalaya-existing-free-compass-v2','AG integrity: SG Himalaya compass binding');
+        && game.sg?.compassContract==='himalaya-existing-free-compass-v3','AG integrity: SG Himalaya compass binding');
     const c=result.Compass,f=result.FSInfo;
     assert(c&&typeof c==='object'&&!Array.isArray(c)&&Object.keys(c).sort().join('|')==='compasPiecesFoundThisSpin|percentFull|pickChoices|pickValueAward|wonGamble','AG integrity: SG Himalaya compass schema');
     const percent=integer(c.percentFull,'Himalaya compass percent'),pieces=integer(c.compasPiecesFoundThisSpin,'Himalaya compass pieces');
-    assert(percent<=80&&percent%20===0&&pieces<=4,'AG integrity: SG Himalaya charged compass not mapped');
+    assert(percent<=100&&percent%20===0&&pieces<=4,'AG integrity: SG Himalaya compass geometry');
     assert(c.pickChoices==='5|7|10|12|20','AG integrity: SG Himalaya award choices changed');
     assert(f&&integer(f.freeSpinNumber,'Himalaya played')<=integer(f.freeSpinsTotal,'Himalaya total'),'AG integrity: SG Himalaya missing free counters');
     const remaining=integer(f.freeSpinsTotal,'Himalaya total')-integer(f.freeSpinNumber,'Himalaya played');
     // Exact own SDK getBoolean maps -1 and 0 to false, 1 to true.
     // Permit only the observed pending branch and the SDK's losing terminal.
-    assert((remaining>0&&c.wonGamble==='-1'&&c.pickValueAward==='-1')||(remaining===0&&c.wonGamble==='0'&&c.pickValueAward==='-2'),'AG integrity: SG Himalaya compass transition not mapped');
+    const pending=remaining>0&&c.wonGamble==='-1'&&c.pickValueAward==='-1'&&percent<=80;
+    const lost=remaining===0&&c.wonGamble==='0'&&c.pickValueAward==='-2'&&percent<=80;
+    // The exact SDK consumes the returned Compass award and continues Logic;
+    // all five awards and charged100 were returned naturally in this own run.
+    // No pick HTTP request is sent, no free counters or money are invented.
+    let won=false;
+    if(c.wonGamble==='1') {
+        const award=integer(c.pickValueAward,'Himalaya awarded free spins');
+        const played=integer(f.freeSpinNumber,'Himalaya awarded played'),total=integer(f.freeSpinsTotal,'Himalaya awarded total');
+        won=!!previousFree&&[5,7,10,12,20].includes(award)
+            &&played===previousFree.freeSpinsTotal&&played===previousFree.freeSpinsPlayed+1
+            &&total===previousFree.freeSpinsTotal+award&&remaining===award;
+    }
+    assert(pending||lost||won,'AG integrity: SG Himalaya compass transition not mapped');
     assert(integer(result.BGInfo.baseGameSpinsRemaining,'Himalaya base remaining')===0,'AG integrity: SG Himalaya base continuation not mapped');
 }
 
@@ -247,7 +260,7 @@ export class SGWmsSession {
             const known=new Set(['stake','stakePerLine','paylineCount','totalWin','betID','ReelResults','BGInfo','FSInfo','BaseGameRecoveryInfo',...(this.game.sg.passiveResultFields || []),...(this.game.sg.wildPositionContract ? ['WildInfo'] : []),...(this.game.sg.compassContract ? ['Compass'] : [])]);
             assert(Object.keys(g).every(k=>known.has(k)),'AG integrity: SG observed feature needs mapping');
             if(g.WildInfo !== undefined)validateDragonWildInfo(this.game,g);
-            if(g.Compass !== undefined)validateHimalayaCompass(this.game,g);
+            if(g.Compass !== undefined)validateHimalayaCompass(this.game,g,this.free);
             assert(integer(g.stake,'stake')===this.game.sg.betRaw,'AG integrity: SG changed stake');
             const bg=g.BGInfo;
             if(this.game.sg.omitsBaseRemaining)assert(bg.baseGameSpinsRemaining===undefined,'AG integrity: SG changed base schema');
