@@ -119,12 +119,12 @@ export function validateGoldenChiefPaidData(game:AGGameConfig,g:any):void {
 // Actual own HTTP200 paid trigger + client's collect encoder. This is a pending
 // selection, never a complete captured round or a synthetic free-spin result.
 
-export function validateGoldenChiefBoardExtras(game:AGGameConfig,g:any):number {
+export function validateGoldenChiefBoardExtras(game:AGGameConfig,g:any,freeHorizontalExpansion=false):number {
  assert(game.gameId==='32771'&&game.dbName==='sg_golden_chief'&&game.sg?.runtimeGameId===32993&&game.sg?.header?.gameID==='20125'&&game.sg?.header?.gameCodeRGI==='goldenchief','AG integrity: SG Golden board binding');
  const keys=(v:any,n:string)=>assert(v&&typeof v==='object'&&!Array.isArray(v)&&Object.keys(v).sort().join('|')===n.split('|').sort().join('|'),'AG integrity: SG Golden board schema');
  const pos=(v:any,max:number)=>{assert(typeof v==='string'&&/^\d+(?:\|\d+)*$/.test(v),'AG integrity: SG Golden board positions');const a=v.split('|').map((n:string)=>integer(n,'Golden board position'));assert(new Set(a).size===a.length&&a.every((n:number)=>n<max),'AG integrity: SG Golden board positions');return a;};
  keys(g.PaylineCountInfo,'normalPaylineCount|bonusPaylineCount|activePaylineCount');assert(g.PaylineCountInfo.normalPaylineCount==='20'&&g.PaylineCountInfo.bonusPaylineCount==='100','AG integrity: SG Golden Init board lines');const active=integer(g.PaylineCountInfo.activePaylineCount,'Golden board active');assert([20,100].includes(active),'AG integrity: SG Golden active lines');
- if(g.WildExpansion){keys(g.WildExpansion,'originalWildPositions|wildReels');const a=pos(g.WildExpansion.originalWildPositions,20),b=pos(g.WildExpansion.wildReels,5);assert(active===100&&a.every((n:number)=>b.includes(n%5))&&b.every((n:number)=>a.some((p:number)=>p%5===n)),'AG integrity: SG Golden board wild columns');}else assert(active===20,'AG integrity: SG Golden missing expanded wild');
+ if(g.WildExpansion){keys(g.WildExpansion,'originalWildPositions|wildReels');const a=pos(g.WildExpansion.originalWildPositions,20),b=pos(g.WildExpansion.wildReels,5);assert(active===100&&a.every((n:number)=>b.includes(n%5))&&(freeHorizontalExpansion||b.every((n:number)=>a.some((p:number)=>p%5===n))),'AG integrity: SG Golden board wild columns');}else assert(active===20,'AG integrity: SG Golden missing expanded wild');
  if(g.SymbolUpgrade){keys(g.SymbolUpgrade,'replacementSymbol|positions');assert(active===100&&game.sg.goldenChiefUpgradeContract==='golden-chief-own-init-symbol-upgrade-v7'&&JSON.stringify(game.sg.goldenChiefUpgradeSymbolIds)===JSON.stringify([0,1,2,3,4,5,6,7,8,9,10])&&game.sg.goldenChiefUpgradeSymbolIds.includes(integer(g.SymbolUpgrade.replacementSymbol,'Golden own Init symbol')),'AG integrity: SG Golden board upgrade');pos(g.SymbolUpgrade.positions,20);}
  return active;
 }
@@ -182,18 +182,24 @@ export function validateGoldenChiefFree(game:AGGameConfig,g:any,prior:any,pendin
  keys(g.FSInfo,'fsWinnings|freeSpinsTotal|freeSpinNumber|freespinsAwarded|isMaxWin');keys(g.BaseGameRecoveryInfo,'ReelResults|BGInfo|PaylineCountInfo|BonusWheel'+(g.BaseGameRecoveryInfo.WildExpansion?'|WildExpansion':'')+(g.BaseGameRecoveryInfo.SymbolUpgrade?'|SymbolUpgrade':''));
  const b=g.BaseGameRecoveryInfo;keys(b.BGInfo,'totalWagerWin|bgWinnings|baseGameSpinsRemaining|isBigBet|isMaxWin|chiefWin');keys(b.BonusWheel,'stopPosition');
  assert(prior&&pending&&Number.isSafeInteger(priorWin)&&JSON.stringify(b.ReelResults)===JSON.stringify(paidReels),'AG integrity: SG Golden free recovery bytes');
- assert(integer(b.BGInfo.bgWinnings,'Golden recovered base')===pending.baseWin&&integer(b.BGInfo.totalWagerWin,'Golden recovered wager')===pending.baseWin&&b.BonusWheel.stopPosition===pending.stop&&b.BGInfo.baseGameSpinsRemaining==='0'&&b.BGInfo.isBigBet==='0'&&b.BGInfo.isMaxWin==='0'&&b.BGInfo.chiefWin==='0','AG integrity: SG Golden free base state');
- const active=validateGoldenChiefBoardExtras(game,g);validateGoldenChiefBoardExtras(game,b);
+ assert(game.sg.goldenChiefFreeContract==='golden-chief-own-free-state-v10','AG integrity: SG Golden free state contract');
+ assert(integer(b.BGInfo.bgWinnings,'Golden recovered base')===pending.baseWin&&b.BonusWheel.stopPosition===pending.stop&&b.BGInfo.baseGameSpinsRemaining==='0'&&b.BGInfo.isBigBet==='0'&&b.BGInfo.isMaxWin==='0'&&b.BGInfo.chiefWin==='0','AG integrity: SG Golden free base state');
+ // The client renders horizontal expansion from returned wildReels. A free
+ // expansion can span columns without an original wild in each column.
+ const active=validateGoldenChiefBoardExtras(game,g,true);validateGoldenChiefBoardExtras(game,b);
  assert(g.stake==='100'&&g.stakePerLine==='5'&&integer(g.paylineCount,'Golden current paylines')===active&&g.FSInfo.isMaxWin==='0','AG integrity: SG Golden free wager');
  const played=integer(g.FSInfo.freeSpinNumber,'Golden played'),total=integer(g.FSInfo.freeSpinsTotal,'Golden total'),awarded=integer(g.FSInfo.freespinsAwarded,'Golden awarded');
  assert(played===prior.freeSpinsPlayed+1&&total===prior.freeSpinsTotal+awarded&&played<=total,'AG integrity: SG Golden free transition');
  keys(g.ReelResults,'numSpins|ReelSpin');const spins=list(g.ReelResults.ReelSpin);assert(g.ReelResults.numSpins==='1'&&spins.length===1,'AG integrity: SG Golden free reel');const r=spins[0];
- assert(r.spinIndex==='0'&&integer(r.reelsetIndex,'Golden free Init set')>=5&&integer(r.reelsetIndex,'Golden free Init set')<=14&&r.freeSpin==='Y'&&r.bonusAwarded==='Y'&&r.winCountSC==='1','AG integrity: SG Golden free flags');
- keys(r.ScatterWin,'#text|winVal|awardIndex');assert(r.ScatterWin.winVal==='0'&&r.ScatterWin.awardIndex==='0','AG integrity: SG Golden free scatter');
+ assert(r.spinIndex==='0'&&integer(r.reelsetIndex,'Golden free Init set')>=5&&integer(r.reelsetIndex,'Golden free Init set')<=14&&r.freeSpin==='Y','AG integrity: SG Golden free flags');
+ if(awarded>0){
+  assert(r.bonusAwarded==='Y'&&r.winCountSC==='1','AG integrity: SG Golden retrigger flags');
+  keys(r.ScatterWin,'#text|winVal|awardIndex');assert(r.ScatterWin.winVal==='0'&&r.ScatterWin.awardIndex==='0','AG integrity: SG Golden free scatter');
+ }else assert(r.bonusAwarded==='N'&&r.winCountSC==='0'&&r.ScatterWin===undefined,'AG integrity: SG Golden non-retrigger flags');
  const wins=list(r.PaylineWin);assert(wins.length===integer(r.winCountPL,'Golden free line count'),'AG integrity: SG Golden free lines');let win=0;const seen=new Set<number>();
  for(const w of wins){const index=integer(w.index,'Golden line');assert(index<active&&!seen.has(index),'AG integrity: SG Golden duplicate line');seen.add(index);integer(w.awardIndex,'Golden award');integer(w.awardTableIndex,'Golden table');assert(typeof w['#text']==='string'&&/^\d+(?:\|\d+)*$/.test(w['#text'])&&w['#text'].split('|').every((v:string)=>integer(v,'Golden symbol position')<20),'AG integrity: SG Golden positions');win+=integer(w.winVal,'Golden line amount');}
  const freeWin=integer(g.FSInfo.fsWinnings,'Golden free winnings');assert(Number.isSafeInteger(win)&&win===integer(r.spinWins,'Golden spin amount')&&win===integer(g.totalWin,'Golden current total')&&pending.baseWin+freeWin===priorWin+win,'AG integrity: SG Golden free monetary components');
- assert(Number.isSafeInteger(pending.baseWin+freeWin),'AG integrity: SG Golden money overflow');return pending.baseWin+freeWin;
+ assert(Number.isSafeInteger(pending.baseWin+freeWin)&&integer(b.BGInfo.totalWagerWin,'Golden recovered cumulative wager')===pending.baseWin+freeWin,'AG integrity: SG Golden cumulative recovery money');return pending.baseWin+freeWin;
 }
 
 
