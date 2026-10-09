@@ -206,6 +206,7 @@ games:
       - 10001
     sg:
       protocol: wms
+      compassContract: himalaya-existing-free-compass-v1
       endpoint: https://gls.atc.casinarena.com/gls.rgsx
       header:
         affiliate: '0'
