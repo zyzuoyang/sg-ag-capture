@@ -19,6 +19,7 @@ games:
       - 10000
       - 10001
     sg:
+      unknownFreeSessionRecovery: original-ag-discard-free-v1
       protocol: wms
       endpoint: https://gls.atc.casinarena.com/gls.rgsx
       header:

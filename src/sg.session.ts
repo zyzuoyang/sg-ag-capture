@@ -6,6 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import { XMLParser } from 'fast-xml-parser';
 import { AGGameConfig } from './ag.types';
+import { AGDiscardedRoundError } from './ag.round';
 // SG transport evidence mapped into the unchanged original AG error policy.
 // This file never retries a request or changes AG scheduling/round handling.
 export type SGFaultCategory = 'recoverable-initialization' | 'protocol' | 'execution-unknown';
@@ -32,6 +33,19 @@ export class SGSourceFault extends Error {
         this.executionUncertain = category === 'execution-unknown';
         this.retryAction = category === 'recoverable-initialization' ? 'original-ag-new-session' : 'stop-preserve-evidence';
         this.evidence = Object.freeze({ ...evidence });
+    }
+}
+
+export class SGClosedFreeSessionDiscard extends AGDiscardedRoundError {
+    readonly executionUncertain=true;
+    readonly oldRequestMayHaveExecuted=true;
+    readonly oldRequestReplays=0;
+    readonly retryAction='original-ag-discard-then-new-free-session';
+    constructor(readonly originalFault:SGSourceFault) {
+        super(originalFault.evidence.event);
+        this.name='SGClosedFreeSessionDiscard';
+        // Do not claim an error-only response or that the old wager failed.
+        this.message='SG uncertain Free round sealed; discard and create a new Free session for future samples';
     }
 }
 
@@ -139,6 +153,23 @@ export function validateHimalayaCompass(game:AGGameConfig,result:any,previousFre
     assert(integer(result.BGInfo.baseGameSpinsRemaining,'Himalaya base remaining')===0,'AG integrity: SG Himalaya base continuation not mapped');
 }
 
+export function sgRequestTimeoutMs(game: AGGameConfig): number {
+    const value=game.sg?.requestTimeoutMs === undefined ? 30000 : game.sg.requestTimeoutMs;
+    assert(Number.isSafeInteger(value) && value>=1000 && value<=120000,'AG integrity: SG request timeout binding');
+    return value;
+}
+export function sgTransportDiagnostic(error: unknown, start: number, deadline: number, now=Date.now(), responseStatus?: number) {
+    const e=error && typeof error==='object' ? error as any : undefined;
+    const safeName=(v:unknown)=>typeof v==='string' && /^[A-Za-z][A-Za-z0-9_]{0,63}$/.test(v) ? v : undefined;
+    const safeCode=(v:unknown)=>typeof v==='string' && /^[A-Z][A-Z0-9_]{0,63}$/.test(v) ? v : undefined;
+    const elapsed=Number.isSafeInteger(start)&&Number.isSafeInteger(now)&&now>=start ? now-start : undefined;
+    return {errorName:safeName(e?.name),causeName:safeName(e?.cause?.name),causeCode:safeCode(e?.cause?.code),
+        elapsedMs:elapsed,configuredTimeoutMs:deadline,
+        responseHeadersReceived:responseStatus!==undefined,
+        ...(responseStatus!==undefined ? {responseStatusBeforeBodyFailed:responseStatus} : {}),
+        completeResponseCaptured:false,serverApplicationOutcomeProven:false};
+}
+
 export class SGWmsSession {
     private balance = Number.NaN;
     private startBalance = Number.NaN;
@@ -146,7 +177,8 @@ export class SGWmsSession {
     private free: Record<string, any> | undefined;
     private action = 'SPIN';
     private steps: WireStep[] = [];
-    private session = 'Free:' + crypto.randomBytes(16).toString('hex');
+    private readonly freshFreeId = 'Free:' + crypto.randomBytes(16).toString('hex');
+    private session = this.freshFreeId;
     private closed = false;
     private lastRequest: {event:string;parameters:Record<string,any>|null} | undefined;
     private lastBase: unknown;
@@ -217,26 +249,44 @@ export class SGWmsSession {
             const step=await this.transport(event,payload);
             if(step.httpStatus!==undefined && !(step.httpStatus>=200 && step.httpStatus<300)) {
                 const fault=httpSourceFault({...context,httpStatus:step.httpStatus,responseSHA256:crypto.createHash('sha256').update(step.responsePayload).digest('hex')});
-                this.close();throw fault;
+                this.close();throw this.closedFaultForFutureSession(fault);
             }
             return step;
         }
         this.evidence({phase:'intent',ordinal,event,payload});
-        const start=Date.now();let response:Response,text:string;
+        const start=Date.now(),deadline=sgRequestTimeoutMs(this.game);let response:Response | undefined,text:string;
         try {
-            response=await fetch(this.game.sg.endpoint,{method:'POST',redirect:'error',signal:AbortSignal.timeout(30000),
+            response=await fetch(this.game.sg.endpoint,{method:'POST',redirect:'error',signal:AbortSignal.timeout(deadline),
                 headers:{'Content-Type':'text/xml; charset=utf-8',...(this.cookies.size?{Cookie:[...this.cookies].map(([k,v])=>k+'='+v).join('; ')}:{})},body:payload});
             text=await response.text();
-        } catch {
+        } catch(error) {
             const fault=transportSourceFault(context);
-            this.evidence({phase:'unknown',ordinal,event,...sourceFaultMetadata(fault)});this.close();
-            throw fault;
+            this.evidence({phase:'unknown',ordinal,event,...sourceFaultMetadata(fault),transportDiagnostic:sgTransportDiagnostic(error,start,deadline,Date.now(),response?.status)});this.close();
+            throw this.closedFaultForFutureSession(fault);
         }
+        assert(response,'AG integrity: SG missing transport response');
         const fault=response.ok ? null : httpSourceFault({...context,httpStatus:response.status,responseSHA256:crypto.createHash('sha256').update(text).digest('hex')});
         this.evidence({phase:'response',ordinal,event,httpStatus:response.status,text,...(fault ? sourceFaultMetadata(fault) : {})});
-        if(fault){this.close();throw fault;}
+        if(fault){this.close();throw this.closedFaultForFutureSession(fault);}
         for(const cookie of response.headers.getSetCookie?.() || []) {const pair=cookie.split(';')[0],at=pair.indexOf('=');if(at>0)this.cookies.set(pair.slice(0,at),pair.slice(at+1));}
         return {msgId:event,requestPayload:payload,responsePayload:text,elapsedMs:Date.now()-start};
+    }
+    private closedFaultForFutureSession(fault:SGSourceFault):Error {
+        if(fault.category!=='execution-unknown' || !this.game.sg.unknownFreeSessionRecovery)return fault;
+        assert(this.game.sg.unknownFreeSessionRecovery==='original-ag-discard-free-v1',
+            'AG integrity: SG unknown Free session recovery contract');
+        assert(this.game.sg.header.freePlay==='Y'&&this.closed&&this.cookies.size===0
+            &&/^Free:[0-9a-f]{32}$/.test(this.freshFreeId),
+            'AG integrity: SG old uncertain session not sealed');
+        if(!['Logic','EndGame'].includes(fault.evidence.event))return fault;
+        const status=fault.evidence.httpStatus;
+        if(status!==undefined && ![408,425,429,500,502,503,504,520,521,522,523,524].includes(status))return fault;
+        // The old outcome stays unknown and cannot be retried. Only a later,
+        // independent Free session is eligible under original AG finite reset.
+        this.evidence({phase:'sealed-session-recovery',ordinal:fault.evidence.ordinal,
+            event:fault.evidence.event,oldOutcomeStillUnknown:true,oldRequestReplays:0,
+            retryAction:'original-ag-discard-then-new-free-session'});
+        return new SGClosedFreeSessionDiscard(fault);
     }
     private readEnvelope(step:WireStep,event:string) {
         const r=xml.parse(step.responsePayload)?.GameResponse;
