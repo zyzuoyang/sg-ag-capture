@@ -275,4 +275,11 @@ games:
       betRaw: 100
       runtimeGameId: 32993
       runtimeSlug: goldenchief
-      goldenChiefPaidContract: golden-chief-own-paid-v1
+      goldenChiefPaidContract: golden-chief-own-totem-v6
+      goldenChiefUpgradeContract: golden-chief-own-init-symbol-upgrade-v7
+      goldenChiefUpgradeSymbolIds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      goldenChiefWheelStrip: [1, 0, 1, 2, 1, 0, 1, 0, 1, 2, 1, 0]
+      goldenChiefGambleCounts: [0, 5, 10, 15, 20, 25, 30]
+      freeStake:
+        total: '100'
+        isBigBet: '0'
