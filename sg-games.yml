@@ -233,3 +233,46 @@ games:
         isBigBet: '0'
     backendId: himalayas
     serviceDir: sg_himalayas--roof-of-the-world
+  - provider: sg
+    gameId: '32771'
+    name: Golden Chief
+    backendId: goldenchief
+    dbName: sg_golden_chief
+    serviceDir: sg_golden-chief
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: goldenchief
+        gameID: '20125'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        total: '100'
+        isBigBet: '0'
+      betRaw: 100
+      runtimeGameId: 32993
+      runtimeSlug: goldenchief
+      goldenChiefPaidContract: golden-chief-own-paid-v1
