@@ -136,6 +136,7 @@ games:
         - BonusData
         - MSReplacement
       runtimeSlug: dragon-spin
+      wildPositionContract: dragon-5x3-positions-v1
       freeStake: {}
       freeLogicCurrencyMultiplier: '1'
     backendId: dragonspin

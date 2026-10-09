@@ -75,6 +75,33 @@ const integer = (v: unknown, name: string): number => {
 };
 const escape = (v: unknown) => String(v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 
+
+// Own Dragon client decodes these as board positions, not network actions or wins.
+// Bind the decoder to this exact game and its declared 5-by-3 wild features.
+export function validateDragonWildInfo(game: AGGameConfig, result: any): void {
+    assert(game.gameId === '32764' && game.dbName === 'sg_dragon_spin'
+        && game.sg?.runtimeGameId === 32986 && game.sg?.runtimeSlug === 'dragon-spin'
+        && game.sg?.header?.gameCodeRGI === 'dragonspin' && game.sg?.header?.gameID === '20117'
+        && game.sg?.wildPositionContract === 'dragon-5x3-positions-v1', 'AG integrity: SG Dragon wild binding');
+    const feature = integer(result.FSInfo?.featureIndex, 'Dragon wild feature');
+    assert(feature === 1 || feature === 2, 'AG integrity: SG Dragon wild feature not mapped');
+    const allowed = feature === 1 ? ['WildPos'] : ['NewWildPos', 'OldWildPos'];
+    const wild = result.WildInfo === '' ? {} : result.WildInfo;
+    assert(wild && typeof wild === 'object' && !Array.isArray(wild)
+        && Object.keys(wild).every(key => allowed.includes(key)), 'AG integrity: SG Dragon wild schema');
+    const seen = new Set<number>();
+    for (const key of Object.keys(wild)) {
+        const text = wild[key];
+        assert(typeof text === 'string' && (text === '' || /^(?:0|[1-9]\d*)(?:\|(?:0|[1-9]\d*))*$/.test(text)),
+            'AG integrity: SG Dragon wild positions');
+        for (const value of text === '' ? [] : text.split('|')) {
+            const position = integer(value, 'Dragon wild position');
+            assert(position < 15 && !seen.has(position), 'AG integrity: SG Dragon wild board position');
+            seen.add(position);
+        }
+    }
+}
+
 export class SGWmsSession {
     private balance = Number.NaN;
     private startBalance = Number.NaN;
@@ -196,8 +223,9 @@ export class SGWmsSession {
             this.action='SPIN';
         } else {
             const g=r.GameResult;assert(g&&g.BGInfo,'AG integrity: SG game result');
-            const known=new Set(['stake','stakePerLine','paylineCount','totalWin','betID','ReelResults','BGInfo','FSInfo','BaseGameRecoveryInfo',...(this.game.sg.passiveResultFields || [])]);
+            const known=new Set(['stake','stakePerLine','paylineCount','totalWin','betID','ReelResults','BGInfo','FSInfo','BaseGameRecoveryInfo',...(this.game.sg.passiveResultFields || []),...(this.game.sg.wildPositionContract ? ['WildInfo'] : [])]);
             assert(Object.keys(g).every(k=>known.has(k)),'AG integrity: SG observed feature needs mapping');
+            if(g.WildInfo !== undefined)validateDragonWildInfo(this.game,g);
             assert(integer(g.stake,'stake')===this.game.sg.betRaw,'AG integrity: SG changed stake');
             const bg=g.BGInfo;
             if(this.game.sg.omitsBaseRemaining)assert(bg.baseGameSpinsRemaining===undefined,'AG integrity: SG changed base schema');
