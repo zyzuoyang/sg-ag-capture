@@ -109,17 +109,17 @@ export function validateHimalayaCompass(game:AGGameConfig,result:any):void {
     assert(game.gameId==='32774' && game.dbName==='sg_himalayas_roof_of_the_world'
         && game.sg?.header?.gameCodeRGI==='himalayas' && game.sg?.header?.gameID==='20230'
         && game.sg?.runtimeGameId===32996 && game.sg?.runtimeSlug==='himalayas--roof-of-the-world'
-        && game.sg?.compassContract==='himalaya-existing-free-compass-v1','AG integrity: SG Himalaya compass binding');
+        && game.sg?.compassContract==='himalaya-existing-free-compass-v2','AG integrity: SG Himalaya compass binding');
     const c=result.Compass,f=result.FSInfo;
     assert(c&&typeof c==='object'&&!Array.isArray(c)&&Object.keys(c).sort().join('|')==='compasPiecesFoundThisSpin|percentFull|pickChoices|pickValueAward|wonGamble','AG integrity: SG Himalaya compass schema');
     const percent=integer(c.percentFull,'Himalaya compass percent'),pieces=integer(c.compasPiecesFoundThisSpin,'Himalaya compass pieces');
     assert(percent<=80&&percent%20===0&&pieces<=4,'AG integrity: SG Himalaya charged compass not mapped');
-    assert(c.pickChoices==='5|7|10|12|20'&&c.pickValueAward==='-1','AG integrity: SG Himalaya awarded route not mapped');
+    assert(c.pickChoices==='5|7|10|12|20','AG integrity: SG Himalaya award choices changed');
     assert(f&&integer(f.freeSpinNumber,'Himalaya played')<=integer(f.freeSpinsTotal,'Himalaya total'),'AG integrity: SG Himalaya missing free counters');
     const remaining=integer(f.freeSpinsTotal,'Himalaya total')-integer(f.freeSpinNumber,'Himalaya played');
     // Exact own SDK getBoolean maps -1 and 0 to false, 1 to true.
     // Permit only the observed pending branch and the SDK's losing terminal.
-    assert((remaining>0&&c.wonGamble==='-1')||(remaining===0&&c.wonGamble==='0'),'AG integrity: SG Himalaya compass transition not mapped');
+    assert((remaining>0&&c.wonGamble==='-1'&&c.pickValueAward==='-1')||(remaining===0&&c.wonGamble==='0'&&c.pickValueAward==='-2'),'AG integrity: SG Himalaya compass transition not mapped');
     assert(integer(result.BGInfo.baseGameSpinsRemaining,'Himalaya base remaining')===0,'AG integrity: SG Himalaya base continuation not mapped');
 }
 
