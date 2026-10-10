@@ -196,11 +196,34 @@ export function validateFudaOwnFreeData(game:AGGameConfig,g:any,first:boolean,pr
 // Own Cool Jewels client decodes each cascade cell award, not an extra wager.
 // This contract covers actual ordinary cascade records; new Feature data is
 // retained as a real own fault rather than manufactured as a zero bonus.
-export function validateCoolJewelsPaidData(game:AGGameConfig,g:any):number {
+export function validateCoolJewelsFreeData(game:AGGameConfig,g:any,first:boolean,prior:any,base:any,previousWin:number){
+ assert(game.sg.coolJewelsFreeContract==='cool-jewels-own-natural-free-v2','AG integrity: SG Cool Jewels own free contract');
+ if(first&&!g.Feature)return {win:validateCoolJewelsPaidData(game,g),free:undefined,base:undefined};
+ ownPaidKeys(g.Feature,'index|FS_Info','Cool Jewels feature');assert(g.Feature.index==='0'&&!Array.isArray(g.Feature.FS_Info),'AG integrity: SG Cool Jewels feature index');
+ const f=g.Feature.FS_Info;
+ if(first){
+  ownPaidKeys(f,'fsAwarded','Cool Jewels paid free intro');const total=integer(f.fsAwarded,'Cool Jewels actual intro budget');assert(total>0,'AG integrity: SG Cool Jewels zero intro');
+  const win=validateCoolJewelsPaidData(game,g,'trigger');return {win,base:structuredClone(g),free:{freeSpinsTotal:total,freeSpinsPlayed:0,freeSpinsRemaining:total,accumulativeWin:win/100}};
+ }
+ assert(prior&&base,'AG integrity: SG Cool Jewels missing original free state');
+ ownPaidKeys(f,'totalSpinsWon|currentSpin|entryWin|currentFSWins|totalGameWins|winTopUp|fsAwarded','Cool Jewels free counters and money');
+ const total=integer(f.totalSpinsWon,'Cool Jewels actual total'),played=integer(f.currentSpin,'Cool Jewels played'),award=integer(f.fsAwarded,'Cool Jewels returned award');
+ assert(played===prior.freeSpinsPlayed+1&&total===prior.freeSpinsTotal+award&&played<=total,'AG integrity: SG Cool Jewels nonadvancing or lost free budget');
+ const current=validateCoolJewelsPaidData(game,g,'free'),entry=integer(f.entryWin,'Cool Jewels original entry cash'),freeWin=integer(f.currentFSWins,'Cool Jewels cumulative free cash'),win=integer(f.totalGameWins,'Cool Jewels total cash');
+ assert(f.winTopUp==='0','AG integrity: SG Cool Jewels actual top-up needs own mapping');
+ assert(entry===integer(base.totalWin,'Cool Jewels original paid cash')&&entry+freeWin===win&&previousWin+current===win,'AG integrity: SG Cool Jewels cash components or cumulative delta');
+ if(played===total){
+  ownPaidKeys(g.PreFS_Info,'visSymbols','Cool Jewels terminal paid display');ownPositionNumbers(g.PreFS_Info.visSymbols,36,'Cool Jewels recovery symbols');
+  const drops=list(base.ReactorChain.ReactorDrop),original=drops[drops.length-1].ReactorLayout.symbols;assert(g.PreFS_Info.visSymbols===original,'AG integrity: SG Cool Jewels original paid display changed');
+ }else assert(g.PreFS_Info===undefined,'AG integrity: SG Cool Jewels premature recovery');
+ return {win,base,free:{freeSpinsTotal:total,freeSpinsPlayed:played,freeSpinsRemaining:total-played,accumulativeWin:win/100}};
+}
+export function validateCoolJewelsPaidData(game:AGGameConfig,g:any,mode:'ordinary'|'trigger'|'free'='ordinary'):number {
  assert(game.gameId==='32758'&&game.dbName==='sg_cooljewels_prt'&&game.sg.runtimeGameId===32980&&game.sg.header.gameID==='20150'&&game.sg.header.gameCodeRGI==='cooljewels_prt'&&game.sg.coolJewelsPaidContract==='cool-jewels-own-reactor-paid-v1'&&game.sg.betRaw===50,'AG integrity: SG Cool Jewels own binding');
- ownPaidKeys(g,'stake|stakePerLine|paylineCount|totalWin|betID|ReelResults|ReactorChain|MaxWin_Info','Cool Jewels result');assert(g.stake==='50'&&g.stakePerLine==='0'&&g.paylineCount==='0'&&typeof g.betID==='string','AG integrity: SG Cool Jewels own wager');
+ assert(mode==='ordinary'||game.sg.coolJewelsFreeContract==='cool-jewels-own-natural-free-v2','AG integrity: SG Cool Jewels free binding');
+ ownPaidKeys(g,'stake|stakePerLine|paylineCount|totalWin|betID|ReelResults|ReactorChain|MaxWin_Info'+(mode!=='ordinary'?'|Feature':'')+(mode==='free'&&g.PreFS_Info!==undefined?'|PreFS_Info':''),'Cool Jewels result');assert(g.stake==='50'&&g.stakePerLine==='0'&&g.paylineCount==='0'&&typeof g.betID==='string','AG integrity: SG Cool Jewels own wager');
  ownPaidKeys(g.ReelResults,'numSpins|ReelSpin','Cool Jewels reels');assert(g.ReelResults.numSpins==='1'&&!Array.isArray(g.ReelResults.ReelSpin),'AG integrity: SG Cool Jewels reel count');const r=g.ReelResults.ReelSpin;
- ownPaidKeys(r,'spinIndex|reelsetIndex|winCountPL|winCountSC|spinWins|freeSpin|bonusAwarded|ReelStops','Cool Jewels ordinary reel');assert(r.spinIndex==='0'&&r.winCountPL==='0'&&r.winCountSC==='0'&&r.spinWins==='0'&&r.freeSpin==='N'&&r.bonusAwarded==='N','AG integrity: SG Cool Jewels new action or reel cash');integer(r.reelsetIndex,'Cool Jewels reel set');ownPositionNumbers(r.ReelStops,6,'Cool Jewels stops');
+ ownPaidKeys(r,'spinIndex|reelsetIndex|winCountPL|winCountSC|spinWins|freeSpin|bonusAwarded|ReelStops','Cool Jewels ordinary reel');assert(r.spinIndex==='0'&&r.winCountPL==='0'&&r.winCountSC==='0'&&r.spinWins==='0'&&r.freeSpin===(mode==='free'?'Y':'N')&&r.bonusAwarded===(mode==='trigger'||(mode==='free'&&integer(g.Feature.FS_Info.fsAwarded,'Cool Jewels returned award')>0)?'Y':'N'),'AG integrity: SG Cool Jewels new action or reel cash');integer(r.reelsetIndex,'Cool Jewels reel set');ownPositionNumbers(r.ReelStops,6,'Cool Jewels stops');
  ownPaidKeys(g.ReactorChain,'num_drops|ReactorDrop','Cool Jewels chain');const drops=list(g.ReactorChain.ReactorDrop);assert(drops.length>0&&drops.length===integer(g.ReactorChain.num_drops,'Cool Jewels drop count'),'AG integrity: SG Cool Jewels chain count');
  const coordinate=(value:any)=>{assert(typeof value==='string'&&/^\d+,\d+$/.test(value),'AG integrity: SG Cool Jewels position');const pos=value.split(',').map((q:string)=>integer(q,'Cool Jewels coordinate'));assert(pos.every((q:number)=>q<6),'AG integrity: SG Cool Jewels board');return value;};
  let total=0;
@@ -538,6 +561,7 @@ export class SGWmsSession {
     private lastRequest: {event:string;parameters:Record<string,any>|null} | undefined;
     private lastBase: unknown;
     private eightyBase: unknown;
+    private coolJewelsBase:any;
     private fudaBase: unknown;
     private journal: number | null = null;
     private journalPath: string | null = null;
@@ -694,7 +718,7 @@ export class SGWmsSession {
     }
     async callGameData(event:string,parameters:Record<string,any>|null) {
         const first=this.action==='SPIN';
-        if(first) {assert(event==='Logic','AG integrity: SG round start');this.startBalance=this.balance;this.totalWin=0;this.free=undefined;this.steps=[];this.lastBase=undefined;this.eightyBase=undefined;this.fudaBase=undefined;this.goldenPending=undefined;}
+        if(first) {assert(event==='Logic','AG integrity: SG round start');this.startBalance=this.balance;this.totalWin=0;this.free=undefined;this.steps=[];this.lastBase=undefined;this.eightyBase=undefined;this.fudaBase=undefined;this.coolJewelsBase=undefined;this.goldenPending=undefined;}
         else assert(event===this.getExactFollowUpRequest(this.action).event,'AG integrity: SG request order');
         assert(Number.isSafeInteger(this.startBalance),'AG integrity: SG missing initial balance');
         const step=await this.exchange(event,parameters || {}),r=this.readEnvelope(step,event);
@@ -706,6 +730,7 @@ export class SGWmsSession {
         } else {
             const g=r.GameResult;
             if(this.game.sg.eightyFortunesContract){const mapped=validateEightyFortunesData(this.game,g,first,this.free,this.eightyBase,this.totalWin);if(first)this.eightyBase=structuredClone(g);this.totalWin=mapped.win;this.free=mapped.free;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
+            else if(this.game.sg.coolJewelsFreeContract){const mapped=validateCoolJewelsFreeData(this.game,g,first,this.free,this.coolJewelsBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.coolJewelsBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(first&&this.game.sg.coolJewelsPaidContract){this.totalWin=validateCoolJewelsPaidData(this.game,g);this.action='PLAY';}
             else if(first&&this.game.sg.fireQueenPaidContract){this.totalWin=validateFireQueenPaidData(this.game,g);this.action='PLAY';}
             else if(first&&(this.game.sg.desertCatsContract||this.game.sg.jinjiEndlessContract)){this.totalWin=validateHealthyPaidData(this.game,g);this.action='PLAY';}

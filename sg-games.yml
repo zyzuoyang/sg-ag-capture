@@ -967,8 +967,11 @@ games:
       stake:
         multiplier: '1'
         total: '50'
-      freeStake: {}
+      freeStake:
+        multiplier: '1'
+        total: '50'
       betRaw: 50
       runtimeSlug: cooljewels_prt
       runtimeGameId: 32980
       coolJewelsPaidContract: cool-jewels-own-reactor-paid-v1
+      coolJewelsFreeContract: cool-jewels-own-natural-free-v2
