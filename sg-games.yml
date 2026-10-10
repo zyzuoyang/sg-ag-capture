@@ -974,4 +974,4 @@ games:
       runtimeSlug: cooljewels_prt
       runtimeGameId: 32980
       coolJewelsPaidContract: cool-jewels-own-reactor-paid-v1
-      coolJewelsFreeContract: cool-jewels-own-natural-free-v2
+      coolJewelsFreeContract: cool-jewels-own-topup-retrigger-v3

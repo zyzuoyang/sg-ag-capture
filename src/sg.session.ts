@@ -197,7 +197,7 @@ export function validateFudaOwnFreeData(game:AGGameConfig,g:any,first:boolean,pr
 // This contract covers actual ordinary cascade records; new Feature data is
 // retained as a real own fault rather than manufactured as a zero bonus.
 export function validateCoolJewelsFreeData(game:AGGameConfig,g:any,first:boolean,prior:any,base:any,previousWin:number){
- assert(game.sg.coolJewelsFreeContract==='cool-jewels-own-natural-free-v2','AG integrity: SG Cool Jewels own free contract');
+ assert(game.sg.coolJewelsFreeContract==='cool-jewels-own-topup-retrigger-v3','AG integrity: SG Cool Jewels own free contract');
  if(first&&!g.Feature)return {win:validateCoolJewelsPaidData(game,g),free:undefined,base:undefined};
  ownPaidKeys(g.Feature,'index|FS_Info','Cool Jewels feature');assert(g.Feature.index==='0'&&!Array.isArray(g.Feature.FS_Info),'AG integrity: SG Cool Jewels feature index');
  const f=g.Feature.FS_Info;
@@ -210,8 +210,8 @@ export function validateCoolJewelsFreeData(game:AGGameConfig,g:any,first:boolean
  const total=integer(f.totalSpinsWon,'Cool Jewels actual total'),played=integer(f.currentSpin,'Cool Jewels played'),award=integer(f.fsAwarded,'Cool Jewels returned award');
  assert(played===prior.freeSpinsPlayed+1&&total===prior.freeSpinsTotal+award&&played<=total,'AG integrity: SG Cool Jewels nonadvancing or lost free budget');
  const current=validateCoolJewelsPaidData(game,g,'free'),entry=integer(f.entryWin,'Cool Jewels original entry cash'),freeWin=integer(f.currentFSWins,'Cool Jewels cumulative free cash'),win=integer(f.totalGameWins,'Cool Jewels total cash');
- assert(f.winTopUp==='0','AG integrity: SG Cool Jewels actual top-up needs own mapping');
- assert(entry===integer(base.totalWin,'Cool Jewels original paid cash')&&entry+freeWin===win&&previousWin+current===win,'AG integrity: SG Cool Jewels cash components or cumulative delta');
+ const topup=integer(f.winTopUp,'Cool Jewels actual terminal guarantee');assert(played===total||topup===0,'AG integrity: SG Cool Jewels premature guarantee');
+ assert(entry===integer(base.totalWin,'Cool Jewels original paid cash')&&entry+freeWin+topup===win&&previousWin+current+topup===win,'AG integrity: SG Cool Jewels cash components or cumulative delta');
  if(played===total){
   ownPaidKeys(g.PreFS_Info,'visSymbols','Cool Jewels terminal paid display');ownPositionNumbers(g.PreFS_Info.visSymbols,36,'Cool Jewels recovery symbols');
   const drops=list(base.ReactorChain.ReactorDrop),original=drops[drops.length-1].ReactorLayout.symbols;assert(g.PreFS_Info.visSymbols===original,'AG integrity: SG Cool Jewels original paid display changed');
@@ -220,10 +220,10 @@ export function validateCoolJewelsFreeData(game:AGGameConfig,g:any,first:boolean
 }
 export function validateCoolJewelsPaidData(game:AGGameConfig,g:any,mode:'ordinary'|'trigger'|'free'='ordinary'):number {
  assert(game.gameId==='32758'&&game.dbName==='sg_cooljewels_prt'&&game.sg.runtimeGameId===32980&&game.sg.header.gameID==='20150'&&game.sg.header.gameCodeRGI==='cooljewels_prt'&&game.sg.coolJewelsPaidContract==='cool-jewels-own-reactor-paid-v1'&&game.sg.betRaw===50,'AG integrity: SG Cool Jewels own binding');
- assert(mode==='ordinary'||game.sg.coolJewelsFreeContract==='cool-jewels-own-natural-free-v2','AG integrity: SG Cool Jewels free binding');
+ assert(mode==='ordinary'||game.sg.coolJewelsFreeContract==='cool-jewels-own-topup-retrigger-v3','AG integrity: SG Cool Jewels free binding');
  ownPaidKeys(g,'stake|stakePerLine|paylineCount|totalWin|betID|ReelResults|ReactorChain|MaxWin_Info'+(mode!=='ordinary'?'|Feature':'')+(mode==='free'&&g.PreFS_Info!==undefined?'|PreFS_Info':''),'Cool Jewels result');assert(g.stake==='50'&&g.stakePerLine==='0'&&g.paylineCount==='0'&&typeof g.betID==='string','AG integrity: SG Cool Jewels own wager');
  ownPaidKeys(g.ReelResults,'numSpins|ReelSpin','Cool Jewels reels');assert(g.ReelResults.numSpins==='1'&&!Array.isArray(g.ReelResults.ReelSpin),'AG integrity: SG Cool Jewels reel count');const r=g.ReelResults.ReelSpin;
- ownPaidKeys(r,'spinIndex|reelsetIndex|winCountPL|winCountSC|spinWins|freeSpin|bonusAwarded|ReelStops','Cool Jewels ordinary reel');assert(r.spinIndex==='0'&&r.winCountPL==='0'&&r.winCountSC==='0'&&r.spinWins==='0'&&r.freeSpin===(mode==='free'?'Y':'N')&&r.bonusAwarded===(mode==='trigger'||(mode==='free'&&integer(g.Feature.FS_Info.fsAwarded,'Cool Jewels returned award')>0)?'Y':'N'),'AG integrity: SG Cool Jewels new action or reel cash');integer(r.reelsetIndex,'Cool Jewels reel set');ownPositionNumbers(r.ReelStops,6,'Cool Jewels stops');
+ ownPaidKeys(r,'spinIndex|reelsetIndex|winCountPL|winCountSC|spinWins|freeSpin|bonusAwarded|ReelStops','Cool Jewels ordinary reel');assert(r.spinIndex==='0'&&r.winCountPL==='0'&&r.winCountSC==='0'&&r.spinWins==='0'&&r.freeSpin===(mode==='free'?'Y':'N')&&r.bonusAwarded===(mode==='trigger'?'Y':'N'),'AG integrity: SG Cool Jewels new action or reel cash');integer(r.reelsetIndex,'Cool Jewels reel set');ownPositionNumbers(r.ReelStops,6,'Cool Jewels stops');
  ownPaidKeys(g.ReactorChain,'num_drops|ReactorDrop','Cool Jewels chain');const drops=list(g.ReactorChain.ReactorDrop);assert(drops.length>0&&drops.length===integer(g.ReactorChain.num_drops,'Cool Jewels drop count'),'AG integrity: SG Cool Jewels chain count');
  const coordinate=(value:any)=>{assert(typeof value==='string'&&/^\d+,\d+$/.test(value),'AG integrity: SG Cool Jewels position');const pos=value.split(',').map((q:string)=>integer(q,'Cool Jewels coordinate'));assert(pos.every((q:number)=>q<6),'AG integrity: SG Cool Jewels board');return value;};
  let total=0;
