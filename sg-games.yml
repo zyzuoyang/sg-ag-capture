@@ -975,3 +975,134 @@ games:
       runtimeGameId: 32980
       coolJewelsPaidContract: cool-jewels-own-reactor-paid-v1
       coolJewelsFreeContract: cool-jewels-own-topup-retrigger-v3
+  - provider: sg
+    gameId: '32751'
+    name: 88 Fortunes Megaways
+    backendId: eightyeightfortunesmegaways
+    dbName: sg_eightyeightfortunesmegaways
+    serviceDir: sg_eightyeightfortunesmegaways
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: eightyeightfortunesmegaways
+        gameID: '20371'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        total: '16'
+        gameMode: '0'
+      freeStake: {}
+      betRaw: 16
+      runtimeSlug: eightyeightfortunesmegaways
+      runtimeGameId: 32973
+      healthyComponentsContract: eighty-eight-megaways-own-components-v1
+      logicPaylineCount: '1'
+  - provider: sg
+    gameId: '32765'
+    name: Drop and Lock Deep Sea Magic
+    backendId: dropandlockdeepseamagic
+    dbName: sg_dropandlockdeepseamagic
+    serviceDir: sg_dropandlockdeepseamagic
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: dropandlockdeepseamagic
+        gameID: '20412'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        total: '200'
+      freeStake: {}
+      betRaw: 200
+      runtimeSlug: dropandlockdeepseamagic
+      runtimeGameId: 32987
+      healthyComponentsContract: deep-sea-own-line-free-components-v1
+  - provider: sg
+    gameId: '32777'
+    name: Jin Ji Bao Xi Megaways
+    backendId: jjbxmegaways
+    dbName: sg_jjbxmegaways
+    serviceDir: sg_jjbxmegaways
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: jjbxmegaways
+        gameID: '20468'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        total: '88'
+      freeStake: {}
+      betRaw: 88
+      runtimeSlug: jjbxmegaways
+      runtimeGameId: 32999
+      healthyComponentsContract: jin-ji-megaways-own-paid-components-v1
