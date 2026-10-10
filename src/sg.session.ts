@@ -532,21 +532,26 @@ export function validateHimalayaCompass(game:AGGameConfig,result:any,previousFre
 
 // Shared returned-cash decoder, bound to these three independently evidenced
 // connections. It translates SG data; original AG still controls every action.
-function ownHealthyComponentsBinding(game:AGGameConfig):'megaways'|'deepsea'|'jinji' {
+function ownHealthyComponentsBinding(game:AGGameConfig):'megaways'|'deepsea'|'jinji'|'spartacus' {
  const bindings:any={
+  '32807':['sg_spartacusmegaways',33167,'20405','spartacusmegaways',200,'spartacus-own-returned-components-v1','spartacus'],
   '32751':['sg_eightyeightfortunesmegaways',32973,'20371','eightyeightfortunesmegaways',16,'eighty-eight-megaways-own-components-v3','megaways'],
   '32765':['sg_dropandlockdeepseamagic',32987,'20412','dropandlockdeepseamagic',200,'deep-sea-own-line-free-components-v1','deepsea'],
   '32777':['sg_jjbxmegaways',32999,'20468','jjbxmegaways',88,'jin-ji-megaways-own-paid-components-v1','jinji']
  };
  const b=bindings[game.gameId];assert(b&&game.dbName===b[0]&&game.sg.runtimeGameId===b[1]&&game.sg.header.gameID===b[2]&&game.sg.header.gameCodeRGI===b[3]&&game.sg.betRaw===b[4]&&game.sg.healthyComponentsContract===b[5],'AG integrity: SG healthy component connection');return b[6];
 }
-function ownHealthyTopReel(top:any) {
+function ownHealthyTopReel(top:any,kind?:string) {
  ownPaidKeys(top,'reelSetIndex|reelStop|positions','healthy top reel');integer(top.reelSetIndex,'top set');integer(top.reelStop,'top stop');
- assert(JSON.stringify(ownPositionNumbers(top.positions,4,'top positions'))===JSON.stringify([37,38,39,40]),'AG integrity: SG top positions');
+ assert(JSON.stringify(ownPositionNumbers(top.positions,4,'top positions'))===JSON.stringify(kind==='spartacus'?[55,56,57,58]:[37,38,39,40]),'AG integrity: SG top positions');
 }
 function ownHealthyReelCash(reels:any,kind:string,isFree:boolean,hasIntro:boolean):number {
- ownPaidKeys(reels,'numSpins|ReelSpin','healthy reels');const spins=list(reels.ReelSpin);
+ ownPaidKeys(reels,'numSpins|ReelSpin'+(kind==='spartacus'?'|CurtainInfo':''),'healthy reels');const spins=list(reels.ReelSpin);
  assert(spins.length===integer(reels.numSpins,'healthy cascade count')&&spins.length>0,'AG integrity: SG healthy cascade count');
+ if(kind==='spartacus'){
+  const curtains=list(reels.CurtainInfo);assert(curtains.length===spins.length,'AG integrity: SG Spartacus paired curtains');
+  for(const [i,c] of curtains.entries()){ownPaidKeys(c,'spinIndex|heights','Spartacus curtain');assert(integer(c.spinIndex,'Spartacus curtain index')===i&&ownPositionNumbers(c.heights,6,'Spartacus curtain heights').every(n=>n<=10),'AG integrity: SG Spartacus curtain geometry');}
+ }
  let cash=0;
  for(const [i,s] of spins.entries()) {
   const deep=kind==='deepsea',wins=list(deep?s.PaylineWin:s.AnywayWin),scatters=list(s.ScatterWin);
@@ -560,11 +565,11 @@ function ownHealthyReelCash(reels:any,kind:string,isFree:boolean,hasIntro:boolea
    ownPaidKeys(w,deep?'index|winVal|awardIndex|awardTableIndex|#text':'winIndex|winVal|ways|awardIndex|#text','healthy cash award');
    if(deep){assert(integer(w.index,'payline index')<50,'AG integrity: SG payline index');integer(w.awardTableIndex,'award table');}
    else assert(integer(w.winIndex,'ways index')===j&&integer(w.ways,'ways')>0,'AG integrity: SG ways index');
-   integer(w.awardIndex,'healthy award index');assert(ownPositionNumbers(w['#text'],undefined,'healthy winning positions').every(n=>n<(deep?15:kind==='megaways'?6*7:41)),'AG integrity: SG healthy position range');lines+=integer(w.winVal,'healthy line cash');
+   integer(w.awardIndex,'healthy award index');assert(ownPositionNumbers(w['#text'],undefined,'healthy winning positions').every(n=>n<(deep?15:kind==='spartacus'?6*10:kind==='megaways'?6*7:41)),'AG integrity: SG healthy position range');lines+=integer(w.winVal,'healthy line cash');
   }
   for(const w of scatters) {
    ownPaidKeys(w,'winVal|awardIndex'+(w['#text']!==undefined?'|#text':''),'healthy scatter');integer(w.awardIndex,'scatter award');
-   if(w['#text']!==undefined)assert(ownPositionNumbers(w['#text'],undefined,'scatter positions').every(n=>n<(deep?15:kind==='megaways'?6*7:41)),'AG integrity: SG scatter range');scatter+=integer(w.winVal,'scatter cash');
+   if(w['#text']!==undefined)assert(ownPositionNumbers(w['#text'],undefined,'scatter positions').every(n=>n<(deep?15:kind==='spartacus'?6*10:kind==='megaways'?6*7:41)),'AG integrity: SG scatter range');scatter+=integer(w.winVal,'scatter cash');
   }
   assert(lines===integer(deep?s.spinWins:s.totalSpinWin,'healthy returned line cash'),'AG integrity: SG healthy line cash disagreement');cash+=lines+scatter;assert(Number.isSafeInteger(cash),'AG integrity: SG unsafe healthy cash');
  }
@@ -575,11 +580,11 @@ export function validateOwnHealthyComponents(game:AGGameConfig,g:any,first:boole
  assert(first||kind!=='jinji','AG integrity: SG Jin Ji new free branch needs own evidence');
  const names='stake|totalWin|betID|ReelResults|BGInfo'+(deep?'|stakePerLine|paylineCount':'|TopReelInfo')+(g?.BonusSymValues!==undefined?'|BonusSymValues':'')+(hasFree?'|FSInfo':'')+(g?.PickerInfo!==undefined?'|PickerInfo':'')+(!first?'|BaseGameRecoveryInfo'+(deep?'|MultiplierInfo':'|CascadeInfo'):'');
  ownPaidKeys(g,names,'healthy component result');assert(integer(g.stake,'healthy stake')===game.sg.betRaw&&typeof g.betID==='string','AG integrity: SG healthy wager');
- if(deep)assert(g.stakePerLine==='4'&&g.paylineCount==='50','AG integrity: SG Deep Sea wager');else ownHealthyTopReel(g.TopReelInfo);
+ if(deep)assert(g.stakePerLine==='4'&&g.paylineCount==='50','AG integrity: SG Deep Sea wager');else ownHealthyTopReel(g.TopReelInfo,kind);
  if(g.BonusSymValues!==undefined){assert(deep&&typeof g.BonusSymValues==='string'&&/^(?:-1|\d+)(?:\|(?:-1|\d+))*$/.test(g.BonusSymValues),'AG integrity: SG Deep Sea bonus display');const vals=g.BonusSymValues.split('|');assert(vals.length===15&&vals.every((v:string)=>v==='-1'||Number.isSafeInteger(Number(v))),'AG integrity: SG Deep Sea display geometry');}
  ownPaidKeys(g.BGInfo,'totalWagerWin|bgWinnings|isMaxWin'+(deep?'':kind==='megaways'?'|gameMode|reelHeights':'|reelHeights'),'healthy base info');assert(g.BGInfo.isMaxWin==='0','AG integrity: SG healthy capped result');
  if(kind==='megaways')assert(g.BGInfo.gameMode==='0','AG integrity: SG 88 game mode');
- if(!deep)assert(ownPositionNumbers(g.BGInfo.reelHeights,6,'base reel heights').every(n=>n>=2&&n<=7),'AG integrity: SG base heights');
+ if(!deep)assert(ownPositionNumbers(g.BGInfo.reelHeights,6,'base reel heights').every(n=>n>=2&&n<=(kind==='spartacus'?10:7)),'AG integrity: SG base heights');
  const current=ownHealthyReelCash(g.ReelResults,kind,!first,first&&hasFree),win=integer(g.BGInfo.totalWagerWin,'healthy cumulative'),bg=integer(g.BGInfo.bgWinnings,'healthy paid cash');
  assert(integer(g.totalWin,'healthy current cash')===current&&win===(first?current:previousWin+current),'AG integrity: SG healthy current cumulative cash');
  if(first){assert(bg===current&&previousFree===undefined,'AG integrity: SG healthy paid entry');base=structuredClone(g);}
@@ -591,15 +596,15 @@ export function validateOwnHealthyComponents(game:AGGameConfig,g:any,first:boole
  }
  if(!hasFree){assert(first&&g.PickerInfo===undefined&&bg===win,'AG integrity: SG healthy free state disappeared');return {win,free:undefined,base};}
  assert(kind!=='jinji','AG integrity: SG Jin Ji free scope not evidenced');
- const f=g.FSInfo;ownPaidKeys(f,first?(deep?'fsWinnings|freeSpinsTotal|freeSpinNumber':'fsWinnings|freeSpinsTotal|freeSpinNumber|isMaxWin|startCasMult'):(deep?'fsWinnings|freeSpinsTotal|freeSpinNumber|isMaxWin|extraSpinsAwarded':'fsWinnings|freeSpinsTotal|freeSpinNumber|extraSpinsAwarded|reelHeights'),'healthy free info');
+ const f=g.FSInfo;ownPaidKeys(f,first?(deep?'fsWinnings|freeSpinsTotal|freeSpinNumber':kind==='spartacus'?'fsWinnings|freeSpinsTotal|freeSpinNumber|extraSpinsAwarded|curtainIndex'+(g.FSInfo.startCasMult!==undefined?'|startCasMult':''):'fsWinnings|freeSpinsTotal|freeSpinNumber|isMaxWin|startCasMult'):(deep?'fsWinnings|freeSpinsTotal|freeSpinNumber|isMaxWin|extraSpinsAwarded':'fsWinnings|freeSpinsTotal|freeSpinNumber|extraSpinsAwarded|reelHeights'),'healthy free info');
  const total=integer(f.freeSpinsTotal,'healthy free total'),played=integer(f.freeSpinNumber,'healthy free played'),freeWin=integer(f.fsWinnings,'healthy free cash');assert(total>0&&played<=total&&bg+freeWin===win,'AG integrity: SG healthy free components');
  if(f.isMaxWin!==undefined)assert(f.isMaxWin==='0','AG integrity: SG healthy free cap');
- if(first){assert(played===0&&freeWin===0,'AG integrity: SG healthy free intro');if(!deep){if(g.PickerInfo!==undefined){ownPaidKeys(g.PickerInfo,'pickerIndex','88 picker display');integer(g.PickerInfo.pickerIndex,'88 returned picker index');}assert(integer(f.startCasMult,'88 initial multiplier')>0,'AG integrity: SG 88 server free introduction');}}
+ if(first){assert(played===0&&freeWin===0,'AG integrity: SG healthy free intro');if(kind==='spartacus'){assert(g.PickerInfo===undefined&&integer(f.extraSpinsAwarded,'Spartacus paid free award')===0&&JSON.stringify(game.sg.spartacusCurtainIndices)===JSON.stringify([0,1,2,3,4,5])&&game.sg.spartacusCurtainIndices.includes(integer(f.curtainIndex,'Spartacus returned curtain')),'AG integrity: SG Spartacus free introduction');if(f.startCasMult!==undefined)assert(integer(f.startCasMult,'Spartacus initial multiplier')>0,'AG integrity: SG Spartacus initial multiplier');}else if(!deep){if(g.PickerInfo!==undefined){ownPaidKeys(g.PickerInfo,'pickerIndex','88 picker display');integer(g.PickerInfo.pickerIndex,'88 returned picker index');}assert(integer(f.startCasMult,'88 initial multiplier')>0,'AG integrity: SG 88 server free introduction');}}
  else {
   const award=integer(f.extraSpinsAwarded,'healthy awarded extra spins');assert(played===previousFree.freeSpinsPlayed+1&&total===previousFree.freeSpinsTotal+award,'AG integrity: SG healthy free counter transition');
-  if(!deep){assert(g.PickerInfo===undefined&&ownPositionNumbers(f.reelHeights,6,'free heights').every(n=>n>=2&&n<=7),'AG integrity: SG healthy free heights');ownPaidKeys(g.CascadeInfo,'prevCascadeMult|curCascadeMult','88 cascade multiplier');const prior=integer(g.CascadeInfo.prevCascadeMult,'88 prior multiplier'),next=integer(g.CascadeInfo.curCascadeMult,'88 current multiplier');assert(prior===(previousFree.ownCascadeMultiplier??integer(base.FSInfo.startCasMult,'88 initial multiplier'))&&next===prior+list(g.ReelResults.ReelSpin).length-1,'AG integrity: SG 88 cascade transition');}
+  if(!deep){assert(g.PickerInfo===undefined&&ownPositionNumbers(f.reelHeights,6,'free heights').every(n=>n>=2&&n<=(kind==='spartacus'?10:7)),'AG integrity: SG healthy free heights');ownPaidKeys(g.CascadeInfo,'prevCascadeMult|curCascadeMult','88 cascade multiplier');const prior=integer(g.CascadeInfo.prevCascadeMult,'88 prior multiplier'),next=integer(g.CascadeInfo.curCascadeMult,'88 current multiplier');assert(prior===(previousFree.ownCascadeMultiplier??(kind==='spartacus'&&base.FSInfo.startCasMult===undefined?1:integer(base.FSInfo.startCasMult,'own initial multiplier')))&&next===prior+list(g.ReelResults.ReelSpin).length-1,'AG integrity: SG 88 cascade transition');}
  }
- return {win,base,free:{freeSpinsTotal:total,freeSpinsPlayed:played,freeSpinsRemaining:total-played,accumulativeWin:win/100,...(kind==='megaways'?{ownCascadeMultiplier:first?integer(f.startCasMult,'88 initial multiplier'):integer(g.CascadeInfo.curCascadeMult,'88 current multiplier')}:{})}};
+ return {win,base,free:{freeSpinsTotal:total,freeSpinsPlayed:played,freeSpinsRemaining:total-played,accumulativeWin:win/100,...(['megaways','spartacus'].includes(kind)?{ownCascadeMultiplier:first?(kind==='spartacus'&&f.startCasMult===undefined?1:integer(f.startCasMult,'own initial multiplier')):integer(g.CascadeInfo.curCascadeMult,'own current multiplier')}:{})}};
 }
 
 export function sgRequestTimeoutMs(game: AGGameConfig): number {

@@ -1106,3 +1106,53 @@ games:
       runtimeSlug: jjbxmegaways
       runtimeGameId: 32999
       healthyComponentsContract: jin-ji-megaways-own-paid-components-v1
+  - provider: sg
+    gameId: '32807'
+    name: Spartacus Megaways
+    backendId: spartacusmegaways
+    dbName: sg_spartacusmegaways
+    serviceDir: sg_spartacusmegaways
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: spartacusmegaways
+        gameID: '20405'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        total: '200'
+      freeStake: {}
+      betRaw: 200
+      runtimeSlug: spartacusmegaways
+      runtimeGameId: 33167
+      healthyComponentsContract: spartacus-own-returned-components-v1
+      spartacusCurtainIndices:
+        - 0
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
