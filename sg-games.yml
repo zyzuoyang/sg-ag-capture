@@ -884,6 +884,7 @@ games:
       runtimeGameId: 32991
       logicRequestNode: WagerInfo
       fudaPaidContract: fuda-own-natural-paid-display-v3
+      fudaFreeContract: fuda-own-natural-free-v4
   - provider: sg
     gameId: '32772'
     name: Heidis Bier Haus

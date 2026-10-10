@@ -112,17 +112,18 @@ function ownHealthyPaidBinding(game:AGGameConfig):'desert'|'jinji' {
 }
 // Observed paid rounds only. Real new gameplay branches require own evidence;
 // display values stay in exact source bytes and cannot create extra money.
-export function validateOwnRequestVariantData(game:AGGameConfig,g:any):number {
+export function validateOwnRequestVariantData(game:AGGameConfig,g:any,freeIntro=false):number {
+ if(freeIntro)assert(game.gameId==='32769'&&game.sg.fudaFreeContract==='fuda-own-natural-free-v4','AG integrity: SG Fu own free scope');
  const fuda=!!game.sg.fudaPaidContract,label=fuda?'Fu Dao Le':'Heidis Bier Haus';
  if(fuda)assert(game.gameId==='32769'&&game.dbName==='sg_fudaole'&&game.sg.runtimeGameId===32991&&game.sg.header.gameID==='20135'&&game.sg.header.gameCodeRGI==='fudaole'&&game.sg.logicRequestNode==='WagerInfo'&&game.sg.fudaPaidContract==='fuda-own-natural-paid-display-v3'&&game.sg.betRaw===200,'AG integrity: SG Fu Dao Le binding');
  else assert(game.gameId==='32772'&&game.dbName==='sg_heidis_bier_haus'&&game.sg.runtimeGameId===32994&&game.sg.header.gameID==='20157'&&game.sg.header.gameCodeRGI==='heidisbierhaus'&&game.sg.heidiPaidContract==='heidi-own-paid-display-v1'&&game.sg.betRaw===75,'AG integrity: SG Heidis binding');
- ownPaidKeys(g,fuda?'totalStake|waysCount|totalWin|betID|MysteryRepSymbol|ReelResults|GameWinInfo|GameRtpInfo':'stake|stakePerLine|paylineCount|totalWin|betID|ReelResults|MystInfo|WildInfo|BaseGameInfo'+(g.BonusReplacementInfo!==undefined?'|BonusReplacementInfo':''),label);
+ ownPaidKeys(g,fuda?'totalStake|waysCount|totalWin|betID|MysteryRepSymbol|ReelResults|GameWinInfo|GameRtpInfo'+(freeIntro?'|Feature':''):'stake|stakePerLine|paylineCount|totalWin|betID|ReelResults|MystInfo|WildInfo|BaseGameInfo'+(g.BonusReplacementInfo!==undefined?'|BonusReplacementInfo':''),label);
  assert(integer(fuda?g.totalStake:g.stake,label+' stake')===game.sg.betRaw&&typeof g.betID==='string',`AG integrity: SG ${label} stake`);
  if(fuda)assert(g.waysCount==='243',`AG integrity: SG ${label} ways`);else assert(g.stakePerLine==='1'&&g.paylineCount==='50',`AG integrity: SG ${label} line stake`);
  ownPaidKeys(g.ReelResults,'numSpins|ReelSpin',label+' reel');const reels=list(g.ReelResults.ReelSpin);assert(g.ReelResults.numSpins==='1'&&reels.length===1,`AG integrity: SG ${label} reel count`);const r=reels[0];
  const redEnvelope=fuda&&g.MysteryRepSymbol?.isRedEnvlpJkpt==='Y';
  ownPaidKeys(r,fuda?'reelsetIndex|anywayWinCount|scatterWinCount|totalWayWin|totalScatterWin|totalSpinWin|freeSpin|bonusAwarded|ReelStops'+(r.AnywayWin!==undefined?'|AnywayWin':'')+(r.ScatterWin!==undefined?'|ScatterWin':''):'spinIndex|reelsetIndex|winCountPL|winCountSC|spinWins|freeSpin|bonusAwarded|ReelStops'+(r.PaylineWin!==undefined?'|PaylineWin':''),label+' spin');
- integer(r.reelsetIndex,label+' reel set');assert(r.freeSpin==='N'&&r.bonusAwarded===(redEnvelope?'Y':'N')&&(redEnvelope?integer(r.scatterWinCount,label+' scatter count')>0:(fuda?r.scatterWinCount:r.winCountSC)==='0'),`AG integrity: SG ${label} feature needs own mapping`);if(!fuda)assert(r.spinIndex==='0',`AG integrity: SG ${label} spin order`);ownPositionNumbers(r.ReelStops,fuda?5:6,label+' reel positions');
+ integer(r.reelsetIndex,label+' reel set');assert(r.freeSpin===(freeIntro?'Y':'N')&&r.bonusAwarded===(freeIntro||redEnvelope?'Y':'N')&&(freeIntro||redEnvelope?integer(r.scatterWinCount,label+' scatter count')>0:(fuda?r.scatterWinCount:r.winCountSC)==='0'),`AG integrity: SG ${label} feature needs own mapping`);if(!fuda)assert(r.spinIndex==='0',`AG integrity: SG ${label} spin order`);ownPositionNumbers(r.ReelStops,fuda?5:6,label+' reel positions');
  const wins=list(fuda?r.AnywayWin:r.PaylineWin),seen=new Set<number>();assert(wins.length===integer(fuda?r.anywayWinCount:r.winCountPL,label+' win count'),`AG integrity: SG ${label} win count`);let win=0;
  for(const w of wins) {
   ownPaidKeys(w,fuda?'winIndex|winVal|ways|awardIndex|#text':'index|winVal|awardIndex|awardTableIndex|#text',label+' prize');const i=integer(fuda?w.winIndex:w.index,label+' prize index');assert(!seen.has(i)&&(fuda?i<wins.length:i<50),`AG integrity: SG ${label} duplicate prize`);seen.add(i);integer(w.awardIndex,label+' award');
@@ -153,6 +154,44 @@ export function validateOwnRequestVariantData(game:AGGameConfig,g:any):number {
   } else assert(g.BonusReplacementInfo===undefined,`AG integrity: SG ${label} unexpected replacement`);
  }
  return win;
+}
+export function validateFudaOwnFreeData(game:AGGameConfig,g:any,first:boolean,prior:any,base:any,previousWin:number) {
+ assert(game.gameId==='32769'&&game.dbName==='sg_fudaole'&&game.sg.fudaPaidContract==='fuda-own-natural-paid-display-v3'&&game.sg.fudaFreeContract==='fuda-own-natural-free-v4','AG integrity: SG Fu own free binding');
+ if(first&&g.Feature===undefined)return {win:validateOwnRequestVariantData(game,g),free:undefined,base:undefined};
+ ownPaidKeys(g.Feature,'index|name|data','Fu free feature');assert(g.Feature.index==='1'&&g.Feature.name==='FreeGame','AG integrity: SG Fu unreviewed feature');
+ if(first){
+  assert(!prior&&!base&&previousWin===0,'AG integrity: SG Fu intro order');
+  ownPaidKeys(g.Feature.data,'remainingFreeSpins|extraFreeSpinsAwarded|totalFreeSpinsPlayed|freeSpinTriggerWin','Fu intro counters');
+  const f=g.Feature.data,total=integer(f.remainingFreeSpins,'Fu returned free total');assert(total>0&&f.totalFreeSpinsPlayed==='0'&&f.extraFreeSpinsAwarded==='0','AG integrity: SG Fu intro counters');integer(f.freeSpinTriggerWin,'Fu trigger display win');
+  const win=validateOwnRequestVariantData(game,g,true);
+  return {win,free:{freeSpinsTotal:total,freeSpinsPlayed:0,freeSpinsRemaining:total,accumulativeWin:win/100},base:structuredClone(g)};
+ }
+ assert(prior&&prior.freeSpinsRemaining>0&&base,'AG integrity: SG Fu free continuation order');
+ ownPaidKeys(g,'totalStake|waysCount|totalWin|betID|MysteryRepSymbol|ReelResults|Feature|BaseGameRecoveryInfo|GameWinInfo|GameRtpInfo','Fu free result');
+ assert(g.totalStake==='200'&&g.waysCount==='243'&&g.betID===base.betID,'AG integrity: SG Fu free wager');
+ ownPaidKeys(g.Feature.data,'remainingFreeSpins|extraFreeSpinsAwarded|totalFreeSpinsPlayed|freeSpinTriggerWin|lastFreeSpin','Fu free counters');
+ const f=g.Feature.data,remaining=integer(f.remainingFreeSpins,'Fu free remaining'),played=integer(f.totalFreeSpinsPlayed,'Fu free played'),award=integer(f.extraFreeSpinsAwarded,'Fu actual awarded'),trigger=integer(f.freeSpinTriggerWin,'Fu free trigger');
+ assert(played===prior.freeSpinsPlayed+1&&remaining===prior.freeSpinsRemaining-1+award&&remaining+played===prior.freeSpinsTotal+award&&trigger===integer(base.Feature.data.freeSpinTriggerWin,'Fu original trigger')&&f.lastFreeSpin===(remaining===0?'Y':'N'),'AG integrity: SG Fu counter or terminal');
+ ownPaidKeys(g.BaseGameRecoveryInfo,'GameResult','Fu own recovery');
+ const projection={totalStake:base.totalStake,waysCount:base.waysCount,totalWin:base.totalWin,betID:base.betID,MysteryRepSymbol:base.MysteryRepSymbol,ReelResults:base.ReelResults};
+ assert.deepStrictEqual(g.BaseGameRecoveryInfo.GameResult,projection,'AG integrity: SG Fu base recovery changed');
+ ownPaidKeys(g.ReelResults,'numSpins|ReelSpin','Fu free reels');assert(g.ReelResults.numSpins==='1'&&!Array.isArray(g.ReelResults.ReelSpin),'AG integrity: SG Fu free reel count');
+ const r=g.ReelResults.ReelSpin,m=g.MysteryRepSymbol,red=m?.isRedEnvlpJkpt==='Y';
+ ownPaidKeys(r,'reelsetIndex|anywayWinCount|scatterWinCount|totalWayWin|totalScatterWin|totalSpinWin|freeSpin|bonusAwarded|ReelStops'+(r.AnywayWin!==undefined?'|AnywayWin':'')+(r.ScatterWin!==undefined?'|ScatterWin':''),'Fu free reel');
+ integer(r.reelsetIndex,'Fu free set');ownPositionNumbers(r.ReelStops,5,'Fu free stops');assert(r.freeSpin==='Y'&&r.bonusAwarded===(red?'Y':'N'),'AG integrity: SG Fu free marker');
+ const ways=list(r.AnywayWin),scatters=list(r.ScatterWin);assert(ways.length===integer(r.anywayWinCount,'Fu free way count')&&scatters.length===integer(r.scatterWinCount,'Fu free scatter count'),'AG integrity: SG Fu free declared awards');
+ let wayWin=0,scatterWin=0;const wayIds=new Set<number>(),scatterIds=new Set<number>();
+ for(const w of ways){ownPaidKeys(w,'winIndex|winVal|ways|awardIndex|#text','Fu free way');const id=integer(w.winIndex,'Fu free way id'),count=integer(w.ways,'Fu free way count');assert(id<ways.length&&!wayIds.has(id)&&count>0&&count<=243,'AG integrity: SG Fu free way index');wayIds.add(id);integer(w.awardIndex,'Fu free award');const pos=ownPositionNumbers(w['#text'],undefined,'Fu free way positions');assert(pos.every(p=>p<15)&&new Set(pos).size===pos.length,'AG integrity: SG Fu free way board');wayWin+=integer(w.winVal,'Fu free way cash');}
+ for(const w of scatters){ownPaidKeys(w,'winIndex|winVal|awardIndex|#text','Fu free scatter');const id=integer(w.winIndex,'Fu free scatter id');assert(id<scatters.length&&!scatterIds.has(id),'AG integrity: SG Fu free scatter index');scatterIds.add(id);integer(w.awardIndex,'Fu free scatter award');const pos=ownPositionNumbers(w['#text'],undefined,'Fu free scatter positions');assert(pos.every(p=>p<15)&&new Set(pos).size===pos.length,'AG integrity: SG Fu free scatter board');scatterWin+=integer(w.winVal,'Fu free scatter cash');}
+ const current=integer(g.totalWin,'Fu free current');assert(Number.isSafeInteger(wayWin)&&Number.isSafeInteger(scatterWin)&&wayWin===integer(r.totalWayWin,'Fu free ways')&&scatterWin===integer(r.totalScatterWin,'Fu free scatters')&&(red?scatterWin>0:scatterWin===0)&&current===wayWin+scatterWin&&current===integer(r.totalSpinWin,'Fu free spin cash'),'AG integrity: SG Fu free current components');
+ ownPaidKeys(m,'isSymPresent|replacementSymbolIndex|isNudgingWild|isRedEnvlpJkpt'+(m.nudgingWildPositions!==undefined?'|nudgingWildPositions':''),'Fu free mystery');assert(['Y','N'].includes(m.isSymPresent)&&['Y','N'].includes(m.isNudgingWild)&&['Y','N'].includes(m.isRedEnvlpJkpt),'AG integrity: SG Fu free display flags');integer(m.replacementSymbolIndex,'Fu free mystery symbol');
+ if(m.isNudgingWild==='Y'){const pos=ownPositionNumbers(m.nudgingWildPositions,undefined,'Fu free nudging');assert(pos.length>0&&pos.every(p=>p<15)&&new Set(pos).size===pos.length,'AG integrity: SG Fu free nudging board');}else assert(m.nudgingWildPositions===undefined||m.nudgingWildPositions==='','AG integrity: SG Fu unflagged free nudging');
+ ownPaidKeys(g.GameWinInfo,'totalWagerWin|totalBaseGameWin|totalFreeSpinsWin|totalPickJkptWin|maxWinValue|isMaxWin','Fu free winnings');ownPaidKeys(g.GameRtpInfo,'targetedRtpValue','Fu free RTP');
+ const w=g.GameWinInfo,baseWin=integer(base.totalWin,'Fu original paid cash'),win=integer(w.totalWagerWin,'Fu returned cumulative'),freeWin=integer(w.totalFreeSpinsWin,'Fu returned free cash');
+ // The returned trigger display award enters cumulative free cash on the first
+ // natural free response, exactly once. It is absent from paid current cash.
+ assert(integer(w.totalBaseGameWin,'Fu unchanged base cash')===baseWin&&win===baseWin+freeWin&&win===previousWin+current+(prior.freeSpinsPlayed===0?trigger:0)&&w.totalPickJkptWin==='0'&&w.maxWinValue==='25000000'&&w.isMaxWin==='N'&&g.GameRtpInfo.targetedRtpValue==='96.06','AG integrity: SG Fu free cumulative components');
+ return {win,free:{freeSpinsTotal:remaining+played,freeSpinsPlayed:played,freeSpinsRemaining:remaining,accumulativeWin:win/100},base};
 }
 export function validateHealthyPaidData(game:AGGameConfig,g:any):number {
  const desert=ownHealthyPaidBinding(game)==='desert',label=desert?'Desert Cats':'Jin Ji Endless';
@@ -478,6 +517,7 @@ export class SGWmsSession {
     private lastRequest: {event:string;parameters:Record<string,any>|null} | undefined;
     private lastBase: unknown;
     private eightyBase: unknown;
+    private fudaBase: unknown;
     private journal: number | null = null;
     private journalPath: string | null = null;
     private ordinal = 0;
@@ -547,6 +587,7 @@ export class SGWmsSession {
         if(action==='PICK_FREE_SPINS'&&this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6')return {event:'Logic',parameters:{__sgGoldenCollect:'1'}};
         if(action==='FEATURE'&&this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6')return {event:'EndGame',parameters:{}};
         if(action === 'PLAY') return {event:'EndGame',parameters:{}};
+        if(action==='FREE_SPIN'&&this.game.sg.fudaFreeContract==='fuda-own-natural-free-v4')return {event:'Logic',parameters:{totalStake:'200'}};
         if(action === 'FREE_SPIN') { assert(this.game.sg.freeStake,'AG integrity: SG own free request not mapped');return {event:'Logic',parameters:{...this.game.sg.freeStake}}; }
         throw new Error('AG integrity: SG observed action not mapped');
     }
@@ -555,7 +596,7 @@ export class SGWmsSession {
         const header='<Header '+Object.entries(h).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')+'/>';
         if(event==='Logic'&&this.game.sg.eightyFortunesContract&&Object.keys(parameters).length){assert(this.action==='SPIN'&&this.game.gameId==='32750'&&JSON.stringify(parameters)===JSON.stringify({creditBet:'88',betMultiplier:'2'}),'AG integrity: SG 88 Fortunes own paid request');return `<GameRequest type="Logic">${header}<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData><SpinInfo creditBet="88" betMultiplier="2"/></GameRequest>`;}
         if(event==='Logic'&&this.game.sg.logicRequestNode==='WagerInfo'){
-            if(this.game.sg.fudaPaidContract){assert(this.action==='SPIN'&&this.game.gameId==='32769'&&this.game.sg.fudaPaidContract==='fuda-own-natural-paid-display-v3'&&JSON.stringify(parameters)===JSON.stringify({totalStake:'200',featureBet:'0'}),'AG integrity: SG Fu Dao Le own request');return `<GameRequest type="Logic">${header}<WagerInfo totalStake="200" featureBet="0"/><AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData></GameRequest>`;}
+            if(this.game.sg.fudaPaidContract){if(this.action==='FREE_SPIN'){assert(this.game.gameId==='32769'&&this.game.sg.fudaFreeContract==='fuda-own-natural-free-v4'&&JSON.stringify(parameters)===JSON.stringify({totalStake:'200'}),'AG integrity: SG Fu own free wager');return `<GameRequest type="Logic">${header}<WagerInfo totalStake="200"/><AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData></GameRequest>`;}assert(this.action==='SPIN'&&this.game.gameId==='32769'&&this.game.sg.fudaPaidContract==='fuda-own-natural-paid-display-v3'&&JSON.stringify(parameters)===JSON.stringify({totalStake:'200',featureBet:'0'}),'AG integrity: SG Fu Dao Le own request');return `<GameRequest type="Logic">${header}<WagerInfo totalStake="200" featureBet="0"/><AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData></GameRequest>`;}
             assert(this.game.gameId==='32767'&&this.game.sg.fireQueenPaidContract==='fire-queen-own-paid-v1'&&this.action==='SPIN'&&Object.keys(parameters).join('|')==='totalStake'&&parameters.totalStake==='50','AG integrity: SG Fire Queen own request');
             return `<GameRequest type="Logic">${header}<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData><WagerInfo totalStake="50"/></GameRequest>`;
         }
@@ -632,7 +673,7 @@ export class SGWmsSession {
     }
     async callGameData(event:string,parameters:Record<string,any>|null) {
         const first=this.action==='SPIN';
-        if(first) {assert(event==='Logic','AG integrity: SG round start');this.startBalance=this.balance;this.totalWin=0;this.free=undefined;this.steps=[];this.lastBase=undefined;this.eightyBase=undefined;this.goldenPending=undefined;}
+        if(first) {assert(event==='Logic','AG integrity: SG round start');this.startBalance=this.balance;this.totalWin=0;this.free=undefined;this.steps=[];this.lastBase=undefined;this.eightyBase=undefined;this.fudaBase=undefined;this.goldenPending=undefined;}
         else assert(event===this.getExactFollowUpRequest(this.action).event,'AG integrity: SG request order');
         assert(Number.isSafeInteger(this.startBalance),'AG integrity: SG missing initial balance');
         const step=await this.exchange(event,parameters || {}),r=this.readEnvelope(step,event);
@@ -646,6 +687,7 @@ export class SGWmsSession {
             if(this.game.sg.eightyFortunesContract){const mapped=validateEightyFortunesData(this.game,g,first,this.free,this.eightyBase,this.totalWin);if(first)this.eightyBase=structuredClone(g);this.totalWin=mapped.win;this.free=mapped.free;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(first&&this.game.sg.fireQueenPaidContract){this.totalWin=validateFireQueenPaidData(this.game,g);this.action='PLAY';}
             else if(first&&(this.game.sg.desertCatsContract||this.game.sg.jinjiEndlessContract)){this.totalWin=validateHealthyPaidData(this.game,g);this.action='PLAY';}
+            else if(this.game.sg.fudaFreeContract){const mapped=validateFudaOwnFreeData(this.game,g,first,this.free,this.fudaBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.fudaBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(first&&(this.game.sg.fudaPaidContract||this.game.sg.heidiPaidContract)){this.totalWin=validateOwnRequestVariantData(this.game,g);this.action='PLAY';}
             else {
             assert(g&&(g.BGInfo||g.FSInfo||(this.action==='PICK_FREE_SPINS'&&this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6')),'AG integrity: SG game result');
