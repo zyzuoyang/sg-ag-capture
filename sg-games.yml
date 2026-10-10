@@ -928,3 +928,47 @@ games:
       runtimeSlug: heidisbierhaus
       runtimeGameId: 32994
       heidiPaidContract: heidi-own-paid-display-v1
+  - provider: sg
+    gameId: '32758'
+    name: Cool Jewels
+    backendId: cooljewels_prt
+    dbName: sg_cooljewels_prt
+    serviceDir: sg_cooljewels_prt
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: cooljewels_prt
+        gameID: '20150'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        multiplier: '1'
+        total: '50'
+      freeStake: {}
+      betRaw: 50
+      runtimeSlug: cooljewels_prt
+      runtimeGameId: 32980
+      coolJewelsPaidContract: cool-jewels-own-reactor-paid-v1

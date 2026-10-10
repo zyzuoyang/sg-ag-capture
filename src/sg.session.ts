@@ -193,6 +193,27 @@ export function validateFudaOwnFreeData(game:AGGameConfig,g:any,first:boolean,pr
  assert(integer(w.totalBaseGameWin,'Fu unchanged base cash')===baseWin&&win===baseWin+freeWin&&win===previousWin+current+(prior.freeSpinsPlayed===0?trigger:0)&&w.totalPickJkptWin==='0'&&w.maxWinValue==='25000000'&&w.isMaxWin==='N'&&g.GameRtpInfo.targetedRtpValue==='96.06','AG integrity: SG Fu free cumulative components');
  return {win,free:{freeSpinsTotal:remaining+played,freeSpinsPlayed:played,freeSpinsRemaining:remaining,accumulativeWin:win/100},base};
 }
+// Own Cool Jewels client decodes each cascade cell award, not an extra wager.
+// This contract covers actual ordinary cascade records; new Feature data is
+// retained as a real own fault rather than manufactured as a zero bonus.
+export function validateCoolJewelsPaidData(game:AGGameConfig,g:any):number {
+ assert(game.gameId==='32758'&&game.dbName==='sg_cooljewels_prt'&&game.sg.runtimeGameId===32980&&game.sg.header.gameID==='20150'&&game.sg.header.gameCodeRGI==='cooljewels_prt'&&game.sg.coolJewelsPaidContract==='cool-jewels-own-reactor-paid-v1'&&game.sg.betRaw===50,'AG integrity: SG Cool Jewels own binding');
+ ownPaidKeys(g,'stake|stakePerLine|paylineCount|totalWin|betID|ReelResults|ReactorChain|MaxWin_Info','Cool Jewels result');assert(g.stake==='50'&&g.stakePerLine==='0'&&g.paylineCount==='0'&&typeof g.betID==='string','AG integrity: SG Cool Jewels own wager');
+ ownPaidKeys(g.ReelResults,'numSpins|ReelSpin','Cool Jewels reels');assert(g.ReelResults.numSpins==='1'&&!Array.isArray(g.ReelResults.ReelSpin),'AG integrity: SG Cool Jewels reel count');const r=g.ReelResults.ReelSpin;
+ ownPaidKeys(r,'spinIndex|reelsetIndex|winCountPL|winCountSC|spinWins|freeSpin|bonusAwarded|ReelStops','Cool Jewels ordinary reel');assert(r.spinIndex==='0'&&r.winCountPL==='0'&&r.winCountSC==='0'&&r.spinWins==='0'&&r.freeSpin==='N'&&r.bonusAwarded==='N','AG integrity: SG Cool Jewels new action or reel cash');integer(r.reelsetIndex,'Cool Jewels reel set');ownPositionNumbers(r.ReelStops,6,'Cool Jewels stops');
+ ownPaidKeys(g.ReactorChain,'num_drops|ReactorDrop','Cool Jewels chain');const drops=list(g.ReactorChain.ReactorDrop);assert(drops.length>0&&drops.length===integer(g.ReactorChain.num_drops,'Cool Jewels drop count'),'AG integrity: SG Cool Jewels chain count');
+ const coordinate=(value:any)=>{assert(typeof value==='string'&&/^\d+,\d+$/.test(value),'AG integrity: SG Cool Jewels position');const pos=value.split(',').map((q:string)=>integer(q,'Cool Jewels coordinate'));assert(pos.every((q:number)=>q<6),'AG integrity: SG Cool Jewels board');return value;};
+ let total=0;
+ for(const [i,d]of drops.entries()){
+  ownPaidKeys(d,'drop_order|num_clusters|ReactorLayout'+(d.ReactorCluster!==undefined?'|ReactorCluster':''),'Cool Jewels drop');assert(integer(d.drop_order,'Cool Jewels drop order')===i,'AG integrity: SG Cool Jewels drop order');ownPaidKeys(d.ReactorLayout,'symbols','Cool Jewels layout');ownPositionNumbers(d.ReactorLayout.symbols,36,'Cool Jewels symbols');
+  const clusters=list(d.ReactorCluster);assert(clusters.length===integer(d.num_clusters,'Cool Jewels cluster count'),'AG integrity: SG Cool Jewels cluster count');
+  if(i===drops.length-1)assert(clusters.length===0,'AG integrity: SG Cool Jewels incomplete cascade');else assert(clusters.length>0,'AG integrity: SG Cool Jewels empty intermediate cascade');
+  for(const [ci,c]of clusters.entries()){
+   ownPaidKeys(c,'id|cluster_positions|cluster_awards|rootSymbol|rootSymbolPos|watermark','Cool Jewels cluster');assert(integer(c.id,'Cool Jewels cluster id')===ci,'AG integrity: SG Cool Jewels cluster id');integer(c.rootSymbol,'Cool Jewels root symbol');coordinate(c.rootSymbolPos);integer(c.watermark,'Cool Jewels watermark');assert(typeof c.cluster_positions==='string','AG integrity: SG Cool Jewels cluster positions');const positions=c.cluster_positions.split('|').map(coordinate),awards=ownPositionNumbers(c.cluster_awards,undefined,'Cool Jewels paired awards');assert(positions.length>0&&positions.length===awards.length&&new Set(positions).size===positions.length,'AG integrity: SG Cool Jewels paired awards');total+=awards.reduce((a,b)=>a+b,0);assert(Number.isSafeInteger(total),'AG integrity: SG Cool Jewels unsafe total');
+  }
+ }
+ ownPaidKeys(g.MaxWin_Info,'maxWinValue|maxWin|cappedWins','Cool Jewels cap');assert(g.MaxWin_Info.maxWinValue==='25000000'&&g.MaxWin_Info.maxWin==='false'&&g.MaxWin_Info.cappedWins==='0','AG integrity: SG Cool Jewels own cap mapping needed');assert(total===integer(g.totalWin,'Cool Jewels returned cash'),'AG integrity: SG Cool Jewels current cash components');return total;
+}
 export function validateHealthyPaidData(game:AGGameConfig,g:any):number {
  const desert=ownHealthyPaidBinding(game)==='desert',label=desert?'Desert Cats':'Jin Ji Endless';
  ownPaidKeys(g,desert?'stake|stakePerLine|paylineCount|totalWin|betID|ReelResults|BGInfo|QuickHits|Symbol|WildReel':'stake|totalWin|betID|ReelResults|BGInfo|MysterySymbol|ScatterInfo',label);
@@ -685,6 +706,7 @@ export class SGWmsSession {
         } else {
             const g=r.GameResult;
             if(this.game.sg.eightyFortunesContract){const mapped=validateEightyFortunesData(this.game,g,first,this.free,this.eightyBase,this.totalWin);if(first)this.eightyBase=structuredClone(g);this.totalWin=mapped.win;this.free=mapped.free;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
+            else if(first&&this.game.sg.coolJewelsPaidContract){this.totalWin=validateCoolJewelsPaidData(this.game,g);this.action='PLAY';}
             else if(first&&this.game.sg.fireQueenPaidContract){this.totalWin=validateFireQueenPaidData(this.game,g);this.action='PLAY';}
             else if(first&&(this.game.sg.desertCatsContract||this.game.sg.jinjiEndlessContract)){this.totalWin=validateHealthyPaidData(this.game,g);this.action='PLAY';}
             else if(this.game.sg.fudaFreeContract){const mapped=validateFudaOwnFreeData(this.game,g,first,this.free,this.fudaBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.fudaBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
