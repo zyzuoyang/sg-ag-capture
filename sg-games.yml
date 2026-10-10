@@ -883,7 +883,7 @@ games:
       runtimeSlug: fudaole
       runtimeGameId: 32991
       logicRequestNode: WagerInfo
-      fudaPaidContract: fuda-own-paid-components-v1
+      fudaPaidContract: fuda-own-paid-scatter-components-v2
   - provider: sg
     gameId: '32772'
     name: Heidis Bier Haus
