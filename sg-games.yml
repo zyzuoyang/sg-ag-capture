@@ -736,7 +736,7 @@ games:
       runtimeGameId: 32972
       runtimeSlug: eightyeightfortunes
       logicRequestNode: SpinInfo
-      eightyFortunesContract: eighty-fortunes-own-free-components-v2
+      eightyFortunesContract: eighty-fortunes-own-free-components-v3
       freeStake: {}
       eightyFortunesBaseReels:
         - 0

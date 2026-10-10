@@ -96,7 +96,7 @@ const escape = (v: unknown) => String(v).replace(/&/g,'&amp;').replace(/"/g,'&qu
 // Golden Chief client parses these paid-spin display fields without requesting
 // another wager. Real gamble/totem/free fields still require their own mapping.
 export function validateEightyFortunesData(game:AGGameConfig,g:any,first:boolean,prior:any,paid:any,priorWin:number):any {
- assert(game.gameId==='32750'&&game.dbName==='sg_eightyeightfortunes'&&game.sg?.runtimeGameId===32972&&game.sg?.header?.gameID==='20077'&&game.sg?.header?.gameCodeRGI==='eightyeightfortunes'&&game.sg?.eightyFortunesContract==='eighty-fortunes-own-free-components-v2'&&game.sg?.betRaw===176,'AG integrity: SG 88 Fortunes binding');
+ assert(game.gameId==='32750'&&game.dbName==='sg_eightyeightfortunes'&&game.sg?.runtimeGameId===32972&&game.sg?.header?.gameID==='20077'&&game.sg?.header?.gameCodeRGI==='eightyeightfortunes'&&game.sg?.eightyFortunesContract==='eighty-fortunes-own-free-components-v3'&&game.sg?.betRaw===176,'AG integrity: SG 88 Fortunes binding');
  const keys=(v:any,n:string)=>assert(v&&typeof v==='object'&&!Array.isArray(v)&&Object.keys(v).sort().join('|')===n.split('|').sort().join('|'),'AG integrity: SG 88 Fortunes schema');
  keys(g,'stake|creditBet|betMultiplier|waysCount|totalWin|betID|ReelResults|GameWinInfo|GameRtpInfo'+(g.Feature?'|Feature':'')+(g.BaseGameRecoveryInfo?'|BaseGameRecoveryInfo':''));
  assert(g.stake==='176'&&g.creditBet==='88'&&g.betMultiplier==='2'&&g.waysCount==='243','AG integrity: SG 88 Fortunes wager');
@@ -110,18 +110,18 @@ export function validateEightyFortunesData(game:AGGameConfig,g:any,first:boolean
  const ways=sum(way,true),scatters=sum(scatter,false),current=integer(g.totalWin,'88 current'),win=integer(g.GameWinInfo.totalWagerWin,'88 wager win'),base=integer(g.GameWinInfo.totalBaseGameWin,'88 base win'),freeWin=integer(g.GameWinInfo.totalFreeSpinsWin,'88 free win');
  const features=list(g.Feature),indices=new Set<string>();for(const f of features){keys(f,'data|index|name');assert(!indices.has(f.index),'AG integrity: SG 88 repeated feature');indices.add(f.index);}
  const freeFeature=features.find((f:any)=>f.index==='1'&&f.name==='FreeGame'),jackpotFeature=features.find((f:any)=>f.index===(first?'2':'3')&&f.name===(first?'BG_FuBat_Jackpot':'FG_FuBat_Jackpot'));
- assert(features.length===(freeFeature?1:0)+(jackpotFeature?1:0)&&features.length<=(first?1:2),'AG integrity: SG 88 Fortunes feature requires own mapping');
+ assert(features.length===(freeFeature?1:0)+(jackpotFeature?1:0)&&features.length<=2,'AG integrity: SG 88 Fortunes feature requires own mapping');
  const paidJackpot=first&&jackpotFeature!==undefined,freeJackpot=!first&&jackpotFeature!==undefined;let jackpot=0;
  if(jackpotFeature){
   const f=jackpotFeature.data;keys(f,'#text|pickLength|jackpotWin|jackpotType');assert(typeof f['#text']==='string'&&/^[0-3](?:\|[0-3])*$/.test(f['#text']),'AG integrity: SG 88 precomputed jackpot picks');const picks=f['#text'].split('|').map(Number),type=integer(f.jackpotType,'88 jackpot type');assert(type<4&&picks.length===integer(f.pickLength,'88 jackpot pick length')&&picks.filter((v:number)=>v===type).length===3&&r.bonusAwarded==='Y','AG integrity: SG 88 completed jackpot picks');
-  if(paidJackpot)assert(!prior&&g.BaseGameRecoveryInfo===undefined&&r.freeSpin==='N'&&freeWin===0,'AG integrity: SG 88 paid jackpot state');
+  if(paidJackpot)assert(!prior&&g.BaseGameRecoveryInfo===undefined&&r.freeSpin===(freeFeature?'Y':'N')&&(freeFeature||freeWin===0),'AG integrity: SG 88 paid jackpot state');
   else assert(prior&&paid&&freeFeature,'AG integrity: SG 88 free jackpot state');jackpot=integer(f.jackpotWin,'88 jackpot amount');
  }
  const trigger=freeFeature?integer(freeFeature.data.freeSpinTriggerWin,'88 trigger'):0;
  // In an ongoing free game the response's current award already includes
  // the retrigger and jackpot components. Each enters the cumulative total once.
  assert(ways===integer(r.totalWayWin,'88 total ways')&&scatters===integer(r.totalScatterWin,'88 total scatter')&&ways+scatters===integer(r.totalSpinWin,'88 spin win')&&ways+scatters+jackpot+(first?0:trigger)===current&&base+freeWin===win&&Number.isSafeInteger(win),'AG integrity: SG 88 Fortunes monetary components');
- if(paidJackpot){assert(base===current&&win===current,'AG integrity: SG 88 paid jackpot amount');return {win,free:undefined};}
+ if(paidJackpot&&!freeFeature){assert(base===current&&win===current,'AG integrity: SG 88 paid jackpot amount');return {win,free:undefined};}
  if(!g.Feature){assert(first&&!prior&&g.BaseGameRecoveryInfo===undefined&&r.freeSpin==='N'&&r.bonusAwarded==='N'&&freeWin===0&&base===current,'AG integrity: SG 88 Fortunes unclassified state');return {win,free:undefined};}
  assert(freeFeature,'AG integrity: SG 88 missing free feature');const f=freeFeature.data;keys(f,'totalFreeSpinsWin|remainingFreeSpins|extraFreeSpinsAwarded|freeSpinTriggerWin|lastFreeSpin');
  const remaining=integer(f.remainingFreeSpins,'88 remaining'),extra=integer(f.extraFreeSpinsAwarded,'88 extra');assert(integer(f.totalFreeSpinsWin,'88 feature cumulative')===freeWin&&f.lastFreeSpin===(remaining===0?'Y':'N'),'AG integrity: SG 88 Fortunes free state');
