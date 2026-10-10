@@ -736,7 +736,7 @@ games:
       runtimeGameId: 32972
       runtimeSlug: eightyeightfortunes
       logicRequestNode: SpinInfo
-      eightyFortunesContract: eighty-fortunes-own-free-components-v3
+      eightyFortunesContract: eighty-fortunes-own-free-components-v4
       freeStake: {}
       eightyFortunesBaseReels:
         - 0
@@ -750,3 +750,180 @@ games:
         - 7
         - 8
         - 9
+  - provider: sg
+    gameId: '32762'
+    name: Desert Cats
+    backendId: desertcats
+    dbName: sg_desertcats
+    serviceDir: sg_desertcats
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: desertcats
+        gameID: '20315'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        total: '200'
+      freeStake: {}
+      betRaw: 200
+      runtimeSlug: desertcats
+      runtimeGameId: 32984
+      desertCatsContract: desert-cats-own-paid-components-v1
+      logicPaylineCount: '50'
+  - provider: sg
+    gameId: '32778'
+    name: Jin Ji Bao Xi Endless Treasure
+    backendId: jinjibaoxiendlesstreasure
+    dbName: sg_jinjibaoxiendlesstreasure
+    serviceDir: sg_jinjibaoxiendlesstreasure
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: jinjibaoxiendlesstreasure
+        gameID: '20322'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        total: '16'
+        gameMode: '0'
+      freeStake: {}
+      betRaw: 16
+      runtimeSlug: jinjibaoxiendlesstreasure
+      runtimeGameId: 33000
+      jinjiEndlessContract: jinji-endless-own-scatter-bank-v1
+      logicPaylineCount: '1'
+  - provider: sg
+    gameId: '32769'
+    name: Fu Dao Le
+    backendId: fudaole
+    dbName: sg_fudaole
+    serviceDir: sg_fudaole
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: fudaole
+        gameID: '20135'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        totalStake: '200'
+        featureBet: '0'
+      freeStake: {}
+      betRaw: 200
+      runtimeSlug: fudaole
+      runtimeGameId: 32991
+      logicRequestNode: WagerInfo
+      fudaPaidContract: fuda-own-paid-components-v1
+  - provider: sg
+    gameId: '32772'
+    name: Heidis Bier Haus
+    backendId: heidisbierhaus
+    dbName: sg_heidis_bier_haus
+    serviceDir: sg_heidis-bier-haus
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: heidisbierhaus
+        gameID: '20157'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        total: '75'
+      freeStake: {}
+      betRaw: 75
+      runtimeSlug: heidisbierhaus
+      runtimeGameId: 32994
+      heidiPaidContract: heidi-own-paid-display-v1

@@ -95,8 +95,87 @@ const escape = (v: unknown) => String(v).replace(/&/g,'&amp;').replace(/"/g,'&qu
 
 // Golden Chief client parses these paid-spin display fields without requesting
 // another wager. Real gamble/totem/free fields still require their own mapping.
+function ownPaidKeys(value:any,names:string,label:string) {
+ assert(value&&typeof value==='object'&&!Array.isArray(value)&&Object.keys(value).sort().join('|')===names.split('|').sort().join('|'),`AG integrity: SG ${label} schema`);
+}
+function ownPositionNumbers(value:any,count:number|undefined,label:string):number[] {
+ assert(typeof value==='string'&&/^\d+(\|\d+)*$/.test(value),`AG integrity: SG ${label} positions`);
+ const numbers=value.split('|').map((n:string)=>integer(n,label));
+ if(count!==undefined)assert(numbers.length===count,`AG integrity: SG ${label} position count`);
+ return numbers;
+}
+function ownHealthyPaidBinding(game:AGGameConfig):'desert'|'jinji' {
+ if(game.sg.desertCatsContract) {
+  assert(game.gameId==='32762'&&game.dbName==='sg_desertcats'&&game.sg.runtimeGameId===32984&&game.sg.header.gameID==='20315'&&game.sg.header.gameCodeRGI==='desertcats'&&game.sg.desertCatsContract==='desert-cats-own-paid-components-v1'&&game.sg.logicPaylineCount==='50'&&game.sg.betRaw===200,'AG integrity: SG Desert Cats own binding');return 'desert';
+ }
+ assert(game.gameId==='32778'&&game.dbName==='sg_jinjibaoxiendlesstreasure'&&game.sg.runtimeGameId===33000&&game.sg.header.gameID==='20322'&&game.sg.header.gameCodeRGI==='jinjibaoxiendlesstreasure'&&game.sg.jinjiEndlessContract==='jinji-endless-own-scatter-bank-v1'&&game.sg.logicPaylineCount==='1'&&game.sg.betRaw===16,'AG integrity: SG Jin Ji Endless own binding');return 'jinji';
+}
+// Observed paid rounds only. Real new gameplay branches require own evidence;
+// display values stay in exact source bytes and cannot create extra money.
+export function validateOwnRequestVariantData(game:AGGameConfig,g:any):number {
+ const fuda=!!game.sg.fudaPaidContract,label=fuda?'Fu Dao Le':'Heidis Bier Haus';
+ if(fuda)assert(game.gameId==='32769'&&game.dbName==='sg_fudaole'&&game.sg.runtimeGameId===32991&&game.sg.header.gameID==='20135'&&game.sg.header.gameCodeRGI==='fudaole'&&game.sg.logicRequestNode==='WagerInfo'&&game.sg.fudaPaidContract==='fuda-own-paid-components-v1'&&game.sg.betRaw===200,'AG integrity: SG Fu Dao Le binding');
+ else assert(game.gameId==='32772'&&game.dbName==='sg_heidis_bier_haus'&&game.sg.runtimeGameId===32994&&game.sg.header.gameID==='20157'&&game.sg.header.gameCodeRGI==='heidisbierhaus'&&game.sg.heidiPaidContract==='heidi-own-paid-display-v1'&&game.sg.betRaw===75,'AG integrity: SG Heidis binding');
+ ownPaidKeys(g,fuda?'totalStake|waysCount|totalWin|betID|MysteryRepSymbol|ReelResults|GameWinInfo|GameRtpInfo':'stake|stakePerLine|paylineCount|totalWin|betID|ReelResults|MystInfo|WildInfo|BaseGameInfo'+(g.BonusReplacementInfo!==undefined?'|BonusReplacementInfo':''),label);
+ assert(integer(fuda?g.totalStake:g.stake,label+' stake')===game.sg.betRaw&&typeof g.betID==='string',`AG integrity: SG ${label} stake`);
+ if(fuda)assert(g.waysCount==='243',`AG integrity: SG ${label} ways`);else assert(g.stakePerLine==='1'&&g.paylineCount==='50',`AG integrity: SG ${label} line stake`);
+ ownPaidKeys(g.ReelResults,'numSpins|ReelSpin',label+' reel');const reels=list(g.ReelResults.ReelSpin);assert(g.ReelResults.numSpins==='1'&&reels.length===1,`AG integrity: SG ${label} reel count`);const r=reels[0];
+ ownPaidKeys(r,fuda?'reelsetIndex|anywayWinCount|scatterWinCount|totalWayWin|totalScatterWin|totalSpinWin|freeSpin|bonusAwarded|ReelStops'+(r.AnywayWin!==undefined?'|AnywayWin':''):'spinIndex|reelsetIndex|winCountPL|winCountSC|spinWins|freeSpin|bonusAwarded|ReelStops'+(r.PaylineWin!==undefined?'|PaylineWin':''),label+' spin');
+ integer(r.reelsetIndex,label+' reel set');assert(r.freeSpin==='N'&&r.bonusAwarded==='N'&&(fuda?r.scatterWinCount:r.winCountSC)==='0',`AG integrity: SG ${label} feature needs own mapping`);if(!fuda)assert(r.spinIndex==='0',`AG integrity: SG ${label} spin order`);ownPositionNumbers(r.ReelStops,fuda?5:6,label+' reel positions');
+ const wins=list(fuda?r.AnywayWin:r.PaylineWin),seen=new Set<number>();assert(wins.length===integer(fuda?r.anywayWinCount:r.winCountPL,label+' win count'),`AG integrity: SG ${label} win count`);let win=0;
+ for(const w of wins) {
+  ownPaidKeys(w,fuda?'winIndex|winVal|ways|awardIndex|#text':'index|winVal|awardIndex|awardTableIndex|#text',label+' prize');const i=integer(fuda?w.winIndex:w.index,label+' prize index');assert(!seen.has(i)&&(fuda?i<wins.length:i<50),`AG integrity: SG ${label} duplicate prize`);seen.add(i);integer(w.awardIndex,label+' award');
+  if(fuda){const ways=integer(w.ways,label+' ways');assert(ways>0&&ways<=243,`AG integrity: SG ${label} ways bound`);}else assert(w.awardTableIndex==='0',`AG integrity: SG ${label} award table`);
+  ownPositionNumbers(w['#text'],undefined,label+' prize positions');win+=integer(w.winVal,label+' win');
+ }
+ assert(Number.isSafeInteger(win)&&win===integer(fuda?r.totalSpinWin:r.spinWins,label+' spin win')&&win===integer(g.totalWin,label+' root win'),`AG integrity: SG ${label} current money`);
+ if(fuda) {
+  assert(r.totalWayWin===r.totalSpinWin&&r.totalScatterWin==='0',`AG integrity: SG ${label} reel components`);ownPaidKeys(g.GameWinInfo,'totalWagerWin|totalBaseGameWin|totalFreeSpinsWin|totalPickJkptWin|maxWinValue|isMaxWin',label+' winnings');ownPaidKeys(g.GameRtpInfo,'targetedRtpValue',label+' RTP');
+  const w=g.GameWinInfo;assert(integer(w.totalBaseGameWin,label+' base')===win&&integer(w.totalWagerWin,label+' cumulative')===win&&w.totalFreeSpinsWin==='0'&&w.totalPickJkptWin==='0'&&w.maxWinValue==='25000000'&&w.isMaxWin==='N'&&g.GameRtpInfo.targetedRtpValue==='96.06',`AG integrity: SG ${label} money or feature`);
+  ownPaidKeys(g.MysteryRepSymbol,'isSymPresent|replacementSymbolIndex|isNudgingWild|isRedEnvlpJkpt',label+' mystery');const m=g.MysteryRepSymbol;assert(['Y','N'].includes(m.isSymPresent)&&m.isNudgingWild==='N'&&m.isRedEnvlpJkpt==='N',`AG integrity: SG ${label} own feature mapping`);integer(m.replacementSymbolIndex,label+' mystery symbol');
+ } else {
+  ownPaidKeys(g.BaseGameInfo,'totalWagerWin|isMaxWin|maxWinValue',label+' base');assert(integer(g.BaseGameInfo.totalWagerWin,label+' cumulative')===win&&g.BaseGameInfo.isMaxWin==='N'&&g.BaseGameInfo.maxWinValue==='25000000',`AG integrity: SG ${label} cumulative money`);
+  ownPaidKeys(g.MystInfo,'index',label+' mystery');const mystery=integer(g.MystInfo.index,label+' mystery index');ownPaidKeys(g.WildInfo,'Indices',label+' wild');const wild=g.WildInfo.Indices===''?[]:ownPositionNumbers(g.WildInfo.Indices,undefined,label+' wild reels');assert(wild.every(i=>i<6)&&new Set(wild).size===wild.length,`AG integrity: SG ${label} wild reels`);
+  if(mystery===13) {
+   ownPaidKeys(g.BonusReplacementInfo,'Reel0|Reel1|Reel2|Reel3|Reel4|Reel5',label+' replacement reels');
+   for(let i=0;i<6;i++) {const reel=g.BonusReplacementInfo['Reel'+i];if(reel==='')continue;ownPaidKeys(reel,'RD',label+' replacement');const used=new Set<number>();for(const d of list(reel.RD)){ownPaidKeys(d,'SS|DS',label+' replacement entry');const source=integer(d.SS,label+' source symbol');assert(source>=23&&source<35&&!used.has(source),`AG integrity: SG ${label} replacement index`);used.add(source);integer(d.DS,label+' destination symbol');}}
+  } else assert(g.BonusReplacementInfo===undefined,`AG integrity: SG ${label} unexpected replacement`);
+ }
+ return win;
+}
+export function validateHealthyPaidData(game:AGGameConfig,g:any):number {
+ const desert=ownHealthyPaidBinding(game)==='desert',label=desert?'Desert Cats':'Jin Ji Endless';
+ ownPaidKeys(g,desert?'stake|stakePerLine|paylineCount|totalWin|betID|ReelResults|BGInfo|QuickHits|Symbol|WildReel':'stake|totalWin|betID|ReelResults|BGInfo|MysterySymbol|ScatterInfo',label);
+ assert(integer(g.stake,label+' stake')===game.sg.betRaw&&typeof g.betID==='string',`AG integrity: SG ${label} wager`);
+ if(desert)assert(g.stakePerLine==='4'&&g.paylineCount==='50',`AG integrity: SG ${label} payline stake`);
+ ownPaidKeys(g.BGInfo,desert?'totalWagerWin|bgWinnings|baseGameSpinsRemaining|isBigBet|isMaxWin':'totalWagerWin|bgWinnings|baseGameSpinsRemaining|isMaxWin|goldChanceAwarded|jackpotAwarded|gameMode',label+' base');
+ assert(g.BGInfo.baseGameSpinsRemaining==='0'&&g.BGInfo.isMaxWin==='0',`AG integrity: SG ${label} remaining action`);
+ if(desert)assert(g.BGInfo.isBigBet==='0',`AG integrity: SG ${label} paid mode`);
+ else assert(g.BGInfo.goldChanceAwarded==='0'&&g.BGInfo.jackpotAwarded==='0'&&g.BGInfo.gameMode==='0',`AG integrity: SG ${label} feature needs own mapping`);
+ ownPaidKeys(g.ReelResults,'numSpins|ReelSpin',label+' reels');const reels=list(g.ReelResults.ReelSpin);assert(g.ReelResults.numSpins==='1'&&reels.length===1,`AG integrity: SG ${label} current reel count`);const r=reels[0];
+ ownPaidKeys(r,desert?'spinIndex|reelsetIndex|winCountPL|winCountSC|spinWins|freeSpin|bonusAwarded|ReelStops'+(r.PaylineWin!==undefined?'|PaylineWin':''):'spinIndex|reelsetIndex|anywayWins|scatterWinCount|totalSpinWin|freeSpin|bonusAwarded|ReelStops'+(r.AnywayWin!==undefined?'|AnywayWin':''),label+' spin');
+ assert(r.spinIndex==='0'&&r.reelsetIndex==='0'&&r.freeSpin==='N'&&r.bonusAwarded==='N'&&(desert?r.winCountSC:r.scatterWinCount)==='0',`AG integrity: SG ${label} unclassified feature`);
+ ownPositionNumbers(r.ReelStops,desert?7:5,label+' reel stops');const wins=list(desert?r.PaylineWin:r.AnywayWin),seen=new Set<number>();
+ assert(wins.length===integer(desert?r.winCountPL:r.anywayWins,label+' win count'),`AG integrity: SG ${label} win count`);let lineWin=0;
+ for(const w of wins) {
+  ownPaidKeys(w,desert?'index|winVal|awardIndex|awardTableIndex|#text':'winIndex|winVal|ways|awardIndex|#text',label+' win');const index=integer(desert?w.index:w.winIndex,label+' win index');assert(!seen.has(index)&&(desert?index<50:index<wins.length),`AG integrity: SG ${label} win index`);seen.add(index);integer(w.awardIndex,label+' award');
+  if(desert)assert(w.awardTableIndex==='0',`AG integrity: SG ${label} award table`);else assert(integer(w.ways,label+' ways')>0,`AG integrity: SG ${label} ways`);
+  ownPositionNumbers(w['#text'],undefined,label+' winning positions');lineWin+=integer(w.winVal,label+' line win');
+ }
+ assert(Number.isSafeInteger(lineWin)&&lineWin===integer(desert?r.spinWins:r.totalSpinWin,label+' spin win'),`AG integrity: SG ${label} reel winnings`);let quickHits=0;
+ if(desert) {
+  ownPaidKeys(g.QuickHits,'winValue|numOfGems',label+' QuickHits');quickHits=integer(g.QuickHits.winValue,label+' QuickHits win');assert(integer(g.QuickHits.numOfGems,label+' gems')<=10,`AG integrity: SG ${label} gems`);
+  ownPaidKeys(g.Symbol,'replacement',label+' symbol');integer(g.Symbol.replacement,label+' replacement');ownPaidKeys(g.WildReel,'pattern',label+' wild reels');assert(ownPositionNumbers(g.WildReel.pattern,7,label+' wild reels').every(n=>n===0||n===1),`AG integrity: SG ${label} wild bit`);
+ } else {
+  ownPaidKeys(g.MysterySymbol,'replacementSym',label+' mystery symbol');integer(g.MysterySymbol.replacementSym,label+' replacement');ownPaidKeys(g.ScatterInfo,'totalValue|numScatters|values',label+' scatter bank');const values=ownPositionNumbers(g.ScatterInfo.values,15,label+' scatter bank'),bank=values.reduce((a,b)=>a+b,0);
+  assert(Number.isSafeInteger(bank)&&bank===integer(g.ScatterInfo.totalValue,label+' bank total')&&integer(g.ScatterInfo.numScatters,label+' scatter count')<=15,`AG integrity: SG ${label} scatter bank`);
+ }
+ // Desert SDK subtracts QuickHits from totalWin for line animation. Jin Ji
+ // ScatterInfo is a bank display, never an additional current win.
+ const win=lineWin+quickHits;assert(Number.isSafeInteger(win)&&win===integer(g.totalWin,label+' current win')&&win===integer(g.BGInfo.bgWinnings,label+' base win')&&win===integer(g.BGInfo.totalWagerWin,label+' cumulative win'),`AG integrity: SG ${label} monetary components`);return win;
+}
 export function validateEightyFortunesData(game:AGGameConfig,g:any,first:boolean,prior:any,paid:any,priorWin:number):any {
- assert(game.gameId==='32750'&&game.dbName==='sg_eightyeightfortunes'&&game.sg?.runtimeGameId===32972&&game.sg?.header?.gameID==='20077'&&game.sg?.header?.gameCodeRGI==='eightyeightfortunes'&&game.sg?.eightyFortunesContract==='eighty-fortunes-own-free-components-v3'&&game.sg?.betRaw===176,'AG integrity: SG 88 Fortunes binding');
+ assert(game.gameId==='32750'&&game.dbName==='sg_eightyeightfortunes'&&game.sg?.runtimeGameId===32972&&game.sg?.header?.gameID==='20077'&&game.sg?.header?.gameCodeRGI==='eightyeightfortunes'&&game.sg?.eightyFortunesContract==='eighty-fortunes-own-free-components-v4'&&game.sg?.betRaw===176,'AG integrity: SG 88 Fortunes binding');
  const keys=(v:any,n:string)=>assert(v&&typeof v==='object'&&!Array.isArray(v)&&Object.keys(v).sort().join('|')===n.split('|').sort().join('|'),'AG integrity: SG 88 Fortunes schema');
  keys(g,'stake|creditBet|betMultiplier|waysCount|totalWin|betID|ReelResults|GameWinInfo|GameRtpInfo'+(g.Feature?'|Feature':'')+(g.BaseGameRecoveryInfo?'|BaseGameRecoveryInfo':''));
  assert(g.stake==='176'&&g.creditBet==='88'&&g.betMultiplier==='2'&&g.waysCount==='243','AG integrity: SG 88 Fortunes wager');
@@ -127,7 +206,13 @@ export function validateEightyFortunesData(game:AGGameConfig,g:any,first:boolean
  const remaining=integer(f.remainingFreeSpins,'88 remaining'),extra=integer(f.extraFreeSpinsAwarded,'88 extra');assert(integer(f.totalFreeSpinsWin,'88 feature cumulative')===freeWin&&f.lastFreeSpin===(remaining===0?'Y':'N'),'AG integrity: SG 88 Fortunes free state');
  let played,total;
  if(first){assert(!prior&&g.BaseGameRecoveryInfo===undefined&&remaining>0&&extra===0&&trigger===freeWin&&base===current&&r.freeSpin==='Y'&&r.bonusAwarded==='Y','AG integrity: SG 88 Fortunes free introduction');played=0;total=remaining;}
- else {assert(prior&&paid,'AG integrity: SG 88 Fortunes prior free state');keys(g.BaseGameRecoveryInfo,'GameResult');const recovered=g.BaseGameRecoveryInfo.GameResult;keys(recovered,'stake|creditBet|betMultiplier|waysCount|totalWin|betID|ReelResults');for(const k of Object.keys(recovered))assert(JSON.stringify(recovered[k])===JSON.stringify(paid[k]),'AG integrity: SG 88 Fortunes paid recovery changed');assert(base===integer(paid.GameWinInfo.totalBaseGameWin,'88 recovered base')&&remaining===prior.freeSpinsRemaining-1+extra&&win===priorWin+current&&(extra>0)===(trigger>0),'AG integrity: SG 88 Fortunes free budget/money delta');played=prior.freeSpinsPlayed+1;total=prior.freeSpinsTotal+extra;assert(r.freeSpin===(extra>0?'Y':'N')&&r.bonusAwarded===(extra>0||freeJackpot?'Y':'N'),'AG integrity: SG 88 Fortunes retrigger/jackpot flags');}
+ else {assert(prior&&paid,'AG integrity: SG 88 Fortunes prior free state');keys(g.BaseGameRecoveryInfo,'GameResult');const recovered=g.BaseGameRecoveryInfo.GameResult;keys(recovered,'stake|creditBet|betMultiplier|waysCount|totalWin|betID|ReelResults');const paidJackpotIntro=list(paid.Feature).some((f:any)=>f.index==='2'&&f.name==='BG_FuBat_Jackpot');
+ // Own SDK replaces this recovery display total with GameWinInfo.totalWagerWin.
+ // A completed paid jackpot is not repeated in the recovered reel display.
+ for(const k of Object.keys(recovered)) {
+  if(k==='totalWin'&&paidJackpotIntro)assert(recovered.totalWin===paid.totalWin||recovered.totalWin===paid.ReelResults.ReelSpin.totalSpinWin,'AG integrity: SG 88 Fortunes recovery display components changed');
+  else assert(JSON.stringify(recovered[k])===JSON.stringify(paid[k]),'AG integrity: SG 88 Fortunes paid recovery changed');
+ }assert(base===integer(paid.GameWinInfo.totalBaseGameWin,'88 recovered base')&&remaining===prior.freeSpinsRemaining-1+extra&&win===priorWin+current&&(extra>0)===(trigger>0),'AG integrity: SG 88 Fortunes free budget/money delta');played=prior.freeSpinsPlayed+1;total=prior.freeSpinsTotal+extra;assert(r.freeSpin===(extra>0?'Y':'N')&&r.bonusAwarded===(extra>0||freeJackpot?'Y':'N'),'AG integrity: SG 88 Fortunes retrigger/jackpot flags');}
  assert(played+remaining===total&&Number.isSafeInteger(total),'AG integrity: SG 88 Fortunes total budget');return {win,free:{freeSpinsTotal:total,freeSpinsPlayed:played,freeSpinsRemaining:remaining,accumulativeWin:win/100}};
 }
 
@@ -459,11 +544,17 @@ export class SGWmsSession {
         const header='<Header '+Object.entries(h).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')+'/>';
         if(event==='Logic'&&this.game.sg.eightyFortunesContract&&Object.keys(parameters).length){assert(this.action==='SPIN'&&this.game.gameId==='32750'&&JSON.stringify(parameters)===JSON.stringify({creditBet:'88',betMultiplier:'2'}),'AG integrity: SG 88 Fortunes own paid request');return `<GameRequest type="Logic">${header}<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData><SpinInfo creditBet="88" betMultiplier="2"/></GameRequest>`;}
         if(event==='Logic'&&this.game.sg.logicRequestNode==='WagerInfo'){
+            if(this.game.sg.fudaPaidContract){assert(this.action==='SPIN'&&this.game.gameId==='32769'&&this.game.sg.fudaPaidContract==='fuda-own-paid-components-v1'&&JSON.stringify(parameters)===JSON.stringify({totalStake:'200',featureBet:'0'}),'AG integrity: SG Fu Dao Le own request');return `<GameRequest type="Logic">${header}<WagerInfo totalStake="200" featureBet="0"/><AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData></GameRequest>`;}
             assert(this.game.gameId==='32767'&&this.game.sg.fireQueenPaidContract==='fire-queen-own-paid-v1'&&this.action==='SPIN'&&Object.keys(parameters).join('|')==='totalStake'&&parameters.totalStake==='50','AG integrity: SG Fire Queen own request');
             return `<GameRequest type="Logic">${header}<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData><WagerInfo totalStake="50"/></GameRequest>`;
         }
         if(Object.prototype.hasOwnProperty.call(parameters,'__sgGoldenCollect')){assert(event==='Logic'&&this.action==='PICK_FREE_SPINS'&&this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6'&&Object.keys(parameters).length===1&&parameters.__sgGoldenCollect==='1','AG integrity: SG Golden Chief collect request');return `<GameRequest type="Logic">${header}<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData><Gamble collect="1"/></GameRequest>`;}
         const stake=Object.keys(parameters).length?'<Stake '+Object.entries(parameters).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')+'/>':'';
+        if(event==='Logic'&&(this.game.sg.desertCatsContract||this.game.sg.jinjiEndlessContract)) {
+            const kind=ownHealthyPaidBinding(this.game);
+            assert(this.action==='SPIN'&&JSON.stringify(parameters)===JSON.stringify(kind==='desert'?{total:'200'}:{total:'16',gameMode:'0'}),'AG integrity: SG own healthy paid request');
+            return `<GameRequest type="Logic"><AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData>${header}${stake}<PaylineCount count="${this.game.sg.logicPaylineCount}"/></GameRequest>`;
+        }
         // Own Dragon client serializes AccountData for a stake-less free Logic too.
         // This is an explicit per-game wire binding, never a guessed feature stake.
         const freeAccount = event==='Logic' && !stake && this.game.sg.freeLogicCurrencyMultiplier !== undefined;
@@ -543,6 +634,8 @@ export class SGWmsSession {
             const g=r.GameResult;
             if(this.game.sg.eightyFortunesContract){const mapped=validateEightyFortunesData(this.game,g,first,this.free,this.eightyBase,this.totalWin);if(first)this.eightyBase=structuredClone(g);this.totalWin=mapped.win;this.free=mapped.free;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(first&&this.game.sg.fireQueenPaidContract){this.totalWin=validateFireQueenPaidData(this.game,g);this.action='PLAY';}
+            else if(first&&(this.game.sg.desertCatsContract||this.game.sg.jinjiEndlessContract)){this.totalWin=validateHealthyPaidData(this.game,g);this.action='PLAY';}
+            else if(first&&(this.game.sg.fudaPaidContract||this.game.sg.heidiPaidContract)){this.totalWin=validateOwnRequestVariantData(this.game,g);this.action='PLAY';}
             else {
             assert(g&&(g.BGInfo||g.FSInfo||(this.action==='PICK_FREE_SPINS'&&this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6')),'AG integrity: SG game result');
             const known=new Set(['stake','stakePerLine','paylineCount','totalWin','betID','ReelResults','BGInfo','FSInfo','BaseGameRecoveryInfo',...(this.game.sg.goldenChiefPaidContract?['PaylineCountInfo','SymbolUpgrade','WildExpansion',...(this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6'?['BonusWheel','GambleInfo','CanyonBonus','TotemBonus']:[])]:[]),...(this.game.sg.passiveResultFields || []),...(this.game.sg.wildPositionContract ? ['WildInfo'] : []),...(this.game.sg.compassContract ? ['Compass'] : [])]);
