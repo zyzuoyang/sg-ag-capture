@@ -975,3 +975,113 @@ export class SGWmsSession {
     }
     close() { if(this.closed)return;this.closed=true;this.cookies.clear();if(this.journal!==null){fs.fsyncSync(this.journal);fs.closeSync(this.journal);this.journal=null;} }
 }
+
+// SG GDM connection/protocol DATA provider for the unchanged original AG.
+// No legacy SG imports, transport retries, source-result guesses or SG storage.
+
+type GDMWireStep={msgId:string;methodName:string;requestPayload:string;responsePayload:string;responseXml:string;responseBalance?:number;httpStatus?:number;elapsedMs?:number};
+type GDMTransport=(event:string,payload:string)=>Promise<GDMWireStep>;
+const gdmParser=new XMLParser({ignoreAttributes:false,attributeNamePrefix:'',parseTagValue:false,parseAttributeValue:false});
+const gdmInteger=(v:unknown,label:string)=>{assert(typeof v==='string'&&/^(0|[1-9]\d*)$/.test(v),'AG integrity: GDM '+label);const n=Number(v);assert(Number.isSafeInteger(n),'AG integrity: GDM unsafe '+label);return n;};
+const gdmEscape=(v:unknown)=>String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+export function ownGDMFields(value:string,separator='&',assignment='='):Record<string,string>{
+ assert(typeof value==='string','AG integrity: GDM form input');const out:Record<string,string>=Object.create(null);
+ for(const part of value.split(separator)){if(!part)continue;const at=part.indexOf(assignment);assert(at>0,'AG integrity: GDM form field');const k=part.slice(0,at);assert(!Object.prototype.hasOwnProperty.call(out,k),'AG integrity: GDM duplicate field');out[k]=part.slice(at+assignment.length);}
+ return out;
+}
+function gdmBinding(game:AGGameConfig){
+ const c=game.sg?.ownGDMContract;
+ assert(game.provider==='sg'&&game.sg.protocol==='gdm'&&game.sg.endpoint==='https://ogs-gdm-usnj.nyxop.net/nextgen/','AG integrity: GDM source gdmBinding');
+ assert(c?.version==='own-SDK-ordinary-final-v1'&&c.gameId===game.gameId&&c.dbName===game.dbName&&c.runtimeGameId===game.sg.runtimeGameId
+  &&c.runtimeSlug===game.sg.runtimeSlug&&game.backendId===c.runtimeSlug&&game.sg.requestParams?.GN===c.runtimeSlug&&c.betRaw===game.sg.betRaw&&c.fixedGitCommit==='885f862bcc04841406820a932ef14c38c7759f1d'
+  &&typeof c.ownSDKFileSHA256==='string'&&/^[a-f0-9]{64}$/.test(c.ownSDKFileSHA256)
+  &&Number.isSafeInteger(c.betRaw)&&c.betRaw>0&&c.balanceScale===1&&c.winScale===1,'AG integrity: GDM own rule gdmBinding');
+ assert(c.ordinaryOnly===true&&c.requiresNoPreviousFeature===true&&Array.isArray(c.pendingClauses)&&c.pendingClauses.length>0
+  &&c.pendingClauses[0].kind==='SDK-base-false'&&c.pendingClauses.some((q:any)=>q.kind==='fresh-ordinary-SDK-NFG'&&q.wireKey==='NFG'&&q.explicitSDKDefault==='0')
+  &&c.rootInactiveFlags.map((q:any)=>q.wireKey).sort().join('|')==='GA|GCT|IFG','AG integrity: GDM own final scope');
+ return c;
+}
+export function ownGDMOrdinaryFinal(game:AGGameConfig,p:Record<string,string>):boolean{
+ const c=gdmBinding(game),gsd=p.GSD===undefined?{}:ownGDMFields(p.GSD,'#','~');
+ for(const k of Object.keys(p))assert(c.responseKeys.includes(k),'AG integrity: GDM unknown response field');
+ for(const k of c.requiredResponseKeys)assert(Object.prototype.hasOwnProperty.call(p,k),'AG integrity: GDM missing response field');
+ for(const k of Object.keys(gsd))assert(c.ordinaryGSDKeys.includes(k),'AG integrity: GDM unseen own GSD field');
+ // These are explicit own SDK-decoded fields and defaults in this game's
+ // sealed contract. Missing unspecified values are never replaced with zero.
+ for(const q of c.rootInactiveFlags){const v=p[q.wireKey]===undefined?q.explicitSDKDefault:p[q.wireKey];assert(v!==undefined&&v==='0','AG integrity: GDM active or unknown own feature');}
+ for(const q of c.pendingClauses){
+  if(q.kind==='SDK-base-false')continue;
+  if(q.kind==='fresh-ordinary-SDK-NFG'){
+   const v=p[q.wireKey]===undefined?q.explicitSDKDefault:p[q.wireKey];assert(v!==undefined,'AG integrity: GDM unknown own remaining budget');if(gdmInteger(v,'own remaining budget')>0)return false;
+  }else if(q.kind==='own-GSD-array-length'){
+   assert(q.SDKArrayDecoderProved===true,'AG integrity: GDM own array decoder');
+   if(q.groupPrefix){if(Object.keys(gsd).some(k=>k.startsWith(q.groupPrefix)))return false;}
+   else{const v=gsd[q.wireKey];assert(v!==undefined||q.explicitSDKEmptyArray===true,'AG integrity: GDM missing own pending array');if(v!==undefined&&v!=='')return false;}
+  }else throw new Error('AG integrity: GDM own pending decision not mapped');
+ }
+ return true;
+}
+export class SGGdmSession{
+ private balance=Number.NaN;private closed=false;private lastRequest:{event:string;parameters:Record<string,any>}|undefined;
+ private readonly freshFreeId='Free:'+crypto.randomBytes(16).toString('hex');
+ private readonly pid='gdmgcm'+this.freshFreeId;private cookies=new Map<string,string>();private ordinal=0;
+ private journal:number|null=null;private journalPath:string|null=null;private gameplaySent=false;
+ constructor(private readonly game:AGGameConfig,private readonly transport?:GDMTransport,initialBalance?:number){gdmBinding(game);if(initialBalance!==undefined){assert(Number.isSafeInteger(initialBalance)&&initialBalance>=0);this.balance=initialBalance;}}
+ private evidence(value:Record<string,unknown>){
+  if(this.transport)return;
+  if(this.journal===null){const dir=path.resolve(process.env.SG_EVIDENCE_DIR||'.sg-evidence');fs.mkdirSync(dir,{recursive:true});
+   if(this.journalPath===null){this.journalPath=path.join(dir,`${this.game.gameId}-${process.pid}-${crypto.randomUUID()}.jsonl`);this.journal=fs.openSync(this.journalPath,'wx',0o600);}else this.journal=fs.openSync(this.journalPath,'a',0o600);}
+  fs.writeSync(this.journal,JSON.stringify({...value,at:new Date().toISOString()})+'\n');fs.fsyncSync(this.journal);
+  if(this.closed){fs.closeSync(this.journal);this.journal=null;}
+ }
+ private form(event:string,parameters:Record<string,any>){
+  assert(!Object.prototype.hasOwnProperty.call(parameters,'PID')&&!Object.prototype.hasOwnProperty.call(parameters,'MSGID'),'AG integrity: GDM continuation identity belongs to own session');
+  const entries={...parameters,PID:this.pid,MSGID:event};
+  for(const[k,v]of Object.entries(entries))assert(/^[A-Za-z0-9_]+$/.test(k)&&typeof v==='string'&&!/[&=<\r\n]/.test(v),'AG integrity: GDM own request field');
+  return Object.entries(entries).map(([k,v])=>k+'='+v).join('&');
+ }
+ private decode(step:GDMWireStep,event:string){
+  assert(step.msgId===event&&step.methodName==='processGameMessage'&&(step.httpStatus===undefined||step.httpStatus===200),'AG integrity: GDM source exchange');
+  const raw=step.responseXml;assert(typeof raw==='string'&&raw.length<262144&&!/<!DOCTYPE|<!ENTITY/i.test(raw),'AG integrity: GDM source XML');
+  const r=gdmParser.parse(raw).GDMRESPONSE;assert(r&&Object.keys(r).sort().join('|')==='OGS_RC|PAYLOAD|SUCCESS'&&r.OGS_RC==='0'&&r.SUCCESS==='true'&&typeof r.PAYLOAD==='string','AG integrity: GDM successful envelope');
+  assert(step.responsePayload===r.PAYLOAD,'AG integrity: GDM payload differs from original XML');const p=ownGDMFields(r.PAYLOAD);assert(p.MSGID===event,'AG integrity: GDM response event');return p;
+ }
+ private async exchange(event:string,parameters:Record<string,any>):Promise<GDMWireStep>{
+  assert(!this.closed,'AG integrity: GDM session permanently closed');const payload=this.form(event,parameters),ordinal=++this.ordinal;
+  const gameplay=event!=='INIT'&&event!=='REELSTRIP';if(gameplay)this.gameplaySent=true;
+  const context={event,ordinal,requestKind:gameplay?'round-start' as const:'initialization' as const,gameplayRequestHasBeenSent:this.gameplaySent};
+  if(this.transport){let step:GDMWireStep;try{step=await this.transport(event,payload);}catch{this.close();throw new SGSourceFault(gameplay?'execution-unknown':'recoverable-initialization',context);}assert(!this.closed,'AG integrity: GDM late response after permanent closure');if(step.httpStatus!==undefined&&step.httpStatus!==200){this.close();throw new SGSourceFault(gameplay?'execution-unknown':'protocol', {...context,httpStatus:step.httpStatus});}return step;}
+  const operator=process.env.SG_GDM_OPERATOR_ID;assert(operator&&/^[A-Za-z0-9_-]+$/.test(operator),'AG integrity: GDM own operator configuration missing');
+  const body=`<gdmRequest><clienttype>flash</clienttype><lang>en_us</lang><currency>USD</currency><mode>demo</mode><token>${gdmEscape(this.freshFreeId+'@'+operator)}</token><methodName>processGameMessage</methodName><payload>${gdmEscape(payload)}</payload></gdmRequest>`;
+  this.evidence({phase:'intent',ordinal,event,payload,methodName:'processGameMessage'});const start=Date.now();let response:Response,text:string;
+  try{response=await fetch(this.game.sg.endpoint,{method:'POST',redirect:'error',signal:AbortSignal.timeout(30000),headers:{'Content-Type':'text/xml; charset=utf-8',...(this.cookies.size?{Cookie:[...this.cookies].map(([k,v])=>k+'='+v).join('; ')}:{})},body});text=await response.text();}
+  catch{const fault=new SGSourceFault(this.gameplaySent?'execution-unknown':'recoverable-initialization',context);this.evidence({phase:'unknown',ordinal,event,...sourceFaultMetadata(fault)});this.close();throw fault;}
+  const transient=[408,425,429,500,502,503,504].includes(response.status),fault=response.status===200?null:new SGSourceFault(this.gameplaySent?'execution-unknown':transient?'recoverable-initialization':'protocol',{...context,httpStatus:response.status,responseSHA256:crypto.createHash('sha256').update(text).digest('hex')});
+  this.evidence({phase:'response',ordinal,event,httpStatus:response.status,text,...(fault?sourceFaultMetadata(fault):{})});if(fault){this.close();throw fault;}assert(!this.closed,'AG integrity: GDM late response after permanent closure');
+  for(const cookie of response.headers.getSetCookie?.()||[]){const pair=cookie.split(';')[0],at=pair.indexOf('=');if(at>0)this.cookies.set(pair.slice(0,at),pair.slice(at+1));}
+  const r=gdmParser.parse(text).GDMRESPONSE;return{msgId:event,methodName:'processGameMessage',requestPayload:payload,responsePayload:r?.PAYLOAD,responseXml:text,httpStatus:response.status,elapsedMs:Date.now()-start};
+ }
+ async connect(){
+  assert(!this.closed,'AG integrity: GDM session closed');if(this.transport){assert(Number.isSafeInteger(this.balance));return;}
+  assert(process.env.SG_AG_ALLOW_SOURCE==='1','AG integrity: GDM live source not enabled');
+  try{const p=this.decode(await this.exchange('INIT',{GN:this.game.sg.runtimeSlug}),'INIT');assert(p.B!==undefined&&p.AB===p.B&&p.GA==='0'&&(p.IFG===undefined||p.IFG==='0')&&(p.NFG===undefined||p.NFG==='0')&&p.FID===undefined&&p.REC===undefined,'AG integrity: GDM initialization cash or recovery');this.balance=gdmInteger(p.B,'initial balance');this.decode(await this.exchange('REELSTRIP',{GN:this.game.sg.runtimeSlug}),'REELSTRIP');}catch(e){this.close();throw e;}
+ }
+ getHandshakeData(){return null;}getBalance(){return this.balance/100;}getFallbackBet(){return this.game.sg.betRaw/100;}
+ getSpinParams(){return {...this.game.sg.requestParams};}getInitialRoundRequest(){return{event:'BET',parameters:this.getSpinParams()};}
+ getLastGameRequest(){return this.lastRequest;}getPickParams(){throw new Error('AG integrity: GDM own selection not mapped');}
+ isRoundTerminalAction(action:string){return action==='SPIN';}
+ async callGameData(event:string,parameters:Record<string,any>|null){
+  assert(!this.closed&&event==='BET'&&parameters,'AG integrity: GDM own ordinary request');assert.deepStrictEqual(parameters,this.game.sg.requestParams,'AG integrity: GDM own request parameters changed');
+  const start=this.balance;assert(Number.isSafeInteger(start));this.lastRequest={event,parameters:{...parameters}};
+  const step=await this.exchange(event,parameters);try{
+   const p=this.decode(step,event),c=gdmBinding(this.game);
+   assert(ownGDMOrdinaryFinal(this.game,p),'AG integrity: GDM own SDK requires genuine continuation');
+   const win=gdmInteger(p.TW,'own returned win'),end=gdmInteger(p.B,'own returned balance');assert(p.AB===p.B&&end===start-c.betRaw+win,'AG integrity: GDM own final cash conservation');
+   if(step.responseBalance!==undefined)assert(step.responseBalance===end,'AG integrity: GDM captured cash differs');this.balance=end;
+   return{NextActionInfo:{nextAction:'SPIN'},PlayerBalanceInfo:{preWagerBalance:start/100,balance:end/100,wager:c.betRaw/100,resultAmount:win/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,
+    startBalance:start/100,endBalance:end/100,totalWin:win/100,stepCount:1,msgIds:['BET'],steps:[{...step,responseBalance:end}],SGWireResponse:p,SGDecodedResponseXML:step.responseXml,
+    SGOwnSDKDecision:{ownSDKFileSHA256:c.ownSDKFileSHA256,verifiedOwnOrdinaryFinal:true,unseenFeatureNotAdmitted:true},money:{startBalanceRaw:start,endBalanceRaw:end,betRaw:c.betRaw,totalWinRaw:win}};
+  }catch(e){this.close();throw e;}
+ }
+ close(){this.closed=true;this.cookies.clear();if(this.journal!==null){fs.closeSync(this.journal);this.journal=null;}}
+}

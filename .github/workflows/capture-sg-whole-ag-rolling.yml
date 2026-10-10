@@ -48,6 +48,7 @@ jobs:
           AG_GAMES_MANIFEST: sg-games.yml
           AG_MANIFEST_GAME_COUNT: "19"
           SG_AG_ALLOW_SOURCE: "1"
+          SG_GDM_OPERATOR_ID: ${{ secrets.SG_GDM_OPERATOR_ID }}
           SG_EVIDENCE_DIR: ${{ runner.temp }}/sg-source-evidence
       - name: Encrypt exact source evidence
         if: always()

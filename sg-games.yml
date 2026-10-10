@@ -1246,3 +1246,1075 @@ games:
       zeusThreeContract: zeus-three-own-line-free-wild-v1
       zeusThreeTriggerCashContract: own-exact-separate-trigger-cash-v3
       zeusThreePaidRecoveryContract: own-exact-paid-wild-display-v2
+  - provider: sg
+    gameId: '32500'
+    name: Dragon Spin Cross Link Fire
+    dbName: sg_dragonspincrosslinkfire96
+    backendId: dragonspincrosslinkfire96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33033
+      runtimeSlug: dragonspincrosslinkfire96
+      betRaw: 100
+      requestParams:
+        BPL: '5'
+        GN: dragonspincrosslinkfire96
+        LB: '40'
+      ownGDMContract:
+        version: own-SDK-ordinary-final-v1
+        gameId: '32500'
+        dbName: sg_dragonspincrosslinkfire96
+        runtimeGameId: 33033
+        runtimeSlug: dragonspincrosslinkfire96
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - PD
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - PD
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - CBPL
+          - SL
+          - VA
+        ownSDKFileSHA256: 4c1937cea505d822a207c1e950e367b5c9a41b9dec5a3004c794b25b127245a4
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: c85d3a1dec2cfd4ff5d47fadb77ac726912199592c8797e4a1dcf571b4096695
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: fb1156c8ea58b57db1f55003ef619f1e5bc88d03fd02d499c63e6f588266ac85
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: c021093a34e3fe9a3c333edb9b3db03722312be89b982e3a96726cacd037d9a6
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 52c5b173fd26dc669e58a2a927fbd517c4bfa9940db16ac111da9f7bc7e99cbe
+        SDKFinalGetterSourceSHA256: 6d21863474ae3dcd5a9823cd1f1f66f5ecee211ae1215bef8b87fc64f075bfc0
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    serviceDir: sg_dragonspincrosslinkfire96
+  - provider: sg
+    gameId: '32532'
+    name: Golden Fire Link Dragon Song
+    dbName: sg_goldenfirelinkdragonsong96
+    backendId: goldenfirelinkdragonsong96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33043
+      runtimeSlug: goldenfirelinkdragonsong96
+      betRaw: 100
+      requestParams:
+        BPL: '5'
+        GN: goldenfirelinkdragonsong96
+        LB: '130'
+        REC: '0'
+      ownGDMContract:
+        version: own-SDK-ordinary-final-v1
+        gameId: '32532'
+        dbName: sg_goldenfirelinkdragonsong96
+        runtimeGameId: 33043
+        runtimeSlug: goldenfirelinkdragonsong96
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPL
+          - BRS
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPL
+          - BRS
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - CSFBS
+          - FC
+          - FLT
+          - RH
+          - VA
+        ownSDKFileSHA256: b6382ca56e7b6699838cfa368f6d70078e5e2f20728d6bcc5c9e89ee3340899b
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: 207dbb90ffe11afa1491908b16d2398cda9dd4d45766ff2a022cb4d92986a717
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 7cacb5fa247848fbe233b67fe722520bf9397e0bbb0e7708a264fff598d130e3
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: ae1a461f56d2c81e3d5bef5f28b0494d63921df737418ef85964cba4143be1a4
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: c090e046964e3e40356e307e883f6e7827802a12e50faf7188692652597639e3
+        SDKFinalGetterSourceSHA256: 7062d38da16e3117e985ae41630cbe94e95cd89016055546c36b348c05225376
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    serviceDir: sg_goldenfirelinkdragonsong96
+  - provider: sg
+    gameId: '32544'
+    name: Huff N' Lots of Puff
+    dbName: sg_huffnlotsofpuff96
+    backendId: huffnlotsofpuff96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33047
+      runtimeSlug: huffnlotsofpuff96
+      betRaw: 200
+      requestParams:
+        BPR: '10'
+        GN: huffnlotsofpuff96
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-ordinary-final-v1
+        gameId: '32544'
+        dbName: sg_huffnlotsofpuff96
+        runtimeGameId: 33047
+        runtimeSlug: huffnlotsofpuff96
+        betRaw: 200
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - PD
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - PD
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - BMS
+          - BRS
+          - BWC
+          - BWS
+          - VA
+        ownSDKFileSHA256: 220b392a2a0cad4d79048f5d69b824989556b46fab84f8e8fa9542321b8aac45
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: 51e9b9d195e16545abad86b68d12d9849b8657901ae6a397440c8fe2bdfeff4a
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: f9bc127be654ef4c6d832a62bd326cfcd1a1bcc8343797515968c180fa674b88
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 91d5fcbfed7387dbe93c3467463f148074d7ac5c04205394f01dd267a0c4ce34
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 7776b2520e4909b6b8b87f923dd34310140986269eaf36f8a10f6783b03d84af
+        SDKFinalGetterSourceSHA256: 46497381e3f18a7fb16c8a580126df23bbd8fdf93fc55409b735e82699dffca3
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    serviceDir: sg_huffnlotsofpuff96
+  - provider: sg
+    gameId: '32548'
+    name: Huff N' Puff Money Mansion
+    dbName: sg_huffnpuffmoneymansion96
+    backendId: huffnpuffmoneymansion96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33050
+      runtimeSlug: huffnpuffmoneymansion96
+      betRaw: 200
+      requestParams:
+        AP: 'false'
+        BPR: '10'
+        GN: huffnpuffmoneymansion96
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-ordinary-final-v1
+        gameId: '32548'
+        dbName: sg_huffnpuffmoneymansion96
+        runtimeGameId: 33050
+        runtimeSlug: huffnpuffmoneymansion96
+        betRaw: 200
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - BMS
+          - HHPOS
+          - VA
+        ownSDKFileSHA256: 1c4c4759d4a55357e0964f4a9e6126ece1bc567c2b0882b5d4e99e20c8f98bde
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: fede761af86c838659cd2654f164f5e2a70d593397c27addcac2ade5e13b00d5
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 7a3ac2c0a9dbd43634e6a3a4eab3f287f8cf784276f8b0cc5ff39699708e4efe
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: bd317de725f6bf527b2107a836807c0089173b13b8bcccee10e3346f177e5918
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: c5a3ea58b52875824aacbf18b697bd79b2257c1b1a8552049ce81ea695634443
+        SDKFinalGetterSourceSHA256: 3db4376b48771e4b927796e1c7252fe1cf6780623328c24e8c053d7a01f1dc71
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    serviceDir: sg_huffnpuffmoneymansion96
+  - provider: sg
+    gameId: '32713'
+    name: Huff N Even More Puff High Limit
+    dbName: sg_huffnevenmorepuffhighlimit96
+    backendId: huffnevenmorepuffhighlimit96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33113
+      runtimeSlug: huffnevenmorepuffhighlimit96
+      betRaw: 2000
+      requestParams:
+        BPR: '100'
+        GN: huffnevenmorepuffhighlimit96
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-ordinary-final-v1
+        gameId: '32713'
+        dbName: sg_huffnevenmorepuffhighlimit96
+        runtimeGameId: 33113
+        runtimeSlug: huffnevenmorepuffhighlimit96
+        betRaw: 2000
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - BMS
+          - BRS
+          - BWC
+          - BWS
+          - VA
+        ownSDKFileSHA256: d2afdbd65840d06549bce7faebcc43aaa95e9d81ba54911b9382e13d2d867c18
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: 8bb25c512f8ae386146e8a71bf59784552be46569a54159dd5c47c5de8b45584
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 4fb04ab926f2cf62ac544f809cd1fcbcba9e6444e0c8c9dc64879975f4b583f9
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 6e70712d35891f3a6ef5a06564ad7857aa03be0f857bfec15e08d099c1230b1d
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 481a70e8c87ebabc957e32362c8b763b6bc8c6713b3d9c09880cedffa03b3e9f
+        SDKFinalGetterSourceSHA256: 29d88e9c4d1f4273028018b81d0b9eb85747be08600a4ad87a20f9c954e4f571
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    serviceDir: sg_huffnevenmorepuffhighlimit96
+  - provider: sg
+    gameId: '32714'
+    name: Huff N Puff Money Mansion High Limit
+    dbName: sg_huffnpuffmoneymansionhighlimit96
+    backendId: huffnpuffmoneymansionhighlimit96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33114
+      runtimeSlug: huffnpuffmoneymansionhighlimit96
+      betRaw: 500
+      requestParams:
+        GN: huffnpuffmoneymansionhighlimit96
+        AP: 'false'
+        BPR: '25'
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-ordinary-final-v1
+        gameId: '32714'
+        dbName: sg_huffnpuffmoneymansionhighlimit96
+        runtimeGameId: 33114
+        runtimeSlug: huffnpuffmoneymansionhighlimit96
+        betRaw: 500
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - BMS
+          - HHPOS
+          - VA
+        ownSDKFileSHA256: 67bcebfd2f16477c8c3b2686b6e10b70f41bde3579d929e89e04e321ffa4e93d
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: 336beccf11b3365223bf21f1fba3853e46dd9286566ead4cdbdc2557521c5ad8
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 0cec5443e145425b9b2d3538d03e364c59c7d67f6ef2bd7b57b648420a21b597
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 6951769980df87f067de1c457c60f69f0283ba643a67fbde0be8674da298ae6e
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: c5a3ea58b52875824aacbf18b697bd79b2257c1b1a8552049ce81ea695634443
+        SDKFinalGetterSourceSHA256: 28bd72462a5cdf622c86075ec8071a48dcc513612699f3654a0adbd1fbf1d29f
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    serviceDir: sg_huffnpuffmoneymansionhighlimit96
+  - provider: sg
+    gameId: '32715'
+    name: Huff N' Even More Puff
+    dbName: sg_huffnevenmorepuff96
+    backendId: huffnevenmorepuff96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33115
+      runtimeSlug: huffnevenmorepuff96
+      betRaw: 200
+      requestParams:
+        BPR: '10'
+        GN: huffnevenmorepuff96
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-ordinary-final-v1
+        gameId: '32715'
+        dbName: sg_huffnevenmorepuff96
+        runtimeGameId: 33115
+        runtimeSlug: huffnevenmorepuff96
+        betRaw: 200
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - BMS
+          - BRS
+          - BWC
+          - BWS
+          - VA
+        ownSDKFileSHA256: ea77b19fd22e4a4a5ae07a82209cf9cd8a4e23932685647342f87f278ce3f2ae
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: 0a99501297316b4b12c042b55312882242b0a82c6d3f0e8f98f9c378823f37a2
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: e245165d82347b02976ded2f3bf6e529574949280759789f24ece8f95d40be82
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: a65a9b9056b36e7a3a4a6710e3dc340a5334620220e0f3f88fd1145bbc7aaabe
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: dcf75dab9cb69f38b5ec046c2b199f7d08d441b2ec1d7dbee8ef0bffc43dd6c4
+        SDKFinalGetterSourceSHA256: 057dd7c3768c1207d2d161a5617cf2fc2845f9b2605f9ce7b1bd4b4defed79f0
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    serviceDir: sg_huffnevenmorepuff96
+  - provider: sg
+    gameId: '32716'
+    name: Huff N’ Even More Puff Grand
+    dbName: sg_hnempgrand96
+    backendId: hnempgrand96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33116
+      runtimeSlug: hnempgrand96
+      betRaw: 200
+      requestParams:
+        AP: 'false'
+        BPR: '10'
+        GN: hnempgrand96
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-ordinary-final-v1
+        gameId: '32716'
+        dbName: sg_hnempgrand96
+        runtimeGameId: 33116
+        runtimeSlug: hnempgrand96
+        betRaw: 200
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - BGHHPOS
+          - BMS
+          - VA
+        ownSDKFileSHA256: 6d949797520cb4e0d2af8fc0dd33d928c11ccb88a46f320ab1916a98151d360e
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: af18c8713b235af99d18bfea27852656b4451bddaa8fee234c220b282937d92e
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 466ccfdb5f97e318e4d1825c19aaa8772ebe6aaee561c5220348bcab9bf37376
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: c9e0cadfce032b4655d1087c6a065728c3afa8d7250e2f5e724dae06a0c8462b
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 3885630ab9dfef0155ed4fe18ea1b8251190fbb6f08ec207993ade78f39e10de
+        SDKFinalGetterSourceSHA256: 35212e766561265f25089b91af9d431f9f28105e2a085b35c84083b7fdaa6511
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    serviceDir: sg_hnempgrand96
+  - provider: sg
+    gameId: '32718'
+    name: Huff N' More Puff High Limit
+    dbName: sg_huffnmorepuffhighlimit96
+    backendId: huffnmorepuffhighlimit96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33118
+      runtimeSlug: huffnmorepuffhighlimit96
+      betRaw: 2000
+      requestParams:
+        GN: huffnmorepuffhighlimit96
+        BPR: '100'
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-ordinary-final-v1
+        gameId: '32718'
+        dbName: sg_huffnmorepuffhighlimit96
+        runtimeGameId: 33118
+        runtimeSlug: huffnmorepuffhighlimit96
+        betRaw: 2000
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - BMS
+          - BRS
+          - BWC
+          - BWS
+          - VA
+        ownSDKFileSHA256: 48898ee09234a8c2388358e6f1f0f760e79f18f7f9290f14b8f87e42a6ffd469
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: bece742e3e801f03edad3c3c08bed9b34c130068772cbf4cd350f162114b175f
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 32503b3683c14edf2357204cdb409446463c416f1ec391e19b2c369fd99a1e3e
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 30960bbb050215142c0b061b34d60b1881e3c5b0a24fe2f3c808b8ab1cf75ccc
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 6f59c3738f344c42d83904f71a71c43babf8c1c075fdf3169663fc43aef9c168
+        SDKFinalGetterSourceSHA256: 2a029df487738b917ab116e55e648a8aaff979ecc0422e3aef416b3a4f38e4fb
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    serviceDir: sg_huffnmorepuffhighlimit96
+  - provider: sg
+    gameId: '32728'
+    name: Money Raid Kodiak
+    dbName: sg_moneyraidkodiak96
+    backendId: moneyraidkodiak96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33128
+      runtimeSlug: moneyraidkodiak96
+      betRaw: 200
+      requestParams:
+        BPR: '10'
+        GN: moneyraidkodiak96
+        RB: '6'
+        REC: '0'
+      ownGDMContract:
+        version: own-SDK-ordinary-final-v1
+        gameId: '32728'
+        dbName: sg_moneyraidkodiak96
+        runtimeGameId: 33128
+        runtimeSlug: moneyraidkodiak96
+        betRaw: 200
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - PD
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - PD
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - BG_INF
+          - CV
+          - POTS
+          - VA
+        ownSDKFileSHA256: 38253ffb32d7a362b70e3505620dfffc013bf47809fe500114aef24e18c76b4c
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: cdef5c25489c9515a85afda4ddc98aff2f89bfca1f5668d3caac5664e5ba1f1d
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: f8c20e65b97361b96486a52aa1f736aafe394becde3bd160834f43ced2224578
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: e05993cbce32f767a39bf554a56b1b5ce9dcb564d712422afef9af9cf173eeb3
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 88ddab6f264c3f6cd37a129eef516c8b54d47b21299bf909493c154b9b4e77be
+        SDKFinalGetterSourceSHA256: 247112c320bfa9b92aa57aac8ab236192a5049e5ca2ea53c7548dd62ad831764
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    serviceDir: sg_moneyraidkodiak96
