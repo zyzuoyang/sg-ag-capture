@@ -637,6 +637,87 @@ export function sgTransportDiagnostic(error: unknown, start: number, deadline: n
         completeResponseCaptured:false,serverApplicationOutcomeProven:false};
 }
 
+
+export function validateSpiritRiver(game:AGGameConfig,g:any,first:boolean,prior:any,base:any,previousWin:number) {
+ assert(game.gameId==='32808'&&game.dbName==='sg_spiritoftheriver'&&game.sg.runtimeGameId===33168&&game.sg.header.gameID==='20470'&&game.sg.header.gameCodeRGI==='spiritoftheriver'&&game.sg.betRaw===200&&game.sg.spiritRiverContract==='spirit-river-own-cash-progress-irf-v1','AG integrity: SG own River binding');
+ ownPaidKeys(g,'stake|stakePerLine|paylineCount|totalWin|betID|ReelResults|BGInfo|ProgressInfo'+(first?'':'|BaseGameRecoveryInfo|FSInfo|IRFInfo')+(first&&g.FSInfo!==undefined?'|FSInfo':''),'River result');
+ assert(g.stake==='200'&&g.stakePerLine==='10'&&g.paylineCount==='0'&&typeof g.betID==='string','AG integrity: SG River source wager');
+ ownPaidKeys(g.BGInfo,'totalWagerWin|bgWinnings|isMaxWin','River base');assert(g.BGInfo.isMaxWin==='0','AG integrity: SG River cap');
+ const vector=(s:any,n:number,label:string)=>ownPositionNumbers(s,n,label);
+ ownPaidKeys(g.ProgressInfo,'prevSeriesSpinIndex|seriesSpinIndex|prevScatterCollected|scattersCollected','River own per-stake progress');
+ for(const k of ['prevSeriesSpinIndex','seriesSpinIndex','prevScatterCollected','scattersCollected'])vector(g.ProgressInfo[k],21,'River progress '+k);
+ let free,expansions:number[]|undefined,multiplier=1;
+ if(first){
+  assert(prior===undefined,'AG integrity: SG River old free state at paid start');base=structuredClone(g);
+  // Bootstrap Stakes.count=21. These arrays are returned per-stake display,
+  // not an additional prize or another request; every source byte is retained.
+ }else{
+  assert(prior&&base&&g.FSInfo,'AG integrity: SG River missing real free state');ownPaidKeys(g.BaseGameRecoveryInfo,'ReelResults','River paid recovery');assert(JSON.stringify(g.BaseGameRecoveryInfo.ReelResults)===JSON.stringify(base.ReelResults),'AG integrity: SG River original paid bytes');
+  ownPaidKeys(g.FSInfo,'fsWinnings|freeSpinsTotal|freeSpinNumber|previousReelExpansions|scattersCollected|extraSpinsAwarded|numWays','River free');
+  expansions=vector(g.FSInfo.previousReelExpansions,6,'River previous expansions');assert(expansions.every(v=>v<=2),'AG integrity: SG River expansion range');
+  if(prior.ownRiverExpansions)assert(JSON.stringify(expansions)===JSON.stringify(prior.ownRiverExpansions),'AG integrity: SG River previous expansions changed');
+  else assert(prior.freeSpinsPlayed===0&&expansions.every(v=>v===0),'AG integrity: SG River initial expansion state');
+  integer(g.FSInfo.scattersCollected,'River returned free scatter count');assert(integer(g.FSInfo.numWays,'River returned ways')>0,'AG integrity: SG River ways');
+  const irf=g.IRFInfo,index=integer(irf.featureIndex,'River returned IRF index');assert([1,2,3,4].includes(index),'AG integrity: SG River unknown IRF');
+  if(index===1){ownPaidKeys(irf,'featureIndex|newReelExpansions','River expansion IRF');const next=vector(irf.newReelExpansions,6,'River new expansions');assert(next.every((v,i)=>v>=expansions![i]&&v<=2),'AG integrity: SG River expansion transition');expansions=next;}
+  else if(index===2){ownPaidKeys(irf,'featureIndex|mysteryPosition|mysterySymbol','River mystery IRF');vector(irf.mysteryPosition,undefined,'River typed mystery positions');integer(irf.mysterySymbol,'River mystery symbol');}
+  else if(index===3){ownPaidKeys(irf,'featureIndex|wildPosition','River wild IRF');vector(irf.wildPosition,undefined,'River typed wild positions');}
+  else{ownPaidKeys(irf,'featureIndex|bearMultiplier','River bear IRF');multiplier=integer(irf.bearMultiplier,'River explicit bear multiplier');assert(multiplier>0,'AG integrity: SG River multiplier');}
+ }
+ ownPaidKeys(g.ReelResults,'numSpins|ReelSpin','River reel results');const spins=list(g.ReelResults.ReelSpin);assert(g.ReelResults.numSpins==='1'&&spins.length===1,'AG integrity: SG River spin count');const spin=spins[0],wins=list(spin.WinInfo);
+ ownPaidKeys(spin,'spinIndex|reelsetIndex|freeSpin|bonusAwarded|winCount|ReelStops'+(wins.length?'|WinInfo':''),'River spin');assert(spin.spinIndex==='0'&&spin.freeSpin===(first?'N':'Y')&&spin.bonusAwarded==='N','AG integrity: SG River spin markers');assert(integer(spin.reelsetIndex,'River reel set')<3,'AG integrity: SG River bootstrap reel set');vector(spin.ReelStops,8,'River eight reel stops');
+ // The client consumes returned WinInfo entries. Own natural XML has index
+ // gaps and winCount larger than the list. Require bounded, distinct keys
+ // and exact cash conservation; do not invent omitted entries or their cash.
+ const declared=integer(spin.winCount,'River win display count');assert(wins.length<=declared,'AG integrity: SG River award count');let cash=0;const seen=new Set<string>();
+ for(const w of wins){ownPaidKeys(w,'direction|index|awardIndex|symbolId|ways|winValue|#text','River win');assert(['0','1'].includes(w.direction)&&integer(w.index,'River win index')<declared&&integer(w.ways,'River ways')>0,'AG integrity: SG River win index or ways');const key=w.direction+':'+w.index;assert(!seen.has(key),'AG integrity: SG River duplicate win');seen.add(key);integer(w.awardIndex,'River award');integer(w.symbolId,'River symbol');vector(w['#text'],undefined,'River typed winning positions');cash+=integer(w.winValue,'River actual raw win');}
+ cash*=multiplier;assert(Number.isSafeInteger(cash)&&cash===integer(g.totalWin,'River current win'),'AG integrity: SG River cash components');const win=integer(g.BGInfo.totalWagerWin,'River cumulative'),bg=integer(g.BGInfo.bgWinnings,'River paid win');assert(win===(first?cash:previousWin+cash),'AG integrity: SG River cumulative cash');
+ if(first)assert(bg===cash,'AG integrity: SG River paid components');else assert(bg===integer(base.BGInfo.bgWinnings,'River original paid win'),'AG integrity: SG River base cash changed');
+ if(g.FSInfo){const f=g.FSInfo;if(first)ownPaidKeys(f,'fsWinnings|freeSpinsTotal|freeSpinNumber','River free introduction');const total=integer(f.freeSpinsTotal,'River total free'),played=integer(f.freeSpinNumber,'River played free'),freeWin=integer(f.fsWinnings,'River cumulative free win');assert(total>0&&played<=total&&bg+freeWin===win,'AG integrity: SG River free cash');
+  if(first)assert(played===0&&freeWin===0,'AG integrity: SG River free intro');else assert(played===prior.freeSpinsPlayed+1&&total===prior.freeSpinsTotal+integer(f.extraSpinsAwarded,'River actual free award'),'AG integrity: SG River free transition');
+  free={freeSpinsTotal:total,freeSpinsPlayed:played,freeSpinsRemaining:total-played,accumulativeWin:win/100,...(expansions?{ownRiverExpansions:expansions}:{})};
+ }else assert(first,'AG integrity: SG River free state disappeared');
+ return {win,base,free};
+}
+
+
+export function validateZeusThree(game:AGGameConfig,g:any,first:boolean,prior:any,base:any,previousWin:number) {
+ assert(game.gameId==='32816'&&game.dbName==='sg_zeus3_prt'&&game.sg.runtimeGameId===33176&&game.sg.header.gameID==='20123'&&game.sg.header.gameCodeRGI==='zeus3_prt'&&game.sg.betRaw===40&&game.sg.zeusThreeContract==='zeus-three-own-line-free-wild-v1','AG integrity: SG own Zeus III binding');
+ const feature=g?.Feature!==undefined;
+ ownPaidKeys(g,'stake|stakePerLine|paylineCount|totalWin|betID|ReelResults|ReelSpinTimes|GameWinInfo'+(feature?'|Feature':'')+(g.WildInfo!==undefined?'|WildInfo':'')+(first?'':'|BaseGameRecoveryInfo'),'Zeus III result');
+ assert(g.stake==='40'&&g.stakePerLine==='1'&&g.paylineCount==='192'&&typeof g.betID==='string','AG integrity: SG Zeus III wager');
+ ownPositionNumbers(g.ReelSpinTimes,6,'Zeus III reel timing');
+ ownPaidKeys(g.ReelResults,'numSpins|ReelSpin','Zeus III reels');const spins=list(g.ReelResults.ReelSpin);assert(g.ReelResults.numSpins==='1'&&spins.length===1,'AG integrity: SG Zeus III spin count');const r=spins[0];
+ const lines=list(r.PaylineWin),scatters=list(r.ScatterWin);
+ ownPaidKeys(r,'spinIndex|reelsetIndex|winCountPL|winCountSC|spinWins|freeSpin|bonusAwarded|ReelStops'+(lines.length?'|PaylineWin':'')+(scatters.length?'|ScatterWin':''),'Zeus III spin');
+ assert(r.spinIndex==='0'&&r.reelsetIndex===(first?'0':'1')&&r.freeSpin===(first?'N':'Y'),'AG integrity: SG Zeus III reel mode');
+ ownPositionNumbers(r.ReelStops,6,'Zeus III six reel stops');
+ assert(integer(r.winCountPL,'Zeus III line count')===lines.length&&integer(r.winCountSC,'Zeus III scatter count')===scatters.length,'AG integrity: SG Zeus III win counts');
+ let cash=0,scatterCash=0;const ids=new Set<number>();
+ const positions=(s:any,label:string)=>{const p=ownPositionNumbers(s,undefined,label);assert(p.every(v=>v<42)&&new Set(p).size===p.length,'AG integrity: SG Zeus III original payline geometry');};
+ for(const w of lines){ownPaidKeys(w,'index|winVal|awardIndex|awardTableIndex|#text','Zeus III line');const id=integer(w.index,'Zeus III line index');assert(id<192&&!ids.has(id),'AG integrity: SG Zeus III duplicate line');ids.add(id);integer(w.awardIndex,'Zeus III award');integer(w.awardTableIndex,'Zeus III award table');positions(w['#text'],'Zeus III line positions');cash+=integer(w.winVal,'Zeus III line cash');}
+ for(const w of scatters){ownPaidKeys(w,'winVal|awardIndex|#text','Zeus III scatter');integer(w.awardIndex,'Zeus III scatter award');positions(w['#text'],'Zeus III scatter positions');scatterCash+=integer(w.winVal,'Zeus III scatter cash');}
+ cash+=scatterCash;assert(Number.isSafeInteger(cash)&&cash===integer(r.spinWins,'Zeus III spin cash')&&cash===integer(g.totalWin,'Zeus III current cash'),'AG integrity: SG Zeus III cash components');
+ if(g.WildInfo!==undefined){assert(typeof g.WildInfo==='string'&&g.WildInfo.length>0,'AG integrity: SG Zeus III wild display');const seen=new Set<number>();for(const item of g.WildInfo.split(',')){const values=item.split('|');assert(values.length===3&&values.every((v:string)=>/^-?(?:0|[1-9]\d*)$/.test(v)),'AG integrity: SG Zeus III typed wild display');const [reel,offset,animate]=values.map(Number);assert([reel,offset,animate].every(Number.isSafeInteger)&&reel>=0&&reel<6&&!seen.has(reel)&&[0,1].includes(animate),'AG integrity: SG Zeus III wild reel identity');seen.add(reel);/* The own client consumes signed nudgingOffset; display never adds cash. */}}
+ ownPaidKeys(g.GameWinInfo,'totalWagerWin|totalBGWin|totalFSWin|maxWinValue|isMaxWin','Zeus III winnings');const w=g.GameWinInfo,win=integer(w.totalWagerWin,'Zeus III cumulative'),bg=integer(w.totalBGWin,'Zeus III base cash'),fs=integer(w.totalFSWin,'Zeus III free cash');
+ assert(w.isMaxWin==='N'&&w.maxWinValue==='25000000'&&bg+fs===win&&win===(first?cash:previousWin+cash),'AG integrity: SG Zeus III cumulative components');
+ let free;
+ if(first){assert(prior===undefined&&bg===cash&&fs===0,'AG integrity: SG Zeus III initial winnings');base=structuredClone(g);
+  if(feature){ownPaidKeys(g.Feature,'index|name|data','Zeus III introduction');assert(g.Feature.index==='1'&&g.Feature.name==='FreeSpins','AG integrity: SG Zeus III feature identity');const f=g.Feature.data;ownPaidKeys(f,'freeSpinTriggerWin|totalFreeSpinsTriggered','Zeus III intro counters');const total=integer(f.totalFreeSpinsTriggered,'Zeus III triggered total');assert(total>0&&integer(f.freeSpinTriggerWin,'Zeus III trigger cash')===scatterCash,'AG integrity: SG Zeus III trigger components');free={freeSpinsTotal:total,freeSpinsPlayed:0,freeSpinsRemaining:total,accumulativeWin:win/100};}
+  assert(r.bonusAwarded===(feature?'Y':'N'),'AG integrity: SG Zeus III paid feature marker');
+ }else{
+  assert(prior&&prior.freeSpinsRemaining>0&&base&&feature&&bg===integer(base.GameWinInfo.totalBGWin,'Zeus III original paid cash'),'AG integrity: SG Zeus III free state');
+  ownPaidKeys(g.BaseGameRecoveryInfo,'ReelResults|Feature','Zeus III paid recovery');assert(JSON.stringify(g.BaseGameRecoveryInfo.ReelResults)===JSON.stringify(base.ReelResults)&&JSON.stringify(g.BaseGameRecoveryInfo.Feature)===JSON.stringify(base.Feature),'AG integrity: SG Zeus III original paid recovery');
+  ownPaidKeys(g.Feature,'index|name|data','Zeus III free feature');assert(g.Feature.index==='1'&&g.Feature.name==='FreeSpins','AG integrity: SG Zeus III free identity');const f=g.Feature.data;
+  ownPaidKeys(f,'totalFreeSpinsWin|totalFreeSpinsAwarded|freeSpinsReTriggered|freeSpinReTriggerWin|remainingFreeSpins|lastFreeSpin','Zeus III free counters');
+  const total=integer(f.totalFreeSpinsAwarded,'Zeus III total free'),extra=integer(f.freeSpinsReTriggered,'Zeus III returned extra'),remaining=integer(f.remainingFreeSpins,'Zeus III remaining free'),played=prior.freeSpinsPlayed+1;
+  assert(total===prior.freeSpinsTotal+extra&&remaining===prior.freeSpinsRemaining-1+extra&&remaining===total-played&&integer(f.totalFreeSpinsWin,'Zeus III returned free cash')===fs,'AG integrity: SG Zeus III free transition');
+  assert(integer(f.freeSpinReTriggerWin,'Zeus III returned retrigger cash')===scatterCash&&r.bonusAwarded===(extra>0?'Y':'N')&&f.lastFreeSpin===(remaining===0?'Y':'N'),'AG integrity: SG Zeus III real terminal or award marker');
+  free={freeSpinsTotal:total,freeSpinsPlayed:played,freeSpinsRemaining:remaining,accumulativeWin:win/100};
+ }
+ return {win,free,base};
+}
+
 export class SGWmsSession {
     private balance = Number.NaN;
     private startBalance = Number.NaN;
@@ -654,6 +735,8 @@ export class SGWmsSession {
     private coolJewelsBase:any;
     private fudaBase: unknown;
     private healthyComponentsBase:any;
+    private riverBase:any;
+    private zeusThreeBase:any;
     private journal: number | null = null;
     private journalPath: string | null = null;
     private ordinal = 0;
@@ -732,6 +815,7 @@ export class SGWmsSession {
         const header='<Header '+Object.entries(h).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')+'/>';
         if(event==='Logic'&&this.game.sg.healthyComponentsContract){const kind=ownHealthyComponentsBinding(this.game);if(this.action==='FREE_SPIN'){assert(kind!=='jinji'&&Object.keys(parameters).length===0,'AG integrity: SG healthy free request');return `<GameRequest type="Logic">${header}</GameRequest>`;}assert(this.action==='SPIN'&&JSON.stringify(parameters)===JSON.stringify(this.game.sg.stake),'AG integrity: SG healthy paid request');const ownStake='<Stake '+Object.entries(parameters).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')+'/>';if(kind==='megaways')return `<GameRequest type="Logic">${header}${ownStake}<PaylineCount count="1"/><AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData></GameRequest>`;return `<GameRequest type="Logic">${header}<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData>${ownStake}</GameRequest>`;}
         if(event==='Logic'&&this.game.sg.eightyFortunesContract&&Object.keys(parameters).length){assert(this.action==='SPIN'&&this.game.gameId==='32750'&&JSON.stringify(parameters)===JSON.stringify({creditBet:'88',betMultiplier:'2'}),'AG integrity: SG 88 Fortunes own paid request');return `<GameRequest type="Logic">${header}<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData><SpinInfo creditBet="88" betMultiplier="2"/></GameRequest>`;}
+        if(event==='Logic'&&this.game.sg.zeusThreeContract){assert(this.game.gameId==='32816'&&this.game.dbName==='sg_zeus3_prt'&&this.game.sg.betRaw===40,'AG integrity: SG Zeus III request binding');if(this.action==='FREE_SPIN'){assert(Object.keys(parameters).length===0,'AG integrity: SG Zeus III free request');return `<GameRequest type="Logic">${header}</GameRequest>`;}assert(this.action==='SPIN'&&JSON.stringify(parameters)===JSON.stringify({totalStake:'40'}),'AG integrity: SG Zeus III paid request');return `<GameRequest type="Logic">${header}<WagerInfo totalStake="40"/><AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData></GameRequest>`;}
         if(event==='Logic'&&this.game.sg.logicRequestNode==='WagerInfo'){
             if(this.game.sg.fudaPaidContract){if(this.action==='FREE_SPIN'){assert(this.game.gameId==='32769'&&this.game.sg.fudaFreeContract==='fuda-own-natural-free-v4'&&JSON.stringify(parameters)===JSON.stringify({totalStake:'200'}),'AG integrity: SG Fu own free wager');return `<GameRequest type="Logic">${header}<WagerInfo totalStake="200"/><AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData></GameRequest>`;}assert(this.action==='SPIN'&&this.game.gameId==='32769'&&this.game.sg.fudaPaidContract==='fuda-own-natural-paid-display-v3'&&JSON.stringify(parameters)===JSON.stringify({totalStake:'200',featureBet:'0'}),'AG integrity: SG Fu Dao Le own request');return `<GameRequest type="Logic">${header}<WagerInfo totalStake="200" featureBet="0"/><AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData></GameRequest>`;}
             assert(this.game.gameId==='32767'&&this.game.sg.fireQueenPaidContract==='fire-queen-own-paid-v1'&&this.action==='SPIN'&&Object.keys(parameters).join('|')==='totalStake'&&parameters.totalStake==='50','AG integrity: SG Fire Queen own request');
@@ -822,7 +906,9 @@ export class SGWmsSession {
             this.action='SPIN';
         } else {
             const g=r.GameResult;
-            if(this.game.sg.healthyComponentsContract){if(first)this.healthyComponentsBase=undefined;const mapped=validateOwnHealthyComponents(this.game,g,first,this.free,this.healthyComponentsBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.healthyComponentsBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
+            if(this.game.sg.zeusThreeContract){const mapped=validateZeusThree(this.game,g,first,this.free,this.zeusThreeBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.zeusThreeBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
+            else if(this.game.sg.spiritRiverContract){const mapped=validateSpiritRiver(this.game,g,first,this.free,this.riverBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.riverBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
+            else if(this.game.sg.healthyComponentsContract){if(first)this.healthyComponentsBase=undefined;const mapped=validateOwnHealthyComponents(this.game,g,first,this.free,this.healthyComponentsBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.healthyComponentsBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(this.game.sg.eightyFortunesContract){const mapped=validateEightyFortunesData(this.game,g,first,this.free,this.eightyBase,this.totalWin);if(first)this.eightyBase=structuredClone(g);this.totalWin=mapped.win;this.free=mapped.free;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(this.game.sg.coolJewelsFreeContract){const mapped=validateCoolJewelsFreeData(this.game,g,first,this.free,this.coolJewelsBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.coolJewelsBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(first&&this.game.sg.coolJewelsPaidContract){this.totalWin=validateCoolJewelsPaidData(this.game,g);this.action='PLAY';}
