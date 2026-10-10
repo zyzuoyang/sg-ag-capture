@@ -1199,6 +1199,7 @@ games:
       runtimeSlug: spiritoftheriver
       runtimeGameId: 33168
       spiritRiverContract: spirit-river-own-cash-progress-irf-v1
+      spiritRiverEmptyMysteryContract: own-returned-empty-mystery-display-v2
   - provider: sg
     gameId: '32816'
     name: Zeus III
@@ -1243,3 +1244,5 @@ games:
       runtimeGameId: 33176
       logicRequestNode: WagerInfo
       zeusThreeContract: zeus-three-own-line-free-wild-v1
+      zeusThreeTriggerCashContract: own-exact-separate-trigger-cash-v3
+      zeusThreePaidRecoveryContract: own-exact-paid-wild-display-v2
