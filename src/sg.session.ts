@@ -534,7 +534,7 @@ export function validateHimalayaCompass(game:AGGameConfig,result:any,previousFre
 // connections. It translates SG data; original AG still controls every action.
 function ownHealthyComponentsBinding(game:AGGameConfig):'megaways'|'deepsea'|'jinji' {
  const bindings:any={
-  '32751':['sg_eightyeightfortunesmegaways',32973,'20371','eightyeightfortunesmegaways',16,'eighty-eight-megaways-own-components-v1','megaways'],
+  '32751':['sg_eightyeightfortunesmegaways',32973,'20371','eightyeightfortunesmegaways',16,'eighty-eight-megaways-own-components-v2','megaways'],
   '32765':['sg_dropandlockdeepseamagic',32987,'20412','dropandlockdeepseamagic',200,'deep-sea-own-line-free-components-v1','deepsea'],
   '32777':['sg_jjbxmegaways',32999,'20468','jjbxmegaways',88,'jin-ji-megaways-own-paid-components-v1','jinji']
  };
@@ -594,7 +594,7 @@ export function validateOwnHealthyComponents(game:AGGameConfig,g:any,first:boole
  const f=g.FSInfo;ownPaidKeys(f,first?(deep?'fsWinnings|freeSpinsTotal|freeSpinNumber':'fsWinnings|freeSpinsTotal|freeSpinNumber|isMaxWin|startCasMult'):(deep?'fsWinnings|freeSpinsTotal|freeSpinNumber|isMaxWin|extraSpinsAwarded':'fsWinnings|freeSpinsTotal|freeSpinNumber|extraSpinsAwarded|reelHeights'),'healthy free info');
  const total=integer(f.freeSpinsTotal,'healthy free total'),played=integer(f.freeSpinNumber,'healthy free played'),freeWin=integer(f.fsWinnings,'healthy free cash');assert(total>0&&played<=total&&bg+freeWin===win,'AG integrity: SG healthy free components');
  if(f.isMaxWin!==undefined)assert(f.isMaxWin==='0','AG integrity: SG healthy free cap');
- if(first){assert(played===0&&freeWin===0,'AG integrity: SG healthy free intro');if(!deep){ownPaidKeys(g.PickerInfo,'pickerIndex','88 picker display');integer(g.PickerInfo.pickerIndex,'88 returned picker index');assert(integer(f.startCasMult,'88 initial multiplier')>0,'AG integrity: SG 88 server free introduction');}}
+ if(first){assert(played===0&&freeWin===0,'AG integrity: SG healthy free intro');if(!deep){if(g.PickerInfo!==undefined){ownPaidKeys(g.PickerInfo,'pickerIndex','88 picker display');integer(g.PickerInfo.pickerIndex,'88 returned picker index');}assert(integer(f.startCasMult,'88 initial multiplier')>0,'AG integrity: SG 88 server free introduction');}}
  else {
   const award=integer(f.extraSpinsAwarded,'healthy awarded extra spins');assert(played===previousFree.freeSpinsPlayed+1&&total===previousFree.freeSpinsTotal+award,'AG integrity: SG healthy free counter transition');
   if(!deep){assert(g.PickerInfo===undefined&&ownPositionNumbers(f.reelHeights,6,'free heights').every(n=>n>=2&&n<=7),'AG integrity: SG healthy free heights');ownPaidKeys(g.CascadeInfo,'prevCascadeMult|curCascadeMult','88 cascade multiplier');const prior=integer(g.CascadeInfo.prevCascadeMult,'88 prior multiplier'),next=integer(g.CascadeInfo.curCascadeMult,'88 current multiplier');assert(prior===(previousFree.ownCascadeMultiplier??integer(base.FSInfo.startCasMult,'88 initial multiplier'))&&next===prior+list(g.ReelResults.ReelSpin).length-1,'AG integrity: SG 88 cascade transition');}
