@@ -2318,3 +2318,573 @@ games:
       - 5001
       - 10001
     serviceDir: sg_moneyraidkodiak96
+  - provider: sg
+    gameId: '32501'
+    name: Dragon Spin Cross Link Water
+    dbName: sg_dragonspincrosslinkwater96
+    backendId: dragonspincrosslinkwater96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33034
+      runtimeSlug: dragonspincrosslinkwater96
+      betRaw: 100
+      requestParams:
+        BPL: '5'
+        GN: dragonspincrosslinkwater96
+        LB: '40'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v2
+        gameId: '32501'
+        dbName: sg_dragonspincrosslinkwater96
+        runtimeGameId: 33034
+        runtimeSlug: dragonspincrosslinkwater96
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPL
+          - CFGG
+          - CW
+          - FGT
+          - FGTW
+          - FID
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NFG
+          - NRID
+          - PD
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TFG
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - GA
+          - MSGID
+          - TW
+        ordinaryGSDKeys:
+          - CBPL
+          - DST
+          - HM
+          - SL
+          - VA
+          - VM
+        ownSDKFileSHA256: 9150f6e073c69ba7a6e940dd7b63890bcdf78e159d0147a632c49c1253b74b58
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: d8dd4f95706bf8504c7ce5d44f93e60aeeef3217007f6964578dc20e78add166
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 9d1a292dc2f7b69edd0717fd5b51ecfeea228aad517eb02fe7a91334cf92d36b
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 9453c7fc4ce9c14e800b7a52e6006488e67a4b95cbe1265f559ec0d8f451e3c5
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: f44d8e7bc69521b3fd60f7cd3b1291c7966265e67611054641645a9ad9ae08aa
+        SDKFinalGetterSourceSHA256: 40214973b16023552097f950880231541f8fad6aa9daf3c23822da8a954c62f3
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32501'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            BPL: '5'
+            GN: dragonspincrosslinkwater96
+            LB: '40'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownPromotionalFieldDecoderProof:
+            - wireKey: FRR
+              property: xgb
+              SHA256: c348bfa785c943a46983076c105a6dc3758f8e964e0160d390347f799b507d14
+            - wireKey: FRT
+              property: Ila
+              SHA256: 2f7f34fd063b552ddc6b5feca4ae747fd43cb42d9ac4b94aef7e0cb3c945e5f7
+            - wireKey: FRR
+              property: Ci
+              SHA256: 45ebf46d9e5f1964e3e9b509396ac85b96548e271ed1062933e38d8e672d7458
+            - wireKey: FRR
+              property: Ci
+              SHA256: c30921a145be501c6dd9ab934d3ca8d9d4a8d21721d308ef4e9b63d73cf68a00
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+  - provider: sg
+    gameId: '32636'
+    name: Rich Little Piggies World Class
+    dbName: sg_richlittlepiggiesworldclass96
+    backendId: richlittlepiggiesworldclass96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33085
+      runtimeSlug: richlittlepiggiesworldclass96
+      betRaw: 100
+      requestParams:
+        GN: richlittlepiggiesworldclass96
+        AP: 'false'
+        BPL: '5'
+        LB: '25'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v2
+        gameId: '32636'
+        dbName: sg_richlittlepiggiesworldclass96
+        runtimeGameId: 33085
+        runtimeSlug: richlittlepiggiesworldclass96
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPL
+          - CFGG
+          - CW
+          - FGT
+          - FGTW
+          - FID
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NFG
+          - NRID
+          - PD
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TFG
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - GA
+          - MSGID
+          - TW
+        ordinaryGSDKeys:
+          - BT
+          - CO
+          - CONAMES
+          - CW
+          - FGEW
+          - ITFG
+          - MSR
+          - MSRNAME
+          - RPI
+          - RSAS
+          - RSTA
+          - RTR
+          - RW
+          - VA
+          - WCP
+          - WCS
+          - WM
+          - WWW
+        ownSDKFileSHA256: 2609546bee152162110eebd96e9508d7aba418b47017b98a01c0c6003be68ff4
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: b2fa127bd8ca5d395acf5ab42d360a921a73c91c5b75c844148328f859940799
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 17fb4cd13a225950cc7cb97d303a93c848e1f93a82438d750c61efac80fa6fda
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 1a173e8b5b0a4a060605cbab5a7132fcc93c8be202fd8b658781a16ae21f5bd5
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: cf6edbe28c248cf71469427ac8282111e1262db258ee31aed6f0c9b359f56491
+        SDKFinalGetterSourceSHA256: ede3bf3c47333896f732ea6464c4dfcaf86cfa368e4371d178060b917c7c7ae0
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32636'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            AP: 'false'
+            BPL: '5'
+            GN: richlittlepiggiesworldclass96
+            LB: '25'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownPromotionalFieldDecoderProof:
+            - wireKey: FRR
+              property: lpb
+              SHA256: 2868a0a6444d022de67f61e15b3db789973222e3c65cecab5a59713d8fa5cd55
+            - wireKey: FRT
+              property: Dpa
+              SHA256: ef110b9df28cafe34714cf8f1008190ef9d00678ebc1939ee5ed970dd38afe2a
+            - wireKey: FRR
+              property: bi
+              SHA256: 082dab08fdb05adc4765a478041cb7f83d77f2e3ca3a248849f7f64c6ced4cff
+            - wireKey: FRR
+              property: bi
+              SHA256: da5c0e0fc01d33ef78c2f3dd1899e282afbccb67eedb594669c382b1b47e3ecd
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+  - provider: sg
+    gameId: '32641'
+    name: Rockets! Red Glare
+    dbName: sg_rocketsredglare96
+    backendId: rocketsredglare96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33087
+      runtimeSlug: rocketsredglare96
+      betRaw: 200
+      requestParams:
+        AP: 'false'
+        BPR: '10'
+        GN: rocketsredglare96
+        RB: '6'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v2
+        gameId: '32641'
+        dbName: sg_rocketsredglare96
+        runtimeGameId: 33087
+        runtimeSlug: rocketsredglare96
+        betRaw: 200
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - CFGG
+          - CW
+          - FGT
+          - FGTW
+          - FID
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NFG
+          - NRID
+          - PD
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TFG
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - GA
+          - MSGID
+          - TW
+        ordinaryGSDKeys:
+          - BGRS
+          - BG_INF
+          - CV
+          - FGVA
+          - POTS
+          - PRE_VA
+          - VA
+          - WILD_MULTIPLIERS
+          - WILD_POSITIONS_WITH_REPLACED_SYMBOL
+        ownSDKFileSHA256: 2ea7f53c90b87a34b66c28c73a7af1179f5201f0463de6c97d60aec1af0b8d40
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: cc5079b91f19e7ee86371dde063ee0ab0c801a48bf062ccb2519e5d70167eada
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 3be8d17b308f2344a045944da81ebdb326e88053c1b15eaf8fd93339b3d2d784
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 5184b95a95ae1ed1c26ee9a4537ab12162ea5312eb74f567e45457451b9c5e9a
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 4c2fd89bd8c132f5fd20c251384746ae9929fa34cd893569f2374ea405f9cde4
+        SDKFinalGetterSourceSHA256: 8101ff764d8a5bfc0a5ec4be00bfbd5a98f4ee25f6272aa035776dade61ff43b
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32641'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            AP: 'false'
+            BPR: '10'
+            GN: rocketsredglare96
+            RB: '6'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownPromotionalFieldDecoderProof:
+            - wireKey: FRR
+              property: Bdb
+              SHA256: c3da018520cad01e3207c685033fddc7fafc2a8b495390fefb3c202a0536d8b8
+            - wireKey: FRT
+              property: Fla
+              SHA256: f800074ae78caf4b94ce4b0fa01d4fcacdbb7f6432aab54d1a6258e316b66f14
+            - wireKey: FRR
+              property: Ei
+              SHA256: fa8d7928ab119b4e03346f17b450344e1d250dbcdde1ceca864724b1e5f70381
+            - wireKey: FRR
+              property: Ei
+              SHA256: e17ffc02a412c16885c2b4cb90d706352d8bfc7044bf73e5171335061c101c8d
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+  - provider: sg
+    gameId: '32717'
+    name: Huff N' Lots of Goals!
+    dbName: sg_huffnlotsofpuffgoals96
+    backendId: huffnlotsofpuffgoals96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33117
+      runtimeSlug: huffnlotsofpuffgoals96
+      betRaw: 200
+      requestParams:
+        GN: huffnlotsofpuffgoals96
+        BPR: '10'
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v2
+        gameId: '32717'
+        dbName: sg_huffnlotsofpuffgoals96
+        runtimeGameId: 33117
+        runtimeSlug: huffnlotsofpuffgoals96
+        betRaw: 200
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - CFGG
+          - CW
+          - FGT
+          - FGTW
+          - FID
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NFG
+          - NRID
+          - PD
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TFG
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - GA
+          - MSGID
+          - TW
+        ordinaryGSDKeys:
+          - BMS
+          - BRS
+          - BWC
+          - BWS
+          - CFCFGG
+          - CFFGT
+          - CFNFG
+          - CFTFG
+          - FEAT
+          - FEAT_WIN
+          - FMS
+          - FRAMES
+          - FRAMEWINS
+          - HHPOS
+          - NEXTTRIGGER
+          - PREVFRAMES
+          - VA
+          - WH1
+          - WH2
+        ownSDKFileSHA256: f41a7744c5d2d5f966fa3c9c2ccf0b77ac3fc0d68614f985518090d3e3fbed7f
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: 04fe237d3e9ba3b8e8aab32528dbbc1929f06041af26569e82dd84a7969a6ffa
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 585ef15046185574da6a001570c3907000e19bb248436bc440791ca13dbe078c
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 5ff98e4a0fa1039aa47f1287fc8bcf737ee47fbb8d7ee4abded817cf5ffada83
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 07a29bb7f6784773e6c3dabc56b7d9cc9945e46150a293892771a1443edb3a32
+        SDKFinalGetterSourceSHA256: c1ca83ffbe5c2b2a05d8f38c04fcc7694fda5a279c12072398ba34f7153754de
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32717'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            BPR: '10'
+            GN: huffnlotsofpuffgoals96
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownPromotionalFieldDecoderProof:
+            - wireKey: FRR
+              property: Xob
+              SHA256: 7a44ff51cfff9364374b4b15e1f4534cf96850cd37635682ab5f580ab64c3886
+            - wireKey: FRT
+              property: bY
+              SHA256: 450fc849855d8737904c947bfe322dadf1548b704ddbd70b12ba4f9cc34738b9
+            - wireKey: FRR
+              property: yi
+              SHA256: 4d0ecead811869c9e6817db13ac0bed0ce0a4aa7a0a0a15f64411e441c8194f3
+            - wireKey: FRR
+              property: yi
+              SHA256: 50f96320c29333efe4066fc496ad8ccdc03b1fabd97577ab6193b9e796222fc3
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
