@@ -534,8 +534,8 @@ export function validateHimalayaCompass(game:AGGameConfig,result:any,previousFre
 // connections. It translates SG data; original AG still controls every action.
 function ownHealthyComponentsBinding(game:AGGameConfig):'megaways'|'deepsea'|'jinji'|'spartacus' {
  const bindings:any={
-  '32807':['sg_spartacusmegaways',33167,'20405','spartacusmegaways',200,'spartacus-own-returned-components-v1','spartacus'],
-  '32751':['sg_eightyeightfortunesmegaways',32973,'20371','eightyeightfortunesmegaways',16,'eighty-eight-megaways-own-components-v3','megaways'],
+  '32807':['sg_spartacusmegaways',33167,'20405','spartacusmegaways',200,'spartacus-own-returned-components-v2','spartacus'],
+  '32751':['sg_eightyeightfortunesmegaways',32973,'20371','eightyeightfortunesmegaways',16,'eighty-eight-megaways-own-components-v4','megaways'],
   '32765':['sg_dropandlockdeepseamagic',32987,'20412','dropandlockdeepseamagic',200,'deep-sea-own-line-free-components-v1','deepsea'],
   '32777':['sg_jjbxmegaways',32999,'20468','jjbxmegaways',88,'jin-ji-megaways-own-paid-components-v1','jinji']
  };
@@ -585,7 +585,20 @@ export function validateOwnHealthyComponents(game:AGGameConfig,g:any,first:boole
  ownPaidKeys(g.BGInfo,'totalWagerWin|bgWinnings|isMaxWin'+(deep?'':kind==='megaways'?'|gameMode|reelHeights':'|reelHeights'),'healthy base info');assert(g.BGInfo.isMaxWin==='0','AG integrity: SG healthy capped result');
  if(kind==='megaways')assert(g.BGInfo.gameMode==='0','AG integrity: SG 88 game mode');
  if(!deep)assert(ownPositionNumbers(g.BGInfo.reelHeights,6,'base reel heights').every(n=>n>=2&&n<=(kind==='spartacus'?10:7)),'AG integrity: SG base heights');
- const current=ownHealthyReelCash(g.ReelResults,kind,!first,first&&hasFree),win=integer(g.BGInfo.totalWagerWin,'healthy cumulative'),bg=integer(g.BGInfo.bgWinnings,'healthy paid cash');
+ // The returned award is a state transition, not another cash payout.
+ // Own closed prefixes include zero/nonzero winnings and 6/8/12 new spins.
+ // Preserve unplayed spins, consume exactly one old spin, add only the award.
+ const ownFreeRetrigger=!first&&hasFree&&(kind==='megaways'||kind==='spartacus')&&integer(g.FSInfo.extraSpinsAwarded,'own returned extra free spins')>0;
+ if(!first&&(kind==='megaways'||kind==='spartacus')) {
+  const spins=list(g.ReelResults.ReelSpin),marked=spins.map((r:any,i:number)=>({r,i})).filter((q:any)=>q.r.bonusAwarded==='Y');
+  assert(marked.length===(ownFreeRetrigger?1:0),'AG integrity: SG free award flag disagreement');
+  if(ownFreeRetrigger) {
+   const award=integer(g.FSInfo.extraSpinsAwarded,'own actual free award');
+   assert(previousFree&&integer(g.FSInfo.freeSpinNumber,'own award played')===previousFree.freeSpinsPlayed+1&&integer(g.FSInfo.freeSpinsTotal,'own awarded total')===previousFree.freeSpinsTotal+award,'AG integrity: SG free award counter transition');
+   assert(marked[0].i===spins.length-1&&integer(marked[0].r.scatterWinCount,'own award scatter count')>0,'AG integrity: SG free award cascade order');
+  }
+ }
+ const current=ownHealthyReelCash(g.ReelResults,kind,!first,(first&&hasFree)||ownFreeRetrigger),win=integer(g.BGInfo.totalWagerWin,'healthy cumulative'),bg=integer(g.BGInfo.bgWinnings,'healthy paid cash');
  assert(integer(g.totalWin,'healthy current cash')===current&&win===(first?current:previousWin+current),'AG integrity: SG healthy current cumulative cash');
  if(first){assert(bg===current&&previousFree===undefined,'AG integrity: SG healthy paid entry');base=structuredClone(g);}
  else {

@@ -1018,7 +1018,7 @@ games:
       betRaw: 16
       runtimeSlug: eightyeightfortunesmegaways
       runtimeGameId: 32973
-      healthyComponentsContract: eighty-eight-megaways-own-components-v3
+      healthyComponentsContract: eighty-eight-megaways-own-components-v4
       logicPaylineCount: '1'
   - provider: sg
     gameId: '32765'
@@ -1148,7 +1148,7 @@ games:
       betRaw: 200
       runtimeSlug: spartacusmegaways
       runtimeGameId: 33167
-      healthyComponentsContract: spartacus-own-returned-components-v1
+      healthyComponentsContract: spartacus-own-returned-components-v2
       spartacusCurtainIndices:
         - 0
         - 1
