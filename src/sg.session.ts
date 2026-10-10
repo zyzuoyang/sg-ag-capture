@@ -992,7 +992,7 @@ export function ownGDMFields(value:string,separator='&',assignment='='):Record<s
 function gdmBinding(game:AGGameConfig){
  const c=game.sg?.ownGDMContract;
  assert(game.provider==='sg'&&game.sg.protocol==='gdm'&&game.sg.endpoint==='https://ogs-gdm-usnj.nyxop.net/nextgen/','AG integrity: GDM source gdmBinding');
- assert(['own-SDK-ordinary-final-v1','own-SDK-free-game-chain-v2'].includes(c?.version)&&c.gameId===game.gameId&&c.dbName===game.dbName&&c.runtimeGameId===game.sg.runtimeGameId
+ assert(['own-SDK-ordinary-final-v1','own-SDK-free-game-chain-v2','own-SDK-free-game-chain-v3'].includes(c?.version)&&c.gameId===game.gameId&&c.dbName===game.dbName&&c.runtimeGameId===game.sg.runtimeGameId
   &&c.runtimeSlug===game.sg.runtimeSlug&&game.backendId===c.runtimeSlug&&game.sg.requestParams?.GN===c.runtimeSlug&&c.betRaw===game.sg.betRaw&&c.fixedGitCommit==='885f862bcc04841406820a932ef14c38c7759f1d'
   &&typeof c.ownSDKFileSHA256==='string'&&/^[a-f0-9]{64}$/.test(c.ownSDKFileSHA256)
   &&Number.isSafeInteger(c.betRaw)&&c.betRaw>0&&c.balanceScale===1&&c.winScale===1,'AG integrity: GDM own rule gdmBinding');
@@ -1021,13 +1021,32 @@ export function ownGDMOrdinaryFinal(game:AGGameConfig,p:Record<string,string>):b
  }
  return true;
 }
+export function ownGDMSDKTypedGSD(game:AGGameConfig,gsd:Record<string,string>){
+ const c=gdmBinding(game),schema=c.ownGSDDataSchema;
+ if(schema)assert(c.version==='own-SDK-free-game-chain-v3'&&schema.version==='own-exact-SDK-GSD-types-v1'&&schema.gameId===game.gameId&&schema.ownSDKFileSHA256===c.ownSDKFileSHA256&&schema.unknownUncompiledFieldsStillFatal===true&&schema.noCashOrNextActionDerivedFromOptionalGSD===true,'AG integrity: GDM foreign typed SDK schema');
+ const check=(value:string,type:any,depth=0):void=>{
+  assert(typeof value==='string'&&value.length<=4096&&depth<8&&!/[\x00-\x1f\x7f]/.test(value),'AG integrity: GDM typed SDK field shape');
+  if(type.kind==='array'){assert(typeof type.delimiter==='string'&&type.delimiter.length===1,'AG integrity: GDM own SDK delimiter');if(value==='')return;const items=value.split(type.delimiter);assert(items.length<=1024,'AG integrity: GDM typed SDK array length');for(const item of items)check(item,type.item,depth+1);return;}
+  if(value===''&&depth>0&&['integer','number'].includes(type.kind)&&schema?.preserveNullableSDKArrayCells===true){assert(/^[a-f0-9]{64}$/.test(schema.nullableSDKNumberValidatorSHA256),'AG integrity: GDM nullable SDK cell proof');return;}
+  if(type.kind==='string')return;
+  if(type.kind==='boolean'){assert(value==='0'||value==='1','AG integrity: GDM typed SDK boolean');return;}
+  assert(type.kind==='integer'||type.kind==='number','AG integrity: GDM uncompiled SDK type');
+  assert(/^-?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+-]?\d+)?$/.test(value)&&Number.isFinite(Number(value)),'AG integrity: GDM typed SDK number');
+  if(type.kind==='integer')assert(!type.integerAliasValidatorUnproven&&Number.isSafeInteger(Number(value)),'AG integrity: GDM typed SDK integer');
+ };
+ for(const [key,value]of Object.entries(gsd)){
+  const field=schema?.fields?.[key];
+  if(field){assert(/^[a-f0-9]{64}$/.test(field.ownSDKFieldSHA256),'AG integrity: GDM unbound SDK field');check(value,field.type);}
+  else assert(c.ordinaryGSDKeys.includes(key),'AG integrity: GDM unknown own typed GSD field');
+ }
+}
 function ownGDMFreeEnvelope(game:AGGameConfig,p:Record<string,string>,event:string){
  const c=gdmBinding(game),rule=c.freeBudgetContract;assert(rule?.gameId===game.gameId,'AG integrity: GDM own free scope');
  for(const k of Object.keys(p))assert(c.responseKeys.includes(k),'AG integrity: GDM unknown free response field');
  for(const k of c.requiredResponseKeys)assert(p[k]!==undefined,'AG integrity: GDM missing free envelope field');
  for(const k of rule.promotionalKeysForbidden)assert(p[k]===undefined,'AG integrity: GDM promotional FreeRounds not mapped');
  assert(p.GA==='0'&&(p.GCT===undefined||p.GCT==='0'),'AG integrity: GDM other active/capped feature not mapped');
- const gsd=p.GSD===undefined?{}:ownGDMFields(p.GSD,'#','~');for(const k of Object.keys(gsd))assert(c.ordinaryGSDKeys.includes(k),'AG integrity: GDM unknown free GSD field');
+ const gsd=p.GSD===undefined?{}:ownGDMFields(p.GSD,'#','~');ownGDMSDKTypedGSD(game,gsd);
  assert(c.pendingClauses.length===2&&c.pendingClauses[0].kind==='SDK-base-false'&&c.pendingClauses[1].kind==='fresh-ordinary-SDK-NFG','AG integrity: GDM extra pending SDK branch not mapped');
  if(event==='FREE_GAME')assert(p.IFG==='1','AG integrity: GDM genuine free marker');else assert(p.IFG===undefined||p.IFG==='0','AG integrity: GDM fresh paid marker');
 }
