@@ -1018,7 +1018,7 @@ games:
       betRaw: 16
       runtimeSlug: eightyeightfortunesmegaways
       runtimeGameId: 32973
-      healthyComponentsContract: eighty-eight-megaways-own-components-v2
+      healthyComponentsContract: eighty-eight-megaways-own-components-v3
       logicPaylineCount: '1'
   - provider: sg
     gameId: '32765'
