@@ -10619,7 +10619,7 @@ games:
       runtimeGameId: 33157
       runtimeSlug: quickhitsuperwheelwildred
       ownQuickHitPaidContract:
-        version: own-quick-hit-paid-components-v1
+        version: own-quick-hit-paid-scatter-components-v2
         gameId: '32797'
         dbName: sg_quickhitsuperwheelwildred
         runtimeGameId: 33157
@@ -10656,6 +10656,7 @@ games:
             keys:
               - PaylineWin
               - ReelStops
+              - ScatterWin
               - bonusAwarded
               - freeSpin
               - reelsetIndex
@@ -10698,10 +10699,21 @@ games:
               - awardTableIndex
               - index
               - winVal
+          GameResult/ReelResults/ReelSpin/ScatterWin:
+            keys:
+              - '#text'
+              - awardIndex
+              - winVal
+            required:
+              - '#text'
+              - awardIndex
+              - winVal
         ownSourceCacheSHA256: b2705ff42d04439ec89669a64b499451b3591fbd5b2d579ed3db04d45cebb1a2
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
         ordinaryOnly: true
         unmappedFeatureRemainsFatal: true
+        ownClosedPrefixProofSHA256: 7118d00e256ee983f1ca2d7ccf6dbb5e866b1d17e6a6e32fd22d65133e74ccf5
+        ownScatterTerminalRecords: 1
   - provider: sg
     gameId: '32798'
     name: Quick Hit Ultra Pays - Sun Dragon
@@ -10745,7 +10757,7 @@ games:
       runtimeGameId: 33158
       runtimeSlug: quickhitsundragon
       ownQuickHitPaidContract:
-        version: own-quick-hit-paid-components-v1
+        version: own-quick-hit-paid-scatter-components-v2
         gameId: '32798'
         dbName: sg_quickhitsundragon
         runtimeGameId: 33158
@@ -10780,6 +10792,7 @@ games:
             keys:
               - AnywayWin
               - ReelStops
+              - ScatterWin
               - anywayWins
               - bonusAwarded
               - freeSpin
@@ -10825,7 +10838,18 @@ games:
               - ways
               - winIndex
               - winVal
+          GameResult/ReelResults/ReelSpin/ScatterWin:
+            keys:
+              - '#text'
+              - awardIndex
+              - winVal
+            required:
+              - '#text'
+              - awardIndex
+              - winVal
         ownSourceCacheSHA256: b2705ff42d04439ec89669a64b499451b3591fbd5b2d579ed3db04d45cebb1a2
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
         ordinaryOnly: true
         unmappedFeatureRemainsFatal: true
+        ownClosedPrefixProofSHA256: 7118d00e256ee983f1ca2d7ccf6dbb5e866b1d17e6a6e32fd22d65133e74ccf5
+        ownScatterTerminalRecords: 1
