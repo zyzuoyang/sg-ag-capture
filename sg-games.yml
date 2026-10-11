@@ -7983,7 +7983,7 @@ games:
         BPL: '1'
         LB: '40'
       ownGDMContract:
-        version: own-SDK-returned-cash-stage-followup-trial-v7
+        version: own-SDK-returned-cash-stage-reentry-trial-v8
         gameId: '32719'
         dbName: sg_hyperchargedincajungle96
         runtimeGameId: 33119
@@ -8604,7 +8604,7 @@ games:
             otherPendingStagesStillFatal: true
             actualOwnCashFailures: 2
           ownSDKExtraStageBinding:
-            version: own-SDK-primary-with-nested-free-counter-v2
+            version: own-SDK-primary-with-nested-free-counter-v3
             gameId: '32719'
             ownSDKFileSHA256: 7897950e66d862f5823a13f9a2ce56f0973d4d40391ed429502fe9fef16d03c2
             SDKBackupSetterSource: |-
@@ -8643,7 +8643,6 @@ games:
             sourceRootBudgetRequiredForFollowup: true
             noCounterDefaults: true
             noSyntheticTerminal: true
-            actualOwnNestedIntroCases: 2
             unseenExtraStageActionStillFatal: true
             SDKLeafSelectorSource: f.prototype.KM=function(d,c){return d.mode!==a.tc.Wc.Fg&&(a.ma.Ic.Da.RM(d)||a.ma.Ic.Da.BU(d))||d.Vb.pi&&!d.state.Tl?L.GDM.ob.gj.ca.Hba:h.prototype.KM.call(this,d,c)}
             SDKLeafSelectorSHA256: 6c8e90360af420171977917dfc76a6ff69b7be74cb3ee85fbd4e1714d5ce98ed
@@ -8659,9 +8658,19 @@ games:
             SDKFIDSetterSHA256: ae2b4895d9a2f3ab7affc87470f23fb2f01dfbc2ae970bff9f76c577ad379bdd
             zeroRootWithSavedPrimaryUsesOwnFreeSelector: true
             paidNestedIntroKeepsUnplayedPrimary: true
-            actualClosedFollowupCases: 2
+            actualClosedFollowupCases: 1
             nextResponseCounterShapeStillStrict: true
             noManufacturedFreeResponse: true
+            reentryOnlyAfterInnerRemainingZero: true
+            reentryConsumesExactlyOneSavedPrimarySpin: true
+            actualOwnRepeatedNestedCases: 1
+            ownSDKSelectorAndBackupMatchSharedReentryMechanism: true
+            sharedNaturalReentryPacketProofs:
+              - gameId: '32719'
+                packetSHA256: fb06759482e5fe16ed5db02e1c175c5bf0df61a072e956cbf242b29ba41d975a
+              - gameId: '32720'
+                packetSHA256: 30db73ecd53855e32b1eb8fbd98b837c55635ec7282125a95f23b8b0e2bd22cc
+            ownRepeatedNaturalCoverageNotClaimed: false
   - provider: sg
     gameId: '32720'
     name: Hypercharged Jinzita
@@ -8678,7 +8687,7 @@ games:
         BPL: '1'
         LB: '40'
       ownGDMContract:
-        version: own-SDK-returned-cash-stage-followup-trial-v7
+        version: own-SDK-returned-cash-stage-reentry-trial-v8
         gameId: '32720'
         dbName: sg_hyperchargedjinzita96
         runtimeGameId: 33120
@@ -9292,7 +9301,7 @@ games:
             otherPendingStagesStillFatal: true
             actualOwnCashFailures: 3
           ownSDKExtraStageBinding:
-            version: own-SDK-primary-with-nested-free-counter-v2
+            version: own-SDK-primary-with-nested-free-counter-v3
             gameId: '32720'
             ownSDKFileSHA256: c3b23a2c481fad8bde0d0d1d9ba36b32e3addc567d505318421020eae560a8b0
             SDKBackupSetterSource: |-
@@ -9331,7 +9340,6 @@ games:
             sourceRootBudgetRequiredForFollowup: true
             noCounterDefaults: true
             noSyntheticTerminal: true
-            actualOwnNestedIntroCases: 2
             unseenExtraStageActionStillFatal: true
             SDKLeafSelectorSource: f.prototype.dN=function(d,c){return d.mode!==a.ac.Cc.Kf&&(a.ma.Bc.Ea.lN(d)||a.ma.Bc.Ea.jN(d))||d.Yb.ri&&!d.state.Zl?L.GDM.qb.gj.da.mca:h.prototype.dN.call(this,d,c)}
             SDKLeafSelectorSHA256: e7d82ad35a7340e92bbac1db1fc6e91092891256107ce523d936aa32fcf88585
@@ -9347,9 +9355,19 @@ games:
             SDKFIDSetterSHA256: 2e749146305643586fbf91cd153d722e4af68d4da8f12bc3fbb8846de57a5eb5
             zeroRootWithSavedPrimaryUsesOwnFreeSelector: true
             paidNestedIntroKeepsUnplayedPrimary: true
-            actualClosedFollowupCases: 2
+            actualClosedFollowupCases: 1
             nextResponseCounterShapeStillStrict: true
             noManufacturedFreeResponse: true
+            reentryOnlyAfterInnerRemainingZero: true
+            reentryConsumesExactlyOneSavedPrimarySpin: true
+            actualOwnRepeatedNestedCases: 1
+            ownSDKSelectorAndBackupMatchSharedReentryMechanism: true
+            sharedNaturalReentryPacketProofs:
+              - gameId: '32719'
+                packetSHA256: fb06759482e5fe16ed5db02e1c175c5bf0df61a072e956cbf242b29ba41d975a
+              - gameId: '32720'
+                packetSHA256: 30db73ecd53855e32b1eb8fbd98b837c55635ec7282125a95f23b8b0e2bd22cc
+            ownRepeatedNaturalCoverageNotClaimed: false
   - provider: sg
     gameId: '32721'
     name: Hypercharged Pyramids of Ra
@@ -9366,7 +9384,7 @@ games:
         BPL: '1'
         LB: '40'
       ownGDMContract:
-        version: own-SDK-returned-cash-prefix-trial-v5
+        version: own-SDK-returned-cash-stage-reentry-trial-v8
         gameId: '32721'
         dbName: sg_hyperchargedpyramidsofra96
         runtimeGameId: 33121
@@ -10001,3 +10019,71 @@ games:
             - IFR
           extraOwnGSDPendingCounterMustBeInactive: true
           ordinaryAndKnownPaidIntroScopeOnly: true
+          ownSDKExtraStageBinding:
+            version: own-SDK-primary-with-nested-free-counter-v3
+            gameId: '32721'
+            ownSDKFileSHA256: fd11152a04daf94fa730bcdd4a4309085fb5a7d1aac93c7a1a8c055369942cfc
+            SDKBackupSetterSource: |-
+              d.prototype.MZa=function(b){var e,g,m,p;b=b.features.ac;b.Qj=null!==(e=this.df.CRa)&&void 0!==e?e:this.E4;b.pta=null!==(g=b.Qe)&&void 0!==g?g:0;b.Qe=null!==(m=this.df.sna)&&void 0!==m?m:this.XT;b.qwa=this.ec;b.bxa=null!==(p=this.df.DRa)&&void 0!==p?p:[];b.lYa=
+              a.ma.Dc.Na.lOa(b.bxa)}
+            SDKBackupSetterSHA256: 8140c9c4b1a1979095206f0c9ebfd2f9475c0bebe01447eec800ff30ad66b3f6
+            SDKPendingMethodSHA256: 74c68ce14e464d552b0ed79c6fa731ef25246a80fdb0be42976926751ef49483
+            FIDDecoderSHA256: ec9e81ab9dd95f83b4f59696533e55d1140234f94cda1455eadc63f2a8cb3eb2
+            fieldBindings:
+              - wireKey: FGRS
+                property: sna
+                sourceSHA256: 13891e0c0a288fb8399be1f9041afe111501b45478b57f05dd5dbc542554275b
+                type:
+                  kind: integer
+                  SDKTypeAlias: lb
+                  ownAliasValidatorSHA256: a9c1764f93901039fbba5e55f2011952a29bff6e8539644adcbaff70eeb3ffde
+              - wireKey: FGTS
+                property: Vfb
+                sourceSHA256: 09ecfdb853f5b88f6a7e4e5fde7ddea9d9a0e9726f860060f4b5c1f8087a8143
+                type:
+                  kind: integer
+                  SDKTypeAlias: lb
+                  ownAliasValidatorSHA256: a9c1764f93901039fbba5e55f2011952a29bff6e8539644adcbaff70eeb3ffde
+              - wireKey: CFGC
+                property: CRa
+                sourceSHA256: 73055dfbb2693231feb9377ae066c56dc6226f5091675a3963f830c6e7e25c6a
+                type:
+                  kind: integer
+                  SDKTypeAlias: lb
+                  ownAliasValidatorSHA256: a9c1764f93901039fbba5e55f2011952a29bff6e8539644adcbaff70eeb3ffde
+            ordinaryPrimaryStageFID: 1|
+            nestedStageFID: 0|1|
+            optionalBackupCountersMustBePresentTogether: true
+            entryConsumesExactlyOnePrimarySpin: true
+            restoreMatchesOwnSavedPrimaryCounterSnapshot: true
+            sourceRootBudgetRequiredForFollowup: true
+            noCounterDefaults: true
+            noSyntheticTerminal: true
+            unseenExtraStageActionStillFatal: true
+            SDKLeafSelectorSource: f.prototype.ZM=function(d,c){return d.mode!==a.Zb.Ec.Kf&&(a.ma.Dc.Ea.gN(d)||a.ma.Dc.Ea.eN(d))||d.ac.zi&&!d.state.cm?L.GDM.rb.gj.da.ica:h.prototype.ZM.call(this,d,c)}
+            SDKLeafSelectorSHA256: 2634bf40f9ec95b66d5bb121bb42feb7b04bd4deb27d0045d4768c2ad6def0c4
+            SDKStageHelpers:
+              - h.gN=function(f){f=f.features;var d=f.ac,c=f.gg,b=f.Zy;return f.zr===n.vk.Ea&&b===n.vk.Na&&0===c.Qe&&0===d.Qj}
+              - |-
+                h.eN=function(f){f=f.features;
+                var d=f.ac,c=f.gg,b=f.Zy;return f.zr===n.vk.Ea&&b===n.vk.Na&&0===c.Qe&&0<d.Qj}
+            SDKStageHelperSHA256:
+              - d32ed8772b1d09ac488872837f50c1c514ebd15c7eea50f8d99aaacab6393338
+              - b9da8eac88c85fdd9a2dd7c713fd7bfa2245bec27b01226544fa5384a88880d7
+            SDKFIDSetterSource: d.prototype.KZa=function(b){var e,g,m,p;b.features.zr=null!==(g=null===(e=this.vM)||void 0===e?void 0:e[0])&&void 0!==g?g:null;b.features.Zy=null!==(p=null===(m=this.vM)||void 0===m?void 0:m[1])&&void 0!==p?p:null;this.MZa(b);this.NZa(b)}
+            SDKFIDSetterSHA256: 9a0b1b2dd1cb3b90b272bae0956668b9afb1fdae02cf8bf57856967baed21b7e
+            zeroRootWithSavedPrimaryUsesOwnFreeSelector: true
+            paidNestedIntroKeepsUnplayedPrimary: true
+            actualClosedFollowupCases: 2
+            nextResponseCounterShapeStillStrict: true
+            noManufacturedFreeResponse: true
+            reentryOnlyAfterInnerRemainingZero: true
+            reentryConsumesExactlyOneSavedPrimarySpin: true
+            actualOwnRepeatedNestedCases: 0
+            ownSDKSelectorAndBackupMatchSharedReentryMechanism: true
+            sharedNaturalReentryPacketProofs:
+              - gameId: '32719'
+                packetSHA256: fb06759482e5fe16ed5db02e1c175c5bf0df61a072e956cbf242b29ba41d975a
+              - gameId: '32720'
+                packetSHA256: 30db73ecd53855e32b1eb8fbd98b837c55635ec7282125a95f23b8b0e2bd22cc
+            ownRepeatedNaturalCoverageNotClaimed: true
