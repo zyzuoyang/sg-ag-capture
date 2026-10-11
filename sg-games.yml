@@ -1675,7 +1675,6 @@ games:
           - MSGID
           - MUL
           - NRID
-          - PD
           - RB
           - RID
           - RS
@@ -1975,6 +1974,32 @@ games:
           noCashOrNextActionDerivedFromOptionalGSD: true
           preserveNullableSDKArrayCells: true
           nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
+        ownOptionalRootMetadata:
+          - schema: own-SDK-optional-PD-metadata-v1
+            gameId: '32544'
+            ownSDKFileSHA256: 220b392a2a0cad4d79048f5d69b824989556b46fab84f8e8fa9542321b8aac45
+            wireKey: PD
+            ownSDKProperty: Bba
+            ownSDKFieldDecoderSHA256s:
+              - c901898d1b9263ee2e40237d84462165728a7fdc246cf96e9e2f2e73dc3a7062
+              - c901898d1b9263ee2e40237d84462165728a7fdc246cf96e9e2f2e73dc3a7062
+            ownSDKFieldSourceSpans:
+              - sourceStart: 1358830
+                sourceEnd: 1358886
+                sourceSHA256: c901898d1b9263ee2e40237d84462165728a7fdc246cf96e9e2f2e73dc3a7062
+              - sourceStart: 1361730
+                sourceEnd: 1361786
+                sourceSHA256: c901898d1b9263ee2e40237d84462165728a7fdc246cf96e9e2f2e73dc3a7062
+            explicitSDKRequired: false
+            missingSDKValue: 'null'
+            cashAndPendingDefaultsForbidden: true
+            requiredCaptureKeys:
+              - B
+              - AB
+              - TW
+              - MSGID
+              - GA
+            ownSDKMissingFieldFunctionSHA256: f514f4afa369e2a04f8abd71f51b5e03740e7a1e6b8af3af94409b141164f7f3
   - provider: sg
     gameId: '32548'
     name: Huff N' Puff Money Mansion
@@ -5920,7 +5945,6 @@ games:
           - MSGID
           - MUL
           - NRID
-          - PD
           - RID
           - RS
           - SID
@@ -6174,6 +6198,32 @@ games:
           noCashOrNextActionDerivedFromOptionalGSD: true
           preserveNullableSDKArrayCells: true
           nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
+        ownOptionalRootMetadata:
+          - schema: own-SDK-optional-PD-metadata-v1
+            gameId: '32629'
+            ownSDKFileSHA256: 6ccffa14540925e4b14b1e9f0f8158bfb1b5f72a5faabb1eab7b0dfa813aeb9a
+            wireKey: PD
+            ownSDKProperty: p8
+            ownSDKFieldDecoderSHA256s:
+              - bcc76b31c8e87337d05ad369e590dd8dd90394940f4523bc7baeb7230378d8d1
+              - bcc76b31c8e87337d05ad369e590dd8dd90394940f4523bc7baeb7230378d8d1
+            ownSDKFieldSourceSpans:
+              - sourceStart: 1213623
+                sourceEnd: 1213679
+                sourceSHA256: bcc76b31c8e87337d05ad369e590dd8dd90394940f4523bc7baeb7230378d8d1
+              - sourceStart: 1215678
+                sourceEnd: 1215734
+                sourceSHA256: bcc76b31c8e87337d05ad369e590dd8dd90394940f4523bc7baeb7230378d8d1
+            explicitSDKRequired: false
+            missingSDKValue: 'null'
+            cashAndPendingDefaultsForbidden: true
+            requiredCaptureKeys:
+              - B
+              - AB
+              - TW
+              - MSGID
+              - GA
+            ownSDKMissingFieldFunctionSHA256: 25f3ecd9e0b0fbfdebbb15b9cd60ba26020ad26c981fa5aad39093f798c2c13f
   - provider: sg
     gameId: '32722'
     name: Jinse Dao Tiger

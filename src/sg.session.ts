@@ -1008,6 +1008,13 @@ function gdmBinding(game:AGGameConfig){
   assert(Object.keys(params).sort().join('|')===['GN',...fields.map((q:any)=>q.wireKey)].sort().join('|'),'AG integrity: GDM extra free request input');
   for(const f of fields)assert(f.type?.kind==='integer'&&/^[a-f0-9]{64}$/.test(f.sourceSHA256)&&params[f.wireKey]===game.sg.requestParams[f.wireKey]&&/^[1-9]\d*$/.test(params[f.wireKey]),'AG integrity: GDM source/SDK wager field binding');
  }
+ if(c.ownOptionalRootMetadata!==undefined){
+  assert(Array.isArray(c.ownOptionalRootMetadata)&&c.ownOptionalRootMetadata.length===1,'AG integrity: GDM optional metadata scope');
+  const q=c.ownOptionalRootMetadata[0];
+  assert(q.schema==='own-SDK-optional-PD-metadata-v1'&&q.wireKey==='PD'&&q.gameId===game.gameId&&q.ownSDKFileSHA256===c.ownSDKFileSHA256&&q.explicitSDKRequired===false&&q.missingSDKValue==='null'&&q.cashAndPendingDefaultsForbidden===true,'AG integrity: GDM optional metadata identity');
+  assert(JSON.stringify(q.requiredCaptureKeys)===JSON.stringify(['B','AB','TW','MSGID','GA'])&&q.requiredCaptureKeys.every((k:string)=>c.requiredResponseKeys.includes(k))&&c.responseKeys.includes('PD')&&!c.requiredResponseKeys.includes('PD'),'AG integrity: GDM required cash/pending envelope');
+  assert(typeof q.ownSDKProperty==='string'&&q.ownSDKProperty.length>0&&/^[a-f0-9]{64}$/.test(q.ownSDKMissingFieldFunctionSHA256)&&Array.isArray(q.ownSDKFieldDecoderSHA256s)&&q.ownSDKFieldDecoderSHA256s.length>0&&q.ownSDKFieldDecoderSHA256s.every((h:any)=>/^[a-f0-9]{64}$/.test(h)),'AG integrity: GDM optional metadata byte proof');
+ }
  return c;
 }
 export function ownGDMOrdinaryFinal(game:AGGameConfig,p:Record<string,string>):boolean{
