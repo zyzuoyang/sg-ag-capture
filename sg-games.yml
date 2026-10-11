@@ -7983,7 +7983,7 @@ games:
         BPL: '1'
         LB: '40'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32719'
         dbName: sg_hyperchargedincajungle96
         runtimeGameId: 33119
@@ -7992,12 +7992,17 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
           - B
           - BPL
+          - CFGG
+          - CW
+          - FGT
+          - FGTW
+          - FID
           - FRBAL
           - GA
           - GSD
@@ -8005,12 +8010,14 @@ games:
           - LB
           - MSGID
           - MUL
+          - NFG
           - NRID
           - PD
           - RID
           - RS
           - SID
           - SUB
+          - TFG
           - TW
           - VER
           - WC
@@ -8478,6 +8485,72 @@ games:
               - MSGID
               - GA
             ownSDKMissingFieldFunctionSHA256: b3ba2792b55e458e92ceb3d50f8645c3624b2eec50188e5e8dad51d0504e3cb9
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32719'
+          freeRequestParams:
+            GN: hyperchargedincajungle96
+            BPL: '1'
+            LB: '40'
+          ownSDKFreeRequestBinding:
+            gameId: '32719'
+            ownSDKFileSHA256: 7897950e66d862f5823a13f9a2ce56f0973d4d40391ed429502fe9fef16d03c2
+            actualSDKSelectorSource: m.prototype.KM=function(p,q){return p.Vb.pi&&!p.state.Tl?n.gj.ca.Hba:p.buyPass.Ava?n.gj.ca.AI:g.prototype.KM.call(this,p,q)}
+            SDKSelectorSHA256: 42e5c00463054ef5666a31c40c6b330bee32b28fdb0c8ff82afeeaef97878549
+            ownLeafSelectorOverrides:
+              - f.prototype.KM=function(d,c){return d.mode!==a.tc.Wc.Fg&&(a.ma.Ic.Da.RM(d)||a.ma.Ic.Da.BU(d))||d.Vb.pi&&!d.state.Tl?L.GDM.ob.gj.ca.Hba:h.prototype.KM.call(this,d,c)}
+            ownLeafSelectorSHA256: 6c8e90360af420171977917dfc76a6ff69b7be74cb3ee85fbd4e1714d5ce98ed
+            NFGSetterSHA256: a01d2333df26b04e51be08571f33842cd791e530e7c243e4aee7e68162afd27e
+            NFGDecoderSHA256: c9b6fa14b2ad5aed3ed1150c1e7385e6046432fd05ddbbe8268bc47d5a475474
+            GCTDecoderSHA256: 5bf44db795a9206446a82f34b1252f7a769e0abdbd3af78f5df12b900b735332
+            ownRequestConstructorSHA256: a791526df937cadebbc59539791841e59df9a2134e14aca01bb1d8b8da757d84
+            fieldBindings:
+              - wireKey: BPL
+                type:
+                  kind: integer
+                  SDKTypeAlias: hb
+                  ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                sourceSHA256: d9d03fcdbeb497ea046c8e27bad1dc11d85c01e6f5c5b86090daec35e57f777f
+              - wireKey: LB
+                type:
+                  kind: integer
+                  SDKTypeAlias: hb
+                  ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                sourceSHA256: 9d836436e2162e305358ecc90c57ab606935dc22b00156b38be18976c76e1551
+            freeRequestParams:
+              GN: hyperchargedincajungle96
+              BPL: '1'
+              LB: '40'
+            actualPaidIntroCases: 2
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
+            actualOwnIntroProofs:
+              - packetSHA256: 6e8bb4e852f563c44a5ba23fcd224365691ba38df509725b14bc35fd864dcec0
+                wager:
+                  BPL: '1'
+                  LB: '40'
+                budget: 10
+              - packetSHA256: fdcd701edf5a042570ede8f38d14db2031c42225e188df2f015bf6ee0fb639f7
+                wager:
+                  BPL: '1'
+                  LB: '40'
+                budget: 6
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          extraOwnGSDPendingCounterMustBeInactive: true
+          ordinaryAndKnownPaidIntroScopeOnly: true
   - provider: sg
     gameId: '32720'
     name: Hypercharged Jinzita
@@ -8494,7 +8567,7 @@ games:
         BPL: '1'
         LB: '40'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32720'
         dbName: sg_hyperchargedjinzita96
         runtimeGameId: 33120
@@ -8503,12 +8576,17 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
           - B
           - BPL
+          - CFGG
+          - CW
+          - FGT
+          - FGTW
+          - FID
           - FRBAL
           - GA
           - GSD
@@ -8516,12 +8594,14 @@ games:
           - LB
           - MSGID
           - MUL
+          - NFG
           - NRID
           - PD
           - RID
           - RS
           - SID
           - SUB
+          - TFG
           - TW
           - VER
           - WC
@@ -8987,3 +9067,64 @@ games:
               - MSGID
               - GA
             ownSDKMissingFieldFunctionSHA256: e3f014b8be18bcd8fc89f195ce2b2e77c04af3e63c665f5f41a3827cffb6f839
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32720'
+          freeRequestParams:
+            GN: hyperchargedjinzita96
+            BPL: '1'
+            LB: '40'
+          ownSDKFreeRequestBinding:
+            gameId: '32720'
+            ownSDKFileSHA256: c3b23a2c481fad8bde0d0d1d9ba36b32e3addc567d505318421020eae560a8b0
+            actualSDKSelectorSource: m.prototype.dN=function(p,q){return p.Yb.ri&&!p.state.Zl?n.gj.da.mca:p.buyPass.owa?n.gj.da.SI:g.prototype.dN.call(this,p,q)}
+            SDKSelectorSHA256: 7c7c20989fc8dc7842a1ba2f69e8e47ae9125509a36318c6ec94d2696cfc0cef
+            ownLeafSelectorOverrides:
+              - f.prototype.dN=function(d,c){return d.mode!==a.ac.Cc.Kf&&(a.ma.Bc.Ea.lN(d)||a.ma.Bc.Ea.jN(d))||d.Yb.ri&&!d.state.Zl?L.GDM.qb.gj.da.mca:h.prototype.dN.call(this,d,c)}
+            ownLeafSelectorSHA256: e7d82ad35a7340e92bbac1db1fc6e91092891256107ce523d936aa32fcf88585
+            NFGSetterSHA256: 279b03585f141b46a07e15ad628e8caf86ee3c87542b541a6892fe8a848b4d13
+            NFGDecoderSHA256: 10b260e2cb0223f7e95b6644b5c24d2a1af97cb9f63bece417f5ef192fe38a45
+            GCTDecoderSHA256: 5bf44db795a9206446a82f34b1252f7a769e0abdbd3af78f5df12b900b735332
+            ownRequestConstructorSHA256: 799d32ec7546d7c744180b515b7c25d828c090bc84b82b6666595a0844b5b3f8
+            fieldBindings:
+              - wireKey: BPL
+                type:
+                  kind: integer
+                  SDKTypeAlias: gb
+                  ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                sourceSHA256: a6e605aed5efb2cf019596f288e29bbd15a466f3bbf116390e5ee31029fe0c60
+              - wireKey: LB
+                type:
+                  kind: integer
+                  SDKTypeAlias: gb
+                  ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                sourceSHA256: a157bf8a977b90e9d9139cd4130c782eaed876ee9b379624e254ccef42acfbe6
+            freeRequestParams:
+              GN: hyperchargedjinzita96
+              BPL: '1'
+              LB: '40'
+            actualPaidIntroCases: 1
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
+            actualOwnIntroProofs:
+              - packetSHA256: e7279a88e7cffa199210ac6b6223bde0320feaf47754696cbb1cbdeabd97ce39
+                wager:
+                  BPL: '1'
+                  LB: '40'
+                budget: 6
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          extraOwnGSDPendingCounterMustBeInactive: true
+          ordinaryAndKnownPaidIntroScopeOnly: true

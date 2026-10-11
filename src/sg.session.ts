@@ -1090,7 +1090,14 @@ function ownGDMFreeEnvelope(game:AGGameConfig,p:Record<string,string>,event:stri
  assert(p.GA==='0'&&(p.GCT===undefined||p.GCT==='0'),'AG integrity: GDM other active/capped feature not mapped');
  if(c.version==='own-SDK-free-prefix-trial-v4')for(const f of rule.ownSDKFreeRequestBinding.fieldBindings)assert(p[f.wireKey]===undefined||p[f.wireKey]===rule.freeRequestParams[f.wireKey],'AG integrity: GDM source wager state changed before next request');
  const gsd=p.GSD===undefined?{}:ownGDMFields(p.GSD,'#','~');ownGDMSDKTypedGSD(game,gsd);
- assert(c.pendingClauses.length===2&&c.pendingClauses[0].kind==='SDK-base-false'&&c.pendingClauses[1].kind==='fresh-ordinary-SDK-NFG','AG integrity: GDM extra pending SDK branch not mapped');
+ assert(c.pendingClauses[0].kind==='SDK-base-false'&&c.pendingClauses[1].kind==='fresh-ordinary-SDK-NFG','AG integrity: GDM own free inherited predicate');
+ if(c.pendingClauses.length===3){
+  const q=c.pendingClauses[2],schema=c.ownGSDDataSchema,f=schema?.fields?.[q.wireKey];
+  assert(rule.extraOwnGSDPendingCounterMustBeInactive===true&&q.kind==='own-GSD-positive-counter'&&q.wireKey==='FGRS'&&q.SDKType==='integer'&&q.SDKMissingValue==='null'&&q.noCashDefault===true&&q.positiveMeansGenuineContinuation===true
+   &&f?.type?.kind==='integer'&&f.ownSDKFieldSHA256===q.SDKDecoderSHA256&&f.ownSDKProperty===q.property&&schema.ownGSDClass===q.ownGSDClass
+   &&schema.ownEffectiveMetadataObject?.ownMetadataDeserializerSHA256===q.ownMetadataDeserializerSHA256&&/^[a-f0-9]{64}$/.test(q.SDKSourceSHA256),'AG integrity: GDM own extra free predicate binding');
+  assert(gsd.FGRS===undefined||gdmInteger(gsd.FGRS,'own extra pending free counter')===0,'AG integrity: GDM extra free stage requires own mapping');
+ }else assert(c.pendingClauses.length===2,'AG integrity: GDM extra pending SDK branch not mapped');
  if(event==='FREE_GAME')assert(p.IFG==='1','AG integrity: GDM genuine free marker');else assert(p.IFG===undefined||p.IFG==='0','AG integrity: GDM fresh paid marker');
 }
 export class SGGdmSession{
