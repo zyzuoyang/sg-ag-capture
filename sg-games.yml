@@ -5859,3 +5859,487 @@ games:
             requiresCompleteNaturalRoundBeforeAnyNative: true
             unmappedOtherFeaturesRemainFatal: true
             wholeFreeChainCoverageNotClaimed: true
+  - provider: sg
+    gameId: '32629'
+    name: Rich Little Hens Founding Feathers
+    dbName: sg_richlittlehensfoundingfeathers96
+    backendId: richlittlehensfoundingfeathers96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33078
+      runtimeSlug: richlittlehensfoundingfeathers96
+      betRaw: 100
+      requestParams:
+        GN: richlittlehensfoundingfeathers96
+        AP: 'false'
+        BPL: '5'
+        LB: '25'
+      ownGDMContract:
+        version: own-SDK-ordinary-typed-final-v2
+        gameId: '32629'
+        dbName: sg_richlittlehensfoundingfeathers96
+        runtimeGameId: 33078
+        runtimeSlug: richlittlehensfoundingfeathers96
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - PD
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - PD
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - CO
+          - CONAMES
+          - MSR
+          - MSRNAME
+          - WE
+        ownSDKFileSHA256: 6ccffa14540925e4b14b1e9f0f8158bfb1b5f72a5faabb1eab7b0dfa813aeb9a
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: 469dbfa1a136d35c6f6f1510038966ea695deffde014fa85679b60398524f799
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 1e4af74e740a82798666a3c42871da4c7922fb089e3e1b55008dda1231c8dbc8
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: ee4e51b52a9529c9f95072efe5dec1834e0c9655ab5db6030881676cbc145b39
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 368987482223e5b5179b731e3189345e68e338bcf8288bf04ba2f5e4f84a4155
+        SDKFinalGetterSourceSHA256: 86c033eb1df8a68f87c98811092827fba1f680de511398ceede4344cbfa90b1c
+        ownGSDDataSchema:
+          version: own-exact-SDK-GSD-types-v1
+          gameId: '32629'
+          ownSDKFileSHA256: 6ccffa14540925e4b14b1e9f0f8158bfb1b5f72a5faabb1eab7b0dfa813aeb9a
+          ownGSDClass: k.hca
+          compiledOwnClassSHA256: 05ef4c4c16896f5ff41fc2337b78579d32cc79f0bd5fe9d361886c9fbf64aa20
+          fields:
+            CWW:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: number
+                  SDKArrayDecoderAlias: zd
+                  ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+                SDKArrayDecoderAlias: zd
+                ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+              ownSDKFieldSHA256: fa0d2d3a95427a58045ac2d9614ebb80066b97daaeed93b44cfe98216c7e83c8
+              ownSDKProperty: UNa
+            NON_CWW:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: number
+                  SDKArrayDecoderAlias: zd
+                  ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+                SDKArrayDecoderAlias: zd
+                ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+              ownSDKFieldSHA256: 56a09367be3a65621d853f4e5d484ac640219434bf257b8f312b39e2b43448e8
+              ownSDKProperty: TNa
+            MSR:
+              type:
+                kind: number
+              ownSDKFieldSHA256: c48a44e69829e595cb03a20623e783b76b4bdc69285bdf3e9c8a53e6cd63c2ee
+              ownSDKProperty: o5a
+            CO:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: number
+                  SDKArrayDecoderAlias: zd
+                  ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+                SDKArrayDecoderAlias: zd
+                ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+              ownSDKFieldSHA256: 0f2712ea9080cead024357c39313292c883b7da021844e07d23181a768b2b286
+              ownSDKProperty: yTa
+            SCP:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: number
+                  SDKArrayDecoderAlias: zd
+                  ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+                SDKArrayDecoderAlias: zd
+                ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+              ownSDKFieldSHA256: 3077a024f8ab0d34f9ca0557053f78b9cc7081c4b9b57d94463f383776d2f0ce
+              ownSDKProperty: X3a
+            JO:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: number
+                  SDKArrayDecoderAlias: zd
+                  ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+                SDKArrayDecoderAlias: zd
+                ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+              ownSDKFieldSHA256: 79663bedd734333f8981293e3ae3aa4ebaaad337e1de27df5a949ac997ab97e1
+              ownSDKProperty: nVa
+            JS:
+              type:
+                kind: array
+                delimiter: ;
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: zd
+                ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+              ownSDKFieldSHA256: 7bab6e4d4065b24f919afab3b58e61436612159602d1ed200ad013bebca4fb1b
+              ownSDKProperty: WH
+            JW:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: number
+                  SDKArrayDecoderAlias: zd
+                  ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+                SDKArrayDecoderAlias: zd
+                ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+              ownSDKFieldSHA256: 58de1943ded5cb742838438f0678e0b11706eaa5022bfdc218460a584afeaefa
+              ownSDKProperty: XH
+            PJS:
+              type:
+                kind: array
+                delimiter: ;
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: zd
+                ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+              ownSDKFieldSHA256: 8043f7c6e8af5541fa70536fd366bac0223d40f443d1a03a6896063fc0d1ff7d
+              ownSDKProperty: cW
+            WE:
+              type:
+                kind: array
+                delimiter: ;
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: zd
+                ownAliasValidatorSHA256: dd66713b4b107a3a5d9befebe468bbb1070007ff050fc0f9cb63d5e1749a53e2
+              ownSDKFieldSHA256: 7631d735f308f00301cfc22087c88cdb15aef674b27000ff29ec5710081f1336
+              ownSDKProperty: yN
+            RE:
+              type:
+                kind: number
+              ownSDKFieldSHA256: 56fd9ab01826e093043c51a26fad37d44ae9ffa7fd7338e28070a040f9b4c1d0
+              ownSDKProperty: w0a
+            RT:
+              type:
+                kind: boolean
+              ownSDKFieldSHA256: 7111d37bb73e14cedef4645c98301af9b0f12630d23791cce752a6710da1efaa
+              ownSDKProperty: YUa
+            WT:
+              type:
+                kind: boolean
+              ownSDKFieldSHA256: 5d55eb80811f0a7e763c523eeff5970a28ff154e46e0ec07a8951a30a43b3a3b
+              ownSDKProperty: hVa
+            BE:
+              type:
+                kind: number
+              ownSDKFieldSHA256: a4df8b95092d8639bf14d67ea851194a3986c233b150ed842828bccb4ef9abff
+              ownSDKProperty: cKa
+            BT:
+              type:
+                kind: boolean
+              ownSDKFieldSHA256: 0f95327222ca754a61780fd05da19771b5eb83b7efafef6b138805ccd1c7baed
+              ownSDKProperty: GUa
+            PRG:
+              type:
+                kind: number
+              ownSDKFieldSHA256: e9952c66ffc45d7e8875e1ccc32f702372db90d38852448582654510c8fa5de6
+              ownSDKProperty: Kz
+            PWG:
+              type:
+                kind: number
+              ownSDKFieldSHA256: 469061e3d108098f0ca73d2deebf278bb51771d0797fe320d233ba00f37b5b01
+              ownSDKProperty: Vz
+            PBG:
+              type:
+                kind: number
+              ownSDKFieldSHA256: f2154a4c877944887dd9c758c25a10b70a014b532e1a4158ef49c7798c1cd6cf
+              ownSDKProperty: Oy
+            WE5:
+              type:
+                kind: number
+              ownSDKFieldSHA256: efe1f9fcc0b094bf5d565672a52f76b454ad966b24b794d62751546c08afc954
+              ownSDKProperty: bXa
+            WE4:
+              type:
+                kind: number
+              ownSDKFieldSHA256: 4b5c778144a88e8b138f5e7345817748b7726a98d76b1924192e3259d51920fe
+              ownSDKProperty: hXa
+            WE3:
+              type:
+                kind: number
+              ownSDKFieldSHA256: e884c534e15e00c4464306731dc57dfc50340590265fd4cdd51513a90642c51b
+              ownSDKProperty: KWa
+            WE2:
+              type:
+                kind: number
+              ownSDKFieldSHA256: 4108810a59a7a8d3452e61a73ef4e7030badfea50b7bd12877a6722b0b9ed1a0
+              ownSDKProperty: uWa
+            EP5:
+              type:
+                kind: number
+              ownSDKFieldSHA256: a1f478a503fec3d9e64a5ef0666f7086350e857538c0ea625132bdb4230e9dbf
+              ownSDKProperty: cXa
+            EP4:
+              type:
+                kind: number
+              ownSDKFieldSHA256: fcae0f901b12de49281006497eb77a980273710500ba81422683c2bb4d84cf57
+              ownSDKProperty: iXa
+            EP3:
+              type:
+                kind: number
+              ownSDKFieldSHA256: 0dce3448f9dcdbc39b57de650e1422112daaf81b055bc5ac32285a0a9651f403
+              ownSDKProperty: LWa
+            EP2:
+              type:
+                kind: number
+              ownSDKFieldSHA256: 11b03cd153625e5585ccea3845f1f84198539b4d62ee627527a19d1667d88642
+              ownSDKProperty: vWa
+            CW:
+              type:
+                kind: number
+              ownSDKFieldSHA256: 1fd42d5f2e7b1bafdc0efa98be7c14fa1b8819e1f000144fec0c2237b236b3b6
+              ownSDKProperty: lW
+          unknownUncompiledFieldsStillFatal: true
+          noCashOrNextActionDerivedFromOptionalGSD: true
+          preserveNullableSDKArrayCells: true
+          nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
+  - provider: sg
+    gameId: '32722'
+    name: Jinse Dao Tiger
+    dbName: sg_jinsedaotiger96
+    backendId: jinsedaotiger96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33122
+      runtimeSlug: jinsedaotiger96
+      betRaw: 100
+      requestParams:
+        BPR: '20'
+        GN: jinsedaotiger96
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-ordinary-typed-final-v2
+        gameId: '32722'
+        dbName: sg_jinsedaotiger96
+        runtimeGameId: 33122
+        runtimeSlug: jinsedaotiger96
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BGRS
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BGRS
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - OML
+          - VR
+        ownSDKFileSHA256: aaf96a361355bdd268bf534044222037ec8f119824a0a1e174605d36240831af
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: e3120e4537f6e9ebf8ba9638cd39029d5d20edec34277f9787bf213cfc5fb58f
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 662d0605375901967dee339afc6788f02711bdc8e8038ab4a7ab4cb0201462b5
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: ec4ecb63d251b61459e7c4255d30275015fd41e8eb9a1e8b50729456ed38440e
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 536cb34eb4f0448743d9ac953b11def2491c1b087a61ce7bd9970db42c9a4324
+        SDKFinalGetterSourceSHA256: c38bcff5c965dab191f13edc72537e27fafb59d0bfd43b4b7dc2d247fd6825be
+        ownGSDDataSchema:
+          version: own-exact-SDK-GSD-types-v1
+          gameId: '32722'
+          ownSDKFileSHA256: aaf96a361355bdd268bf534044222037ec8f119824a0a1e174605d36240831af
+          ownGSDClass: l.OFa
+          compiledOwnClassSHA256: 0e516c79365b197d6a78342901cd34066f18b1b93f458746ce0e66ee8fd481bc
+          fields:
+            VR:
+              type:
+                kind: integer
+                SDKTypeAlias: mc
+                ownAliasValidatorSHA256: 74dd20ca18bded5858d77935c604679d30a6c572941c6930a586ade9732df155
+              ownSDKFieldSHA256: 26d34d62300f65e46fe93bdbd0837d46e05e441fd10e77a3721306427bf75fe4
+              ownSDKProperty: kCa
+            OML:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: tuple
+                  delimiter: ;
+                  items:
+                    - kind: integer
+                      SDKTypeAlias: mc
+                      ownAliasValidatorSHA256: 74dd20ca18bded5858d77935c604679d30a6c572941c6930a586ade9732df155
+                    - kind: integer
+                      SDKTypeAlias: mc
+                      ownAliasValidatorSHA256: 74dd20ca18bded5858d77935c604679d30a6c572941c6930a586ade9732df155
+                    - kind: integer
+                      SDKTypeAlias: mc
+                      ownAliasValidatorSHA256: 74dd20ca18bded5858d77935c604679d30a6c572941c6930a586ade9732df155
+                  requiredSDKPositions:
+                    - 0
+                    - 1
+                    - 2
+                  ownSDKTupleClassSHA256: 789ff2a335aa87c7bb96e90104eac48e2124949076772161d6bc9ad90330b7a4
+                  ownSDKPositionDecoderSHA256s:
+                    - 32b0ee5e26210556a5dfb17851505fef7847420b1e2760befba1ebb5e5b97a3b
+                    - 13fd41b107fdc8a5455e09fd4f11432840804f85a6b6ccb36cef47df6781d1be
+                    - 72235075bd1a538d40dec8f110c678b4cb45735f1cc0748246a6a00b64d33516
+                SDKArrayDecoderAlias: Eg
+                ownAliasValidatorSHA256: 146455c095174d795fa4a832f0ef81ba90c6269e9b9d6b196d65295725dac615
+                strategy: SDK-postfix
+                ownSDKArrayStrategySHA256: 5b4995df7db03b3d6b8483b5830fc7dcf31dec9b995c85dfacc795b29377b7ed
+              ownSDKFieldSHA256: ea8e11fa118282da9378a3bb6ec836a076e55d5ff0cb3d88b6241a73664d1083
+              ownSDKProperty: Y1a
+            WR:
+              type:
+                kind: tuple
+                delimiter: ;
+                items:
+                  - kind: string
+                  - kind: integer
+                    SDKTypeAlias: mc
+                    ownAliasValidatorSHA256: 74dd20ca18bded5858d77935c604679d30a6c572941c6930a586ade9732df155
+                requiredSDKPositions:
+                  - 0
+                  - 1
+                ownSDKTupleClassSHA256: 7bda1ba0d48680853b295f0619a5ad90ee4dc62ee223cb4a98d9c9c6293d5117
+                ownSDKPositionDecoderSHA256s:
+                  - ac64651985733c057047100549971d5f34bfefbee245fdfac650514340144386
+                  - 13fd41b107fdc8a5455e09fd4f11432840804f85a6b6ccb36cef47df6781d1be
+                ownSDKEmptyTupleBecomesNull: true
+                ownSDKOptionalParentFieldDecoderSHA256: 5b4995df7db03b3d6b8483b5830fc7dcf31dec9b995c85dfacc795b29377b7ed
+                noMissingCashDefault: true
+              ownSDKFieldSHA256: e87634e848c5b40f85dee6f4bc2f13a1256cbf156f8c5ee8125b660ae59b9d57
+              ownSDKProperty: mCa
+            OST:
+              type:
+                kind: integer
+                SDKTypeAlias: mc
+                ownAliasValidatorSHA256: 74dd20ca18bded5858d77935c604679d30a6c572941c6930a586ade9732df155
+              ownSDKFieldSHA256: e9bc0ac130d1dacfd9a9734d30cfe848541ef774cbf55d7cc399150991c45ed8
+              ownSDKProperty: Zxa
+          unknownUncompiledFieldsStillFatal: true
+          noCashOrNextActionDerivedFromOptionalGSD: true
+          preserveNullableSDKArrayCells: true
+          nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
