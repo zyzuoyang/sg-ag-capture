@@ -1262,7 +1262,7 @@ games:
         GN: dragonspincrosslinkfire96
         LB: '40'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32500'
         dbName: sg_dragonspincrosslinkfire96
         runtimeGameId: 33033
@@ -1271,7 +1271,7 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
@@ -1294,26 +1294,19 @@ games:
           - VER
           - WC
           - WS
+          - CW
+          - NFG
+          - FGT
+          - TFG
+          - CFGG
+          - FGTW
+          - FID
         requiredResponseKeys:
-          - AB
           - B
-          - BPL
-          - FRBAL
-          - GA
-          - GSD
-          - IFG
-          - LB
-          - MSGID
-          - MUL
-          - NRID
-          - PD
-          - RID
-          - RS
-          - SID
-          - SUB
+          - AB
           - TW
-          - VER
-          - WC
+          - MSGID
+          - GA
         ordinaryGSDKeys:
           - CBPL
           - SL
@@ -1467,6 +1460,52 @@ games:
           noCashOrNextActionDerivedFromOptionalGSD: true
           preserveNullableSDKArrayCells: true
           nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32500'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: dragonspincrosslinkfire96
+            BPL: '5'
+            LB: '40'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: 4c1937cea505d822a207c1e950e367b5c9a41b9dec5a3004c794b25b127245a4
+            SDKSelectorSHA256: b7c106e0bcd86f3407b2de51e7b6611e73fe0481264db778d4838156357b183d
+            NFGSetterSHA256: 04894f25c1d5ea1ff5b1d6303262076b356360c936475c1d5b2ede0f4a17558a
+            NFGDecoderSHA256: 4d7658456322d2777433ed5a6ccc443bafc450af221dbd8ce2250677e3af0cdf
+            GCTDecoderSHA256: 48609391a5f8611640d1ca72dfdf3195a1d7f71c891c78ee7ba5592ed63f4c16
+            ownRequestConstructorSHA256: 80bd66dd52059bb4d37e4813c62a7782d9a061a91755002c7678ce4e70140322
+            fieldBindings:
+              - wireKey: BPL
+                type:
+                  kind: integer
+                  SDKTypeAlias: Pb
+                  ownAliasValidatorSHA256: 8eb5de9e3fce914f385ebf883ba4ec4772ed5f6036c13754d29ba74fec2dc25d
+                sourceSHA256: 3ce1ecc7eca4cf30431252adf2057c30ef16924fe9284a27c28e5107bc352f31
+              - wireKey: LB
+                type:
+                  kind: integer
+                  SDKTypeAlias: Pb
+                  ownAliasValidatorSHA256: 8eb5de9e3fce914f385ebf883ba4ec4772ed5f6036c13754d29ba74fec2dc25d
+                sourceSHA256: 29d5ce87c8ce46a1baca037ebb71da7ba6aa63433ef573e3b0ef5969bb504edb
+            actualPaidIntroCases: 1
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
   - provider: sg
     gameId: '32532'
     name: Golden Fire Link Dragon Song
@@ -2279,7 +2318,7 @@ games:
         GN: huffnevenmorepuffhighlimit96
         RB: '5'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32713'
         dbName: sg_huffnevenmorepuffhighlimit96
         runtimeGameId: 33113
@@ -2288,7 +2327,7 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
@@ -2311,25 +2350,19 @@ games:
           - WC
           - WM
           - WS
+          - CW
+          - NFG
+          - FGT
+          - TFG
+          - CFGG
+          - FGTW
+          - FID
         requiredResponseKeys:
-          - AB
           - B
-          - BPR
-          - FRBAL
-          - GA
-          - GSD
-          - IFG
-          - MSGID
-          - MUL
-          - NRID
-          - RB
-          - RID
-          - RS
-          - SID
-          - SUB
+          - AB
           - TW
-          - VER
-          - WC
+          - MSGID
+          - GA
         ordinaryGSDKeys:
           - BMS
           - BRS
@@ -2577,6 +2610,52 @@ games:
           noCashOrNextActionDerivedFromOptionalGSD: true
           preserveNullableSDKArrayCells: true
           nullableSDKNumberValidatorSHA256: b9875888f75d1efead4c1d956edb34d2021514f853bc635a61970919f6b37aab
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32713'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: huffnevenmorepuffhighlimit96
+            BPR: '100'
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: d2afdbd65840d06549bce7faebcc43aaa95e9d81ba54911b9382e13d2d867c18
+            SDKSelectorSHA256: 67563a0b0ce5cefe8f9b86162bbb27e863ebee2ef2227a2b684fe9b443b7f277
+            NFGSetterSHA256: fddb485ae72cd524911cc9cf7d37723ea9449a612e6c93101e3b70fc0a15a159
+            NFGDecoderSHA256: 136ea6d14c9dfd2aca081f42a2ef45d8849b61886674aa7653102d8ec0ab3d86
+            GCTDecoderSHA256: 456612a0d035a936549b933a549d2cb093c502ba211bd98136ed279cc9ee2f47
+            ownRequestConstructorSHA256: bdfedacd18fc40a08702b8cc5917fbcb71131a57051abda2cb3745fe220705b9
+            fieldBindings:
+              - wireKey: BPR
+                type:
+                  kind: integer
+                  SDKTypeAlias: Xb
+                  ownAliasValidatorSHA256: cb411be33afb81aed89b07517f9645a21041c0bcfd3eddbd1f506608bfebb141
+                sourceSHA256: 6056fdfe707af1af592f69d687b81866f5093f76013bb8b8d2276cc15992cd0d
+              - wireKey: RB
+                type:
+                  kind: integer
+                  SDKTypeAlias: Xb
+                  ownAliasValidatorSHA256: cb411be33afb81aed89b07517f9645a21041c0bcfd3eddbd1f506608bfebb141
+                sourceSHA256: 5e5ddf3f09cecdfe8733ff987345db23184009cb0f207cf8276609eb00b0ed25
+            actualPaidIntroCases: 2
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
   - provider: sg
     gameId: '32714'
     name: Huff N Puff Money Mansion High Limit
@@ -2594,7 +2673,7 @@ games:
         BPR: '25'
         RB: '5'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32714'
         dbName: sg_huffnpuffmoneymansionhighlimit96
         runtimeGameId: 33114
@@ -2603,7 +2682,7 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
@@ -2626,25 +2705,19 @@ games:
           - WC
           - WM
           - WS
+          - CW
+          - NFG
+          - FGT
+          - TFG
+          - CFGG
+          - FGTW
+          - FID
         requiredResponseKeys:
-          - AB
           - B
-          - BPR
-          - FRBAL
-          - GA
-          - GSD
-          - IFG
-          - MSGID
-          - MUL
-          - NRID
-          - RB
-          - RID
-          - RS
-          - SID
-          - SUB
+          - AB
           - TW
-          - VER
-          - WC
+          - MSGID
+          - GA
         ordinaryGSDKeys:
           - BMS
           - HHPOS
@@ -2904,6 +2977,52 @@ games:
           noCashOrNextActionDerivedFromOptionalGSD: true
           preserveNullableSDKArrayCells: true
           nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32714'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: huffnpuffmoneymansionhighlimit96
+            BPR: '25'
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: 67bcebfd2f16477c8c3b2686b6e10b70f41bde3579d929e89e04e321ffa4e93d
+            SDKSelectorSHA256: 2a3a8c97c1f494387a77268e34be978805df62251e6855d3c5f2abc522a19a31
+            NFGSetterSHA256: 57aa66021376a9a42c4054fda75a71ba7e796d4012405078927b84275c879460
+            NFGDecoderSHA256: 8a3ffe8fa163085ca3dc3e2820f55d4864b3a9877d167d0bd43a89ab5d6bc577
+            GCTDecoderSHA256: eb80ba3a7e1135c1985cbe82b38e0d24bee417a602b5809bc16965fc8316e797
+            ownRequestConstructorSHA256: 8ba847070b4c91e4095d615add0bce9ba85c85cedebaac96023cc6ade59ffd29
+            fieldBindings:
+              - wireKey: BPR
+                type:
+                  kind: integer
+                  SDKTypeAlias: Nb
+                  ownAliasValidatorSHA256: 1bf0f68637c43b673edf5ef24b46eb86922e5fac239f0102a0edc83833b27fa0
+                sourceSHA256: 8a53642e88459f9186d5b551dabaabdaa0b280e737adca4eb47313811dd9c916
+              - wireKey: RB
+                type:
+                  kind: integer
+                  SDKTypeAlias: Nb
+                  ownAliasValidatorSHA256: 1bf0f68637c43b673edf5ef24b46eb86922e5fac239f0102a0edc83833b27fa0
+                sourceSHA256: 5a8579711b7a494ff70d0a92be040ceb2da0b8cacd4eab7e4fc4f25d23393131
+            actualPaidIntroCases: 1
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
   - provider: sg
     gameId: '32715'
     name: Huff N' Even More Puff
@@ -2920,7 +3039,7 @@ games:
         GN: huffnevenmorepuff96
         RB: '5'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32715'
         dbName: sg_huffnevenmorepuff96
         runtimeGameId: 33115
@@ -2929,7 +3048,7 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
@@ -2952,25 +3071,19 @@ games:
           - WC
           - WM
           - WS
+          - CW
+          - NFG
+          - FGT
+          - TFG
+          - CFGG
+          - FGTW
+          - FID
         requiredResponseKeys:
-          - AB
           - B
-          - BPR
-          - FRBAL
-          - GA
-          - GSD
-          - IFG
-          - MSGID
-          - MUL
-          - NRID
-          - RB
-          - RID
-          - RS
-          - SID
-          - SUB
+          - AB
           - TW
-          - VER
-          - WC
+          - MSGID
+          - GA
         ordinaryGSDKeys:
           - BMS
           - BRS
@@ -3218,6 +3331,52 @@ games:
           noCashOrNextActionDerivedFromOptionalGSD: true
           preserveNullableSDKArrayCells: true
           nullableSDKNumberValidatorSHA256: b9875888f75d1efead4c1d956edb34d2021514f853bc635a61970919f6b37aab
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32715'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: huffnevenmorepuff96
+            BPR: '10'
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: ea77b19fd22e4a4a5ae07a82209cf9cd8a4e23932685647342f87f278ce3f2ae
+            SDKSelectorSHA256: 0db94765a8988e3f28e78c95155f255037282e452fb06dd1484f71a5a7e011c2
+            NFGSetterSHA256: 5f62744607f480d7f9e11bd5cbf8945be9a7af9d1d331359764822a298950b26
+            NFGDecoderSHA256: 974592456cb62320d2a0fefbf70ee430f0002e174ee24aa4a20df3a4b5a8e491
+            GCTDecoderSHA256: 8039f4ecaf0e564dd0912503606be3c14553482b1486ed64bdf2502eb710a0e5
+            ownRequestConstructorSHA256: 7449075b543e66ddbf7394a5b514390151c942ae31fe0ae8b2a6c7eb8ea941ec
+            fieldBindings:
+              - wireKey: BPR
+                type:
+                  kind: integer
+                  SDKTypeAlias: Xb
+                  ownAliasValidatorSHA256: 69efdcde5ad19dc0d3f302de4ad06d27e930c074f6ae0dae1b154e8db84945a6
+                sourceSHA256: 2a25cfd1489ccea5bc94016325f333dbaf4b214f5e6bbc616c0f4f3e2ad0220a
+              - wireKey: RB
+                type:
+                  kind: integer
+                  SDKTypeAlias: Xb
+                  ownAliasValidatorSHA256: 69efdcde5ad19dc0d3f302de4ad06d27e930c074f6ae0dae1b154e8db84945a6
+                sourceSHA256: 1108aa8921e4b2497d310d882288c4517b293cec268d6dbfc487e273dd1833c8
+            actualPaidIntroCases: 2
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
   - provider: sg
     gameId: '32716'
     name: Huff N’ Even More Puff Grand
@@ -3675,7 +3834,7 @@ games:
         RB: '6'
         REC: '0'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32728'
         dbName: sg_moneyraidkodiak96
         runtimeGameId: 33128
@@ -3684,7 +3843,7 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
@@ -3708,26 +3867,19 @@ games:
           - WC
           - WM
           - WS
+          - CW
+          - NFG
+          - FGT
+          - TFG
+          - CFGG
+          - FGTW
+          - FID
         requiredResponseKeys:
-          - AB
           - B
-          - BPR
-          - FRBAL
-          - GA
-          - GSD
-          - IFG
-          - MSGID
-          - MUL
-          - NRID
-          - PD
-          - RB
-          - RID
-          - RS
-          - SID
-          - SUB
+          - AB
           - TW
-          - VER
-          - WC
+          - MSGID
+          - GA
         ordinaryGSDKeys:
           - BG_INF
           - CV
@@ -3903,6 +4055,52 @@ games:
           noCashOrNextActionDerivedFromOptionalGSD: true
           preserveNullableSDKArrayCells: true
           nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32728'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: moneyraidkodiak96
+            BPR: '10'
+            RB: '6'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: 38253ffb32d7a362b70e3505620dfffc013bf47809fe500114aef24e18c76b4c
+            SDKSelectorSHA256: 7ff375ef863de8a628ec464013076d73c90e73f053ffa3bda9cbf4d15ada3818
+            NFGSetterSHA256: dc0c1b7f1cd4e9addba2287246dc7159f2b0acc5e1d84dcff0a1525b9d5ff5d4
+            NFGDecoderSHA256: 2193fbf69fb48fa3525bfcef75db3c72bbe6619ebee028bf1b5ce9cce52f7be7
+            GCTDecoderSHA256: 3d64c09fe71e7fc9f514a918923011f6139d1f964ab5d3782301fb2bdf8707bb
+            ownRequestConstructorSHA256: 4ca808a092963b7c6a913074a8dc5817ce81ffe5da2256d0f16eabea5c8e958e
+            fieldBindings:
+              - wireKey: BPR
+                type:
+                  kind: integer
+                  SDKTypeAlias: Xb
+                  ownAliasValidatorSHA256: 932b5868504057b96bbeaaa358bea8adebec7ae76a68de916369dcb86612db18
+                sourceSHA256: f07819431b0f3ce554bbab0578e9a7c6f53f73d93bfee5a3225c1949446d0dae
+              - wireKey: RB
+                type:
+                  kind: integer
+                  SDKTypeAlias: Xb
+                  ownAliasValidatorSHA256: 932b5868504057b96bbeaaa358bea8adebec7ae76a68de916369dcb86612db18
+                sourceSHA256: 2a042aa999ed812341673ad13d5968a66b4b098dea64695d3157f705474b0ea8
+            actualPaidIntroCases: 2
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
   - provider: sg
     gameId: '32501'
     name: Dragon Spin Cross Link Water
@@ -5356,7 +5554,7 @@ games:
         LB: '30'
         REC: '0'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32618'
         dbName: sg_quickhitlinkfire96
         runtimeGameId: 33073
@@ -5365,7 +5563,7 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
@@ -5388,26 +5586,19 @@ games:
           - VER
           - WC
           - WS
+          - CW
+          - NFG
+          - FGT
+          - TFG
+          - CFGG
+          - FGTW
+          - FID
         requiredResponseKeys:
-          - AB
           - B
-          - BPL
-          - FRBAL
-          - GA
-          - GSD
-          - IFG
-          - LB
-          - MSGID
-          - MUL
-          - NRID
-          - PD
-          - RID
-          - RS
-          - SID
-          - SUB
+          - AB
           - TW
-          - VER
-          - WC
+          - MSGID
+          - GA
         ordinaryGSDKeys:
           - BGRS
           - CC
@@ -5622,3 +5813,49 @@ games:
           noCashOrNextActionDerivedFromOptionalGSD: true
           preserveNullableSDKArrayCells: true
           nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32618'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: quickhitlinkfire96
+            BPL: '5'
+            LB: '30'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: bf4dd809cc375858f99fd221ad8547d59c499d185a942090eab4f99e1ecbc726
+            SDKSelectorSHA256: 99dd8fa6f3ed6ee12415dbc802ee8db6fe5c57d24c6b008a37b6eb30a1bf2e38
+            NFGSetterSHA256: 714482af79cc2fc043c4882f72d0284a50cfbecd788f923912b82e6ea4a15c35
+            NFGDecoderSHA256: 3f2bbfb562830d11a1706d728b746af8eebaaef6836e2ac08d789e695227b212
+            GCTDecoderSHA256: 4b57bf53ac1ec7881dd6fdc57c748b905db0880e14c6ac3100e6cf1cec7d6f88
+            ownRequestConstructorSHA256: c22d929c01035970734a93dec3380827fe390c46ec2b5c95ae0ba309df42d7c6
+            fieldBindings:
+              - wireKey: BPL
+                type:
+                  kind: integer
+                  SDKTypeAlias: qb
+                  ownAliasValidatorSHA256: 55a8f1aa60b83d158395c42bd190a52583598f7ff0b9b78d7162b47f22197b61
+                sourceSHA256: 22472cc29bc72fc21be8d4a60a9acabf157098f9aa65919839175b8c1e9cc788
+              - wireKey: LB
+                type:
+                  kind: integer
+                  SDKTypeAlias: qb
+                  ownAliasValidatorSHA256: 55a8f1aa60b83d158395c42bd190a52583598f7ff0b9b78d7162b47f22197b61
+                sourceSHA256: f588a714f74f17a7fb30cf3ba2d56a0d0a087b1b3bee4e2d1d06f8c0150fd555
+            actualPaidIntroCases: 2
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
