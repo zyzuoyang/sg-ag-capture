@@ -10763,7 +10763,7 @@ games:
       runtimeGameId: 33158
       runtimeSlug: quickhitsundragon
       ownQuickHitPaidContract:
-        version: own-quick-hit-client-features-v4
+        version: own-quick-hit-client-free-shape-v5
         gameId: '32798'
         dbName: sg_quickhitsundragon
         runtimeGameId: 33158
@@ -10862,3 +10862,4 @@ games:
         ownClientAppSHA256: dba5a17db6a922fa2c4b495ef8f8a72ae2aca2df3c036bf45bf3bce7c9738d84
         ownClientSemanticProofSHA256: c7951467d86d52f716238e187940eb3355ff786e0383c4637bf0329b01ce0217
         ownObservedFreeIntroductionsSHA256: 2ae1bc7f435cd2b4f5bb7320a047d5cebfd3d6eb1990f3132045e7adbb3ad7d3
+        ownFreeShapeClientProofSHA256: e206ed57d7f4a3d5d411135f2cd01d93e83e5ab58b2877f9ea9b6cd0f46c3d16
