@@ -721,22 +721,71 @@ export function validateZeusThree(game:AGGameConfig,g:any,first:boolean,prior:an
 
 function ownQuickHitPaidBinding(game:AGGameConfig) {
  const c=game.sg.ownQuickHitPaidContract,b:any={'32797':['sg_quickhitsuperwheelwildred',33157,'20291','quickhitsuperwheelwildred'],'32798':['sg_quickhitsundragon',33158,'20292','quickhitsundragon']},q=b[game.gameId];
- assert(q&&c?.version==='own-quick-hit-paid-scatter-components-v2'&&c.gameId===game.gameId&&c.dbName===game.dbName&&c.runtimeGameId===game.sg.runtimeGameId&&game.dbName===q[0]&&game.sg.runtimeGameId===q[1]&&c.sourceGameId===q[2]&&game.sg.header.gameID===q[2]&&c.slug===q[3]&&game.sg.runtimeSlug===q[3]&&game.sg.header.gameCodeRGI===q[3]&&c.betRaw===200&&game.sg.betRaw===200&&c.ordinaryOnly===true&&c.unmappedFeatureRemainsFatal===true,'AG integrity: SG Quick Hit own binding');
+ assert(q&&(c?.version==='own-quick-hit-paid-scatter-components-v2'||game.gameId==='32797'&&c?.version==='own-quick-hit-paid-scatter-wheel-v3'||c?.version==='own-quick-hit-client-features-v4')&&c.gameId===game.gameId&&c.dbName===game.dbName&&c.runtimeGameId===game.sg.runtimeGameId&&game.dbName===q[0]&&game.sg.runtimeGameId===q[1]&&c.sourceGameId===q[2]&&game.sg.header.gameID===q[2]&&c.slug===q[3]&&game.sg.runtimeSlug===q[3]&&game.sg.header.gameCodeRGI===q[3]&&c.betRaw===200&&game.sg.betRaw===200&&c.ordinaryOnly===(c.version!=='own-quick-hit-client-features-v4')&&c.unmappedFeatureRemainsFatal===true,'AG integrity: SG Quick Hit own binding');
  assert(c.fixedGitCommit==='885f862bcc04841406820a932ef14c38c7759f1d'&&/^[0-9a-f]{64}$/.test(c.ownSourceCacheSHA256),'AG integrity: SG Quick Hit own evidence');return c;
 }
 export function validateOwnQuickHitPaid(game:AGGameConfig,g:any,first:boolean):number {
  const c=ownQuickHitPaidBinding(game);assert(first,'AG integrity: SG Quick Hit unmapped continuation');
  function check(v:any,path:string):void{if(Array.isArray(v)){assert(v.length>0,'AG integrity: SG Quick Hit empty structure');for(const q of v)check(q,path);return;}if(v&&typeof v==='object'){const s=c.schemas[path];assert(s&&Object.keys(v).every(k=>s.keys.includes(k))&&s.required.every((k:string)=>k in v),'AG integrity: SG Quick Hit own schema');for(const[k,q]of Object.entries(v))check(q,path+'/'+k);}}
- check(g,'GameResult');assert(!g.FSInfo&&!g.Feature&&!g.PickerInfo&&!g.BaseGameRecoveryInfo,'AG integrity: SG Quick Hit unmapped feature');
+ if(g.WheelInfo!==undefined){assert(game.gameId==='32797'&&['own-quick-hit-paid-scatter-wheel-v3','own-quick-hit-client-features-v4'].includes(c.version)&&/^[a-f0-9]{64}$/.test(c.ownPaidWheelCompleteCacheSHA256),'AG integrity: SG own paid wheel binding');const w=g.WheelInfo;ownPaidKeys(w,'featureName|outerWheelIndex|outerWheelType|innerWheelIndex|multiplier','own paid wheel');assert(w.featureName==='X_PAYS'&&integer(w.outerWheelType,'own wheel type')===4&&integer(w.multiplier,'own wheel metadata multiplier')>0,'AG integrity: SG unmapped wheel feature');integer(w.outerWheelIndex,'own outer wheel index');integer(w.innerWheelIndex,'own inner wheel index');}
+ const envelope={...g};delete envelope.WheelInfo;
+ check(envelope,'GameResult');assert(!g.FSInfo&&!g.Feature&&!g.PickerInfo&&!g.BaseGameRecoveryInfo,'AG integrity: SG Quick Hit unmapped feature');
  assert(integer(g.stake,'Quick Hit stake')===200&&typeof g.betID==='string','AG integrity: SG Quick Hit wager');
+ const cash=ownQuickHitReturnedCash(game,g,false);
+ assert(Number.isSafeInteger(cash)&&cash===integer(g.totalWin,'Quick Hit total cash')&&cash===integer(g.BGInfo.bgWinnings,'Quick Hit base cash')&&cash===integer(g.BGInfo.totalWagerWin,'Quick Hit cumulative cash')&&g.BGInfo.isMaxWin==='0','AG integrity: SG Quick Hit cash components');if(g.BGInfo.baseGameSpinsRemaining!==undefined)assert(integer(g.BGInfo.baseGameSpinsRemaining,'Quick Hit remaining')===0,'AG integrity: SG Quick Hit unmapped base spins');return cash;
+}
+
+function ownQuickHitReturnedCash(game:AGGameConfig,g:any,free:boolean):number {
  const paidLines=game.gameId==='32797',spins=list(g.ReelResults.ReelSpin);assert(spins.length===1&&integer(g.ReelResults.numSpins,'Quick Hit spin count')===1,'AG integrity: SG Quick Hit own spin');let cash=0;
  if(paidLines)assert(g.stakePerLine==='5'&&g.paylineCount==='30','AG integrity: SG Quick Hit own paylines');
- for(const s of spins){assert(s.freeSpin==='N'&&['N','Y'].includes(s.bonusAwarded)&&integer(s.spinIndex,'Quick Hit spin index')===0,'AG integrity: SG Quick Hit unmapped feature state');integer(s.reelsetIndex,'Quick Hit reel set');ownPositionNumbers(s.ReelStops,5,'Quick Hit reel stops');const wins=list(paidLines?s.PaylineWin:s.AnywayWin),scatters=list(s.ScatterWin);assert(wins.length===integer(paidLines?s.winCountPL:s.anywayWins,'Quick Hit award count')&&scatters.length===integer(paidLines?s.winCountSC:s.scatterWinCount,'Quick Hit scatter count'),'AG integrity: SG Quick Hit cash count');assert((s.bonusAwarded==='Y')===(scatters.length>0),'AG integrity: SG Quick Hit returned cash-scatter marker');let lines=0;const seen=new Set<number>();
+ for(const s of spins){assert((free?['N','Y'].includes(s.freeSpin):s.freeSpin==='N')&&['N','Y'].includes(s.bonusAwarded)&&integer(s.spinIndex,'Quick Hit spin index')===0,'AG integrity: SG Quick Hit unmapped feature state');integer(s.reelsetIndex,'Quick Hit reel set');ownPositionNumbers(s.ReelStops,5,'Quick Hit reel stops');const wins=list(paidLines?s.PaylineWin:s.AnywayWin),scatters=list(s.ScatterWin);assert(wins.length===integer(paidLines?s.winCountPL:s.anywayWins,'Quick Hit award count')&&scatters.length===integer(paidLines?s.winCountSC:s.scatterWinCount,'Quick Hit scatter count'),'AG integrity: SG Quick Hit cash count');assert((free||((s.bonusAwarded==='Y')===(scatters.length>0))),'AG integrity: SG Quick Hit returned cash-scatter marker');let lines=0;const seen=new Set<number>();
   for(const [i,w]of wins.entries()){if(paidLines){const line=integer(w.index,'Quick Hit line index');assert(line<30&&!seen.has(line),'AG integrity: SG Quick Hit line identity');seen.add(line);integer(w.awardTableIndex,'Quick Hit award table');assert(ownPositionNumbers(w['#text'],undefined,'Quick Hit line positions').every(n=>n<15),'AG integrity: SG Quick Hit own bootstrap paylines');}else{assert(integer(w.winIndex,'Quick Hit win index')===i&&integer(w.ways,'Quick Hit ways')>0,'AG integrity: SG Quick Hit ways identity');ownPositionNumbers(w['#text'],undefined,'Quick Hit win positions');}integer(w.awardIndex,'Quick Hit award');lines+=integer(w.winVal,'Quick Hit line cash');}
   let scatter=0;for(const w of scatters){integer(w.awardIndex,'Quick Hit scatter award');if(w['#text']!==undefined)ownPositionNumbers(w['#text'],undefined,'Quick Hit scatter positions');scatter+=integer(w.winVal,'Quick Hit scatter cash');}
   assert((paidLines?lines+scatter:lines)===integer(paidLines?s.spinWins:s.totalSpinWin,'Quick Hit spin line cash'),'AG integrity: SG Quick Hit returned reel cash');cash+=lines+scatter;
  }
- assert(Number.isSafeInteger(cash)&&cash===integer(g.totalWin,'Quick Hit total cash')&&cash===integer(g.BGInfo.bgWinnings,'Quick Hit base cash')&&cash===integer(g.BGInfo.totalWagerWin,'Quick Hit cumulative cash')&&g.BGInfo.isMaxWin==='0','AG integrity: SG Quick Hit cash components');if(g.BGInfo.baseGameSpinsRemaining!==undefined)assert(integer(g.BGInfo.baseGameSpinsRemaining,'Quick Hit remaining')===0,'AG integrity: SG Quick Hit unmapped base spins');return cash;
+ assert(Number.isSafeInteger(cash),'AG integrity: SG Quick Hit unsafe cash');return cash;
+}
+
+export function validateOwnQuickHitFeatures(game:AGGameConfig,g:any,first:boolean,prior:any,base:any,priorWin:number):{win:number;free?:any;base?:any} {
+ const c=ownQuickHitPaidBinding(game),hasWG=g?.WGInfo!==undefined,hasFS=g?.FSInfo!==undefined;
+ if(!hasWG&&!hasFS){assert(first,'AG integrity: SG Quick Hit missing own continuation state');return {win:validateOwnQuickHitPaid(game,g,true)};}
+ const hashes:any={'32797':'c9975a3e20c940c6dde0af82430b2493b94d31273f1663beae0d75e4e086ed78','32798':'dba5a17db6a922fa2c4b495ef8f8a72ae2aca2df3c036bf45bf3bce7c9738d84'};
+ assert(c.version==='own-quick-hit-client-features-v4'&&c.ownClientAppSHA256===hashes[game.gameId]&&/^[a-f0-9]{64}$/.test(c.ownClientSemanticProofSHA256)&&/^[a-f0-9]{64}$/.test(c.ownObservedFreeIntroductionsSHA256),'AG integrity: SG Quick Hit own client feature binding');
+ assert(!(hasWG&&hasFS)&&(!hasWG||game.gameId==='32797'),'AG integrity: SG Quick Hit unclassified simultaneous free stages');
+ const f=hasWG?g.WGInfo:g.FSInfo,kind=hasWG?'WG':'FS';
+ const allowed=['fsWinnings','freeSpinsTotal','freeSpinNumber','isMaxWin','spinsUsed','spinsRemaining','extraSpinsAwarded',...(hasWG?['wildsAdded','totalWildsAdded']:game.gameId==='32798'?['patternGroup','patternIndex']:[])];
+ assert(f&&typeof f==='object'&&!Array.isArray(f)&&Object.keys(f).every(k=>allowed.includes(k))&&['fsWinnings','freeSpinsTotal','freeSpinNumber','isMaxWin',...(hasWG?['wildsAdded','totalWildsAdded']:[])].every(k=>k in f),'AG integrity: SG Quick Hit free schema');
+ const total=integer(f.freeSpinsTotal,'Quick Hit total'),played=integer(f.freeSpinNumber,'Quick Hit played'),remaining=total-played,freeCash=integer(f.fsWinnings,'Quick Hit cumulative free cash');
+ assert(total>0&&played<=total&&f.isMaxWin==='0'&&g.BGInfo?.isMaxWin==='0','AG integrity: SG Quick Hit free counter/max');
+ for(const k of ['patternIndex','patternGroup'])if(f[k]!==undefined)integer(f[k],'Quick Hit own pattern metadata');
+ if(f.spinsUsed!==undefined)assert(integer(f.spinsUsed,'Quick Hit used')===played,'AG integrity: SG Quick Hit used counter');
+ if(f.spinsRemaining!==undefined)assert(integer(f.spinsRemaining,'Quick Hit remaining')===remaining,'AG integrity: SG Quick Hit remaining counter');
+ const extra=f.extraSpinsAwarded===undefined?0:integer(f.extraSpinsAwarded,'Quick Hit actual additional free award');
+ let wheelAward=0;
+ if(g.WheelInfo!==undefined){const w=g.WheelInfo;ownPaidKeys(w,'featureName|outerWheelIndex|outerWheelType|innerWheelIndex|freeSpinsAwarded','Quick Hit free wheel');
+  assert(game.gameId==='32797'&&w.featureName===(hasWG?'WILDGAMES':'FREESPINS'),'AG integrity: SG Quick Hit wheel/free kind');
+  for(const k of ['outerWheelIndex','outerWheelType','innerWheelIndex'])integer(w[k],'Quick Hit wheel index');wheelAward=integer(w.freeSpinsAwarded,'Quick Hit actual wheel award');assert(wheelAward>0,'AG integrity: SG Quick Hit missing wheel award');}
+ const envelope={...g};delete envelope.WGInfo;delete envelope.FSInfo;delete envelope.WheelInfo;delete envelope.BaseGameRecoveryInfo;
+ let baseCash:number,win:number;
+ if(first){assert(played===0&&freeCash===0&&extra===0&&remaining===total,'AG integrity: SG Quick Hit invalid free introduction');
+  assert(!hasWG||wheelAward===total,'AG integrity: SG Quick Hit wheel introduced budget');
+  assert(g.BaseGameRecoveryInfo===undefined,'AG integrity: SG Quick Hit unexpected paid recovery');
+  win=validateOwnQuickHitPaid(game,envelope,true);baseCash=win;base=structuredClone(g);
+  if(hasWG)assert(f.wildsAdded==='0'&&f.totalWildsAdded==='0','AG integrity: SG Quick Hit intro wild state');
+ }else{
+  assert(prior&&base&&prior.ownQuickHitFreeKind===kind,'AG integrity: SG Quick Hit changed free kind');
+  function check(v:any,p:string):void{if(Array.isArray(v)){assert(v.length>0,'AG integrity: SG Quick Hit empty free structure');for(const q of v)check(q,p);return;}if(v&&typeof v==='object'){const s=c.schemas[p];assert(s&&Object.keys(v).every(k=>s.keys.includes(k))&&s.required.every((k:string)=>k in v),'AG integrity: SG Quick Hit own continuation schema');for(const [k,q]of Object.entries(v))check(q,p+'/'+k);}}
+  check(envelope,'GameResult');assert(integer(g.stake,'Quick Hit free stake')===200&&typeof g.betID==='string','AG integrity: SG Quick Hit changed free wager');
+  const awarded=wheelAward||extra;assert(!wheelAward||extra===0||wheelAward===extra,'AG integrity: SG Quick Hit inconsistent award components');
+  assert(played===prior.freeSpinsPlayed+1&&total===prior.freeSpinsTotal+awarded&&remaining===prior.freeSpinsRemaining-1+awarded,'AG integrity: SG Quick Hit free budget transition');
+  if(g.BaseGameRecoveryInfo!==undefined){ownPaidKeys(g.BaseGameRecoveryInfo,'ReelResults','Quick Hit base recovery');assert(JSON.stringify(g.BaseGameRecoveryInfo.ReelResults)===JSON.stringify(base.ReelResults),'AG integrity: SG Quick Hit original base recovery changed');}
+  baseCash=integer(base.BGInfo.bgWinnings,'Quick Hit original base cash');const cash=ownQuickHitReturnedCash(game,g,true);
+  assert(cash===integer(g.totalWin,'Quick Hit current free cash')&&baseCash===integer(g.BGInfo.bgWinnings,'Quick Hit retained base cash')&&baseCash+freeCash===integer(g.BGInfo.totalWagerWin,'Quick Hit total free cash')&&baseCash+freeCash===priorWin+cash,'AG integrity: SG Quick Hit free money transition');
+  win=baseCash+freeCash;
+  if(hasWG)assert(integer(f.totalWildsAdded,'Quick Hit total wilds')===prior.ownQuickHitTotalWilds+integer(f.wildsAdded,'Quick Hit added wilds'),'AG integrity: SG Quick Hit wild counter transition');
+ }
+ assert(Number.isSafeInteger(win),'AG integrity: SG Quick Hit unsafe cumulative cash');
+ return {win,base,free:{freeSpinsTotal:total,freeSpinsPlayed:played,freeSpinsRemaining:remaining,accumulativeWin:win/100,ownQuickHitFreeKind:kind,...(hasWG?{ownQuickHitTotalWilds:integer(f.totalWildsAdded,'Quick Hit wild count')}:{})}};
 }
 
 export class SGWmsSession {
@@ -834,7 +883,7 @@ export class SGWmsSession {
     private payload(event:string,parameters:Record<string,any>) {
         const h={...this.game.sg.header,sessionID:this.session};
         const header='<Header '+Object.entries(h).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')+'/>';
-        if(event==='Logic'&&this.game.sg.ownQuickHitPaidContract){const c=ownQuickHitPaidBinding(this.game);assert(this.action==='SPIN'&&JSON.stringify(parameters)===JSON.stringify({total:'200'}),'AG integrity: SG Quick Hit own paid request');return `<GameRequest type="Logic">${header}${c.paidRequestDataXML}</GameRequest>`;}
+        if(event==='Logic'&&this.game.sg.ownQuickHitPaidContract){const c=ownQuickHitPaidBinding(this.game);assert((this.action==='SPIN'||this.action==='FREE_SPIN'&&c.version==='own-quick-hit-client-features-v4')&&JSON.stringify(parameters)===JSON.stringify({total:'200'}),'AG integrity: SG Quick Hit own paid/free current stake request');return `<GameRequest type="Logic">${header}${c.paidRequestDataXML}</GameRequest>`;}
         if(event==='Logic'&&this.game.sg.healthyComponentsContract){const kind=ownHealthyComponentsBinding(this.game);if(this.action==='FREE_SPIN'){assert(kind!=='jinji'&&Object.keys(parameters).length===0,'AG integrity: SG healthy free request');return `<GameRequest type="Logic">${header}</GameRequest>`;}assert(this.action==='SPIN'&&JSON.stringify(parameters)===JSON.stringify(this.game.sg.stake),'AG integrity: SG healthy paid request');const ownStake='<Stake '+Object.entries(parameters).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')+'/>';if(kind==='megaways')return `<GameRequest type="Logic">${header}${ownStake}<PaylineCount count="1"/><AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData></GameRequest>`;return `<GameRequest type="Logic">${header}<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData>${ownStake}</GameRequest>`;}
         if(event==='Logic'&&this.game.sg.eightyFortunesContract&&Object.keys(parameters).length){assert(this.action==='SPIN'&&this.game.gameId==='32750'&&JSON.stringify(parameters)===JSON.stringify({creditBet:'88',betMultiplier:'2'}),'AG integrity: SG 88 Fortunes own paid request');return `<GameRequest type="Logic">${header}<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData><SpinInfo creditBet="88" betMultiplier="2"/></GameRequest>`;}
         if(event==='Logic'&&this.game.sg.zeusThreeContract){assert(this.game.gameId==='32816'&&this.game.dbName==='sg_zeus3_prt'&&this.game.sg.betRaw===40,'AG integrity: SG Zeus III request binding');if(this.action==='FREE_SPIN'){assert(Object.keys(parameters).length===0,'AG integrity: SG Zeus III free request');return `<GameRequest type="Logic">${header}</GameRequest>`;}assert(this.action==='SPIN'&&JSON.stringify(parameters)===JSON.stringify({totalStake:'40'}),'AG integrity: SG Zeus III paid request');return `<GameRequest type="Logic">${header}<WagerInfo totalStake="40"/><AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData></GameRequest>`;}
@@ -930,7 +979,7 @@ export class SGWmsSession {
             const g=r.GameResult;
             if(this.game.sg.zeusThreeContract){const mapped=validateZeusThree(this.game,g,first,this.free,this.zeusThreeBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.zeusThreeBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(this.game.sg.spiritRiverContract){const mapped=validateSpiritRiver(this.game,g,first,this.free,this.riverBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.riverBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
-            else if(this.game.sg.ownQuickHitPaidContract){this.totalWin=validateOwnQuickHitPaid(this.game,g,first);this.free=undefined;this.action='PLAY';}
+            else if(this.game.sg.ownQuickHitPaidContract){if(first)this.healthyComponentsBase=undefined;const m=validateOwnQuickHitFeatures(this.game,g,first,this.free,this.healthyComponentsBase,this.totalWin);this.totalWin=m.win;this.free=m.free;this.healthyComponentsBase=m.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(this.game.sg.healthyComponentsContract){if(first)this.healthyComponentsBase=undefined;const mapped=validateOwnHealthyComponents(this.game,g,first,this.free,this.healthyComponentsBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.healthyComponentsBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(this.game.sg.eightyFortunesContract){const mapped=validateEightyFortunesData(this.game,g,first,this.free,this.eightyBase,this.totalWin);if(first)this.eightyBase=structuredClone(g);this.totalWin=mapped.win;this.free=mapped.free;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(this.game.sg.coolJewelsFreeContract){const mapped=validateCoolJewelsFreeData(this.game,g,first,this.free,this.coolJewelsBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.coolJewelsBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}

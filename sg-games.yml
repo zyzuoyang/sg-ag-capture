@@ -10614,12 +10614,13 @@ games:
         versionID: 1_0
       stake:
         total: '200'
-      freeStake: {}
+      freeStake:
+        total: '200'
       betRaw: 200
       runtimeGameId: 33157
       runtimeSlug: quickhitsuperwheelwildred
       ownQuickHitPaidContract:
-        version: own-quick-hit-paid-scatter-components-v2
+        version: own-quick-hit-client-features-v4
         gameId: '32797'
         dbName: sg_quickhitsuperwheelwildred
         runtimeGameId: 33157
@@ -10710,10 +10711,14 @@ games:
               - winVal
         ownSourceCacheSHA256: b2705ff42d04439ec89669a64b499451b3591fbd5b2d579ed3db04d45cebb1a2
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         unmappedFeatureRemainsFatal: true
         ownClosedPrefixProofSHA256: 7118d00e256ee983f1ca2d7ccf6dbb5e866b1d17e6a6e32fd22d65133e74ccf5
         ownScatterTerminalRecords: 1
+        ownPaidWheelCompleteCacheSHA256: 96befb97bc716e3f739586f35f32bcbe93c9c8aad9d3d361881b63864571145e
+        ownClientAppSHA256: c9975a3e20c940c6dde0af82430b2493b94d31273f1663beae0d75e4e086ed78
+        ownClientSemanticProofSHA256: c7951467d86d52f716238e187940eb3355ff786e0383c4637bf0329b01ce0217
+        ownObservedFreeIntroductionsSHA256: 2ae1bc7f435cd2b4f5bb7320a047d5cebfd3d6eb1990f3132045e7adbb3ad7d3
   - provider: sg
     gameId: '32798'
     name: Quick Hit Ultra Pays - Sun Dragon
@@ -10752,12 +10757,13 @@ games:
         versionID: 1_0
       stake:
         total: '200'
-      freeStake: {}
+      freeStake:
+        total: '200'
       betRaw: 200
       runtimeGameId: 33158
       runtimeSlug: quickhitsundragon
       ownQuickHitPaidContract:
-        version: own-quick-hit-paid-scatter-components-v2
+        version: own-quick-hit-client-features-v4
         gameId: '32798'
         dbName: sg_quickhitsundragon
         runtimeGameId: 33158
@@ -10849,7 +10855,10 @@ games:
               - winVal
         ownSourceCacheSHA256: b2705ff42d04439ec89669a64b499451b3591fbd5b2d579ed3db04d45cebb1a2
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         unmappedFeatureRemainsFatal: true
         ownClosedPrefixProofSHA256: 7118d00e256ee983f1ca2d7ccf6dbb5e866b1d17e6a6e32fd22d65133e74ccf5
         ownScatterTerminalRecords: 1
+        ownClientAppSHA256: dba5a17db6a922fa2c4b495ef8f8a72ae2aca2df3c036bf45bf3bce7c9738d84
+        ownClientSemanticProofSHA256: c7951467d86d52f716238e187940eb3355ff786e0383c4637bf0329b01ce0217
+        ownObservedFreeIntroductionsSHA256: 2ae1bc7f435cd2b4f5bb7320a047d5cebfd3d6eb1990f3132045e7adbb3ad7d3
