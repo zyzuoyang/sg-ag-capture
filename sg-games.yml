@@ -10620,7 +10620,7 @@ games:
       runtimeGameId: 33157
       runtimeSlug: quickhitsuperwheelwildred
       ownQuickHitPaidContract:
-        version: own-quick-hit-client-features-v4
+        version: own-quick-hit-client-free-cash-wheel-v6
         gameId: '32797'
         dbName: sg_quickhitsuperwheelwildred
         runtimeGameId: 33157
@@ -10719,6 +10719,7 @@ games:
         ownClientAppSHA256: c9975a3e20c940c6dde0af82430b2493b94d31273f1663beae0d75e4e086ed78
         ownClientSemanticProofSHA256: c7951467d86d52f716238e187940eb3355ff786e0383c4637bf0329b01ce0217
         ownObservedFreeIntroductionsSHA256: 2ae1bc7f435cd2b4f5bb7320a047d5cebfd3d6eb1990f3132045e7adbb3ad7d3
+        ownFreeCashWheelClientProofSHA256: b6fb54de5e3920441f783a5f2b7ff9619164832d23f03971a486232740eb57e7
   - provider: sg
     gameId: '32798'
     name: Quick Hit Ultra Pays - Sun Dragon
@@ -10763,7 +10764,7 @@ games:
       runtimeGameId: 33158
       runtimeSlug: quickhitsundragon
       ownQuickHitPaidContract:
-        version: own-quick-hit-client-free-shape-v5
+        version: own-quick-hit-client-empty-shape-v7
         gameId: '32798'
         dbName: sg_quickhitsundragon
         runtimeGameId: 33158
@@ -10863,3 +10864,4 @@ games:
         ownClientSemanticProofSHA256: c7951467d86d52f716238e187940eb3355ff786e0383c4637bf0329b01ce0217
         ownObservedFreeIntroductionsSHA256: 2ae1bc7f435cd2b4f5bb7320a047d5cebfd3d6eb1990f3132045e7adbb3ad7d3
         ownFreeShapeClientProofSHA256: e206ed57d7f4a3d5d411135f2cd01d93e83e5ab58b2877f9ea9b6cd0f46c3d16
+        ownEmptyShapeClientProofSHA256: 94011fd6267e4a0fcb0b58c44b70fc0f412c6f03c901d7031a2acfc31f47a26a
