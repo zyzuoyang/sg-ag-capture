@@ -8027,7 +8027,6 @@ games:
           - MSGID
           - MUL
           - NRID
-          - PD
           - RID
           - RS
           - SID
@@ -8453,6 +8452,32 @@ games:
             rootUnknownsRemainFatal: true
             rawDictionaryPreserved: true
             noCashOrNextActionFromUnconsumedDictionaryFields: true
+        ownOptionalRootMetadata:
+          - schema: own-SDK-optional-PD-metadata-v1
+            gameId: '32719'
+            ownSDKFileSHA256: 7897950e66d862f5823a13f9a2ce56f0973d4d40391ed429502fe9fef16d03c2
+            wireKey: PD
+            ownSDKProperty: CN
+            ownSDKFieldDecoderSHA256s:
+              - f4ccb0cf2a1d14967045a73e7604a0339f85d1b23575731f79aca2b6ff23ff1d
+              - 1a273e148f5058a7ae59973a25fca89b14ee92e1594fdc339758b0fdcceddafc
+            ownSDKFieldSourceSpans:
+              - sourceStart: 1167716
+                sourceEnd: 1167763
+                sourceSHA256: f4ccb0cf2a1d14967045a73e7604a0339f85d1b23575731f79aca2b6ff23ff1d
+              - sourceStart: 1171672
+                sourceEnd: 1171720
+                sourceSHA256: 1a273e148f5058a7ae59973a25fca89b14ee92e1594fdc339758b0fdcceddafc
+            explicitSDKRequired: false
+            missingSDKValue: 'null'
+            cashAndPendingDefaultsForbidden: true
+            requiredCaptureKeys:
+              - B
+              - AB
+              - TW
+              - MSGID
+              - GA
+            ownSDKMissingFieldFunctionSHA256: b3ba2792b55e458e92ceb3d50f8645c3624b2eec50188e5e8dad51d0504e3cb9
   - provider: sg
     gameId: '32720'
     name: Hypercharged Jinzita
@@ -8936,3 +8961,29 @@ games:
             rootUnknownsRemainFatal: true
             rawDictionaryPreserved: true
             noCashOrNextActionFromUnconsumedDictionaryFields: true
+        ownOptionalRootMetadata:
+          - schema: own-SDK-optional-PD-metadata-v1
+            gameId: '32720'
+            ownSDKFileSHA256: c3b23a2c481fad8bde0d0d1d9ba36b32e3addc567d505318421020eae560a8b0
+            wireKey: PD
+            ownSDKProperty: XN
+            ownSDKFieldDecoderSHA256s:
+              - d5b37db197e07cafe38fd78d07cc9f68a57461b75dd9c166a02bb9cdc98847e9
+              - d5b37db197e07cafe38fd78d07cc9f68a57461b75dd9c166a02bb9cdc98847e9
+            ownSDKFieldSourceSpans:
+              - sourceStart: 1169777
+                sourceEnd: 1169824
+                sourceSHA256: d5b37db197e07cafe38fd78d07cc9f68a57461b75dd9c166a02bb9cdc98847e9
+              - sourceStart: 1173706
+                sourceEnd: 1173753
+                sourceSHA256: d5b37db197e07cafe38fd78d07cc9f68a57461b75dd9c166a02bb9cdc98847e9
+            explicitSDKRequired: false
+            missingSDKValue: 'null'
+            cashAndPendingDefaultsForbidden: true
+            requiredCaptureKeys:
+              - B
+              - AB
+              - TW
+              - MSGID
+              - GA
+            ownSDKMissingFieldFunctionSHA256: e3f014b8be18bcd8fc89f195ce2b2e77c04af3e63c665f5f41a3827cffb6f839
