@@ -1051,6 +1051,23 @@ export function ownGDMOrdinaryFinal(game:AGGameConfig,p:Record<string,string>):b
    // Exact SDK deserializer sets absent optional FGRS to null; 0 < null is false.
    // No amount or feature result is manufactured and raw dictionary is preserved.
    const value=gsd[q.wireKey];if(value!==undefined&&gdmInteger(value,'own positive pending counter')>0)return false;
+  }else if(q.kind==='own-root-fresh-ordinary-predicate'){
+   const b=c.ownRootPendingBinding;
+   assert(b&&JSON.stringify(q)===JSON.stringify(b)&&q.gameId===game.gameId&&q.ownSDKFileSHA256===c.ownSDKFileSHA256&&q.noCashDefaults===true
+    &&/^[a-f0-9]{64}$/.test(q.ownMetadataDeserializerSHA256)&&/^[a-f0-9]{64}$/.test(q.SDKSourceSHA256)
+    &&Array.isArray(q.fieldBindings)&&q.fieldBindings.map((f:any)=>f.wireKey).join('|')===q.wireKeys.join('|')&&q.fieldBindings.every((f:any)=>/^[a-f0-9]{64}$/.test(f.sourceSHA256)),'AG integrity: GDM own root pending binding');
+   if(q.shape==='own-nullable-root-array-length'){
+    assert(q.wireKeys.join('|')==='FID'&&q.SDKMissingValue==='null'&&q.fieldBindings.length===1&&/^[a-f0-9]{64}$/.test(q.ownArrayValidatorSHA256),'AG integrity: GDM own root array binding');
+    // The sealed SDK makes an absent optional FID null, whose length is not read.
+    // A present feature identifier is outside this ordinary trial scope.
+    if(p.FID!==undefined&&p.FID!=='')return false;
+   }else{
+    assert(q.shape==='own-minus-one-pending-marker'&&q.wireKeys.join('|')==='NFG|CFGG'&&q.SDKMissingValue==='not-used-for-ordinary-marker-scope'&&q.ordinaryTrialRequiresCountersInactive===true,'AG integrity: GDM own pending marker binding');
+    const n=p.NFG===undefined?null:gdmInteger(p.NFG,'own root pending marker'),played=p.CFGG===undefined?null:gdmInteger(p.CFGG,'own root played counter');
+    // Actual leaf is (-1 === NFG && 0 === CFGG); no missing value is inferred.
+    // This admission intentionally accepts only fresh ordinary counters.
+    assert((n===null||n===0)&&(played===null||played===0),'AG integrity: GDM nonordinary own root counters');
+   }
   }else throw new Error('AG integrity: GDM own pending decision not mapped');
  }
  return true;

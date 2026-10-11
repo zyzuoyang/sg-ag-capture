@@ -10087,3 +10087,419 @@ games:
               - gameId: '32720'
                 packetSHA256: 30db73ecd53855e32b1eb8fbd98b837c55635ec7282125a95f23b8b0e2bd22cc
             ownRepeatedNaturalCoverageNotClaimed: true
+  - provider: sg
+    gameId: '32707'
+    name: Dancing Drums Prosperity
+    dbName: sg_dancingdrumsprosperity96
+    backendId: dancingdrumsprosperity96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33107
+      runtimeSlug: dancingdrumsprosperity96
+      betRaw: 108
+      requestParams:
+        AP: 'false'
+        BPR: '108'
+        GN: dancingdrumsprosperity96
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-ordinary-typed-final-v2
+        gameId: '32707'
+        dbName: sg_dancingdrumsprosperity96
+        runtimeGameId: 33107
+        runtimeSlug: dancingdrumsprosperity96
+        betRaw: 108
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - CFGG
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NFG
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VA
+          - VER
+          - WC
+          - WM
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VA
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - RSHP
+        ownSDKFileSHA256: 183aa27737161a22c4f51a97216777fe57d8d1582b799c57da4c45b96a6a71c8
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            SDKSourceSHA256: 6e65db64ce0b1011a6ebcae669d824224536c10908934fa86fb6572f0cb700db
+          - kind: own-root-fresh-ordinary-predicate
+            gameId: '32707'
+            ownSDKFileSHA256: 183aa27737161a22c4f51a97216777fe57d8d1582b799c57da4c45b96a6a71c8
+            SDKSourceSHA256: 8876c8e4f7d7fc35feccdcfde276ea46165ce038ac1fcb3a76c8d88b9b582ee8
+            ownMethodSource: return-1===this.QL&&0===this.gw?!0:!1
+            ownMetadataDeserializerSHA256: bd7ef654616e20b55c66091a32caac8efec442cf35305fa0324f4fe2d4a170dd
+            sourceScope: fresh ordinary only; no preceding feature
+            noCashDefaults: true
+            shape: own-minus-one-pending-marker
+            wireKeys:
+              - NFG
+              - CFGG
+            fieldBindings:
+              - wireKey: NFG
+                property: QL
+                sourceSHA256: 0babb52de06dec3b6cc6d92a781b50d77b7c061314dfdffe02e36a50d52e270e
+                source: '{key:"NFG",type:m.na.ac,defaultValue:0}'
+              - wireKey: CFGG
+                property: gw
+                sourceSHA256: 946b5216b116e3d0f221ede63ec43c8bd49325b1256dad995fe188d39a2e3208
+                source: '{key:"CFGG",type:m.na.ac,defaultValue:0}'
+            ownRootDecoderDefinitions:
+              - - wireKey: NFG
+                  property: QL
+                  sourceSHA256: 0babb52de06dec3b6cc6d92a781b50d77b7c061314dfdffe02e36a50d52e270e
+                  source: '{key:"NFG",type:m.na.ac,defaultValue:0}'
+                - wireKey: NFG
+                  property: QL
+                  sourceSHA256: 1910f5ad5f2b0867a1384eac25ba7b5371b645c963903601e796f78c740b4112
+                  source: '{key:"NFG",type:m.ac}'
+              - - wireKey: CFGG
+                  property: gw
+                  sourceSHA256: 946b5216b116e3d0f221ede63ec43c8bd49325b1256dad995fe188d39a2e3208
+                  source: '{key:"CFGG",type:m.na.ac,defaultValue:0}'
+                - wireKey: CFGG
+                  property: gw
+                  sourceSHA256: fa8aa7c3e7570c4f3b99dd2de40235275217c29998ac6c380c9daf7c9f83a3fe
+                  source: '{key:"CFGG",type:m.ac}'
+            SDKMissingValue: not-used-for-ordinary-marker-scope
+            ordinaryTrialRequiresCountersInactive: true
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: d14a52a6467d3d78c5073eb4201a7ff719168142dbcb4cd56694f1c6196dd02c
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: c4a0b1f292254cfce7c1bf2781947b6164957414ddf48ab9b26bba0f7c9fd05c
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: e4043c9e5238eebb618a52e2a2897754aa2c4fc976a6c39979365aa00877296e
+        SDKFinalGetterSourceSHA256: bef86aea2f705224746735994827930bbebec34472003a32bc027df6d56fdf02
+        ownRootPendingBinding:
+          kind: own-root-fresh-ordinary-predicate
+          gameId: '32707'
+          ownSDKFileSHA256: 183aa27737161a22c4f51a97216777fe57d8d1582b799c57da4c45b96a6a71c8
+          SDKSourceSHA256: 8876c8e4f7d7fc35feccdcfde276ea46165ce038ac1fcb3a76c8d88b9b582ee8
+          ownMethodSource: return-1===this.QL&&0===this.gw?!0:!1
+          ownMetadataDeserializerSHA256: bd7ef654616e20b55c66091a32caac8efec442cf35305fa0324f4fe2d4a170dd
+          sourceScope: fresh ordinary only; no preceding feature
+          noCashDefaults: true
+          shape: own-minus-one-pending-marker
+          wireKeys:
+            - NFG
+            - CFGG
+          fieldBindings:
+            - wireKey: NFG
+              property: QL
+              sourceSHA256: 0babb52de06dec3b6cc6d92a781b50d77b7c061314dfdffe02e36a50d52e270e
+              source: '{key:"NFG",type:m.na.ac,defaultValue:0}'
+            - wireKey: CFGG
+              property: gw
+              sourceSHA256: 946b5216b116e3d0f221ede63ec43c8bd49325b1256dad995fe188d39a2e3208
+              source: '{key:"CFGG",type:m.na.ac,defaultValue:0}'
+          ownRootDecoderDefinitions:
+            - - wireKey: NFG
+                property: QL
+                sourceSHA256: 0babb52de06dec3b6cc6d92a781b50d77b7c061314dfdffe02e36a50d52e270e
+                source: '{key:"NFG",type:m.na.ac,defaultValue:0}'
+              - wireKey: NFG
+                property: QL
+                sourceSHA256: 1910f5ad5f2b0867a1384eac25ba7b5371b645c963903601e796f78c740b4112
+                source: '{key:"NFG",type:m.ac}'
+            - - wireKey: CFGG
+                property: gw
+                sourceSHA256: 946b5216b116e3d0f221ede63ec43c8bd49325b1256dad995fe188d39a2e3208
+                source: '{key:"CFGG",type:m.na.ac,defaultValue:0}'
+              - wireKey: CFGG
+                property: gw
+                sourceSHA256: fa8aa7c3e7570c4f3b99dd2de40235275217c29998ac6c380c9daf7c9f83a3fe
+                source: '{key:"CFGG",type:m.ac}'
+          SDKMissingValue: not-used-for-ordinary-marker-scope
+          ordinaryTrialRequiresCountersInactive: true
+        ownGSDDataSchema:
+          version: own-exact-SDK-GSD-types-v1
+          gameId: '32707'
+          ownSDKFileSHA256: 183aa27737161a22c4f51a97216777fe57d8d1582b799c57da4c45b96a6a71c8
+          ownGSDClass: l.O4
+          compiledOwnClassSHA256: 725f961851b5bcd57f37183281311bd0e0c4e3e177921cf25900d9a4c838726f
+          fields:
+            GCT:
+              type:
+                kind: boolean
+              ownSDKFieldSHA256: e4043c9e5238eebb618a52e2a2897754aa2c4fc976a6c39979365aa00877296e
+              ownSDKProperty: Uf
+            RSHP:
+              type:
+                kind: string
+              ownSDKFieldSHA256: 3b507fc978a2d3d7e876ca2f97f85ddb910224d539ac480d6fd80faaae5f1b05
+              ownSDKProperty: Wz
+            MYST_SYM:
+              type:
+                kind: integer
+                SDKTypeAlias: ac
+                ownAliasValidatorSHA256: 1fa3b1f048104b09313940f5811192b1a31af087c93eacf2514cb9c32ad034cc
+              ownSDKFieldSHA256: cf982ae05161ecb3b1f7e54bde19dcbc15b3c8882ea9414bad1b4482134ef3cd
+              ownSDKProperty: hAa
+            MYST_PRZ:
+              type:
+                kind: integer
+                SDKTypeAlias: ac
+                ownAliasValidatorSHA256: 1fa3b1f048104b09313940f5811192b1a31af087c93eacf2514cb9c32ad034cc
+              ownSDKFieldSHA256: 45b6ed5e12218a1b0347ba3d60911cb501c04156de468da1e8ce43b4ab1441f6
+              ownSDKProperty: Pq
+            RE:
+              type:
+                kind: integer
+                SDKTypeAlias: ac
+                ownAliasValidatorSHA256: 1fa3b1f048104b09313940f5811192b1a31af087c93eacf2514cb9c32ad034cc
+              ownSDKFieldSHA256: 515579dccb69f2f96de498313b78228f8516c681e0daa53f0e968d0afac31df2
+              ownSDKProperty: xM
+            JP_WIN:
+              type:
+                kind: integer
+                SDKTypeAlias: ac
+                ownAliasValidatorSHA256: 1fa3b1f048104b09313940f5811192b1a31af087c93eacf2514cb9c32ad034cc
+              ownSDKFieldSHA256: d308f981b92c581abc760e3676b404af7b47824bbb300e58f2ff16868bc58338
+              ownSDKProperty: fD
+            JP_WIN1:
+              type:
+                kind: integer
+                SDKTypeAlias: ac
+                ownAliasValidatorSHA256: 1fa3b1f048104b09313940f5811192b1a31af087c93eacf2514cb9c32ad034cc
+              ownSDKFieldSHA256: 15498b2cd4b0bab6bac246b749c3b8e450a0ee511a87d422284915e0e6912b5a
+              ownSDKProperty: NZa
+            JP_WIN2:
+              type:
+                kind: integer
+                SDKTypeAlias: ac
+                ownAliasValidatorSHA256: 1fa3b1f048104b09313940f5811192b1a31af087c93eacf2514cb9c32ad034cc
+              ownSDKFieldSHA256: 35dfc43e3f7f59bf43fdb30936024958e8d597e65f3461702f4d0dcbb1ce7132
+              ownSDKProperty: mDa
+            TRIGGER_AFTER:
+              type:
+                kind: string
+              ownSDKFieldSHA256: 438d1e66e38caae824e756121ef3e095e01204d91672d1bcc5c19b33d21c6d53
+              ownSDKProperty: uva
+          knownUnsupportedFields: []
+          unknownUncompiledFieldsStillFatal: true
+          noCashOrNextActionDerivedFromOptionalGSD: true
+          preserveNullableSDKArrayCells: true
+          nullableSDKNumberValidatorSHA256: a5f591a89affffbb7686769b7f8371d9d289bb62eb7748d6d81a29f76f01eea0
+          ownEffectiveMetadataObject:
+            schema: own-complete-SDK-metadata-object-v1
+            gameId: '32707'
+            ownSDKFileSHA256: 183aa27737161a22c4f51a97216777fe57d8d1582b799c57da4c45b96a6a71c8
+            ownGSDClass: l.O4
+            effectiveFieldKeys:
+              - GCT
+              - JP_WIN
+              - JP_WIN1
+              - JP_WIN2
+              - MYST_PRZ
+              - MYST_SYM
+              - RE
+              - RSHP
+              - TRIGGER_AFTER
+            ownClassSourceSHA256s:
+              - ae450bc61a28de4310a70ebb3228ee9fdd0ac59fbc6c9b87733aaafaebabe3b7
+              - 37710ddc47790ff310ca08e1b7cedf312bf12552a2da014e5698775fc3153a9c
+            emptyParentSourceSHA256s: []
+            ownObjectFieldDecoderSHA256s:
+              - 5fee76a09c3098e79233df56ef305873ec21f7bd5b9b29c6b22c300cf0acc532
+              - 5fee76a09c3098e79233df56ef305873ec21f7bd5b9b29c6b22c300cf0acc532
+              - 5fee76a09c3098e79233df56ef305873ec21f7bd5b9b29c6b22c300cf0acc532
+            ownObjectCodecSHA256: 6c845cef15d14cc871eff0d4810be37cc6c55b9466ac538a5ba0019b113d7f63
+            ownMetadataDeserializerSHA256: bd7ef654616e20b55c66091a32caac8efec442cf35305fa0324f4fe2d4a170dd
+            dictionaryNotPassedToConstructor: true
+            metadataOnlyObjectProjection: true
+            knownUnsupportedFieldsRemainFatal: true
+            rootUnknownsRemainFatal: true
+            rawDictionaryPreserved: true
+            noCashOrNextActionFromUnconsumedDictionaryFields: true
+  - provider: sg
+    gameId: '32736'
+    name: Squid Game One Lucky Day
+    dbName: sg_squidgameoneluckyday96
+    backendId: squidgameoneluckyday96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33136
+      runtimeSlug: squidgameoneluckyday96
+      betRaw: 50
+      requestParams:
+        GN: squidgameoneluckyday96
+        AP: 'false'
+        BPL: '5'
+        LB: '10'
+      ownGDMContract:
+        version: own-SDK-ordinary-typed-final-v2
+        gameId: '32736'
+        dbName: sg_squidgameoneluckyday96
+        runtimeGameId: 33136
+        runtimeSlug: squidgameoneluckyday96
+        betRaw: 50
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPL
+          - FID
+          - FRBAL
+          - GA
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - RID
+          - RS
+          - SID
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - RID
+          - RS
+          - SID
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys: []
+        ownSDKFileSHA256: 2d3886a4aa6e2933676db592889674fa948a5b020321dc0594d2b18dbc3f352f
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            SDKSourceSHA256: f6d27f5ce58f7e8e23256ca7f49f96de95a14661114cd057eac2b18b8a111199
+          - kind: own-root-fresh-ordinary-predicate
+            gameId: '32736'
+            ownSDKFileSHA256: 2d3886a4aa6e2933676db592889674fa948a5b020321dc0594d2b18dbc3f352f
+            SDKSourceSHA256: 8dcd443eef147a168d3775307fd54f05844918898ad94a592082c5cf56f048fa
+            ownMethodSource: |-
+              return b.prototype.qO.call(this)||
+              null!=this.lz&&0<this.lz.length
+            ownMetadataDeserializerSHA256: 4e12b5dbed4b1ffd128409fbf10b82b36aa278356dd856c98ee2cb79ba523b1d
+            sourceScope: fresh ordinary only; no preceding feature
+            noCashDefaults: true
+            shape: own-nullable-root-array-length
+            wireKeys:
+              - FID
+            fieldBindings:
+              - wireKey: FID
+                property: lz
+                sourceSHA256: 30850b3ece4852034bfb055311b2f6e272c67380c2c6d11f9184c008621e8ffa
+                source: '{key:"FID",type:e.ja.re(e.ja.Ab)}'
+            SDKMissingValue: 'null'
+            ownArrayValidatorSource: |-
+              d.re=function(a){return{validate:function(c){if(null==
+              c)return null;if(!h(c))return"must be an array";for(var b=0;b<c.length;b++){var d=a.validate(c[b]);if(d)return"members ".concat(d)}return null}}}
+            ownArrayValidatorSHA256: 5a83d029cca9320a02e650432c0866f3e6043a1f727842c60f4e6971c6b1f39e
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: d97d646011d4986540e8c17e3503f246b8bbcfd2642e77a19018d67ca102c624
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 6811ce72dc9e512a22840f7e797006deaeb39024dc541ad91d7a9ff25d92fa6a
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 82110e468a43860a8af15ef045f699b71ab5fcd15f8743297ed4163c1258daee
+        SDKFinalGetterSourceSHA256: f98f2b98e0150f1ef527a43dc7d57647810bd4baf4b8a1895832e003632c28a1
+        ownRootPendingBinding:
+          kind: own-root-fresh-ordinary-predicate
+          gameId: '32736'
+          ownSDKFileSHA256: 2d3886a4aa6e2933676db592889674fa948a5b020321dc0594d2b18dbc3f352f
+          SDKSourceSHA256: 8dcd443eef147a168d3775307fd54f05844918898ad94a592082c5cf56f048fa
+          ownMethodSource: |-
+            return b.prototype.qO.call(this)||
+            null!=this.lz&&0<this.lz.length
+          ownMetadataDeserializerSHA256: 4e12b5dbed4b1ffd128409fbf10b82b36aa278356dd856c98ee2cb79ba523b1d
+          sourceScope: fresh ordinary only; no preceding feature
+          noCashDefaults: true
+          shape: own-nullable-root-array-length
+          wireKeys:
+            - FID
+          fieldBindings:
+            - wireKey: FID
+              property: lz
+              sourceSHA256: 30850b3ece4852034bfb055311b2f6e272c67380c2c6d11f9184c008621e8ffa
+              source: '{key:"FID",type:e.ja.re(e.ja.Ab)}'
+          SDKMissingValue: 'null'
+          ownArrayValidatorSource: |-
+            d.re=function(a){return{validate:function(c){if(null==
+            c)return null;if(!h(c))return"must be an array";for(var b=0;b<c.length;b++){var d=a.validate(c[b]);if(d)return"members ".concat(d)}return null}}}
+          ownArrayValidatorSHA256: 5a83d029cca9320a02e650432c0866f3e6043a1f727842c60f4e6971c6b1f39e
+        ownGSDDataSchema:
+          version: own-exact-SDK-GSD-types-v1
+          gameId: '32736'
+          ownSDKFileSHA256: 2d3886a4aa6e2933676db592889674fa948a5b020321dc0594d2b18dbc3f352f
+          ownGSDClass: e.AAa
+          compiledOwnClassSHA256: a596ff2713a6eb26525b36100c3d07e64529f008f1d6d48c8eccdc7ed1ffe7fb
+          fields: {}
+          knownUnsupportedFields: []
+          unknownUncompiledFieldsStillFatal: true
+          noCashOrNextActionDerivedFromOptionalGSD: true
+          preserveNullableSDKArrayCells: true
+          nullableSDKNumberValidatorSHA256: a5f591a89affffbb7686769b7f8371d9d289bb62eb7748d6d81a29f76f01eea0
+          ordinaryEmptyGSDOnlyNoObjectAliasClaim: true
