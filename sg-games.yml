@@ -10395,6 +10395,7 @@ games:
           - FID
           - FRBAL
           - GA
+          - GSD
           - IFG
           - LB
           - MSGID
@@ -10424,7 +10425,8 @@ games:
           - TW
           - VER
           - WC
-        ordinaryGSDKeys: []
+        ordinaryGSDKeys:
+          - ST
         ownSDKFileSHA256: 2d3886a4aa6e2933676db592889674fa948a5b020321dc0594d2b18dbc3f352f
         pendingClauses:
           - kind: SDK-base-false
@@ -10496,10 +10498,18 @@ games:
           ownSDKFileSHA256: 2d3886a4aa6e2933676db592889674fa948a5b020321dc0594d2b18dbc3f352f
           ownGSDClass: e.AAa
           compiledOwnClassSHA256: a596ff2713a6eb26525b36100c3d07e64529f008f1d6d48c8eccdc7ed1ffe7fb
-          fields: {}
+          fields:
+            ST:
+              type:
+                kind: integer
+                SDKTypeAlias: Ab
+                ownAliasValidatorSHA256: 2fdea531090ba4a607bfda780f0eb05d1768ea08c0e0c7b770d9aefc3920581b
+              ownSDKFieldSHA256: ebcc7a9b5875f52c32889cc8dda5c6771bed7caadc3687eb13eadd8526133d8f
+              ownSDKProperty: Ygb
           knownUnsupportedFields: []
           unknownUncompiledFieldsStillFatal: true
           noCashOrNextActionDerivedFromOptionalGSD: true
           preserveNullableSDKArrayCells: true
           nullableSDKNumberValidatorSHA256: a5f591a89affffbb7686769b7f8371d9d289bb62eb7748d6d81a29f76f01eea0
-          ordinaryEmptyGSDOnlyNoObjectAliasClaim: true
+          ownObservedGSDFieldsOnly: true
+          wholeObjectProjectionNotClaimed: true
