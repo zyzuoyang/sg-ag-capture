@@ -7983,7 +7983,7 @@ games:
         BPL: '1'
         LB: '40'
       ownGDMContract:
-        version: own-SDK-returned-cash-prefix-trial-v5
+        version: own-SDK-returned-cash-stage-trial-v6
         gameId: '32719'
         dbName: sg_hyperchargedincajungle96
         runtimeGameId: 33119
@@ -8603,6 +8603,48 @@ games:
             requiresCompleteNaturalRoundBeforeNative: true
             otherPendingStagesStillFatal: true
             actualOwnCashFailures: 2
+          ownSDKExtraStageBinding:
+            version: own-SDK-primary-with-nested-free-counter-v1
+            gameId: '32719'
+            ownSDKFileSHA256: 7897950e66d862f5823a13f9a2ce56f0973d4d40391ed429502fe9fef16d03c2
+            SDKBackupSetterSource: |-
+              d.prototype.LXa=function(b){var e,g,m,p,q;b=b.features.Vb;b.ui=null!==(e=this.Ue.SPa)&&void 0!==e?e:this.i4;b.xZa=null!==(g=b.We)&&void 0!==g?g:0;b.We=null!==(m=this.Ue.Ema)&&void 0!==m?m:this.GT;b.Uka=null!==(p=this.Ue.yZa)&&void 0!==p?p:[];b.c7=null!==(q=this.Ue.c7)&&
+              void 0!==q?q:[];b.rva=this.ic}
+            SDKBackupSetterSHA256: 9bbf25ec86dbda7b955bbddf2df01601e23863857a547c542d3330d2fa4a5394
+            SDKPendingMethodSHA256: a64f95ff91f672d75aebd24ae0a921e7c457c8c180bb2a95efbbbca46911d0c9
+            FIDDecoderSHA256: b01915de12f49fd19d3c5a821afc1c5193269fc6ce442dc510559408ec5de9fa
+            fieldBindings:
+              - wireKey: FGRS
+                property: Ema
+                sourceSHA256: e683fa4a586b770947178f6f8ecab2df93d8fdd71b4581c9fc7a03fda93e154a
+                type:
+                  kind: integer
+                  SDKTypeAlias: hb
+                  ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+              - wireKey: FGTS
+                property: sdb
+                sourceSHA256: 530293547e69e72cca0093ad361763130482cf222ace7fca4cf36d6bb165bdca
+                type:
+                  kind: integer
+                  SDKTypeAlias: hb
+                  ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+              - wireKey: CFGC
+                property: SPa
+                sourceSHA256: d369eef83bd161d6fb78d767c0619bd86f8e0c9fabf540c8cc4e34fa64d814d8
+                type:
+                  kind: integer
+                  SDKTypeAlias: hb
+                  ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+            ordinaryPrimaryStageFID: 1|
+            nestedStageFID: 0|1|
+            optionalBackupCountersMustBePresentTogether: true
+            entryConsumesExactlyOnePrimarySpin: true
+            restoreMatchesOwnSavedPrimaryCounterSnapshot: true
+            sourceRootBudgetRequiredForFollowup: true
+            noCounterDefaults: true
+            noSyntheticTerminal: true
+            actualOwnNestedIntroCases: 2
+            unseenExtraStageActionStillFatal: true
   - provider: sg
     gameId: '32720'
     name: Hypercharged Jinzita
@@ -8619,7 +8661,7 @@ games:
         BPL: '1'
         LB: '40'
       ownGDMContract:
-        version: own-SDK-returned-cash-prefix-trial-v5
+        version: own-SDK-returned-cash-stage-trial-v6
         gameId: '32720'
         dbName: sg_hyperchargedjinzita96
         runtimeGameId: 33120
@@ -9232,3 +9274,45 @@ games:
             requiresCompleteNaturalRoundBeforeNative: true
             otherPendingStagesStillFatal: true
             actualOwnCashFailures: 3
+          ownSDKExtraStageBinding:
+            version: own-SDK-primary-with-nested-free-counter-v1
+            gameId: '32720'
+            ownSDKFileSHA256: c3b23a2c481fad8bde0d0d1d9ba36b32e3addc567d505318421020eae560a8b0
+            SDKBackupSetterSource: |-
+              d.prototype.sZa=function(b){var e,g,m,p;b=b.features.Yb;b.Oj=null!==(e=this.Ve.mRa)&&void 0!==e?e:this.I4;b.ata=null!==(g=b.Qe)&&void 0!==g?g:0;b.Qe=null!==(m=this.Ve.ina)&&void 0!==m?m:this.bU;b.fM=null!==(p=this.Ve.n0a)&&void 0!==p?p:null;b.fwa=this.hc;b.i8a=
+              this.Ve.nRa}
+            SDKBackupSetterSHA256: 10b744fda6344ae89040980e19eab2fe046be9e7f504a600af83f88c517196f8
+            SDKPendingMethodSHA256: b053226da7fbed27b6094bb59592af1267f9c5337b47dbf23970fe885d072778
+            FIDDecoderSHA256: 27db5c969ed38bc37c8dc39dfcfff9750627e2c5f999622fb7041218d78cc005
+            fieldBindings:
+              - wireKey: FGRS
+                property: ina
+                sourceSHA256: 85d8e1d6ac1b28b560e0df3b3fb89b3ac62b1cd96285921c4cdfed0f1f430c83
+                type:
+                  kind: integer
+                  SDKTypeAlias: gb
+                  ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+              - wireKey: FGTS
+                property: rfb
+                sourceSHA256: 4ad4c86e6136988f62432142f3e6c73a6063473a17db3ed07d54ca57e5b79be6
+                type:
+                  kind: integer
+                  SDKTypeAlias: gb
+                  ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+              - wireKey: CFGC
+                property: mRa
+                sourceSHA256: b2d851d3d95676de73ca7a4dfc69ea9e3ca99856b5dc39934474fbc04494acd7
+                type:
+                  kind: integer
+                  SDKTypeAlias: gb
+                  ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+            ordinaryPrimaryStageFID: 1|
+            nestedStageFID: 0|1|
+            optionalBackupCountersMustBePresentTogether: true
+            entryConsumesExactlyOnePrimarySpin: true
+            restoreMatchesOwnSavedPrimaryCounterSnapshot: true
+            sourceRootBudgetRequiredForFollowup: true
+            noCounterDefaults: true
+            noSyntheticTerminal: true
+            actualOwnNestedIntroCases: 2
+            unseenExtraStageActionStillFatal: true
