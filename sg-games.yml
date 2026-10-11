@@ -7967,3 +7967,972 @@ games:
             requiresCompleteNaturalRoundBeforeAnyNative: true
             unmappedOtherFeaturesRemainFatal: true
             wholeFreeChainCoverageNotClaimed: true
+  - provider: sg
+    gameId: '32719'
+    name: Hypercharged Inca Jungle
+    dbName: sg_hyperchargedincajungle96
+    backendId: hyperchargedincajungle96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33119
+      runtimeSlug: hyperchargedincajungle96
+      betRaw: 20
+      requestParams:
+        GN: hyperchargedincajungle96
+        BPL: '1'
+        LB: '40'
+      ownGDMContract:
+        version: own-SDK-ordinary-typed-final-v2
+        gameId: '32719'
+        dbName: sg_hyperchargedincajungle96
+        runtimeGameId: 33119
+        runtimeSlug: hyperchargedincajungle96
+        betRaw: 20
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - PD
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - PD
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - BGCL
+          - BGRS
+          - CL
+          - VA
+        ownSDKFileSHA256: 7897950e66d862f5823a13f9a2ce56f0973d4d40391ed429502fe9fef16d03c2
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: 31083f59e7a7b0d9148d859c3ef42a5fef2453d6461b4a9de2116cf62d02fb37
+          - kind: own-GSD-positive-counter
+            SDKSourceSHA256: a64f95ff91f672d75aebd24ae0a921e7c457c8c180bb2a95efbbbca46911d0c9
+            wireKey: FGRS
+            property: Ema
+            SDKDecoderSHA256: e683fa4a586b770947178f6f8ecab2df93d8fdd71b4581c9fc7a03fda93e154a
+            SDKType: integer
+            SDKMissingValue: 'null'
+            ownMetadataDeserializerSHA256: b3ba2792b55e458e92ceb3d50f8645c3624b2eec50188e5e8dad51d0504e3cb9
+            ownGSDClass: k.Mza
+            noCashDefault: true
+            positiveMeansGenuineContinuation: true
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 59ff8ab45e0aadfb042d7fbfdc6894eaab9dc72e43bbdba3390198286f756c3d
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 910f4332c0e7d6224d2d3105f40b311fc28728185ea8a1ee00466497181222a0
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 5bf44db795a9206446a82f34b1252f7a769e0abdbd3af78f5df12b900b735332
+        SDKFinalGetterSourceSHA256: 64bfc3c29b59eba657432eb9430b39c44041970f92fbae8fb7c5cef5c8c911fc
+        ownGSDDataSchema:
+          version: own-exact-SDK-GSD-types-v1
+          gameId: '32719'
+          ownSDKFileSHA256: 7897950e66d862f5823a13f9a2ce56f0973d4d40391ed429502fe9fef16d03c2
+          ownGSDClass: k.Mza
+          compiledOwnClassSHA256: f49b08780f84d5b96bf1122fb2714ccda3f054838037b9f89a9dbcda899e5273
+          fields:
+            VA:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: hb
+                    ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                  SDKArrayDecoderAlias: Cc
+                  ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: c419c15b455b7fbe1f7f24733e35b094d21dd09670168c800053b5fe78f1943b
+              ownSDKProperty: wz
+            CL:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: hb
+                    ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                  SDKArrayDecoderAlias: Cc
+                  ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: bf22e3372dd5921c00946725987b4c856d9a7f441ea5b069febd86ccabee582f
+              ownSDKProperty: tLa
+            PWI:
+              type:
+                kind: array
+                delimiter: ;
+                item:
+                  kind: integer
+                  SDKTypeAlias: hb
+                  ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: dbd8da90f023e2c6c01249519fe071588307c46f862ea19b5286824cc46da94d
+              ownSDKProperty: yZa
+            NWI:
+              type:
+                kind: array
+                delimiter: ;
+                item:
+                  kind: integer
+                  SDKTypeAlias: hb
+                  ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: 73f73e2d98226509babdaf7d7088c030ff6905326aa2a4890985236e7585358d
+              ownSDKProperty: c7
+            FGTS:
+              type:
+                kind: integer
+                SDKTypeAlias: hb
+                ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+              ownSDKFieldSHA256: 530293547e69e72cca0093ad361763130482cf222ace7fca4cf36d6bb165bdca
+              ownSDKProperty: sdb
+            FGRS:
+              type:
+                kind: integer
+                SDKTypeAlias: hb
+                ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+              ownSDKFieldSHA256: e683fa4a586b770947178f6f8ecab2df93d8fdd71b4581c9fc7a03fda93e154a
+              ownSDKProperty: Ema
+            CFGC:
+              type:
+                kind: integer
+                SDKTypeAlias: hb
+                ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+              ownSDKFieldSHA256: d369eef83bd161d6fb78d767c0619bd86f8e0c9fabf540c8cc4e34fa64d814d8
+              ownSDKProperty: SPa
+            BGRS:
+              type:
+                kind: array
+                delimiter: ;
+                item:
+                  kind: integer
+                  SDKTypeAlias: hb
+                  ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: d010897476428517072c003e6b490665c93451d7c975ee731bfa0a1ca13835d1
+              ownSDKProperty: WJa
+            BGCL:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: hb
+                    ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                  SDKArrayDecoderAlias: Cc
+                  ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: 6cf80ab48948b8d7e17fbb6793279f4998b907479462b358b902ade0d67f40e1
+              ownSDKProperty: VJa
+            HRS:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: hb
+                    ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                  SDKArrayDecoderAlias: Cc
+                  ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: 3ba0bd4f029c02b6699fb135dc0e35953c0a5ed86a4a1e72afe5af332c228702
+              ownSDKProperty: cpa
+            HRSBT:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: hb
+                    ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                  SDKArrayDecoderAlias: Cc
+                  ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: 73b8aabeb7ea1d143c36d53b27164e80b0e0c875e0499d0be1deaa2edec0a462
+              ownSDKProperty: dpa
+            STRS:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: hb
+                    ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                  SDKArrayDecoderAlias: Cc
+                  ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: c33727e7f44c6a9299dba04f506db421041c37704d72d15f05a1d31e2aeeb9f5
+              ownSDKProperty: jO
+            PSTRS:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: hb
+                    ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                  SDKArrayDecoderAlias: Cc
+                  ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: 909240c36e13a732977a269d3201efd253b47bedf4b38e39e41d17002cc776d3
+              ownSDKProperty: f8
+            HNSID:
+              type:
+                kind: integer
+                SDKTypeAlias: hb
+                ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+              ownSDKFieldSHA256: de1ae24f7ac31cc75330be3e00ccb4b669e32924de02d530393e3f7732ebdb6a
+              ownSDKProperty: xSa
+            HNSRIDS:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: hb
+                    ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                  SDKArrayDecoderAlias: Cc
+                  ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: ddea8a8f9fb3721bd4ff7583f3c2d5b8362d2a8a50c8edba4f24184be7518cda
+              ownSDKProperty: epa
+            HVA:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: hb
+                    ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                  SDKArrayDecoderAlias: Cc
+                  ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: 21bc162de887d087ab9a5c137bf08592b059ef5c0d018a97f9205380c8e43b7a
+              ownSDKProperty: ASa
+            HVABT:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: hb
+                    ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                  SDKArrayDecoderAlias: Cc
+                  ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: 6dd89aaa5fa9ca524bbe72ffa8330373158af2ef4f0135a4cfb56b715b38a145
+              ownSDKProperty: BSa
+            HCL:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: hb
+                    ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                  SDKArrayDecoderAlias: Cc
+                  ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: f7d3156eaeaa5c9dfa9c3d50d2bf583465ba2368190215e8181b2d8fd4217c85
+              ownSDKProperty: apa
+            HPCL:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: hb
+                    ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                  SDKArrayDecoderAlias: Cc
+                  ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: adb49ea72dd94299e10deae41a0b8c249040b8826ac3018a14f2d1407344f8a5
+              ownSDKProperty: bpa
+            HCLBT:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: hb
+                    ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                  SDKArrayDecoderAlias: Cc
+                  ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: 0b4fbc3016ad096416078e629d7d2cf61d26165a1bfb0daba1cc88f551cec499
+              ownSDKProperty: $oa
+            NCCP:
+              type:
+                kind: array
+                delimiter: ;
+                item:
+                  kind: integer
+                  SDKTypeAlias: hb
+                  ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: 58dac7ebd06e5576d0d23383c7bfebb6e7a147c9699921df4d2082a60544b28d
+              ownSDKProperty: Fqa
+            SHNST:
+              type:
+                kind: boolean
+              ownSDKFieldSHA256: 87679cdbcd0c4b516b92679333b9ac237b2ebef93e1e8b11136ed4d2fbe69e01
+              ownSDKProperty: A3a
+            SFGT:
+              type:
+                kind: boolean
+              ownSDKFieldSHA256: ae0ad7b2b396a7d0ae61aaccb2db9aa3581c6ab82e67d8354ef5c83af5576889
+              ownSDKProperty: z3a
+            PJV:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: integer
+                  SDKTypeAlias: hb
+                  ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+                SDKArrayDecoderAlias: Cc
+                ownAliasValidatorSHA256: c76fc9d5f863bcf8fb2ea2eda88159f2e81024c86d3dff6ddc8dfa64349ebbe1
+              ownSDKFieldSHA256: 25753be04fb9183ecf7bdfb8f3d152b6e2fc10fe7a849f904872bc495375b37e
+              ownSDKProperty: jma
+            HNSTW:
+              type:
+                kind: integer
+                SDKTypeAlias: hb
+                ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+              ownSDKFieldSHA256: 30d47d5d2c5f8f9ee710722efd68439c69b3c1c39a884cec8e5be6c99c00439b
+              ownSDKProperty: zSa
+          knownUnsupportedFields: []
+          unknownUncompiledFieldsStillFatal: true
+          noCashOrNextActionDerivedFromOptionalGSD: true
+          preserveNullableSDKArrayCells: true
+          nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
+          ownEffectiveMetadataObject:
+            schema: own-complete-SDK-metadata-object-v1
+            gameId: '32719'
+            ownSDKFileSHA256: 7897950e66d862f5823a13f9a2ce56f0973d4d40391ed429502fe9fef16d03c2
+            ownGSDClass: k.Mza
+            effectiveFieldKeys:
+              - BGCL
+              - BGRS
+              - CFGC
+              - CL
+              - FGRS
+              - FGTS
+              - HCL
+              - HCLBT
+              - HNSID
+              - HNSRIDS
+              - HNSTW
+              - HPCL
+              - HRS
+              - HRSBT
+              - HVA
+              - HVABT
+              - NCCP
+              - NWI
+              - PJV
+              - PSTRS
+              - PWI
+              - SFGT
+              - SHNST
+              - STRS
+              - VA
+            ownClassSourceSHA256s:
+              - 3a9b2e9e65be913725715477ccf0a63ab2c0d750b1b5d7a5641fa9ea202157bc
+            emptyParentSourceSHA256s:
+              - c4aed86632253e11f9d80e57563f87697a611c04b5589b11bfe44635969816d3
+            ownObjectFieldDecoderSHA256s:
+              - 8dfc4be0f451f980d6baf3dd93ac15a027d75d3c320048371ec62bd1b160b5ad
+            ownObjectCodecSHA256: 65a13adfae7b0485476ba67748b8f711d0759604f0f8b64365dc10be78ad8381
+            ownMetadataDeserializerSHA256: b3ba2792b55e458e92ceb3d50f8645c3624b2eec50188e5e8dad51d0504e3cb9
+            dictionaryNotPassedToConstructor: true
+            metadataOnlyObjectProjection: true
+            knownUnsupportedFieldsRemainFatal: true
+            rootUnknownsRemainFatal: true
+            rawDictionaryPreserved: true
+            noCashOrNextActionFromUnconsumedDictionaryFields: true
+  - provider: sg
+    gameId: '32720'
+    name: Hypercharged Jinzita
+    dbName: sg_hyperchargedjinzita96
+    backendId: hyperchargedjinzita96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33120
+      runtimeSlug: hyperchargedjinzita96
+      betRaw: 20
+      requestParams:
+        GN: hyperchargedjinzita96
+        BPL: '1'
+        LB: '40'
+      ownGDMContract:
+        version: own-SDK-ordinary-typed-final-v2
+        gameId: '32720'
+        dbName: sg_hyperchargedjinzita96
+        runtimeGameId: 33120
+        runtimeSlug: hyperchargedjinzita96
+        betRaw: 20
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - PD
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - BGCL
+          - BGRS
+          - CL
+          - VA
+        ownSDKFileSHA256: c3b23a2c481fad8bde0d0d1d9ba36b32e3addc567d505318421020eae560a8b0
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: c427fafb4120ef4104d900aa62b8976d311504e5392929c198aa9612f7fe834e
+          - kind: own-GSD-positive-counter
+            SDKSourceSHA256: b053226da7fbed27b6094bb59592af1267f9c5337b47dbf23970fe885d072778
+            wireKey: FGRS
+            property: ina
+            SDKDecoderSHA256: 85d8e1d6ac1b28b560e0df3b3fb89b3ac62b1cd96285921c4cdfed0f1f430c83
+            SDKType: integer
+            SDKMissingValue: 'null'
+            ownMetadataDeserializerSHA256: e3f014b8be18bcd8fc89f195ce2b2e77c04af3e63c665f5f41a3827cffb6f839
+            ownGSDClass: k.AAa
+            noCashDefault: true
+            positiveMeansGenuineContinuation: true
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 59ff8ab45e0aadfb042d7fbfdc6894eaab9dc72e43bbdba3390198286f756c3d
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 910f4332c0e7d6224d2d3105f40b311fc28728185ea8a1ee00466497181222a0
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 5bf44db795a9206446a82f34b1252f7a769e0abdbd3af78f5df12b900b735332
+        SDKFinalGetterSourceSHA256: ed371d33185ceae5cc0d79673da483368f13b32db3676755ffda342737745d26
+        ownGSDDataSchema:
+          version: own-exact-SDK-GSD-types-v1
+          gameId: '32720'
+          ownSDKFileSHA256: c3b23a2c481fad8bde0d0d1d9ba36b32e3addc567d505318421020eae560a8b0
+          ownGSDClass: k.AAa
+          compiledOwnClassSHA256: 75cbc3083da793c9951f8a38a7d13b8073fcadf86153194f16b4ee6e490b24f3
+          fields:
+            VA:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: gb
+                    ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                  SDKArrayDecoderAlias: Ic
+                  ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: 7d7ed3d1ede0d19126c48aa8b9f221146945af0fd9f3e5dcc92fa7f21702d94e
+              ownSDKProperty: Dz
+            CL:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: gb
+                    ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                  SDKArrayDecoderAlias: Ic
+                  ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: 35afd5dd9485b41f6983d27157501cd27cec3df1903ccd4afea579a89be392f5
+              ownSDKProperty: HMa
+            PWI:
+              type:
+                kind: integer
+                SDKTypeAlias: gb
+                ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+              ownSDKFieldSHA256: 8d802f2e673e483c5d472ef6e609ba56081076ede803c1afd61dcf2f0a31f9d8
+              ownSDKProperty: n0a
+            NWI:
+              type:
+                kind: integer
+                SDKTypeAlias: gb
+                ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+              ownSDKFieldSHA256: 3525faac56d09fe0d258a110a70f33b68260b0fcc3092fd860d0861efd6e0fa9
+              ownSDKProperty: yib
+            FGTS:
+              type:
+                kind: integer
+                SDKTypeAlias: gb
+                ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+              ownSDKFieldSHA256: 4ad4c86e6136988f62432142f3e6c73a6063473a17db3ed07d54ca57e5b79be6
+              ownSDKProperty: rfb
+            FGRS:
+              type:
+                kind: integer
+                SDKTypeAlias: gb
+                ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+              ownSDKFieldSHA256: 85d8e1d6ac1b28b560e0df3b3fb89b3ac62b1cd96285921c4cdfed0f1f430c83
+              ownSDKProperty: ina
+            CFGC:
+              type:
+                kind: integer
+                SDKTypeAlias: gb
+                ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+              ownSDKFieldSHA256: b2d851d3d95676de73ca7a4dfc69ea9e3ca99856b5dc39934474fbc04494acd7
+              ownSDKProperty: mRa
+            BGRS:
+              type:
+                kind: array
+                delimiter: ;
+                item:
+                  kind: integer
+                  SDKTypeAlias: gb
+                  ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: e4e7ada5da2500ce9c6f7efe5fd6d8838635f709f6c87995297697ac4300300c
+              ownSDKProperty: XKa
+            BGCL:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: gb
+                    ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                  SDKArrayDecoderAlias: Ic
+                  ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: 38e3b0dc5ff691c439b9a31f9eb3e5b48fcd20afef99b6d9b5515f521c9019fb
+              ownSDKProperty: WKa
+            HRS:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: gb
+                    ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                  SDKArrayDecoderAlias: Ic
+                  ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: a140eff749f0a2e008928857c5eb1ee42a9dcff89f4e65d6ff9682302784e7df
+              ownSDKProperty: Kpa
+            HRSBT:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: gb
+                    ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                  SDKArrayDecoderAlias: Ic
+                  ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: 7ced1ece3410c699c308924feab92605c0a53f31102a0799f6fbb09c89ab3664
+              ownSDKProperty: Lpa
+            STRS:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: gb
+                    ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                  SDKArrayDecoderAlias: Ic
+                  ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: d7092b5aeef7f6508113892c5b25694244c7be6773379c37f9bff27f079ed877
+              ownSDKProperty: GO
+            PSTRS:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: gb
+                    ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                  SDKArrayDecoderAlias: Ic
+                  ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: ef0711f802abf8f6769c1a0cca7588b41faf05e3cb189d6fd4c79adb1415bd1c
+              ownSDKProperty: H8
+            HNSID:
+              type:
+                kind: integer
+                SDKTypeAlias: gb
+                ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+              ownSDKFieldSHA256: b5533c9148c3a5418a5fa8d69579ecb58f29a933fac63c6c397b4338b82e5dde
+              ownSDKProperty: ZTa
+            HNSRIDS:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: gb
+                    ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                  SDKArrayDecoderAlias: Ic
+                  ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: 80ff828f1c222efac373f45574f5f1477ead87f7ee75350637e5c4b710477443
+              ownSDKProperty: Mpa
+            HVA:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: gb
+                    ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                  SDKArrayDecoderAlias: Ic
+                  ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: 3b439363ec4143a0dee8bb3506a854152543adb027ac75a06ef890a9148febe8
+              ownSDKProperty: bUa
+            HVABT:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: gb
+                    ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                  SDKArrayDecoderAlias: Ic
+                  ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: 172a83ce661477217a8b97959adab10bf997d774718d4a582cea67e006851836
+              ownSDKProperty: cUa
+            HCL:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: gb
+                    ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                  SDKArrayDecoderAlias: Ic
+                  ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: 03569ac92cc5fa1806f33ce1f095487831823bfb8986430b7c005b1e64f8c8a1
+              ownSDKProperty: Ipa
+            HPCL:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: gb
+                    ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                  SDKArrayDecoderAlias: Ic
+                  ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: fbe89c2cc4d869352cb42e55900ddc279e4edcf3bcc22eb49a318bcb34a63d06
+              ownSDKProperty: Jpa
+            HCLBT:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: integer
+                    SDKTypeAlias: gb
+                    ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                  SDKArrayDecoderAlias: Ic
+                  ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: 65e86613f600c16a87b5ee9a20da0a19dd4c9d643b6e21d3fb3211dc84b5f059
+              ownSDKProperty: Hpa
+            NCCP:
+              type:
+                kind: array
+                delimiter: ;
+                item:
+                  kind: integer
+                  SDKTypeAlias: gb
+                  ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: b60dd85dbee822647734b505f957d77a103fb489409140a7db97ded3d5f11f78
+              ownSDKProperty: nra
+            SHNST:
+              type:
+                kind: boolean
+              ownSDKFieldSHA256: 87679cdbcd0c4b516b92679333b9ac237b2ebef93e1e8b11136ed4d2fbe69e01
+              ownSDKProperty: s5a
+            SFGT:
+              type:
+                kind: boolean
+              ownSDKFieldSHA256: ae0ad7b2b396a7d0ae61aaccb2db9aa3581c6ab82e67d8354ef5c83af5576889
+              ownSDKProperty: r5a
+            PJV:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: integer
+                  SDKTypeAlias: gb
+                  ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+                SDKArrayDecoderAlias: Ic
+                ownAliasValidatorSHA256: 17100acb963ea77c1411c3a82b7c011f7091a89e468d35a8fe296d2c241395ca
+              ownSDKFieldSHA256: c4c8933d137a74d5fd76bbe6f0a49a0f2fe544dd92b1679828122d91b2e7c1d0
+              ownSDKProperty: Nma
+            HNSTW:
+              type:
+                kind: integer
+                SDKTypeAlias: gb
+                ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+              ownSDKFieldSHA256: 0e80ad9114c8742c2cacc6468f0e0e317609605066fb270bf1bde236ad42e4d6
+              ownSDKProperty: aUa
+            FGWM:
+              type:
+                kind: integer
+                SDKTypeAlias: gb
+                ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+              ownSDKFieldSHA256: 94b3e793f0d3944507bfaeeb1a638669a3bf87823599618f100c3f8fc60f2053
+              ownSDKProperty: nRa
+          knownUnsupportedFields: []
+          unknownUncompiledFieldsStillFatal: true
+          noCashOrNextActionDerivedFromOptionalGSD: true
+          preserveNullableSDKArrayCells: true
+          nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
+          ownEffectiveMetadataObject:
+            schema: own-complete-SDK-metadata-object-v1
+            gameId: '32720'
+            ownSDKFileSHA256: c3b23a2c481fad8bde0d0d1d9ba36b32e3addc567d505318421020eae560a8b0
+            ownGSDClass: k.AAa
+            effectiveFieldKeys:
+              - BGCL
+              - BGRS
+              - CFGC
+              - CL
+              - FGRS
+              - FGTS
+              - FGWM
+              - HCL
+              - HCLBT
+              - HNSID
+              - HNSRIDS
+              - HNSTW
+              - HPCL
+              - HRS
+              - HRSBT
+              - HVA
+              - HVABT
+              - NCCP
+              - NWI
+              - PJV
+              - PSTRS
+              - PWI
+              - SFGT
+              - SHNST
+              - STRS
+              - VA
+            ownClassSourceSHA256s:
+              - 8637b53b91997a26d4d5508fda2cd2c0f946effa525d373ed5e13ceac60655c7
+            emptyParentSourceSHA256s:
+              - 75ee9b07e6a71c75560f6e2c5b79f01909756510dbc5aa7bccc643ed8bcfe296
+            ownObjectFieldDecoderSHA256s:
+              - c5fa2eb8fba1d6fed236ed08a6633473c1f57bb545b2e3a5bea19801b62653cf
+            ownObjectCodecSHA256: 01efed2f2d9218b9a5a670317d837b9474ebe95a1d22a2d97b4f80267e0a6aee
+            ownMetadataDeserializerSHA256: e3f014b8be18bcd8fc89f195ce2b2e77c04af3e63c665f5f41a3827cffb6f839
+            dictionaryNotPassedToConstructor: true
+            metadataOnlyObjectProjection: true
+            knownUnsupportedFieldsRemainFatal: true
+            rootUnknownsRemainFatal: true
+            rawDictionaryPreserved: true
+            noCashOrNextActionFromUnconsumedDictionaryFields: true

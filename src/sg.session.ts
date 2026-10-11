@@ -1033,6 +1033,14 @@ export function ownGDMOrdinaryFinal(game:AGGameConfig,p:Record<string,string>):b
    assert(q.SDKArrayDecoderProved===true,'AG integrity: GDM own array decoder');
    if(q.groupPrefix){if(Object.keys(gsd).some(k=>k.startsWith(q.groupPrefix)))return false;}
    else{const v=gsd[q.wireKey];assert(v!==undefined||q.explicitSDKEmptyArray===true,'AG integrity: GDM missing own pending array');if(v!==undefined&&v!=='')return false;}
+  }else if(q.kind==='own-GSD-positive-counter'){
+   const schema=c.ownGSDDataSchema,projection=schema?.ownEffectiveMetadataObject,field=schema?.fields?.[q.wireKey];
+   assert(q.wireKey==='FGRS'&&q.SDKType==='integer'&&q.SDKMissingValue==='null'&&q.noCashDefault===true&&q.positiveMeansGenuineContinuation===true&&field?.type?.kind==='integer'
+    &&field.ownSDKFieldSHA256===q.SDKDecoderSHA256&&field.ownSDKProperty===q.property&&schema.ownGSDClass===q.ownGSDClass
+    &&projection?.ownMetadataDeserializerSHA256===q.ownMetadataDeserializerSHA256&&/^[a-f0-9]{64}$/.test(q.SDKSourceSHA256),'AG integrity: GDM own positive-counter binding');
+   // Exact SDK deserializer sets absent optional FGRS to null; 0 < null is false.
+   // No amount or feature result is manufactured and raw dictionary is preserved.
+   const value=gsd[q.wireKey];if(value!==undefined&&gdmInteger(value,'own positive pending counter')>0)return false;
   }else throw new Error('AG integrity: GDM own pending decision not mapped');
  }
  return true;
