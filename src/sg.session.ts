@@ -1010,10 +1010,10 @@ function gdmBinding(game:AGGameConfig){
  }
  if(['own-SDK-returned-cash-prefix-trial-v5','own-SDK-returned-cash-stage-trial-v6','own-SDK-returned-cash-stage-followup-trial-v7'].includes(c.version)){
   const b=c.freeBudgetContract?.ownSDKReturnedCashBinding;
-  assert(b?.version==='own-SDK-TW-total-CW-current-free-cash-v1'&&b.gameId===game.gameId&&b.ownSDKFileSHA256===c.ownSDKFileSHA256
+  assert(b?.version===(b.actualOwnCompletedNaturalCashChains!==undefined?'own-SDK-TW-total-CW-current-free-cash-natural-v2':'own-SDK-TW-total-CW-current-free-cash-v1')&&b.gameId===game.gameId&&b.ownSDKFileSHA256===c.ownSDKFileSHA256
    &&b.totalWireKey==='TW'&&b.currentWireKey==='CW'&&b.auxiliaryFeatureCashWireKey==='FGTW'&&b.cashTotalsComeFromTWNotFGTW===true
    &&b.actualCWRequiredNoSDKFallbackUsed===true&&b.allRawCashFieldsPreserved===true&&b.noMissingCashDefault===true&&b.noFakeTerminal===true
-   &&b.requiresCompleteNaturalRoundBeforeNative===true&&b.otherPendingStagesStillFatal===true&&Number.isSafeInteger(b.actualOwnCashFailures)&&b.actualOwnCashFailures>0,'AG integrity: GDM own returned cash scope');
+   &&b.requiresCompleteNaturalRoundBeforeNative===true&&b.otherPendingStagesStillFatal===true&&(b.actualOwnCompletedNaturalCashChains===undefined?Number.isSafeInteger(b.actualOwnCashFailures)&&b.actualOwnCashFailures>0:b.actualOwnCashFailures===0&&Number.isSafeInteger(b.actualOwnCompletedNaturalCashChains)&&b.actualOwnCompletedNaturalCashChains>0&&/^[a-f0-9]{64}$/.test(b.ownCompletedNaturalRecordSHA256)&&Number.isSafeInteger(b.ownNaturalFeatureCurrentCashRaw)&&b.ownNaturalFeatureCurrentCashRaw>0),'AG integrity: GDM own returned cash scope');
   for(const k of ['rootResponseClassSHA256','getterDefinitionSHA256','currentPayoutCopySHA256','auxiliaryInfoSetterSHA256'])assert(/^[a-f0-9]{64}$/.test(b[k]),'AG integrity: GDM own returned cash byte binding');
   assert(Array.isArray(b.fieldBindings)&&b.fieldBindings.length===3&&b.fieldBindings.map((f:any)=>f.wireKey).sort().join('|')==='CW|FGTW|TW'
    &&b.fieldBindings.every((f:any)=>/^[a-f0-9]{64}$/.test(f.sourceSHA256)&&typeof f.property==='string'&&f.property.length>0),'AG integrity: GDM own returned cash decoders');
