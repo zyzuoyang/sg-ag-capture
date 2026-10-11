@@ -7983,7 +7983,7 @@ games:
         BPL: '1'
         LB: '40'
       ownGDMContract:
-        version: own-SDK-free-prefix-trial-v4
+        version: own-SDK-returned-cash-prefix-trial-v5
         gameId: '32719'
         dbName: sg_hyperchargedincajungle96
         runtimeGameId: 33119
@@ -8551,6 +8551,58 @@ games:
             - IFR
           extraOwnGSDPendingCounterMustBeInactive: true
           ordinaryAndKnownPaidIntroScopeOnly: true
+          ownSDKReturnedCashBinding:
+            version: own-SDK-TW-total-CW-current-free-cash-v1
+            gameId: '32719'
+            ownSDKFileSHA256: 7897950e66d862f5823a13f9a2ce56f0973d4d40391ed429502fe9fef16d03c2
+            totalWireKey: TW
+            currentWireKey: CW
+            auxiliaryFeatureCashWireKey: FGTW
+            cashTotalsComeFromTWNotFGTW: true
+            actualCWRequiredNoSDKFallbackUsed: true
+            allRawCashFieldsPreserved: true
+            rootResponseClassSHA256: abf133f0e7307a8755cda3cee3cf9efa2b5f22ce847aed8c3cfc343cc83790a4
+            getterDefinitionSHA256: 9d56405b7e9d2368e116f00765f8f94c2765742a29800bfdd23a0ed04b3c7a7e
+            currentPayoutCopySHA256: ff73fd20600795bc8ab0787173bb2614e0d0c49684ecb7ca4a4c15ef45919318
+            auxiliaryInfoSetterSHA256: 3303f094f18a1bf9255692ee11e374f41f86cee264be4446357cd59b3e1d96d9
+            fieldBindings:
+              - wireKey: TW
+                property: ic
+                sourceSHA256: 96f85906cd4d7a4c173faee72a0347d580220f104195a448a8f05980ec2ee598
+                type:
+                  kind: integer
+                  SDKTypeAlias: hb
+                  ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+              - wireKey: CW
+                property: o3
+                sourceSHA256: dd2fbf40ba2eb8cc59cf6116485660ce1a8a245718a17531b05ac21bac6b0c93
+                type:
+                  kind: number
+              - wireKey: FGTW
+                property: GPa
+                sourceSHA256: 5c50b9abc314df63ed196b317079143cc8d7adb0a365d0b54760fdc0cd47994e
+                type:
+                  kind: integer
+                  SDKTypeAlias: hb
+                  ownAliasValidatorSHA256: 4cf51e5c7162db419961c097550859fdf9b32c65fbc38ccce2cdf05fa48b3ccc
+            totalProperty: ic
+            currentProperty: o3
+            totalGetter: rh
+            currentGetter: fT
+            auxiliaryProperty: GPa
+            auxiliaryInfoProperty: FD
+            getterDefinitionSource: |-
+              Object.defineProperties(e.prototype,{rh:{get:function(){return this.ic},enumerable:!1,configurable:!0},fT:{get:function(){return null==this.o3?this.ic:this.o3},enumerable:!1,configurable:!0},xj:{get:function(){return this.isFinal?
+              this.$x-this.rh:this.$x},enumerable:!1,configurable:!0},mr:{get:function(){return this.isFinal?this.$x:this.xj},enumerable:!1,configurable:!0},isFinal:{get:function(){return this.Tl?!0:!this.EM()},enumerable:!1,configurable:!0}});
+            currentPayoutCopySource: |-
+              d.prototype.OXa=function(b){var e,g,m,p,q;b.Hb.fT=this.o3;b.Hb.qb=null!==(e=this.qb)&&void 0!==e?e:null;b.Hb.ic=null!==(g=this.ic)&&void 0!==g?g:0;b.Hb.GD=null!==(m=this.GD)&&void 0!==m?
+              m:null;b.Hb.wz=a.Utils.Array.jI(null!==(p=this.Ue.wz)&&void 0!==p?p:[]);b.Hb.zva=null!==(q=this.Ue.WJa)&&void 0!==q?q:null;b.Hb.b5a=a.ma.wc.iC(this.Ue.VJa);b.Hb.BV=a.ma.wc.iC(this.Ue.tLa);b.Hb.Q4a=this.uRa(b)}
+            auxiliaryInfoSetterSource: m.prototype.fZa=function(q){q.Sl=this.VTa;q.lu=this.i4;q.pi=this.GT;q.FD=this.GPa;q.W3=this.HPa}
+            noMissingCashDefault: true
+            noFakeTerminal: true
+            requiresCompleteNaturalRoundBeforeNative: true
+            otherPendingStagesStillFatal: true
+            actualOwnCashFailures: 2
   - provider: sg
     gameId: '32720'
     name: Hypercharged Jinzita
@@ -8567,7 +8619,7 @@ games:
         BPL: '1'
         LB: '40'
       ownGDMContract:
-        version: own-SDK-free-prefix-trial-v4
+        version: own-SDK-returned-cash-prefix-trial-v5
         gameId: '32720'
         dbName: sg_hyperchargedjinzita96
         runtimeGameId: 33120
@@ -9128,3 +9180,55 @@ games:
             - IFR
           extraOwnGSDPendingCounterMustBeInactive: true
           ordinaryAndKnownPaidIntroScopeOnly: true
+          ownSDKReturnedCashBinding:
+            version: own-SDK-TW-total-CW-current-free-cash-v1
+            gameId: '32720'
+            ownSDKFileSHA256: c3b23a2c481fad8bde0d0d1d9ba36b32e3addc567d505318421020eae560a8b0
+            totalWireKey: TW
+            currentWireKey: CW
+            auxiliaryFeatureCashWireKey: FGTW
+            cashTotalsComeFromTWNotFGTW: true
+            actualCWRequiredNoSDKFallbackUsed: true
+            allRawCashFieldsPreserved: true
+            rootResponseClassSHA256: f70efd4cbede14866732e8332df67ef09eefa995e48cce2f477c9b9b252ad5b2
+            getterDefinitionSHA256: 782a1cbd01c55e0e7a313605f31f1c0fe5ed0dfb52ddf7e1e90d7259edd599c7
+            currentPayoutCopySHA256: 7fc5684e0ceaf16b2483fb37eae7d45654baeac04d0fe0f9d99f14ad5e2c010b
+            auxiliaryInfoSetterSHA256: 199819198f5ac4ecdbc9a782b2220b29b8cdf3c5602938c1cb1fedd78b2589dc
+            fieldBindings:
+              - wireKey: TW
+                property: hc
+                sourceSHA256: c3d152217aa18c1f7d01c2ed2697d99b784cee8d69e908809347e32444436b8b
+                type:
+                  kind: integer
+                  SDKTypeAlias: gb
+                  ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+              - wireKey: CW
+                property: O3
+                sourceSHA256: dd2fbf40ba2eb8cc59cf6116485660ce1a8a245718a17531b05ac21bac6b0c93
+                type:
+                  kind: number
+              - wireKey: FGTW
+                property: $Qa
+                sourceSHA256: 72a949244f3e691154c48bb7bcad4a31adcb48458376616c59242a3fdb366604
+                type:
+                  kind: integer
+                  SDKTypeAlias: gb
+                  ownAliasValidatorSHA256: 4d29c8eb6123bcd4bad668bf34776fdef846921e220cd2576680f69ed82195f2
+            totalProperty: hc
+            currentProperty: O3
+            totalGetter: wh
+            currentGetter: BT
+            auxiliaryProperty: $Qa
+            auxiliaryInfoProperty: PD
+            getterDefinitionSource: |-
+              Object.defineProperties(e.prototype,{wh:{get:function(){return this.hc},enumerable:!1,configurable:!0},BT:{get:function(){return null==this.O3?this.hc:this.O3},enumerable:!1,configurable:!0},xj:{get:function(){return this.isFinal?
+              this.ly-this.wh:this.ly},enumerable:!1,configurable:!0},vr:{get:function(){return this.isFinal?this.ly:this.xj},enumerable:!1,configurable:!0},isFinal:{get:function(){return this.Zl?!0:!this.XM()},enumerable:!1,configurable:!0}});
+            currentPayoutCopySource: |-
+              d.prototype.vZa=function(b){var e,g,m,p,q;b.Ob.BT=this.O3;b.Ob.sb=null!==(e=this.sb)&&void 0!==e?e:null;b.Ob.hc=null!==(g=this.hc)&&void 0!==g?g:0;b.Ob.QD=null!==(m=this.QD)&&void 0!==m?
+              m:null;b.Ob.Dz=a.Utils.Array.xI(null!==(p=this.Ve.Dz)&&void 0!==p?p:[]);b.Ob.nwa=null!==(q=this.Ve.XKa)&&void 0!==q?q:null;b.Ob.X6a=a.ma.Vb.oC(this.Ve.WKa);b.Ob.VV=a.ma.Vb.oC(this.Ve.HMa);b.Ob.N6a=this.XSa(b)}
+            auxiliaryInfoSetterSource: m.prototype.S_a=function(q){q.Yl=this.xVa;q.qu=this.I4;q.ri=this.bU;q.PD=this.$Qa;q.y4=this.aRa}
+            noMissingCashDefault: true
+            noFakeTerminal: true
+            requiresCompleteNaturalRoundBeforeNative: true
+            otherPendingStagesStillFatal: true
+            actualOwnCashFailures: 3

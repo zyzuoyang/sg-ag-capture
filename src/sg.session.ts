@@ -992,14 +992,14 @@ export function ownGDMFields(value:string,separator='&',assignment='='):Record<s
 function gdmBinding(game:AGGameConfig){
  const c=game.sg?.ownGDMContract;
  assert(game.provider==='sg'&&game.sg.protocol==='gdm'&&game.sg.endpoint==='https://ogs-gdm-usnj.nyxop.net/nextgen/','AG integrity: GDM source gdmBinding');
- assert(['own-SDK-ordinary-final-v1','own-SDK-ordinary-typed-final-v2','own-SDK-free-game-chain-v2','own-SDK-free-game-chain-v3','own-SDK-free-prefix-trial-v4'].includes(c?.version)&&c.gameId===game.gameId&&c.dbName===game.dbName&&c.runtimeGameId===game.sg.runtimeGameId
+ assert(['own-SDK-ordinary-final-v1','own-SDK-ordinary-typed-final-v2','own-SDK-free-game-chain-v2','own-SDK-free-game-chain-v3','own-SDK-free-prefix-trial-v4','own-SDK-returned-cash-prefix-trial-v5'].includes(c?.version)&&c.gameId===game.gameId&&c.dbName===game.dbName&&c.runtimeGameId===game.sg.runtimeGameId
   &&c.runtimeSlug===game.sg.runtimeSlug&&game.backendId===c.runtimeSlug&&game.sg.requestParams?.GN===c.runtimeSlug&&c.betRaw===game.sg.betRaw&&c.fixedGitCommit==='885f862bcc04841406820a932ef14c38c7759f1d'
   &&typeof c.ownSDKFileSHA256==='string'&&/^[a-f0-9]{64}$/.test(c.ownSDKFileSHA256)
   &&Number.isSafeInteger(c.betRaw)&&c.betRaw>0&&c.balanceScale===1&&c.winScale===1,'AG integrity: GDM own rule gdmBinding');
  assert((['own-SDK-ordinary-final-v1','own-SDK-ordinary-typed-final-v2'].includes(c.version)?c.ordinaryOnly===true:c.ordinaryOnly===false&&c.freeBudgetContract?.version==='own-SDK-NFG-without-promotional-FreeRounds-v1'&&c.freeBudgetContract.gameId===game.gameId)&&c.requiresNoPreviousFeature===true&&Array.isArray(c.pendingClauses)&&c.pendingClauses.length>0
   &&c.pendingClauses[0].kind==='SDK-base-false'&&c.pendingClauses.some((q:any)=>q.kind==='fresh-ordinary-SDK-NFG'&&q.wireKey==='NFG'&&q.explicitSDKDefault==='0')
   &&c.rootInactiveFlags.map((q:any)=>q.wireKey).sort().join('|')==='GA|GCT|IFG','AG integrity: GDM own final scope');
- if(c.version==='own-SDK-free-prefix-trial-v4'){
+ if(['own-SDK-free-prefix-trial-v4','own-SDK-returned-cash-prefix-trial-v5'].includes(c.version)){
   const rule=c.freeBudgetContract,b=rule?.ownSDKFreeRequestBinding,fields=b?.fieldBindings,params=rule?.freeRequestParams;
   assert(b&&b.ownSDKFileSHA256===c.ownSDKFileSHA256&&b.requestFieldsFromValidatedSourceBetState===true&&b.ordinaryAPAndRECNotAssumedFreeFields===true&&b.requiresCompleteNaturalRoundBeforeAnyNative===true&&b.unmappedOtherFeaturesRemainFatal===true&&b.wholeFreeChainCoverageNotClaimed===true&&Number.isSafeInteger(b.actualPaidIntroCases)&&b.actualPaidIntroCases>0,'AG integrity: GDM own SDK prefix request scope');
   for(const k of ['SDKSelectorSHA256','NFGSetterSHA256','NFGDecoderSHA256','GCTDecoderSHA256','ownRequestConstructorSHA256'])assert(/^[a-f0-9]{64}$/.test(b[k]),'AG integrity: GDM own SDK request byte binding');
@@ -1008,6 +1008,16 @@ function gdmBinding(game:AGGameConfig){
   assert(Object.keys(params).sort().join('|')===['GN',...fields.map((q:any)=>q.wireKey)].sort().join('|'),'AG integrity: GDM extra free request input');
   for(const f of fields)assert(f.type?.kind==='integer'&&/^[a-f0-9]{64}$/.test(f.sourceSHA256)&&params[f.wireKey]===game.sg.requestParams[f.wireKey]&&/^[1-9]\d*$/.test(params[f.wireKey]),'AG integrity: GDM source/SDK wager field binding');
  }
+ if(c.version==='own-SDK-returned-cash-prefix-trial-v5'){
+  const b=c.freeBudgetContract?.ownSDKReturnedCashBinding;
+  assert(b?.version==='own-SDK-TW-total-CW-current-free-cash-v1'&&b.gameId===game.gameId&&b.ownSDKFileSHA256===c.ownSDKFileSHA256
+   &&b.totalWireKey==='TW'&&b.currentWireKey==='CW'&&b.auxiliaryFeatureCashWireKey==='FGTW'&&b.cashTotalsComeFromTWNotFGTW===true
+   &&b.actualCWRequiredNoSDKFallbackUsed===true&&b.allRawCashFieldsPreserved===true&&b.noMissingCashDefault===true&&b.noFakeTerminal===true
+   &&b.requiresCompleteNaturalRoundBeforeNative===true&&b.otherPendingStagesStillFatal===true&&Number.isSafeInteger(b.actualOwnCashFailures)&&b.actualOwnCashFailures>0,'AG integrity: GDM own returned cash scope');
+  for(const k of ['rootResponseClassSHA256','getterDefinitionSHA256','currentPayoutCopySHA256','auxiliaryInfoSetterSHA256'])assert(/^[a-f0-9]{64}$/.test(b[k]),'AG integrity: GDM own returned cash byte binding');
+  assert(Array.isArray(b.fieldBindings)&&b.fieldBindings.length===3&&b.fieldBindings.map((f:any)=>f.wireKey).sort().join('|')==='CW|FGTW|TW'
+   &&b.fieldBindings.every((f:any)=>/^[a-f0-9]{64}$/.test(f.sourceSHA256)&&typeof f.property==='string'&&f.property.length>0),'AG integrity: GDM own returned cash decoders');
+ }else assert(c.freeBudgetContract?.ownSDKReturnedCashBinding===undefined,'AG integrity: GDM returned cash binding outside own version');
  if(c.ownOptionalRootMetadata!==undefined){
   assert(Array.isArray(c.ownOptionalRootMetadata)&&c.ownOptionalRootMetadata.length===1,'AG integrity: GDM optional metadata scope');
   const q=c.ownOptionalRootMetadata[0];
@@ -1047,7 +1057,7 @@ export function ownGDMOrdinaryFinal(game:AGGameConfig,p:Record<string,string>):b
 }
 export function ownGDMSDKTypedGSD(game:AGGameConfig,gsd:Record<string,string>){
  const c=gdmBinding(game),schema=c.ownGSDDataSchema;
- if(schema)assert(['own-SDK-free-game-chain-v3','own-SDK-ordinary-typed-final-v2','own-SDK-free-prefix-trial-v4'].includes(c.version)&&schema.version==='own-exact-SDK-GSD-types-v1'&&schema.gameId===game.gameId&&schema.ownSDKFileSHA256===c.ownSDKFileSHA256&&schema.unknownUncompiledFieldsStillFatal===true&&schema.noCashOrNextActionDerivedFromOptionalGSD===true,'AG integrity: GDM foreign typed SDK schema');
+ if(schema)assert(['own-SDK-free-game-chain-v3','own-SDK-ordinary-typed-final-v2','own-SDK-free-prefix-trial-v4','own-SDK-returned-cash-prefix-trial-v5'].includes(c.version)&&schema.version==='own-exact-SDK-GSD-types-v1'&&schema.gameId===game.gameId&&schema.ownSDKFileSHA256===c.ownSDKFileSHA256&&schema.unknownUncompiledFieldsStillFatal===true&&schema.noCashOrNextActionDerivedFromOptionalGSD===true,'AG integrity: GDM foreign typed SDK schema');
  const projection=schema?.ownEffectiveMetadataObject;
  if(projection){
   const hashes=[projection.ownObjectCodecSHA256,projection.ownMetadataDeserializerSHA256,...projection.ownClassSourceSHA256s,...projection.emptyParentSourceSHA256s,...projection.ownObjectFieldDecoderSHA256s];
@@ -1088,7 +1098,7 @@ function ownGDMFreeEnvelope(game:AGGameConfig,p:Record<string,string>,event:stri
  for(const k of c.requiredResponseKeys)assert(p[k]!==undefined,'AG integrity: GDM missing free envelope field');
  for(const k of rule.promotionalKeysForbidden)assert(p[k]===undefined,'AG integrity: GDM promotional FreeRounds not mapped');
  assert(p.GA==='0'&&(p.GCT===undefined||p.GCT==='0'),'AG integrity: GDM other active/capped feature not mapped');
- if(c.version==='own-SDK-free-prefix-trial-v4')for(const f of rule.ownSDKFreeRequestBinding.fieldBindings)assert(p[f.wireKey]===undefined||p[f.wireKey]===rule.freeRequestParams[f.wireKey],'AG integrity: GDM source wager state changed before next request');
+ if(['own-SDK-free-prefix-trial-v4','own-SDK-returned-cash-prefix-trial-v5'].includes(c.version))for(const f of rule.ownSDKFreeRequestBinding.fieldBindings)assert(p[f.wireKey]===undefined||p[f.wireKey]===rule.freeRequestParams[f.wireKey],'AG integrity: GDM source wager state changed before next request');
  const gsd=p.GSD===undefined?{}:ownGDMFields(p.GSD,'#','~');ownGDMSDKTypedGSD(game,gsd);
  assert(c.pendingClauses[0].kind==='SDK-base-false'&&c.pendingClauses[1].kind==='fresh-ordinary-SDK-NFG','AG integrity: GDM own free inherited predicate');
  if(c.pendingClauses.length===3){
@@ -1163,8 +1173,8 @@ export class SGGdmSession{
    // AB at the charged round balance or release it to B; no cash is defaulted.
    assert(available===end||((!first||remaining>0)&&available===this.roundStart-c.betRaw),'AG integrity: GDM own B/AB cumulative return split');
    if(first){assert(end===before-c.betRaw+total,'AG integrity: GDM paid intro cash');
-    if(remaining>0){const all=gdmInteger(p.TFG,'initial free total'),played=gdmInteger(p.CFGG,'initial played'),win=gdmInteger(p.FGTW,'initial feature cash');assert(played===0&&all===remaining&&win<=total&&gdmInteger(p.CW,'paid intro current cash')===total,'AG integrity: GDM genuine free intro');this.freeState={total:all,played,remaining,win,offset:total-win};}
-   }else{const prior=this.freeState!;const all=gdmInteger(p.TFG,'returned free total'),played=gdmInteger(p.CFGG,'returned played'),win=gdmInteger(p.FGTW,'cumulative feature cash'),current=gdmInteger(p.CW,'current free cash');
+    if(remaining>0){const all=gdmInteger(p.TFG,'initial free total'),played=gdmInteger(p.CFGG,'initial played'),rawFeatureCash=gdmInteger(p.FGTW,'initial feature cash');assert(played===0&&all===remaining&&rawFeatureCash<=total&&gdmInteger(p.CW,'paid intro current cash')===total,'AG integrity: GDM genuine free intro');const win=rule.ownSDKReturnedCashBinding?0:rawFeatureCash;this.freeState={total:all,played,remaining,win,offset:total-win};}
+   }else{const prior=this.freeState!;const all=gdmInteger(p.TFG,'returned free total'),played=gdmInteger(p.CFGG,'returned played'),rawFeatureCash=gdmInteger(p.FGTW,'returned auxiliary feature cash'),win=rule.ownSDKReturnedCashBinding?total-prior.offset:rawFeatureCash,current=gdmInteger(p.CW,'current free cash');
     assert(played===prior.played+1&&all>=prior.total&&played+remaining===all&&remaining===prior.remaining-1+all-prior.total,'AG integrity: GDM free counter transition');
     assert(win>=prior.win&&current===win-prior.win&&total===prior.offset+win&&total===this.totalWin+current&&end===before+current,'AG integrity: GDM free cash transition');this.freeState={total:all,played,remaining,win,offset:prior.offset};
    }
