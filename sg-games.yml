@@ -6393,3 +6393,423 @@ games:
           noCashOrNextActionDerivedFromOptionalGSD: true
           preserveNullableSDKArrayCells: true
           nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
+  - provider: sg
+    gameId: '32689'
+    name: Ultimate Fire Link Olvera Street
+    dbName: sg_uflolverastreet96
+    backendId: uflolverastreet96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33097
+      runtimeSlug: uflolverastreet96
+      betRaw: 100
+      requestParams:
+        BPL: '5'
+        GN: uflolverastreet96
+        LB: '50'
+        REC: '0'
+      ownGDMContract:
+        version: own-SDK-ordinary-typed-final-v2
+        gameId: '32689'
+        dbName: sg_uflolverastreet96
+        runtimeGameId: 33097
+        runtimeSlug: uflolverastreet96
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - FBV
+        ownSDKFileSHA256: b323ec5ba9da57ded7c5bfb1182d6aca708d64f9877c8c1ff1dd719f244afc9f
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: 30addc4fb8089c4f3054204acdc8d024dec7568888e242f0de9acb89f8977989
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 5235a0d64871c10b59024a08dc1f3d165834a1d0684d0f044069559a0d37dc1e
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 8f0783942ee8e2a6b9492401674449807dd56f2d46cf83b7627ee97f0e94bf79
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: c996367e1eb557ce80722327b6b06560cc8616ac790b7b914519b2fc850733bf
+        SDKFinalGetterSourceSHA256: 569e2fe0c0f1b1f9ac88a8ccd122968bbb86f8f5e4c34a24fec33843771d3a46
+        ownExactInheritedDelegationProofs:
+          - gameId: '32689'
+            ownSDKFileSHA256: b323ec5ba9da57ded7c5bfb1182d6aca708d64f9877c8c1ff1dd719f244afc9f
+            body: return d.prototype.yS.call(this)
+            bodySHA256: b6e5d455391ea68ac673b1dd2afb51dcd4fc3dcc84490dc731fdf40065605ebd
+            method: yS
+            parentVariable: d
+            actualSuperclass: G.GDM.tb.ld.ca.Ex
+            leafClassExports:
+              - e.Ex
+            ownClassSourceSHA256: fcbb4c6a8322082a9d0574e376fc438520ec05aa8e76def1403d39053980d518
+            noExtraStateOrDefaults: true
+        ownEquivalentDecoderProof:
+          - wireKey: GCT
+            property: oo
+            ownSDKFileSHA256: b323ec5ba9da57ded7c5bfb1182d6aca708d64f9877c8c1ff1dd719f244afc9f
+            equalDomain: Boolean
+            equalExplicitDefault: '0'
+            ownDecoderSourceSHA256s:
+              - c996367e1eb557ce80722327b6b06560cc8616ac790b7b914519b2fc850733bf
+              - 3f9b9712715e214967ebf0f19c57015b98a70dee75cb432695332d476ed7b7c6
+            conflictingDecoderNotAccepted: true
+        ownGSDDataSchema:
+          version: own-exact-SDK-GSD-types-v1
+          gameId: '32689'
+          ownSDKFileSHA256: b323ec5ba9da57ded7c5bfb1182d6aca708d64f9877c8c1ff1dd719f244afc9f
+          ownGSDClass: e.qka
+          compiledOwnClassSHA256: b4dba5a60d2f9d434a4cf19ca238ffac79eb8da96b8281d38342060dfe327871
+          fields:
+            FBV:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: number
+                  SDKArrayDecoderAlias: je
+                  ownAliasValidatorSHA256: 6b38561162a0431e93120b0d896145b2627f42f1416d5fba698ebb70b7e25b16
+                SDKArrayDecoderAlias: je
+                ownAliasValidatorSHA256: 6b38561162a0431e93120b0d896145b2627f42f1416d5fba698ebb70b7e25b16
+              ownSDKFieldSHA256: 9aebd624b7f2fd71933265f217b7b1c5e9f4e9405dd107bad00c15b18cd4ac85
+              ownSDKProperty: si
+            FLV:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: je
+                ownAliasValidatorSHA256: 6b38561162a0431e93120b0d896145b2627f42f1416d5fba698ebb70b7e25b16
+              ownSDKFieldSHA256: 0a173ada5b2ea9da4ccd861cab4389c66275433536259a9d806b3aa1aa7dc8ff
+              ownSDKProperty: AL
+            FLJS:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: je
+                ownAliasValidatorSHA256: 6b38561162a0431e93120b0d896145b2627f42f1416d5fba698ebb70b7e25b16
+              ownSDKFieldSHA256: ac64c5775f8f247cb3fc5f29d4c2728484920d431df4c1096ce766738b0b9c21
+              ownSDKProperty: I_a
+            PFLV:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: je
+                ownAliasValidatorSHA256: 6b38561162a0431e93120b0d896145b2627f42f1416d5fba698ebb70b7e25b16
+              ownSDKFieldSHA256: a2d015673f2a2dcbd5e8734320c3563fe8cc1ad2e54117f6648d99eadcbf2d06
+              ownSDKProperty: gH
+            PFLJS:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: je
+                ownAliasValidatorSHA256: 6b38561162a0431e93120b0d896145b2627f42f1416d5fba698ebb70b7e25b16
+              ownSDKFieldSHA256: 4415ce767fc627450fbc6d67aaa804fbfe76db99c55a387ed02582fa1e7ef5b5
+              ownSDKProperty: X6a
+            FLS:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: je
+                ownAliasValidatorSHA256: 6b38561162a0431e93120b0d896145b2627f42f1416d5fba698ebb70b7e25b16
+              ownSDKFieldSHA256: 4d810ad6b1a995ff9c14c0fc923e99c4700bf47dcc945aa920a337ffc7f68c56
+              ownSDKProperty: O_a
+            FLR:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: number
+                  SDKArrayDecoderAlias: je
+                  ownAliasValidatorSHA256: 6b38561162a0431e93120b0d896145b2627f42f1416d5fba698ebb70b7e25b16
+                SDKArrayDecoderAlias: je
+                ownAliasValidatorSHA256: 6b38561162a0431e93120b0d896145b2627f42f1416d5fba698ebb70b7e25b16
+              ownSDKFieldSHA256: bae5a8e95bc6ab726674484afab6269a0265c26c04e9e4df797a0a7c95de8e0d
+              ownSDKProperty: wz
+            BGRS:
+              type:
+                kind: array
+                delimiter: ;
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: je
+                ownAliasValidatorSHA256: 6b38561162a0431e93120b0d896145b2627f42f1416d5fba698ebb70b7e25b16
+              ownSDKFieldSHA256: 7a7b27bad1e6fdb3a0bf3112c7e5fa2be66c1416d4af481d790d6b7adca9a8ff
+              ownSDKProperty: Qea
+          unknownUncompiledFieldsStillFatal: true
+          noCashOrNextActionDerivedFromOptionalGSD: true
+          preserveNullableSDKArrayCells: true
+          nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
+  - provider: sg
+    gameId: '32691'
+    name: Ultimate Fire Link Rue Royale
+    dbName: sg_ultimatefirelinkrueroyale96
+    backendId: ultimatefirelinkrueroyale96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33098
+      runtimeSlug: ultimatefirelinkrueroyale96
+      betRaw: 100
+      requestParams:
+        BPL: '5'
+        GN: ultimatefirelinkrueroyale96
+        LB: '50'
+        REC: '0'
+      ownGDMContract:
+        version: own-SDK-ordinary-typed-final-v2
+        gameId: '32691'
+        dbName: sg_ultimatefirelinkrueroyale96
+        runtimeGameId: 33098
+        runtimeSlug: ultimatefirelinkrueroyale96
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: true
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+        ordinaryGSDKeys:
+          - FBV
+        ownSDKFileSHA256: a98f2bbba033a631e86b2caf715de81d4a921019d5047082baebf482cebb79ad
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: 846f8f384f7fad81218a926c24691617b0fa0d456a9bd46e36d95c3f7a31f086
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 67be90f5b04a067b35482480caa838de522b3ee71c729a957f2d38afba43433a
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 0bcbbdcd94f96b7e0b6c27c433b5b9a9a3b782a0e466bc0900afe7996e86b659
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 15b8dcb1cc01d0cc016af06d4d5f95538b890fa9dd98c78154d9e7e9d2c4b9cb
+        SDKFinalGetterSourceSHA256: febf98d0e4e8359fd612c3deb89f084c191d671d6765d71f07c3601f1ef27a86
+        ownExactInheritedDelegationProofs:
+          - gameId: '32691'
+            ownSDKFileSHA256: a98f2bbba033a631e86b2caf715de81d4a921019d5047082baebf482cebb79ad
+            body: return d.prototype.XR.call(this)
+            bodySHA256: 6d84afab0061751dbee675a0ae45ad399dc8478807ed5916ab8dd98e159611e4
+            method: XR
+            parentVariable: d
+            actualSuperclass: G.GDM.xb.jd.ba.qx
+            leafClassExports:
+              - e.qx
+            ownClassSourceSHA256: c9b43f3fa8bdf1b689f621c52894806dedf5d0b0b3c62c9a93e10c32c01dc5d6
+            noExtraStateOrDefaults: true
+        ownEquivalentDecoderProof:
+          - wireKey: GCT
+            property: yn
+            ownSDKFileSHA256: a98f2bbba033a631e86b2caf715de81d4a921019d5047082baebf482cebb79ad
+            equalDomain: Boolean
+            equalExplicitDefault: '0'
+            ownDecoderSourceSHA256s:
+              - 15b8dcb1cc01d0cc016af06d4d5f95538b890fa9dd98c78154d9e7e9d2c4b9cb
+              - 2fe076e4f6bf65ab54353f45bfdee668c244560cd228c521c37ab10de207f153
+            conflictingDecoderNotAccepted: true
+        ownGSDDataSchema:
+          version: own-exact-SDK-GSD-types-v1
+          gameId: '32691'
+          ownSDKFileSHA256: a98f2bbba033a631e86b2caf715de81d4a921019d5047082baebf482cebb79ad
+          ownGSDClass: e.Rja
+          compiledOwnClassSHA256: 1006fc01302869126d7ab20a923104b9875f662d8e2fa0f561ae1fd17d6e30a0
+          fields:
+            FBV:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: number
+                  SDKArrayDecoderAlias: ke
+                  ownAliasValidatorSHA256: aed5ece434b15ababea5cc8946e6be298f9d5ef993a0dfee636ed7236d63ed8c
+                SDKArrayDecoderAlias: ke
+                ownAliasValidatorSHA256: aed5ece434b15ababea5cc8946e6be298f9d5ef993a0dfee636ed7236d63ed8c
+              ownSDKFieldSHA256: 2c33d3c1f6dbc1b6bd5a0651bbdbcddb666366189a064607f0330caafa60bebc
+              ownSDKProperty: hi
+            FLV:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: ke
+                ownAliasValidatorSHA256: aed5ece434b15ababea5cc8946e6be298f9d5ef993a0dfee636ed7236d63ed8c
+              ownSDKFieldSHA256: db4aaaf0916f7cfd72015b5afac0f86bece695016816b839a1cf395cf72d0667
+              ownSDKProperty: VK
+            FLJS:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: ke
+                ownAliasValidatorSHA256: aed5ece434b15ababea5cc8946e6be298f9d5ef993a0dfee636ed7236d63ed8c
+              ownSDKFieldSHA256: 0cdac65cc88db924d9a6d5b495b712d4a36c261b7bfe8a3f3b25e6ce1b922df0
+              ownSDKProperty: z_a
+            PFLV:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: ke
+                ownAliasValidatorSHA256: aed5ece434b15ababea5cc8946e6be298f9d5ef993a0dfee636ed7236d63ed8c
+              ownSDKFieldSHA256: 4e65c324639025e1ea849848184c78e106938340d4f93ab1e99b9864722ebbba
+              ownSDKProperty: CG
+            PFLJS:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: ke
+                ownAliasValidatorSHA256: aed5ece434b15ababea5cc8946e6be298f9d5ef993a0dfee636ed7236d63ed8c
+              ownSDKFieldSHA256: cada3a6250cd187986ea63c5e39a645abef9d8e3a00810403ad4327e120af296
+              ownSDKProperty: O6a
+            FLS:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: ke
+                ownAliasValidatorSHA256: aed5ece434b15ababea5cc8946e6be298f9d5ef993a0dfee636ed7236d63ed8c
+              ownSDKFieldSHA256: b4380f40b2d6d6f06dff64b421ec4800a1b6972854a4a2f72b0b2c2a2f3acb9c
+              ownSDKProperty: F_a
+            FLR:
+              type:
+                kind: array
+                delimiter: '|'
+                item:
+                  kind: array
+                  delimiter: ;
+                  item:
+                    kind: number
+                  SDKArrayDecoderAlias: ke
+                  ownAliasValidatorSHA256: aed5ece434b15ababea5cc8946e6be298f9d5ef993a0dfee636ed7236d63ed8c
+                SDKArrayDecoderAlias: ke
+                ownAliasValidatorSHA256: aed5ece434b15ababea5cc8946e6be298f9d5ef993a0dfee636ed7236d63ed8c
+              ownSDKFieldSHA256: 18d5b54de917a08028b6cd4305c69b04d3d920a4614da128f7364a737e536e61
+              ownSDKProperty: gz
+            BGRS:
+              type:
+                kind: array
+                delimiter: ;
+                item:
+                  kind: number
+                SDKArrayDecoderAlias: ke
+                ownAliasValidatorSHA256: aed5ece434b15ababea5cc8946e6be298f9d5ef993a0dfee636ed7236d63ed8c
+              ownSDKFieldSHA256: 9ec6d63a3239aa6ec448d23b95ec0af6f5a23c266c9e0714833e805d43d11826
+              ownSDKProperty: xBa
+          unknownUncompiledFieldsStillFatal: true
+          noCashOrNextActionDerivedFromOptionalGSD: true
+          preserveNullableSDKArrayCells: true
+          nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
