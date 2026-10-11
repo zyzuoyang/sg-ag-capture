@@ -5901,7 +5901,7 @@ games:
         BPL: '5'
         LB: '25'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32629'
         dbName: sg_richlittlehensfoundingfeathers96
         runtimeGameId: 33078
@@ -5910,7 +5910,7 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
@@ -5933,25 +5933,19 @@ games:
           - VER
           - WC
           - WS
+          - CW
+          - NFG
+          - FGT
+          - TFG
+          - CFGG
+          - FGTW
+          - FID
         requiredResponseKeys:
-          - AB
           - B
-          - BPL
-          - FRBAL
-          - GA
-          - GSD
-          - IFG
-          - LB
-          - MSGID
-          - MUL
-          - NRID
-          - RID
-          - RS
-          - SID
-          - SUB
+          - AB
           - TW
-          - VER
-          - WC
+          - MSGID
+          - GA
         ordinaryGSDKeys:
           - CO
           - CONAMES
@@ -6198,6 +6192,55 @@ games:
           noCashOrNextActionDerivedFromOptionalGSD: true
           preserveNullableSDKArrayCells: true
           nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
+          knownUnsupportedFields: []
+          ownEffectiveMetadataObject:
+            schema: own-complete-SDK-metadata-object-v1
+            gameId: '32629'
+            ownSDKFileSHA256: 6ccffa14540925e4b14b1e9f0f8158bfb1b5f72a5faabb1eab7b0dfa813aeb9a
+            ownGSDClass: k.hca
+            effectiveFieldKeys:
+              - BE
+              - BT
+              - CO
+              - CW
+              - CWW
+              - EP2
+              - EP3
+              - EP4
+              - EP5
+              - JO
+              - JS
+              - JW
+              - MSR
+              - NON_CWW
+              - PBG
+              - PJS
+              - PRG
+              - PWG
+              - RE
+              - RT
+              - SCP
+              - WE
+              - WE2
+              - WE3
+              - WE4
+              - WE5
+              - WT
+            ownClassSourceSHA256s:
+              - df052c8d5f2e3a0cb08c7b7fb121a8004e3a795dbb617c5e56feecadd69c6e44
+            emptyParentSourceSHA256s:
+              - 8494de2fa33679c82ebc1ce2210c889624ba5b456001dc7bc25648e2577e43fb
+            ownObjectFieldDecoderSHA256s:
+              - 7e7caab6df7caa0eed14d09b2da0dc1cccd3d3300b6bbe023d90762bce427a42
+              - 7e7caab6df7caa0eed14d09b2da0dc1cccd3d3300b6bbe023d90762bce427a42
+            ownObjectCodecSHA256: de70648db05df44eccc65f2940bd10e71c98a22587e0591b045f8bbd19007715
+            ownMetadataDeserializerSHA256: 25f3ecd9e0b0fbfdebbb15b9cd60ba26020ad26c981fa5aad39093f798c2c13f
+            dictionaryNotPassedToConstructor: true
+            metadataOnlyObjectProjection: true
+            knownUnsupportedFieldsRemainFatal: true
+            rootUnknownsRemainFatal: true
+            rawDictionaryPreserved: true
+            noCashOrNextActionFromUnconsumedDictionaryFields: true
         ownOptionalRootMetadata:
           - schema: own-SDK-optional-PD-metadata-v1
             gameId: '32629'
@@ -6224,6 +6267,52 @@ games:
               - MSGID
               - GA
             ownSDKMissingFieldFunctionSHA256: 25f3ecd9e0b0fbfdebbb15b9cd60ba26020ad26c981fa5aad39093f798c2c13f
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32629'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: richlittlehensfoundingfeathers96
+            BPL: '5'
+            LB: '25'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: 6ccffa14540925e4b14b1e9f0f8158bfb1b5f72a5faabb1eab7b0dfa813aeb9a
+            SDKSelectorSHA256: a913fa766fb990f7dae7e698ec1a7f650248204f56a363ddcff95083c1e4e1cc
+            NFGSetterSHA256: 01135066e0e95749a0a4067586308fec51d44a30d834c236aafb799d4bb0eec4
+            NFGDecoderSHA256: 4801100bbf1f159feb6e3a6ea2abe8825d1e4166ff80da846ce945e8ce0bef99
+            GCTDecoderSHA256: 5bf44db795a9206446a82f34b1252f7a769e0abdbd3af78f5df12b900b735332
+            ownRequestConstructorSHA256: 1967d1fddd1374339b6a5dbdd021476f1961b43ca3cc6c100806092b1de488ca
+            fieldBindings:
+              - wireKey: BPL
+                type:
+                  kind: integer
+                  SDKTypeAlias: Nb
+                  ownAliasValidatorSHA256: 2b3426b5e1777ca0e4303fc38eaf1dd07cf9835731a1a9c802eaf7844a51712d
+                sourceSHA256: 6c2a5ef1ff55bc96fab3d9f48d6e562aca1cacb63a1855857e07c6a29cca5d4f
+              - wireKey: LB
+                type:
+                  kind: integer
+                  SDKTypeAlias: Nb
+                  ownAliasValidatorSHA256: 2b3426b5e1777ca0e4303fc38eaf1dd07cf9835731a1a9c802eaf7844a51712d
+                sourceSHA256: d5076537c3cacc30d5a5c48e5334809df4b1f439644c2586b26144a33c50d87b
+            actualPaidIntroCases: 2
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
   - provider: sg
     gameId: '32722'
     name: Jinse Dao Tiger
@@ -6410,7 +6499,7 @@ games:
         LB: '50'
         REC: '0'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32689'
         dbName: sg_uflolverastreet96
         runtimeGameId: 33097
@@ -6419,7 +6508,7 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
@@ -6441,24 +6530,19 @@ games:
           - VER
           - WC
           - WS
+          - CW
+          - NFG
+          - FGT
+          - TFG
+          - CFGG
+          - FGTW
+          - FID
         requiredResponseKeys:
-          - AB
           - B
-          - BPL
-          - FRBAL
-          - GA
-          - IFG
-          - LB
-          - MSGID
-          - MUL
-          - NRID
-          - RID
-          - RS
-          - SID
-          - SUB
+          - AB
           - TW
-          - VER
-          - WC
+          - MSGID
+          - GA
         ordinaryGSDKeys:
           - FBV
         ownSDKFileSHA256: b323ec5ba9da57ded7c5bfb1182d6aca708d64f9877c8c1ff1dd719f244afc9f
@@ -6509,6 +6593,11 @@ games:
           ownGSDClass: e.qka
           compiledOwnClassSHA256: b4dba5a60d2f9d434a4cf19ca238ffac79eb8da96b8281d38342060dfe327871
           fields:
+            GCT:
+              type:
+                kind: boolean
+              ownSDKFieldSHA256: 82110e468a43860a8af15ef045f699b71ab5fcd15f8743297ed4163c1258daee
+              ownSDKProperty: oo
             FBV:
               type:
                 kind: array
@@ -6603,6 +6692,83 @@ games:
           noCashOrNextActionDerivedFromOptionalGSD: true
           preserveNullableSDKArrayCells: true
           nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
+          knownUnsupportedFields: []
+          ownEffectiveMetadataObject:
+            schema: own-complete-SDK-metadata-object-v1
+            gameId: '32689'
+            ownSDKFileSHA256: b323ec5ba9da57ded7c5bfb1182d6aca708d64f9877c8c1ff1dd719f244afc9f
+            ownGSDClass: e.qka
+            effectiveFieldKeys:
+              - BGRS
+              - FBV
+              - FLJS
+              - FLR
+              - FLS
+              - FLV
+              - GCT
+              - PFLJS
+              - PFLV
+            ownClassSourceSHA256s:
+              - 3da27336718a0fe3ade560cc6846a9c8a8541ed98b85a097a91042a3fa5ec566
+              - 1af9c1804fc3e92af7933666b65893172c8ed2b990226dae278870723c0a45c1
+            emptyParentSourceSHA256s: []
+            ownObjectFieldDecoderSHA256s:
+              - 31de35187472018c003a6b9d7a70df4c2add0497ccd80d795064c249c3492f88
+              - 31de35187472018c003a6b9d7a70df4c2add0497ccd80d795064c249c3492f88
+            ownObjectCodecSHA256: 10e7941317cd3e8cf9eb60fc76695f1cfe7956360284128d99bb4444630884d6
+            ownMetadataDeserializerSHA256: cd1802e26f7eda11289635dadea88859861134954a9b8a5f9b82960c59392c67
+            dictionaryNotPassedToConstructor: true
+            metadataOnlyObjectProjection: true
+            knownUnsupportedFieldsRemainFatal: true
+            rootUnknownsRemainFatal: true
+            rawDictionaryPreserved: true
+            noCashOrNextActionFromUnconsumedDictionaryFields: true
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32689'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: uflolverastreet96
+            BPL: '5'
+            LB: '50'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: b323ec5ba9da57ded7c5bfb1182d6aca708d64f9877c8c1ff1dd719f244afc9f
+            SDKSelectorSHA256: 22f7ad9f8c68d34c59572c856f75feb52da89529d411f9d6a9f0a6d3e1b54a09
+            NFGSetterSHA256: 5c4166ca3cde2022fab1acf909f4e4499ee6ae0f84bf2aefd88fde2e14497146
+            NFGDecoderSHA256: 5ffd2a1955a0d7950d1fe01195022e651ecfc75e8af0a77644f129961c53c90a
+            GCTDecoderSHA256: 82110e468a43860a8af15ef045f699b71ab5fcd15f8743297ed4163c1258daee
+            ownRequestConstructorSHA256: 345c3fbbeca8d7b29abd3faf1f39a5e78556bb16a24556c3b99fb780d24f20c4
+            fieldBindings:
+              - wireKey: BPL
+                type:
+                  kind: integer
+                  SDKTypeAlias: dc
+                  ownAliasValidatorSHA256: b6412cf16be958cf9cbc54607d6014189181a0bf43c75525981d996f1cd53b31
+                sourceSHA256: 06a780befb95e6f9374d1f11f779ec0b6be79de60ed2fd717301d31618666c77
+              - wireKey: LB
+                type:
+                  kind: integer
+                  SDKTypeAlias: dc
+                  ownAliasValidatorSHA256: b6412cf16be958cf9cbc54607d6014189181a0bf43c75525981d996f1cd53b31
+                sourceSHA256: d516286f74c3a43d81be6099d461ec2ed9471aaaaf469efadbef51b3aaa52076
+            actualPaidIntroCases: 2
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
   - provider: sg
     gameId: '32691'
     name: Ultimate Fire Link Rue Royale
@@ -6620,7 +6786,7 @@ games:
         LB: '50'
         REC: '0'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32691'
         dbName: sg_ultimatefirelinkrueroyale96
         runtimeGameId: 33098
@@ -6629,7 +6795,7 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
@@ -6651,24 +6817,19 @@ games:
           - VER
           - WC
           - WS
+          - CW
+          - NFG
+          - FGT
+          - TFG
+          - CFGG
+          - FGTW
+          - FID
         requiredResponseKeys:
-          - AB
           - B
-          - BPL
-          - FRBAL
-          - GA
-          - IFG
-          - LB
-          - MSGID
-          - MUL
-          - NRID
-          - RID
-          - RS
-          - SID
-          - SUB
+          - AB
           - TW
-          - VER
-          - WC
+          - MSGID
+          - GA
         ordinaryGSDKeys:
           - FBV
         ownSDKFileSHA256: a98f2bbba033a631e86b2caf715de81d4a921019d5047082baebf482cebb79ad
@@ -6719,6 +6880,11 @@ games:
           ownGSDClass: e.Rja
           compiledOwnClassSHA256: 1006fc01302869126d7ab20a923104b9875f662d8e2fa0f561ae1fd17d6e30a0
           fields:
+            GCT:
+              type:
+                kind: boolean
+              ownSDKFieldSHA256: 0f7bfeb27f093922282b867fe269e6b9f901892f36e6afac78879fffc7edc9d7
+              ownSDKProperty: yn
             FBV:
               type:
                 kind: array
@@ -6813,3 +6979,80 @@ games:
           noCashOrNextActionDerivedFromOptionalGSD: true
           preserveNullableSDKArrayCells: true
           nullableSDKNumberValidatorSHA256: c44a945c4bbbdca08c8eab63fb7fd3b2855906eface3bb298eca4546e23f6af1
+          knownUnsupportedFields: []
+          ownEffectiveMetadataObject:
+            schema: own-complete-SDK-metadata-object-v1
+            gameId: '32691'
+            ownSDKFileSHA256: a98f2bbba033a631e86b2caf715de81d4a921019d5047082baebf482cebb79ad
+            ownGSDClass: e.Rja
+            effectiveFieldKeys:
+              - BGRS
+              - FBV
+              - FLJS
+              - FLR
+              - FLS
+              - FLV
+              - GCT
+              - PFLJS
+              - PFLV
+            ownClassSourceSHA256s:
+              - b4dabf3dc9f76b070fcc31ad7c898afd009ef520e037690c670b5b44031eac10
+              - a7645c941892c2fcb1216414785de7a4e0d8af47eb23b54d43adb7fc183979cb
+            emptyParentSourceSHA256s: []
+            ownObjectFieldDecoderSHA256s:
+              - 70fec5aa030349de6288cde54d0191f35ad1a8f8cfe417162cb054f2a8884a12
+              - 70fec5aa030349de6288cde54d0191f35ad1a8f8cfe417162cb054f2a8884a12
+            ownObjectCodecSHA256: e6fc34706e084bae1f5a607faeb0f923eba6137140e675916e9c6c677c68cc3c
+            ownMetadataDeserializerSHA256: 2b7c85d179db663ceed64d132558f18189964921ff37c3b3fe390516f6fab8c0
+            dictionaryNotPassedToConstructor: true
+            metadataOnlyObjectProjection: true
+            knownUnsupportedFieldsRemainFatal: true
+            rootUnknownsRemainFatal: true
+            rawDictionaryPreserved: true
+            noCashOrNextActionFromUnconsumedDictionaryFields: true
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32691'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: ultimatefirelinkrueroyale96
+            BPL: '5'
+            LB: '50'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: a98f2bbba033a631e86b2caf715de81d4a921019d5047082baebf482cebb79ad
+            SDKSelectorSHA256: c8ee7da406358f6edc202879f01ab0974cb83586373a7963e28d074547b8a7e3
+            NFGSetterSHA256: 8570c4a26712c56c4486becdb7c9d3b5ab0d7f39f55a78f1180b42817fbc456a
+            NFGDecoderSHA256: e468f55300e3cd038296b4dcd04ab32b0958287f2cd52bf0212ec8cc8e99accc
+            GCTDecoderSHA256: 0f7bfeb27f093922282b867fe269e6b9f901892f36e6afac78879fffc7edc9d7
+            ownRequestConstructorSHA256: 8166c8862f32096cc41f605a67ffe3f30752c6dc4140625dbc25636a9a11234c
+            fieldBindings:
+              - wireKey: BPL
+                type:
+                  kind: integer
+                  SDKTypeAlias: hc
+                  ownAliasValidatorSHA256: 3d93cbc66c4c1005985fb241dd942c80dfb1c81c65e40f1960f734b693b2761e
+                sourceSHA256: f79ab93f92a388380cbba2337b0c5a2c33947575bea3b68a64a0530a712e4bf9
+              - wireKey: LB
+                type:
+                  kind: integer
+                  SDKTypeAlias: hc
+                  ownAliasValidatorSHA256: 3d93cbc66c4c1005985fb241dd942c80dfb1c81c65e40f1960f734b693b2761e
+                sourceSHA256: 73ec8eaac77c7ca871b1489260c927eee7766698934af7797c74ec029b05e52a
+            actualPaidIntroCases: 2
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true

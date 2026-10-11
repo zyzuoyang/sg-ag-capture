@@ -1040,6 +1040,13 @@ export function ownGDMOrdinaryFinal(game:AGGameConfig,p:Record<string,string>):b
 export function ownGDMSDKTypedGSD(game:AGGameConfig,gsd:Record<string,string>){
  const c=gdmBinding(game),schema=c.ownGSDDataSchema;
  if(schema)assert(['own-SDK-free-game-chain-v3','own-SDK-ordinary-typed-final-v2','own-SDK-free-prefix-trial-v4'].includes(c.version)&&schema.version==='own-exact-SDK-GSD-types-v1'&&schema.gameId===game.gameId&&schema.ownSDKFileSHA256===c.ownSDKFileSHA256&&schema.unknownUncompiledFieldsStillFatal===true&&schema.noCashOrNextActionDerivedFromOptionalGSD===true,'AG integrity: GDM foreign typed SDK schema');
+ const projection=schema?.ownEffectiveMetadataObject;
+ if(projection){
+  const hashes=[projection.ownObjectCodecSHA256,projection.ownMetadataDeserializerSHA256,...projection.ownClassSourceSHA256s,...projection.emptyParentSourceSHA256s,...projection.ownObjectFieldDecoderSHA256s];
+  assert(projection.schema==='own-complete-SDK-metadata-object-v1'&&projection.gameId===game.gameId&&projection.ownSDKFileSHA256===c.ownSDKFileSHA256&&projection.ownGSDClass===schema.ownGSDClass&&hashes.length>=4&&hashes.every((h:any)=>typeof h==='string'&&/^[a-f0-9]{64}$/.test(h)),'AG integrity: GDM foreign own object codec');
+  for(const k of ['dictionaryNotPassedToConstructor','metadataOnlyObjectProjection','knownUnsupportedFieldsRemainFatal','rootUnknownsRemainFatal','rawDictionaryPreserved','noCashOrNextActionFromUnconsumedDictionaryFields'])assert(projection[k]===true,'AG integrity: GDM incomplete own object proof');
+  assert(Array.isArray(schema.knownUnsupportedFields)&&Array.isArray(projection.effectiveFieldKeys)&&new Set(projection.effectiveFieldKeys).size===projection.effectiveFieldKeys.length&&JSON.stringify([...Object.keys(schema.fields),...schema.knownUnsupportedFields].sort())===JSON.stringify(projection.effectiveFieldKeys),'AG integrity: GDM incomplete own object metadata');
+ }
  const check=(value:string,type:any,depth=0):void=>{
   assert(typeof value==='string'&&value.length<=4096&&depth<8&&!/[\x00-\x1f\x7f]/.test(value),'AG integrity: GDM typed SDK field shape');
   if(type.kind==='tuple'){
@@ -1058,7 +1065,13 @@ export function ownGDMSDKTypedGSD(game:AGGameConfig,gsd:Record<string,string>){
  for(const [key,value]of Object.entries(gsd)){
   const field=schema?.fields?.[key];
   if(field){assert(/^[a-f0-9]{64}$/.test(field.ownSDKFieldSHA256),'AG integrity: GDM unbound SDK field');check(value,field.type);}
-  else assert(c.ordinaryGSDKeys.includes(key),'AG integrity: GDM unknown own typed GSD field');
+  else if(projection){
+   assert(!projection.effectiveFieldKeys.includes(key),'AG integrity: GDM known unsupported own object field');
+   // This game's complete Object decoder constructs without the dictionary
+   // and reads only its bound metadata. Preserve extra display metadata in
+   // the raw response; never use it to derive cash or a follow-up request.
+   assert(/^[A-Za-z][A-Za-z0-9_]{0,63}$/.test(key)&&typeof value==='string'&&value.length<=4096&&!/[\x00-\x1f\x7f]/.test(value),'AG integrity: GDM own object dictionary shape');
+  }else assert(c.ordinaryGSDKeys.includes(key),'AG integrity: GDM unknown own typed GSD field');
  }
 }
 function ownGDMFreeEnvelope(game:AGGameConfig,p:Record<string,string>,event:string){
