@@ -11130,6 +11130,7 @@ games:
             ownFeatureLookupSHA256: 432f8dcd2f684c7bdbaf756969830c31f38580562c60664a2a6231b1a4b0b17b
             actualFreeFeatureModes:
               - 1
+              - 0
             sourceDefinedModesOnly: true
             unmappedPickAndOtherFlowStops: true
             noDisplayCashOrBudgetEquations: true
@@ -11270,8 +11271,9 @@ games:
             ownNFGDecoderSHA256: f6ff20c20a81dd2bd3b27b10a0268ab209f63eee5a0730592b1fc40bcf65f9c1
             ownFeatureLookupSHA256: 8139ba15386fd9c590d17951f45e8a404d521e95a8ba6b95f47b312aa3712cb4
             actualFreeFeatureModes:
-              - 0
               - 2
+              - 0
+              - 1
             sourceDefinedModesOnly: true
             unmappedPickAndOtherFlowStops: true
             noDisplayCashOrBudgetEquations: true
