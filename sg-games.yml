@@ -10999,3 +10999,280 @@ games:
         ownObservedFreeIntroductionsSHA256: 2ae1bc7f435cd2b4f5bb7320a047d5cebfd3d6eb1990f3132045e7adbb3ad7d3
         ownFreeShapeClientProofSHA256: e206ed57d7f4a3d5d411135f2cd01d93e83e5ab58b2877f9ea9b6cd0f46c3d16
         ownEmptyShapeClientProofSHA256: 94011fd6267e4a0fcb0b58c44b70fc0f412c6f03c901d7031a2acfc31f47a26a
+  - provider: sg
+    gameId: '32820'
+    name: Beaver Las Vegas
+    dbName: sg_beaverlasvegas96
+    backendId: beaverlasvegas96
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33180
+      runtimeSlug: beaverlasvegas96
+      betRaw: 100
+      requestParams:
+        GN: beaverlasvegas96
+        AP: 'false'
+        BPL: '5'
+        LB: '20'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v3
+        gameId: '32820'
+        dbName: sg_beaverlasvegas96
+        runtimeGameId: 33180
+        runtimeSlug: beaverlasvegas96
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - RID
+          - RS
+          - RTP
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - B
+          - AB
+          - TW
+          - MSGID
+          - GA
+        ordinaryGSDKeys: []
+        ownSDKFileSHA256: d6a09b64c29b0f42c1752c15b335a6d148eda0fb5bb26692913247c418f87829
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            SDKSourceSHA256: f6ff20c20a81dd2bd3b27b10a0268ab209f63eee5a0730592b1fc40bcf65f9c1
+        rootInactiveFlags:
+          - wireKey: GA
+            explicitSDKDefault: '0'
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+        SDKFinalGetterSourceSHA256: 1a12b30e19f0be0b63d822df6e48a809f3ce3ec7e83e36db2ff430963be9a89b
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32820'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: beaverlasvegas96
+            BPL: '5'
+            LB: '20'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+        ownRootNFGFlowOnlyCapture:
+          version: own-bundle-NFG-flow-only-v3
+          gameId: '32820'
+          ownSDKFileSHA256: d6a09b64c29b0f42c1752c15b335a6d148eda0fb5bb26692913247c418f87829
+          SDKFinalGetterSourceSHA256: 1a12b30e19f0be0b63d822df6e48a809f3ce3ec7e83e36db2ff430963be9a89b
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          ownBundleFlow:
+            version: own-bundle-SDK-NFG-next-end-v1
+            gameId: '32820'
+            ownSDKFileSHA256: d6a09b64c29b0f42c1752c15b335a6d148eda0fb5bb26692913247c418f87829
+            ownFreeRequestSourceSHA256: 922150bd6fa932af48eb4bdb8f9d35a5e0b387d8dd591422dbba70c48ec41267
+            ownTerminalSourceSHA256: 1a12b30e19f0be0b63d822df6e48a809f3ce3ec7e83e36db2ff430963be9a89b
+            ownNFGDecoderSHA256: f6ff20c20a81dd2bd3b27b10a0268ab209f63eee5a0730592b1fc40bcf65f9c1
+            ownFeatureLookupSHA256: 432f8dcd2f684c7bdbaf756969830c31f38580562c60664a2a6231b1a4b0b17b
+            actualFreeFeatureModes:
+              - 1
+            sourceDefinedModesOnly: true
+            unmappedPickAndOtherFlowStops: true
+            noDisplayCashOrBudgetEquations: true
+            rawWirePreserved: true
+  - provider: sg
+    gameId: '32835'
+    name: Pyramids of Luxor
+    dbName: sg_pyramidsofluxor96
+    backendId: pyramidsofluxor96
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33195
+      runtimeSlug: pyramidsofluxor96
+      betRaw: 100
+      requestParams:
+        GN: pyramidsofluxor96
+        BPR: '5'
+        RB: '20'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v3
+        gameId: '32835'
+        dbName: sg_pyramidsofluxor96
+        runtimeGameId: 33195
+        runtimeSlug: pyramidsofluxor96
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - CFGG
+          - CW
+          - FGT
+          - FGTW
+          - FID
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NFG
+          - NRID
+          - RB
+          - RID
+          - RS
+          - RTP
+          - SID
+          - SUB
+          - TFG
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - B
+          - AB
+          - TW
+          - MSGID
+          - GA
+        ordinaryGSDKeys: []
+        ownSDKFileSHA256: 92ce086770525b2e481ddfd81b5f54fb51c3cac7942f2102c9d074efd5170c72
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            SDKSourceSHA256: f6ff20c20a81dd2bd3b27b10a0268ab209f63eee5a0730592b1fc40bcf65f9c1
+        rootInactiveFlags:
+          - wireKey: GA
+            explicitSDKDefault: '0'
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+        SDKFinalGetterSourceSHA256: 1a12b30e19f0be0b63d822df6e48a809f3ce3ec7e83e36db2ff430963be9a89b
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32835'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: pyramidsofluxor96
+            BPR: '5'
+            RB: '20'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+        ownRootNFGFlowOnlyCapture:
+          version: own-bundle-NFG-flow-only-v3
+          gameId: '32835'
+          ownSDKFileSHA256: 92ce086770525b2e481ddfd81b5f54fb51c3cac7942f2102c9d074efd5170c72
+          SDKFinalGetterSourceSHA256: 1a12b30e19f0be0b63d822df6e48a809f3ce3ec7e83e36db2ff430963be9a89b
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          ownBundleFlow:
+            version: own-bundle-SDK-NFG-next-end-v1
+            gameId: '32835'
+            ownSDKFileSHA256: 92ce086770525b2e481ddfd81b5f54fb51c3cac7942f2102c9d074efd5170c72
+            ownFreeRequestSourceSHA256: 1b39c449c2f1678b4986c960eeca82a9e4c9b8cb62affce1add45a91f738f74f
+            ownTerminalSourceSHA256: 1a12b30e19f0be0b63d822df6e48a809f3ce3ec7e83e36db2ff430963be9a89b
+            ownNFGDecoderSHA256: f6ff20c20a81dd2bd3b27b10a0268ab209f63eee5a0730592b1fc40bcf65f9c1
+            ownFeatureLookupSHA256: 8139ba15386fd9c590d17951f45e8a404d521e95a8ba6b95f47b312aa3712cb4
+            actualFreeFeatureModes:
+              - 0
+              - 2
+            sourceDefinedModesOnly: true
+            unmappedPickAndOtherFlowStops: true
+            noDisplayCashOrBudgetEquations: true
+            rawWirePreserved: true
