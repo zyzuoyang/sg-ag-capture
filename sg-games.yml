@@ -1844,7 +1844,7 @@ games:
         GN: huffnlotsofpuff96
         RB: '5'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32544'
         dbName: sg_huffnlotsofpuff96
         runtimeGameId: 33047
@@ -1853,18 +1853,24 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
           - B
           - BPR
+          - CFGG
+          - CW
+          - FGT
+          - FGTW
+          - FID
           - FRBAL
           - GA
           - GSD
           - IFG
           - MSGID
           - MUL
+          - NFG
           - NRID
           - PD
           - RB
@@ -1872,6 +1878,7 @@ games:
           - RS
           - SID
           - SUB
+          - TFG
           - TW
           - VER
           - WC
@@ -2262,6 +2269,74 @@ games:
               - MSGID
               - GA
             ownSDKMissingFieldFunctionSHA256: f514f4afa369e2a04f8abd71f51b5e03740e7a1e6b8af3af94409b141164f7f3
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32544'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: huffnlotsofpuff96
+            BPR: '10'
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            gameId: '32544'
+            ownSDKFileSHA256: 220b392a2a0cad4d79048f5d69b824989556b46fab84f8e8fa9542321b8aac45
+            SDKSelectorSHA256: acd1f8fefa4e553b3a7c02695874b897b3e7985ab305398bbfbee4ae84d1aa5a
+            NFGSetterSHA256: 0a7a3047449883f0a7071cdb0e2d6b7467b92c70deff6c9cae24250f8c20fca9
+            NFGDecoderSHA256: e9f41eba7463981bd4d472d4673e509d5ef6989a1214dfab8a60bcfe57e446ac
+            GCTDecoderSHA256: 2f7eb11555bfa6855b9e5428719f10b0b705b2db82fa5c65630b1acdfacf7b8b
+            ownRequestConstructorSHA256: 2e00fb0c1943bfe3c777b83b3185486b022f825fc5f582d5ee6d1e8fccde3cf6
+            fieldBindings:
+              - wireKey: BPR
+                type:
+                  kind: integer
+                  SDKTypeAlias: Ub
+                  ownAliasValidatorSHA256: 140a7a5cf9ddc831ce7e1a61bd3365983bfe184fdf429c5f59ee17037e4aa39d
+                sourceSHA256: d324ea6b6f964ee764d4ff43da2712e1747e785744adbc6c6a9560a00ba7b876
+              - wireKey: RB
+                type:
+                  kind: integer
+                  SDKTypeAlias: Ub
+                  ownAliasValidatorSHA256: 140a7a5cf9ddc831ce7e1a61bd3365983bfe184fdf429c5f59ee17037e4aa39d
+                sourceSHA256: f6067a1c99c53558d74684aa2188a4539f14db7284ee5169cc761c8b3c52e4ad
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
+            actualPaidIntroCases: 1
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32544'
+          ownSDKFileSHA256: 220b392a2a0cad4d79048f5d69b824989556b46fab84f8e8fa9542321b8aac45
+          SDKFinalGetterSourceSHA256: 46497381e3f18a7fb16c8a580126df23bbd8fdf93fc55409b735e82699dffca3
+          SDKSelectorSHA256: acd1f8fefa4e553b3a7c02695874b897b3e7985ab305398bbfbee4ae84d1aa5a
+          NFGSetterSHA256: 0a7a3047449883f0a7071cdb0e2d6b7467b92c70deff6c9cae24250f8c20fca9
+          NFGDecoderSHA256: e9f41eba7463981bd4d472d4673e509d5ef6989a1214dfab8a60bcfe57e446ac
+          GCTDecoderSHA256: 2f7eb11555bfa6855b9e5428719f10b0b705b2db82fa5c65630b1acdfacf7b8b
+          ownRequestConstructorSHA256: 2e00fb0c1943bfe3c777b83b3185486b022f825fc5f582d5ee6d1e8fccde3cf6
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
   - provider: sg
     gameId: '32548'
     name: Huff N' Puff Money Mansion
@@ -2279,7 +2354,7 @@ games:
         GN: huffnpuffmoneymansion96
         RB: '5'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32548'
         dbName: sg_huffnpuffmoneymansion96
         runtimeGameId: 33050
@@ -2288,24 +2363,31 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
           - B
           - BPR
+          - CFGG
+          - CW
+          - FGT
+          - FGTW
+          - FID
           - FRBAL
           - GA
           - GSD
           - IFG
           - MSGID
           - MUL
+          - NFG
           - NRID
           - RB
           - RID
           - RS
           - SID
           - SUB
+          - TFG
           - TW
           - VER
           - WC
@@ -2634,6 +2716,74 @@ games:
             rootUnknownsRemainFatal: true
             rawDictionaryPreserved: true
             noCashOrNextActionFromUnconsumedDictionaryFields: true
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32548'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: huffnpuffmoneymansion96
+            BPR: '10'
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            gameId: '32548'
+            ownSDKFileSHA256: 1c4c4759d4a55357e0964f4a9e6126ece1bc567c2b0882b5d4e99e20c8f98bde
+            SDKSelectorSHA256: 91d90bbb63f4a55278bcd158379021a58657578200618f734b2a4882e6492d16
+            NFGSetterSHA256: 57fcd3ba5eac0efe7c2feeeecdb25e3e37ecccb826dacde4b8942f8d41c0cbf9
+            NFGDecoderSHA256: 63ea50305e4aad840f815e9c83b83d32310cf83267193ef65861c41cfea85f21
+            GCTDecoderSHA256: eb80ba3a7e1135c1985cbe82b38e0d24bee417a602b5809bc16965fc8316e797
+            ownRequestConstructorSHA256: 1bcb60eaca2c20ac09cc972b41df0c00253801d5675765bb0b8aeecf2615233c
+            fieldBindings:
+              - wireKey: BPR
+                type:
+                  kind: integer
+                  SDKTypeAlias: Ob
+                  ownAliasValidatorSHA256: 7659dfc3e8eeca2bf241f2c68d0e67eb03b61343ca9bb6224a7bbde2cde4bff9
+                sourceSHA256: 751e8fb0f169e29bef4e802faeac6aa1db8c4bd35f10a1b8e4fae902294e0f73
+              - wireKey: RB
+                type:
+                  kind: integer
+                  SDKTypeAlias: Ob
+                  ownAliasValidatorSHA256: 7659dfc3e8eeca2bf241f2c68d0e67eb03b61343ca9bb6224a7bbde2cde4bff9
+                sourceSHA256: 2a94ecae8ae3fc28fa64a1815d4d9ee0e1f0695b55ee1e55f020c10cf219aee9
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
+            actualPaidIntroCases: 2
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32548'
+          ownSDKFileSHA256: 1c4c4759d4a55357e0964f4a9e6126ece1bc567c2b0882b5d4e99e20c8f98bde
+          SDKFinalGetterSourceSHA256: 3db4376b48771e4b927796e1c7252fe1cf6780623328c24e8c053d7a01f1dc71
+          SDKSelectorSHA256: 91d90bbb63f4a55278bcd158379021a58657578200618f734b2a4882e6492d16
+          NFGSetterSHA256: 57fcd3ba5eac0efe7c2feeeecdb25e3e37ecccb826dacde4b8942f8d41c0cbf9
+          NFGDecoderSHA256: 63ea50305e4aad840f815e9c83b83d32310cf83267193ef65861c41cfea85f21
+          GCTDecoderSHA256: eb80ba3a7e1135c1985cbe82b38e0d24bee417a602b5809bc16965fc8316e797
+          ownRequestConstructorSHA256: 1bcb60eaca2c20ac09cc972b41df0c00253801d5675765bb0b8aeecf2615233c
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
   - provider: sg
     gameId: '32713'
     name: Huff N Even More Puff High Limit
