@@ -6159,6 +6159,13 @@ games:
             - wireKey: FRR
               property: yi
               SHA256: 50f96320c29333efe4066fc496ad8ccdc03b1fabd97577ab6193b9e796222fc3
+          ownNaturalFreeRequestBinding:
+            gameId: '32717'
+            ownSDKFileSHA256: f41a7744c5d2d5f966fa3c9c2ccf0b77ac3fc0d68614f985518090d3e3fbed7f
+            ownActualFreeRequestParamsSHA256: 792f1f3906d43fba1203d0ce29bf60bd83a9a4f9c2f012bcc402521a5aa35e54
+            ownCompleteNaturalRecordsSHA256: 8ded07c0b672d0e57489e2d06f123fabc069955d4d7d0f229a71916eb3f10602
+            ownPaidAndFreeRequestBytesUsed: true
+            noSyntheticTerminal: true
         ownGSDDataSchema:
           version: own-exact-SDK-GSD-types-v1
           gameId: '32717'
@@ -6474,6 +6481,24 @@ games:
             rootUnknownsRemainFatal: true
             rawDictionaryPreserved: true
             noCashOrNextActionFromUnconsumedDictionaryFields: true
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-natural-chain-flow-only-v2
+          gameId: '32717'
+          ownSDKFileSHA256: f41a7744c5d2d5f966fa3c9c2ccf0b77ac3fc0d68614f985518090d3e3fbed7f
+          SDKFinalGetterSourceSHA256: c1ca83ffbe5c2b2a05d8f38c04fcc7694fda5a279c12072398ba34f7153754de
+          ownActualFreeRequestParamsSHA256: 792f1f3906d43fba1203d0ce29bf60bd83a9a4f9c2f012bcc402521a5aa35e54
+          ownCompleteNaturalRecordsSHA256: 8ded07c0b672d0e57489e2d06f123fabc069955d4d7d0f229a71916eb3f10602
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
     rtpBuckets:
       - 0
       - 30
