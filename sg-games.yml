@@ -4923,6 +4923,15 @@ games:
             - wireKey: FRR
               property: Ci
               SHA256: c30921a145be501c6dd9ab934d3ca8d9d4a8d21721d308ef4e9b63d73cf68a00
+          ownSDKFreeRequestBinding:
+            version: own-SDK-FreeGame-data-request-v1
+            gameId: '32501'
+            ownSDKFileSHA256: 9150f6e073c69ba7a6e940dd7b63890bcdf78e159d0147a632c49c1253b74b58
+            SDKSelectorSHA256: d4ac6e3f874d0dc24f0b0b4db30fed3c645dac625b8bf3e61a5da98e857b03f9
+            NFGSetterSHA256: 754d94b8a9f7c611611eb03d1ab558f814ff16d92415f3ad8d80a80597735dd8
+            NFGDecoderSHA256: 1d01e5975f9e7aa033888ea4de256fcff7a149f673bcd6b9f80845d30e1f59e3
+            GCTDecoderSHA256: 5bf44db795a9206446a82f34b1252f7a769e0abdbd3af78f5df12b900b735332
+            ownRequestConstructorSHA256: 99007df67962f3c7179452f624a4f9f447e22ebcf35d3c11c5a3045232621444
         ownGSDDataSchema:
           version: own-exact-SDK-GSD-types-v1
           gameId: '32501'
@@ -5065,6 +5074,45 @@ games:
             rootUnknownsRemainFatal: true
             rawDictionaryPreserved: true
             noCashOrNextActionFromUnconsumedDictionaryFields: true
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32501'
+          ownSDKFileSHA256: 9150f6e073c69ba7a6e940dd7b63890bcdf78e159d0147a632c49c1253b74b58
+          SDKFinalGetterSourceSHA256: 40214973b16023552097f950880231541f8fad6aa9daf3c23822da8a954c62f3
+          SDKSelectorSHA256: d4ac6e3f874d0dc24f0b0b4db30fed3c645dac625b8bf3e61a5da98e857b03f9
+          NFGSetterSHA256: 754d94b8a9f7c611611eb03d1ab558f814ff16d92415f3ad8d80a80597735dd8
+          NFGDecoderSHA256: 1d01e5975f9e7aa033888ea4de256fcff7a149f673bcd6b9f80845d30e1f59e3
+          GCTDecoderSHA256: 5bf44db795a9206446a82f34b1252f7a769e0abdbd3af78f5df12b900b735332
+          ownRequestConstructorSHA256: 99007df67962f3c7179452f624a4f9f447e22ebcf35d3c11c5a3045232621444
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          ownCrossLinkFlow:
+            version: own-Free-to-CrossLink-next-end-v1
+            gameId: '32501'
+            ownSDKFileSHA256: 9150f6e073c69ba7a6e940dd7b63890bcdf78e159d0147a632c49c1253b74b58
+            ownFreeToCrossLinkSHA256: 172db66eacbf696cef3d4aa273ef51679f349e3ddaceafebbcf497c35f6c4331
+            ownActualRequestSelectorSHA256: d4ac6e3f874d0dc24f0b0b4db30fed3c645dac625b8bf3e61a5da98e857b03f9
+            ownFirstFIDSetterSHA256: f627862a6a1b297855f8f4a4ecc3ada63ed964e8f971406b9b6c95865e2fb41d
+            ownCrossLinkNFGSetterSHA256: 6cc007638218353606711d26617c6624d20299e58a56f3d0aeeeb1ec03c3a074
+            ownCrossLinkEndSHA256: 53d76761f3c27de5e137de3433a0167a897b0e4a02dc004d13ef3cb63b68d5bb
+            freeMode: 0
+            crossLinkMode: 1
+            modeWireKey: FID
+            remainingWireKey: NFG
+            nextEvent: FREE_GAME
+            sameOwnFreeRequestParameters: true
+            noWireCounterInvented: true
+            noGuessedFEATURE_END: true
+            rawWirePreserved: true
     rtpBuckets:
       - 0
       - 30
