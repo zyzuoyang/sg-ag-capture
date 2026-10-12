@@ -1275,7 +1275,7 @@ export class SGGdmSession{
  }
  getHandshakeData(){return null;}getBalance(){return this.balance/100;}getFallbackBet(){return this.game.sg.betRaw/100;}
  getSpinParams(){return {...this.game.sg.requestParams};}getInitialRoundRequest(){return{event:'BET',parameters:this.getSpinParams()};}
- getExactFollowUpRequest(action:string){if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){assert(action==='FREE_SPIN'&&(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink),'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
+ getExactFollowUpRequest(action:string){if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){assert(action==='FREE_SPIN'&&(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink),'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:this.rootFlowFreeRequest()};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
  getLastGameRequest(){return this.lastRequest;}getPickParams(){throw new Error('AG integrity: GDM own selection not mapped');}
  isRoundTerminalAction(action:string){return action==='SPIN';}
  private ownExtraStageCounter(p:Record<string,string>,prior:any){
@@ -1324,6 +1324,27 @@ export class SGGdmSession{
  }
  private ownPendingFree(){return !!this.freeState&&(this.freeState.remaining>0||(['own-SDK-returned-cash-stage-followup-trial-v7','own-SDK-returned-cash-stage-reentry-trial-v8'].includes(this.game.sg.ownGDMContract.version)&&!!this.freeState.outer&&this.freeState.outer.remaining>0));}
 
+ private quickHitSecondFeature=false;
+ private quickHitNextRequestBinding(){
+  const c=this.game.sg.ownGDMContract,b=c.ownRootNFGFlowOnlyCapture?.ownQuickHitFG2TNextRequest;
+  if(!b)return undefined;
+  assert(b.version==='own-quick-hit-FG2T-game-request-v1'&&this.game.gameId===b.gameId&&b.gameId==='32618'&&this.game.dbName===b.dbName&&b.dbName==='sg_quickhitlinkfire96'&&this.game.sg.runtimeGameId===b.runtimeGameId&&b.runtimeGameId===33073&&this.game.sg.runtimeSlug===b.runtimeSlug&&b.runtimeSlug==='quickhitlinkfire96'&&b.ownSDKFileSHA256===c.ownSDKFileSHA256&&b.ownSDKFileSHA256==='bf4dd809cc375858f99fd221ad8547d59c499d185a942090eab4f99e1ecbc726','AG integrity: GDM own Quick Hit next-request identity');
+  assert(b.controlWireKey==='FG2T'&&b.normalLines==='30'&&b.secondFeatureLines==='60'&&b.ownBPL==='5'&&this.game.sg.requestParams.BPL===b.ownBPL&&this.game.sg.requestParams.LB===b.normalLines&&b.presentOwnGSDMissingFG2TUsesSourceDefaultFalse&&b.absentOwnGSDKeepsPriorSourceState&&b.sameOwnBPLSourceValue&&b.paidRequestUnchanged&&b.rawWirePreserved&&b.noSyntheticTerminal&&b.noOldErrorPOSTReplay,'AG integrity: GDM own Quick Hit next-request contract');
+  const expected:Record<string,string>={"gameRequestConstructorSHA256":"9ffcb43a17bfb57be6e725cdeb8394343a043fe2b5f4cc065f3bf991a2e397ac","gameRequestCallerSHA256":"a483d45c6c1b6401a2556ae7afe287ab6794ae1254649418ad3859632a58b3aa","lineConstantsSHA256":"354cb1c7c908fbfab5ab7730f7e79a75ef97fde60ad59a001edb9fde4ef12738","booleanDecoderSHA256":"2c45285298f014e6c729eaf7ee3a80c092cd6b276c357203f7e3b6ad8995807b","responseStateSetterSHA256":"57040846a3030c0449265572cd32e5b2a5d0783944da00c6fabd645c301f7bae","objectDecoderSHA256":"2adbb6c5b444779555985930f88436ec61e86b4f810d921967017e6f337e9ce6","ownGSDConstructorSHA256":"7e3cc77828198c4598eef3c894baccbae34c9f50993a8fe4bbcc695353b42539","guardedStateSetterSHA256":"7c34809c03f5f122bc396d916aff427f42a5b1d096a7b9371c2bcc3d68054932"};
+  for(const[k,value]of Object.entries(expected))assert(b[k]===value,'AG integrity: GDM own Quick Hit actual source binding');
+  return b;
+ }
+ private rootFlowFreeRequest(){
+  const params={...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams},b=this.quickHitNextRequestBinding();
+  if(b){params.BPL=this.game.sg.requestParams.BPL;params.LB=this.quickHitSecondFeature?b.secondFeatureLines:b.normalLines;}
+  return params;
+ }
+ private updateQuickHitRequestState(p:Record<string,string>){
+  if(!this.quickHitNextRequestBinding()||p.GSD===undefined)return;
+  const fields=ownGDMFields(p.GSD,'#','~'),value=fields.FG2T;
+  assert(value===undefined||value==='0'||value==='1','AG integrity: GDM own Quick Hit FG2T boolean');
+  this.quickHitSecondFeature=value==='1';
+ }
  private rootFlowRemaining:number|undefined;
  private rootFlowPendingCrossLink:boolean=false;
  private rootFlowSteps:GDMWireStep[]=[];
@@ -1335,25 +1356,27 @@ export class SGGdmSession{
 else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&&n.ownSDKFileSHA256===c.ownSDKFileSHA256&&n.ownPaidAndFreeRequestBytesUsed&&n.noSyntheticTerminal&&n.ownCompleteNaturalRecordsSHA256===q.ownCompleteNaturalRecordsSHA256&&n.ownActualFreeRequestParamsSHA256===q.ownActualFreeRequestParamsSHA256,'AG integrity: GDM own natural request/terminal binding');const ordered=Object.fromEntries(Object.entries(r.freeRequestParams).sort(([a],[b])=>a.localeCompare(b)));assert(crypto.createHash('sha256').update(JSON.stringify(ordered)).digest('hex')===q.ownActualFreeRequestParamsSHA256&&c.pendingClauses.some((x:any)=>x.wireKey==='NFG'),'AG integrity: GDM actual natural free request');}
   assert(q.nextEvent==='FREE_GAME'&&q.remainingWireKey==='NFG'&&q.terminalRemaining===0&&q.usesOwnRequestAndTerminalOnly&&q.rawWirePreserved&&q.originalAGAmountReplayMongoChecksRequired&&q.noSyntheticTerminal&&q.noOldUnknownPOSTReplay&&q.unusedDisplayAndBudgetFieldsDoNotBlock&&q.noPreviouslySeenWholeVariationGate&&q.unmappedActiveFlagsStillStop,'AG integrity: GDM own root flow contract');
   if(q.ownCrossLinkFlow){const b=q.ownCrossLinkFlow;assert(b.version==='own-Free-to-CrossLink-next-end-v1'&&b.gameId===this.game.gameId&&b.ownSDKFileSHA256===c.ownSDKFileSHA256&&b.freeMode===0&&b.crossLinkMode===1&&b.modeWireKey==='FID'&&b.remainingWireKey==='NFG'&&b.nextEvent==='FREE_GAME'&&b.sameOwnFreeRequestParameters&&b.noWireCounterInvented&&b.noGuessedFEATURE_END&&b.rawWirePreserved,'AG integrity: GDM own CrossLink flow binding');for(const k of ['ownFreeToCrossLinkSHA256','ownActualRequestSelectorSHA256','ownFirstFIDSetterSHA256','ownCrossLinkNFGSetterSHA256','ownCrossLinkEndSHA256'])assert(/^[a-f0-9]{64}$/.test(b[k]),'AG integrity: GDM own CrossLink SDK source');}
+  this.quickHitNextRequestBinding();
   return {c,q,r};
  }
  private async rootFlowCall(event:string,parameters:Record<string,any>|null){
   const {c,q,r}=this.rootFlowBinding(),first=event==='BET';assert(!this.closed&&parameters,'AG integrity: GDM own root session closed');
   assert(first?this.rootFlowRemaining===undefined&&!this.rootFlowPendingCrossLink:(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink)&&event==='FREE_GAME','AG integrity: GDM actual root action');
-  assert.deepStrictEqual(parameters,first?this.game.sg.requestParams:r.freeRequestParams,'AG integrity: GDM own root request');
-  if(first){this.roundStart=this.balance;this.totalWin=0;this.rootFlowSteps=[];}this.lastRequest={event,parameters:{...parameters}};
+  assert.deepStrictEqual(parameters,first?this.game.sg.requestParams:this.rootFlowFreeRequest(),'AG integrity: GDM own root request');
+  if(first){this.roundStart=this.balance;this.totalWin=0;this.rootFlowSteps=[];this.quickHitSecondFeature=false;}this.lastRequest={event,parameters:{...parameters}};
   const step=await this.exchange(event,parameters);try{
    const p=this.decode(step,event);assert(p.B!==undefined&&p.TW!==undefined,'AG integrity: GDM required original AG money');
    assert(p.GA==='0'&&(p.GCT===undefined||p.GCT==='0'),'AG integrity: GDM unmapped active root flow');
    for(const k of r.promotionalKeysForbidden)assert(p[k]===undefined,'AG integrity: GDM unmapped promotional flow');
    assert(p.REC===undefined,'AG integrity: GDM recovered flow unmapped');
-   if(!q.ownBundleFlow)for(const k of Object.keys(r.freeRequestParams).filter(k=>k!=='GN'))assert(p[k]===undefined||p[k]===r.freeRequestParams[k],'AG integrity: GDM actual wager changed');
+   if(!q.ownBundleFlow)for(const k of Object.keys(r.freeRequestParams).filter(k=>k!=='GN'))assert(p[k]===undefined||p[k]===(q.ownQuickHitFG2TNextRequest?parameters[k]:r.freeRequestParams[k]),'AG integrity: GDM actual wager changed');
    let remaining:number;if(q.ownBundleFlow?.remainingDecoder==='signed-minus-one-is-pending'){if(p.NFG===undefined&&first)remaining=0;else{assert(typeof p.NFG==='string'&&/^-?\d+$/.test(p.NFG)&&Number.isSafeInteger(Number(p.NFG))&&Number(p.NFG)>=-1,'AG integrity: GDM own signed next/end NFG');remaining=Number(p.NFG)===-1?1:0;}}else remaining=p.NFG===undefined&&first?0:gdmInteger(p.NFG,'own actual NFG');const total=gdmInteger(p.TW,'own actual total cash'),end=gdmInteger(p.B,'own actual balance');
    assert(end===this.roundStart-c.betRaw+total,'AG integrity: GDM original whole cash conservation');
    if(step.responseBalance!==undefined)assert(step.responseBalance===gdmInteger(p.AB===undefined?p.B:p.AB,'own source balance'),'AG integrity: GDM source captured balance differs');
        if(q.ownBundleFlow&&p.FID!==undefined){const modes=p.FID.split('|').filter((v:string)=>v!=='').map((v:string)=>gdmInteger(v,'own bundle feature mode'));assert(modes.length>0&&modes.every((v:number)=>q.ownBundleFlow.actualFreeFeatureModes.includes(v)),'AG integrity: GDM unmapped bundle next/end');}
 let pendingCrossLink=false;
    if(q.ownCrossLinkFlow){const b=q.ownCrossLinkFlow;let mode:number|undefined;if(p.FID!==undefined){const fields=p.FID.split('|').filter((v:string)=>v!=='');assert(fields.length>0,'AG integrity: GDM empty actual stage');mode=gdmInteger(fields[0],'own first feature mode');assert(mode===b.freeMode||mode===b.crossLinkMode,'AG integrity: GDM unmapped actual CrossLink mode');}if(remaining>0)assert(mode!==undefined,'AG integrity: GDM active feature has no stage');pendingCrossLink=remaining===0&&mode===b.freeMode;}
+   this.updateQuickHitRequestState(p);
    this.balance=end;this.totalWin=total;this.rootFlowRemaining=remaining>0?remaining:undefined;this.rootFlowPendingCrossLink=pendingCrossLink;this.rootFlowSteps.push({...step,responseBalance:end});
    const pending=this.rootFlowRemaining!==undefined||this.rootFlowPendingCrossLink,steps=pending?this.rootFlowSteps.slice(-1):this.rootFlowSteps;
    return {NextActionInfo:{nextAction:pending?'FREE_SPIN':'SPIN'},PlayerBalanceInfo:{preWagerBalance:this.roundStart/100,balance:end/100,wager:c.betRaw/100,resultAmount:total/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,startBalance:this.roundStart/100,endBalance:end/100,totalWin:total/100,stepCount:steps.length,msgIds:steps.map(s=>s.msgId),steps:structuredClone(steps),SGWireResponse:p,SGDecodedResponseXML:step.responseXml,SGOwnSDKDecision:{ownSDKFileSHA256:c.ownSDKFileSHA256,ownRootNFGNextEndOnly:true,noSyntheticTerminal:true},money:{startBalanceRaw:this.roundStart,endBalanceRaw:end,betRaw:c.betRaw,totalWinRaw:total}};

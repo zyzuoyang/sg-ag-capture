@@ -7110,6 +7110,32 @@ games:
           unusedDisplayAndBudgetFieldsDoNotBlock: true
           noPreviouslySeenWholeVariationGate: true
           unmappedActiveFlagsStillStop: true
+          ownQuickHitFG2TNextRequest:
+            version: own-quick-hit-FG2T-game-request-v1
+            gameId: '32618'
+            dbName: sg_quickhitlinkfire96
+            runtimeSlug: quickhitlinkfire96
+            runtimeGameId: 33073
+            ownSDKFileSHA256: bf4dd809cc375858f99fd221ad8547d59c499d185a942090eab4f99e1ecbc726
+            controlWireKey: FG2T
+            normalLines: '30'
+            secondFeatureLines: '60'
+            ownBPL: '5'
+            presentOwnGSDMissingFG2TUsesSourceDefaultFalse: true
+            absentOwnGSDKeepsPriorSourceState: true
+            sameOwnBPLSourceValue: true
+            paidRequestUnchanged: true
+            rawWirePreserved: true
+            noSyntheticTerminal: true
+            noOldErrorPOSTReplay: true
+            gameRequestConstructorSHA256: 9ffcb43a17bfb57be6e725cdeb8394343a043fe2b5f4cc065f3bf991a2e397ac
+            gameRequestCallerSHA256: a483d45c6c1b6401a2556ae7afe287ab6794ae1254649418ad3859632a58b3aa
+            lineConstantsSHA256: 354cb1c7c908fbfab5ab7730f7e79a75ef97fde60ad59a001edb9fde4ef12738
+            booleanDecoderSHA256: 2c45285298f014e6c729eaf7ee3a80c092cd6b276c357203f7e3b6ad8995807b
+            responseStateSetterSHA256: 57040846a3030c0449265572cd32e5b2a5d0783944da00c6fabd645c301f7bae
+            objectDecoderSHA256: 2adbb6c5b444779555985930f88436ec61e86b4f810d921967017e6f337e9ce6
+            ownGSDConstructorSHA256: 7e3cc77828198c4598eef3c894baccbae34c9f50993a8fe4bbcc695353b42539
+            guardedStateSetterSHA256: 7c34809c03f5f122bc396d916aff427f42a5b1d096a7b9371c2bcc3d68054932
   - provider: sg
     gameId: '32629'
     name: Rich Little Hens Founding Feathers
