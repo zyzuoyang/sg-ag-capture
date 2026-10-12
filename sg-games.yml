@@ -4316,7 +4316,7 @@ games:
         BPR: '100'
         RB: '5'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32718'
         dbName: sg_huffnmorepuffhighlimit96
         runtimeGameId: 33118
@@ -4325,24 +4325,31 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
           - B
           - BPR
+          - CFGG
+          - CW
+          - FGT
+          - FGTW
+          - FID
           - FRBAL
           - GA
           - GSD
           - IFG
           - MSGID
           - MUL
+          - NFG
           - NRID
           - RB
           - RID
           - RS
           - SID
           - SUB
+          - TFG
           - TW
           - VER
           - WC
@@ -4623,6 +4630,116 @@ games:
             rootUnknownsRemainFatal: true
             rawDictionaryPreserved: true
             noCashOrNextActionFromUnconsumedDictionaryFields: true
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32718'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: huffnmorepuffhighlimit96
+            BPR: '100'
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            gameId: '32718'
+            ownSDKFileSHA256: 48898ee09234a8c2388358e6f1f0f760e79f18f7f9290f14b8f87e42a6ffd469
+            SDKSelectorSHA256: 67cd72734cbeb672313700ee38eeb460350415d724cc608ca2ba3cf314a0bb8a
+            NFGSetterSHA256: c03ef4ebf4b5f55fc67e67939ee5148b034280b9995f30bf3719e22e95236b7d
+            NFGDecoderSHA256: 9f3003a348af9f92a7ad0ab36dd7b67659713fd896dd89f4669d89460d22e87f
+            GCTDecoderSHA256: 5dcb2cb5aa6565540ac34751e41d66f8c07b8e1896530bc21b12bea60159402d
+            ownRequestConstructorSHA256: 3c383c3f95b46b93a489a3add024aead9df25ebabc5343a050dd6d14a960df8f
+            fieldBindings:
+              - wireKey: BPR
+                type:
+                  kind: integer
+                  SDKTypeAlias: Ob
+                  ownAliasValidatorSHA256: 1f0aaf9ffcfbad0ce935ba7ac64a6288b9c9cefbaadb0c1756d8597d7e65ee1c
+                sourceSHA256: d08fb89e9dd16acc7c85723f692e84fd25a5161d2a0ba3d6d30d5fdabf58ad5e
+              - wireKey: RB
+                type:
+                  kind: integer
+                  SDKTypeAlias: Ob
+                  ownAliasValidatorSHA256: 1f0aaf9ffcfbad0ce935ba7ac64a6288b9c9cefbaadb0c1756d8597d7e65ee1c
+                sourceSHA256: 814dbc377e345cc30faf95e94925c24bed3b238ad9322b20382ddb0b859835df
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
+            actualPaidIntroCases: 2
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32718'
+          ownSDKFileSHA256: 48898ee09234a8c2388358e6f1f0f760e79f18f7f9290f14b8f87e42a6ffd469
+          SDKFinalGetterSourceSHA256: 2a029df487738b917ab116e55e648a8aaff979ecc0422e3aef416b3a4f38e4fb
+          SDKSelectorSHA256: 67cd72734cbeb672313700ee38eeb460350415d724cc608ca2ba3cf314a0bb8a
+          NFGSetterSHA256: c03ef4ebf4b5f55fc67e67939ee5148b034280b9995f30bf3719e22e95236b7d
+          NFGDecoderSHA256: 9f3003a348af9f92a7ad0ab36dd7b67659713fd896dd89f4669d89460d22e87f
+          GCTDecoderSHA256: 5dcb2cb5aa6565540ac34751e41d66f8c07b8e1896530bc21b12bea60159402d
+          ownRequestConstructorSHA256: 3c383c3f95b46b93a489a3add024aead9df25ebabc5343a050dd6d14a960df8f
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          ownHuffSourceNextRequest:
+            version: own-Huff-source-selected-next-request-v1
+            gameId: '32718'
+            dbName: sg_huffnmorepuffhighlimit96
+            runtimeGameId: 33118
+            runtimeSlug: huffnmorepuffhighlimit96
+            ownSDKFileSHA256: 48898ee09234a8c2388358e6f1f0f760e79f18f7f9290f14b8f87e42a6ffd469
+            controlWireKey: FID
+            firstFeatureModeOnly: true
+            normalMode: 0
+            wheelMode: 2
+            passiveBaseMode: 1
+            ownLines: '20'
+            ownBPL: '100'
+            normalFields:
+              BPL: '100'
+              LB: '20'
+              BPR: '100'
+              RB: '5'
+            wheelFields:
+              BPL: '100'
+              LB: '20'
+            presentFirstFIDUpdatesSourceMode: true
+            absentFIDKeepsPriorSourceMode: true
+            missingInitialModeDoesNotDefaultToZero: true
+            unmappedActiveModeStops: true
+            paidRequestUnchanged: true
+            rawWirePreserved: true
+            noSyntheticTerminal: true
+            noOldUnknownPOSTReplay: true
+            actualControllerConfigurationSHA256: a9c239914e4577bbd7bb2569bb0aad762dd19a22db61c721a70a2c045a7b9762
+            actualRequestOverrideSHA256: f0d4084055e2e2f409ce2f1d90c9b20f9372f8de2611f4c3e588f7452ac6a9f9
+            ownNormalCallerOptionsSHA256: 5974be08b253e08da90df47a2795e1a7a7927acd53b96fc64d3c49e476b98bc0
+            ownCallerConstantSHA256: 01c3edef9e4a193c4077c145d0bf7f6271fc6b718492b64cb3d4cb06789a405c
+            ownRequestOptionsProjectionSHA256: 31137c247d82bd18f641235cba866e0046d09952aa415986352f7cde20782fa5
+            ownWheelRequestOptionsSHA256: 242dadb250bfe8289719cc9b287ca75f11b8162e39f410db0a4df60224b9551b
+            ownWheelOptionsBridgeSHA256: 03115bc705f456c1a4dcebc5015f7e01266f14335a88a79dd9d3be2b76e937df
+            ownWheelSubmitSHA256: 25345ebd0d03f85c253e5ef717583d4f43b9941f1c94fb48d0f4a1a068705db5
+            ownFIDStateProjectionSHA256: 0fa1cab6df6e0d5bd564f4f53b7db1e006df22ac962a284f21d49713a8907761
+            ownFeatureModesSHA256: 678529d456948187152f21582b377764875192a67f704f95e4e39d72f1bec27b
+            ownPaylineConfigurationSHA256: 1369293a7d5196f725060e132c186fe8358a506779834449631127792e36e875
+            genericInheritedRequestConstructorSHA256: 3c383c3f95b46b93a489a3add024aead9df25ebabc5343a050dd6d14a960df8f
     rtpBuckets:
       - 0
       - 30

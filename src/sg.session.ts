@@ -1324,6 +1324,23 @@ export class SGGdmSession{
  }
  private ownPendingFree(){return !!this.freeState&&(this.freeState.remaining>0||(['own-SDK-returned-cash-stage-followup-trial-v7','own-SDK-returned-cash-stage-reentry-trial-v8'].includes(this.game.sg.ownGDMContract.version)&&!!this.freeState.outer&&this.freeState.outer.remaining>0));}
 
+ private huffActualRequestMode:number|undefined;
+ private huffActualNextRequestBinding(){
+  const c=this.game.sg.ownGDMContract,b=c.ownRootNFGFlowOnlyCapture?.ownHuffSourceNextRequest;
+  if(!b)return undefined;
+  assert(b.version==='own-Huff-source-selected-next-request-v1'&&this.game.gameId===b.gameId&&b.gameId==='32718'&&this.game.dbName===b.dbName&&b.dbName==='sg_huffnmorepuffhighlimit96'&&this.game.sg.runtimeGameId===b.runtimeGameId&&b.runtimeGameId===33118&&this.game.sg.runtimeSlug===b.runtimeSlug&&b.runtimeSlug==='huffnmorepuffhighlimit96'&&b.ownSDKFileSHA256===c.ownSDKFileSHA256&&b.ownSDKFileSHA256==='48898ee09234a8c2388358e6f1f0f760e79f18f7f9290f14b8f87e42a6ffd469','AG integrity: GDM own Huff actual request identity');
+  assert(b.controlWireKey==='FID'&&b.firstFeatureModeOnly&&b.normalMode===0&&b.wheelMode===2&&b.passiveBaseMode===1&&b.ownLines==='20'&&b.ownBPL==='100'&&this.game.sg.betRaw===2000&&this.game.sg.requestParams.BPR==='100'&&this.game.sg.requestParams.RB==='5'&&b.presentFirstFIDUpdatesSourceMode&&b.absentFIDKeepsPriorSourceMode&&b.missingInitialModeDoesNotDefaultToZero&&b.unmappedActiveModeStops&&b.paidRequestUnchanged&&b.rawWirePreserved&&b.noSyntheticTerminal&&b.noOldUnknownPOSTReplay,'AG integrity: GDM own Huff actual request contract');
+  assert.deepStrictEqual(b.normalFields,{BPL:'100',LB:'20',BPR:'100',RB:'5'},'AG integrity: GDM own Huff normal request fields');
+  assert.deepStrictEqual(b.wheelFields,{BPL:'100',LB:'20'},'AG integrity: GDM own Huff wheel request fields');
+  const expected:Record<string,string>={"actualControllerConfigurationSHA256":"a9c239914e4577bbd7bb2569bb0aad762dd19a22db61c721a70a2c045a7b9762","actualRequestOverrideSHA256":"f0d4084055e2e2f409ce2f1d90c9b20f9372f8de2611f4c3e588f7452ac6a9f9","ownNormalCallerOptionsSHA256":"5974be08b253e08da90df47a2795e1a7a7927acd53b96fc64d3c49e476b98bc0","ownCallerConstantSHA256":"01c3edef9e4a193c4077c145d0bf7f6271fc6b718492b64cb3d4cb06789a405c","ownRequestOptionsProjectionSHA256":"31137c247d82bd18f641235cba866e0046d09952aa415986352f7cde20782fa5","ownWheelRequestOptionsSHA256":"242dadb250bfe8289719cc9b287ca75f11b8162e39f410db0a4df60224b9551b","ownWheelOptionsBridgeSHA256":"03115bc705f456c1a4dcebc5015f7e01266f14335a88a79dd9d3be2b76e937df","ownWheelSubmitSHA256":"25345ebd0d03f85c253e5ef717583d4f43b9941f1c94fb48d0f4a1a068705db5","ownFIDStateProjectionSHA256":"0fa1cab6df6e0d5bd564f4f53b7db1e006df22ac962a284f21d49713a8907761","ownFeatureModesSHA256":"678529d456948187152f21582b377764875192a67f704f95e4e39d72f1bec27b","ownPaylineConfigurationSHA256":"1369293a7d5196f725060e132c186fe8358a506779834449631127792e36e875","genericInheritedRequestConstructorSHA256":"3c383c3f95b46b93a489a3add024aead9df25ebabc5343a050dd6d14a960df8f"};
+  for(const[k,value]of Object.entries(expected))assert(b[k]===value,'AG integrity: GDM own Huff actual source binding');
+  return b;
+ }
+ private updateHuffActualRequestMode(p:Record<string,string>,remaining:number){
+  const b=this.huffActualNextRequestBinding();if(!b)return;
+  if(p.FID!==undefined){const fields=p.FID.split('|').filter(v=>v!=='');assert(fields.length>0,'AG integrity: GDM own Huff empty actual mode');const mode=gdmInteger(fields[0],'own Huff first FID');assert(mode===b.normalMode||mode===b.wheelMode||mode===b.passiveBaseMode,'AG integrity: GDM own Huff unmapped actual mode');this.huffActualRequestMode=mode;}
+  if(remaining>0)assert(this.huffActualRequestMode===b.normalMode||this.huffActualRequestMode===b.wheelMode,'AG integrity: GDM own Huff missing or unmapped active mode');
+ }
  private quickHitSecondFeature=false;
  private quickHitNextRequestBinding(){
   const c=this.game.sg.ownGDMContract,b=c.ownRootNFGFlowOnlyCapture?.ownQuickHitFG2TNextRequest;
@@ -1335,6 +1352,8 @@ export class SGGdmSession{
   return b;
  }
  private rootFlowFreeRequest(){
+  const h=this.huffActualNextRequestBinding();
+  if(h){assert(this.huffActualRequestMode===h.normalMode||this.huffActualRequestMode===h.wheelMode,'AG integrity: GDM own Huff actual next mode');return {GN:this.game.sg.runtimeSlug,...(this.huffActualRequestMode===h.wheelMode?h.wheelFields:h.normalFields)};}
   const params={...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams},b=this.quickHitNextRequestBinding();
   if(b){params.BPL=this.game.sg.requestParams.BPL;params.LB=this.quickHitSecondFeature?b.secondFeatureLines:b.normalLines;}
   return params;
@@ -1364,6 +1383,7 @@ else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&
    for(const[k,value]of Object.entries(expected))assert(b[k]===value,'AG integrity: GDM own NOVA optional gamble source');
   }
   this.quickHitNextRequestBinding();
+  this.huffActualNextRequestBinding();
   return {c,q,r};
  }
  private async rootFlowCall(event:string,parameters:Record<string,any>|null){
@@ -1377,6 +1397,7 @@ else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&
    for(const k of r.promotionalKeysForbidden)assert(p[k]===undefined,'AG integrity: GDM unmapped promotional flow');
    assert(p.REC===undefined,'AG integrity: GDM recovered flow unmapped');
    if(!q.ownBundleFlow)for(const k of Object.keys(r.freeRequestParams).filter(k=>k!=='GN'))assert(p[k]===undefined||p[k]===(q.ownQuickHitFG2TNextRequest?parameters[k]:r.freeRequestParams[k]),'AG integrity: GDM actual wager changed');
+   if(q.ownHuffSourceNextRequest)for(const k of ['BPL','LB'])if(parameters[k]!==undefined)assert(p[k]===undefined||p[k]===parameters[k],'AG integrity: GDM own Huff actual request wager changed');
    let remaining:number;if(q.ownBundleFlow?.remainingDecoder==='signed-minus-one-is-pending'){if(p.NFG===undefined&&first)remaining=0;else{assert(typeof p.NFG==='string'&&/^-?\d+$/.test(p.NFG)&&Number.isSafeInteger(Number(p.NFG))&&Number(p.NFG)>=-1,'AG integrity: GDM own signed next/end NFG');remaining=Number(p.NFG)===-1?1:0;}}else remaining=p.NFG===undefined&&first?0:gdmInteger(p.NFG,'own actual NFG');const total=gdmInteger(p.TW,'own actual total cash'),end=gdmInteger(p.B,'own actual balance');
    assert(end===this.roundStart-c.betRaw+total,'AG integrity: GDM original whole cash conservation');
    if(step.responseBalance!==undefined)assert(step.responseBalance===gdmInteger(p.AB===undefined?p.B:p.AB,'own source balance'),'AG integrity: GDM source captured balance differs');
@@ -1384,6 +1405,7 @@ else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&
 let pendingCrossLink=false;
    if(q.ownCrossLinkFlow){const b=q.ownCrossLinkFlow;let mode:number|undefined;if(p.FID!==undefined){const fields=p.FID.split('|').filter((v:string)=>v!=='');assert(fields.length>0,'AG integrity: GDM empty actual stage');mode=gdmInteger(fields[0],'own first feature mode');assert(mode===b.freeMode||mode===b.crossLinkMode,'AG integrity: GDM unmapped actual CrossLink mode');}if(remaining>0)assert(mode!==undefined,'AG integrity: GDM active feature has no stage');pendingCrossLink=remaining===0&&mode===b.freeMode;}
    this.updateQuickHitRequestState(p);
+   this.updateHuffActualRequestMode(p,remaining);
    this.balance=end;this.totalWin=total;this.rootFlowRemaining=remaining>0?remaining:undefined;this.rootFlowPendingCrossLink=pendingCrossLink;this.rootFlowSteps.push({...step,responseBalance:end});
    const pending=this.rootFlowRemaining!==undefined||this.rootFlowPendingCrossLink,steps=pending?this.rootFlowSteps.slice(-1):this.rootFlowSteps;
    return {NextActionInfo:{nextAction:pending?'FREE_SPIN':'SPIN'},PlayerBalanceInfo:{preWagerBalance:this.roundStart/100,balance:end/100,wager:c.betRaw/100,resultAmount:total/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,startBalance:this.roundStart/100,endBalance:end/100,totalWin:total/100,stepCount:steps.length,msgIds:steps.map(s=>s.msgId),steps:structuredClone(steps),SGWireResponse:p,SGDecodedResponseXML:step.responseXml,SGOwnSDKDecision:{ownSDKFileSHA256:c.ownSDKFileSHA256,ownRootNFGNextEndOnly:true,noSyntheticTerminal:true},money:{startBalanceRaw:this.roundStart,endBalanceRaw:end,betRaw:c.betRaw,totalWinRaw:total}};
