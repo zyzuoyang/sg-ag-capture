@@ -1536,6 +1536,27 @@ games:
             requiresCompleteNaturalRoundBeforeAnyNative: true
             unmappedOtherFeaturesRemainFatal: true
             wholeFreeChainCoverageNotClaimed: true
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32500'
+          ownSDKFileSHA256: 4c1937cea505d822a207c1e950e367b5c9a41b9dec5a3004c794b25b127245a4
+          SDKFinalGetterSourceSHA256: 6d21863474ae3dcd5a9823cd1f1f66f5ecee211ae1215bef8b87fc64f075bfc0
+          SDKSelectorSHA256: b7c106e0bcd86f3407b2de51e7b6611e73fe0481264db778d4838156357b183d
+          NFGSetterSHA256: 04894f25c1d5ea1ff5b1d6303262076b356360c936475c1d5b2ede0f4a17558a
+          NFGDecoderSHA256: 4d7658456322d2777433ed5a6ccc443bafc450af221dbd8ce2250677e3af0cdf
+          GCTDecoderSHA256: 48609391a5f8611640d1ca72dfdf3195a1d7f71c891c78ee7ba5592ed63f4c16
+          ownRequestConstructorSHA256: 80bd66dd52059bb4d37e4813c62a7782d9a061a91755002c7678ce4e70140322
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
   - provider: sg
     gameId: '32532'
     name: Golden Fire Link Dragon Song
@@ -2949,6 +2970,27 @@ games:
             requiresCompleteNaturalRoundBeforeAnyNative: true
             unmappedOtherFeaturesRemainFatal: true
             wholeFreeChainCoverageNotClaimed: true
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32713'
+          ownSDKFileSHA256: d2afdbd65840d06549bce7faebcc43aaa95e9d81ba54911b9382e13d2d867c18
+          SDKFinalGetterSourceSHA256: 29d88e9c4d1f4273028018b81d0b9eb85747be08600a4ad87a20f9c954e4f571
+          SDKSelectorSHA256: 67563a0b0ce5cefe8f9b86162bbb27e863ebee2ef2227a2b684fe9b443b7f277
+          NFGSetterSHA256: fddb485ae72cd524911cc9cf7d37723ea9449a612e6c93101e3b70fc0a15a159
+          NFGDecoderSHA256: 136ea6d14c9dfd2aca081f42a2ef45d8849b61886674aa7653102d8ec0ab3d86
+          GCTDecoderSHA256: 456612a0d035a936549b933a549d2cb093c502ba211bd98136ed279cc9ee2f47
+          ownRequestConstructorSHA256: bdfedacd18fc40a08702b8cc5917fbcb71131a57051abda2cb3745fe220705b9
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
   - provider: sg
     gameId: '32714'
     name: Huff N Puff Money Mansion High Limit
@@ -3361,6 +3403,27 @@ games:
             requiresCompleteNaturalRoundBeforeAnyNative: true
             unmappedOtherFeaturesRemainFatal: true
             wholeFreeChainCoverageNotClaimed: true
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32714'
+          ownSDKFileSHA256: 67bcebfd2f16477c8c3b2686b6e10b70f41bde3579d929e89e04e321ffa4e93d
+          SDKFinalGetterSourceSHA256: 28bd72462a5cdf622c86075ec8071a48dcc513612699f3654a0adbd1fbf1d29f
+          SDKSelectorSHA256: 2a3a8c97c1f494387a77268e34be978805df62251e6855d3c5f2abc522a19a31
+          NFGSetterSHA256: 57aa66021376a9a42c4054fda75a71ba7e796d4012405078927b84275c879460
+          NFGDecoderSHA256: 8a3ffe8fa163085ca3dc3e2820f55d4864b3a9877d167d0bd43a89ab5d6bc577
+          GCTDecoderSHA256: eb80ba3a7e1135c1985cbe82b38e0d24bee417a602b5809bc16965fc8316e797
+          ownRequestConstructorSHA256: 8ba847070b4c91e4095d615add0bce9ba85c85cedebaac96023cc6ade59ffd29
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
   - provider: sg
     gameId: '32715'
     name: Huff N' Even More Puff
@@ -3715,6 +3778,27 @@ games:
             requiresCompleteNaturalRoundBeforeAnyNative: true
             unmappedOtherFeaturesRemainFatal: true
             wholeFreeChainCoverageNotClaimed: true
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32715'
+          ownSDKFileSHA256: ea77b19fd22e4a4a5ae07a82209cf9cd8a4e23932685647342f87f278ce3f2ae
+          SDKFinalGetterSourceSHA256: 057dd7c3768c1207d2d161a5617cf2fc2845f9b2605f9ce7b1bd4b4defed79f0
+          SDKSelectorSHA256: 0db94765a8988e3f28e78c95155f255037282e452fb06dd1484f71a5a7e011c2
+          NFGSetterSHA256: 5f62744607f480d7f9e11bd5cbf8945be9a7af9d1d331359764822a298950b26
+          NFGDecoderSHA256: 974592456cb62320d2a0fefbf70ee430f0002e174ee24aa4a20df3a4b5a8e491
+          GCTDecoderSHA256: 8039f4ecaf0e564dd0912503606be3c14553482b1486ed64bdf2502eb710a0e5
+          ownRequestConstructorSHA256: 7449075b543e66ddbf7394a5b514390151c942ae31fe0ae8b2a6c7eb8ea941ec
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
   - provider: sg
     gameId: '32716'
     name: Huff N’ Even More Puff Grand
@@ -6764,6 +6848,27 @@ games:
             requiresCompleteNaturalRoundBeforeAnyNative: true
             unmappedOtherFeaturesRemainFatal: true
             wholeFreeChainCoverageNotClaimed: true
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32618'
+          ownSDKFileSHA256: bf4dd809cc375858f99fd221ad8547d59c499d185a942090eab4f99e1ecbc726
+          SDKFinalGetterSourceSHA256: de17e516c52c499a0005af11fd9c7b954879f730c0de865c2973bf4812a80449
+          SDKSelectorSHA256: 99dd8fa6f3ed6ee12415dbc802ee8db6fe5c57d24c6b008a37b6eb30a1bf2e38
+          NFGSetterSHA256: 714482af79cc2fc043c4882f72d0284a50cfbecd788f923912b82e6ea4a15c35
+          NFGDecoderSHA256: 3f2bbfb562830d11a1706d728b746af8eebaaef6836e2ac08d789e695227b212
+          GCTDecoderSHA256: 4b57bf53ac1ec7881dd6fdc57c748b905db0880e14c6ac3100e6cf1cec7d6f88
+          ownRequestConstructorSHA256: c22d929c01035970734a93dec3380827fe390c46ec2b5c95ae0ba309df42d7c6
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
   - provider: sg
     gameId: '32629'
     name: Rich Little Hens Founding Feathers

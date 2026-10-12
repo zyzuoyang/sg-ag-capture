@@ -1275,7 +1275,7 @@ export class SGGdmSession{
  }
  getHandshakeData(){return null;}getBalance(){return this.balance/100;}getFallbackBet(){return this.game.sg.betRaw/100;}
  getSpinParams(){return {...this.game.sg.requestParams};}getInitialRoundRequest(){return{event:'BET',parameters:this.getSpinParams()};}
- getExactFollowUpRequest(action:string){if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
+ getExactFollowUpRequest(action:string){if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){assert(action==='FREE_SPIN'&&this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0,'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
  getLastGameRequest(){return this.lastRequest;}getPickParams(){throw new Error('AG integrity: GDM own selection not mapped');}
  isRoundTerminalAction(action:string){return action==='SPIN';}
  private ownExtraStageCounter(p:Record<string,string>,prior:any){
@@ -1323,6 +1323,36 @@ export class SGGdmSession{
   return{total:all,played,remaining,stageFID:p.FID,outer:prior.outer};
  }
  private ownPendingFree(){return !!this.freeState&&(this.freeState.remaining>0||(['own-SDK-returned-cash-stage-followup-trial-v7','own-SDK-returned-cash-stage-reentry-trial-v8'].includes(this.game.sg.ownGDMContract.version)&&!!this.freeState.outer&&this.freeState.outer.remaining>0));}
+
+ private rootFlowRemaining:number|undefined;
+ private rootFlowSteps:GDMWireStep[]=[];
+ private rootFlowBinding(){
+  const c=gdmBinding(this.game),q=c.ownRootNFGFlowOnlyCapture,r=c.freeBudgetContract,b=r?.ownSDKFreeRequestBinding;
+  assert(q?.version==='own-SDK-root-NFG-flow-only-v1'&&q.gameId===this.game.gameId&&q.ownSDKFileSHA256===c.ownSDKFileSHA256&&b?.ownSDKFileSHA256===c.ownSDKFileSHA256&&q.SDKFinalGetterSourceSHA256===c.SDKFinalGetterSourceSHA256,'AG integrity: GDM own root flow identity');
+  for(const k of ['SDKSelectorSHA256','NFGSetterSHA256','NFGDecoderSHA256','GCTDecoderSHA256','ownRequestConstructorSHA256'])assert(q[k]===b[k],'AG integrity: GDM own root next/end selector');
+  assert(q.nextEvent==='FREE_GAME'&&q.remainingWireKey==='NFG'&&q.terminalRemaining===0&&q.usesOwnRequestAndTerminalOnly&&q.rawWirePreserved&&q.originalAGAmountReplayMongoChecksRequired&&q.noSyntheticTerminal&&q.noOldUnknownPOSTReplay&&q.unusedDisplayAndBudgetFieldsDoNotBlock&&q.noPreviouslySeenWholeVariationGate&&q.unmappedActiveFlagsStillStop,'AG integrity: GDM own root flow contract');
+  return {c,q,r};
+ }
+ private async rootFlowCall(event:string,parameters:Record<string,any>|null){
+  const {c,r}=this.rootFlowBinding(),first=event==='BET';assert(!this.closed&&parameters,'AG integrity: GDM own root session closed');
+  assert(first?this.rootFlowRemaining===undefined:this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0&&event==='FREE_GAME','AG integrity: GDM actual root action');
+  assert.deepStrictEqual(parameters,first?this.game.sg.requestParams:r.freeRequestParams,'AG integrity: GDM own root request');
+  if(first){this.roundStart=this.balance;this.totalWin=0;this.rootFlowSteps=[];}this.lastRequest={event,parameters:{...parameters}};
+  const step=await this.exchange(event,parameters);try{
+   const p=this.decode(step,event);assert(p.B!==undefined&&p.TW!==undefined,'AG integrity: GDM required original AG money');
+   assert(p.GA==='0'&&(p.GCT===undefined||p.GCT==='0'),'AG integrity: GDM unmapped active root flow');
+   for(const k of r.promotionalKeysForbidden)assert(p[k]===undefined,'AG integrity: GDM unmapped promotional flow');
+   assert(p.REC===undefined,'AG integrity: GDM recovered flow unmapped');
+   for(const k of Object.keys(r.freeRequestParams).filter(k=>k!=='GN'))assert(p[k]===undefined||p[k]===r.freeRequestParams[k],'AG integrity: GDM actual wager changed');
+   const remaining=p.NFG===undefined&&first?0:gdmInteger(p.NFG,'own actual NFG'),total=gdmInteger(p.TW,'own actual total cash'),end=gdmInteger(p.B,'own actual balance');
+   assert(end===this.roundStart-c.betRaw+total,'AG integrity: GDM original whole cash conservation');
+   if(step.responseBalance!==undefined)assert(step.responseBalance===gdmInteger(p.AB===undefined?p.B:p.AB,'own source balance'),'AG integrity: GDM source captured balance differs');
+   this.balance=end;this.totalWin=total;this.rootFlowRemaining=remaining>0?remaining:undefined;this.rootFlowSteps.push({...step,responseBalance:end});
+   const pending=this.rootFlowRemaining!==undefined,steps=pending?this.rootFlowSteps.slice(-1):this.rootFlowSteps;
+   return {NextActionInfo:{nextAction:pending?'FREE_SPIN':'SPIN'},PlayerBalanceInfo:{preWagerBalance:this.roundStart/100,balance:end/100,wager:c.betRaw/100,resultAmount:total/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,startBalance:this.roundStart/100,endBalance:end/100,totalWin:total/100,stepCount:steps.length,msgIds:steps.map(s=>s.msgId),steps:structuredClone(steps),SGWireResponse:p,SGDecodedResponseXML:step.responseXml,SGOwnSDKDecision:{ownSDKFileSHA256:c.ownSDKFileSHA256,ownRootNFGNextEndOnly:true,noSyntheticTerminal:true},money:{startBalanceRaw:this.roundStart,endBalanceRaw:end,betRaw:c.betRaw,totalWinRaw:total}};
+  }catch(e){this.close();throw e;}
+ }
+
  private async freeCall(event:string,parameters:Record<string,any>|null){
   const c=gdmBinding(this.game),rule=c.freeBudgetContract;assert(!this.closed&&parameters&&rule,'AG integrity: GDM free session closed');
   const first=event==='BET';assert(first?!this.freeState:this.ownPendingFree()&&event==='FREE_GAME','AG integrity: GDM own free action');
@@ -1349,6 +1379,7 @@ export class SGGdmSession{
   }catch(e){this.close();throw e;}
  }
  async callGameData(event:string,parameters:Record<string,any>|null){
+  if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture)return this.rootFlowCall(event,parameters);
   if(this.game.sg.ownGDMContract.freeBudgetContract)return this.freeCall(event,parameters);
   assert(!this.closed&&event==='BET'&&parameters,'AG integrity: GDM own ordinary request');assert.deepStrictEqual(parameters,this.game.sg.requestParams,'AG integrity: GDM own request parameters changed');
   const start=this.balance;assert(Number.isSafeInteger(start));this.lastRequest={event,parameters:{...parameters}};
