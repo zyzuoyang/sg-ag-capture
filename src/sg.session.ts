@@ -1356,6 +1356,13 @@ export class SGGdmSession{
 else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&&n.ownSDKFileSHA256===c.ownSDKFileSHA256&&n.ownPaidAndFreeRequestBytesUsed&&n.noSyntheticTerminal&&n.ownCompleteNaturalRecordsSHA256===q.ownCompleteNaturalRecordsSHA256&&n.ownActualFreeRequestParamsSHA256===q.ownActualFreeRequestParamsSHA256,'AG integrity: GDM own natural request/terminal binding');const ordered=Object.fromEntries(Object.entries(r.freeRequestParams).sort(([a],[b])=>a.localeCompare(b)));assert(crypto.createHash('sha256').update(JSON.stringify(ordered)).digest('hex')===q.ownActualFreeRequestParamsSHA256&&c.pendingClauses.some((x:any)=>x.wireKey==='NFG'),'AG integrity: GDM actual natural free request');}
   assert(q.nextEvent==='FREE_GAME'&&q.remainingWireKey==='NFG'&&q.terminalRemaining===0&&q.usesOwnRequestAndTerminalOnly&&q.rawWirePreserved&&q.originalAGAmountReplayMongoChecksRequired&&q.noSyntheticTerminal&&q.noOldUnknownPOSTReplay&&q.unusedDisplayAndBudgetFieldsDoNotBlock&&q.noPreviouslySeenWholeVariationGate&&q.unmappedActiveFlagsStillStop,'AG integrity: GDM own root flow contract');
   if(q.ownCrossLinkFlow){const b=q.ownCrossLinkFlow;assert(b.version==='own-Free-to-CrossLink-next-end-v1'&&b.gameId===this.game.gameId&&b.ownSDKFileSHA256===c.ownSDKFileSHA256&&b.freeMode===0&&b.crossLinkMode===1&&b.modeWireKey==='FID'&&b.remainingWireKey==='NFG'&&b.nextEvent==='FREE_GAME'&&b.sameOwnFreeRequestParameters&&b.noWireCounterInvented&&b.noGuessedFEATURE_END&&b.rawWirePreserved,'AG integrity: GDM own CrossLink flow binding');for(const k of ['ownFreeToCrossLinkSHA256','ownActualRequestSelectorSHA256','ownFirstFIDSetterSHA256','ownCrossLinkNFGSetterSHA256','ownCrossLinkEndSHA256'])assert(/^[a-f0-9]{64}$/.test(b[k]),'AG integrity: GDM own CrossLink SDK source');}
+  if(q.ownNOVAOptionalGambleAvailability){
+   const b=q.ownNOVAOptionalGambleAvailability;
+   assert(b.version==='own-ZeusII-NOVA-optional-gamble-availability-v1'&&b.gameId===this.game.gameId&&this.game.gameId==='32748'&&b.dbName===this.game.dbName&&this.game.dbName==='sg_zeustwo96'&&b.runtimeGameId===this.game.sg.runtimeGameId&&b.runtimeGameId===33148&&b.runtimeSlug===this.game.sg.runtimeSlug&&b.runtimeSlug==='zeustwo96'&&b.ownSDKFileSHA256===c.ownSDKFileSHA256&&c.ownSDKFileSHA256==='bdd1730f21b35300ff2dceebeb6891fd9b1838155095f618d425a16d6c382e48','AG integrity: GDM own NOVA optional gamble identity');
+   assert(b.availabilityWireKey==='GA'&&JSON.stringify(b.availabilityValues)==='["0","1"]'&&b.actualGambleActionRequiresUISelection&&b.optionalGambleUIOnlyShowsButton&&b.nextEndStillUsesActualNFG&&b.rawGAPreserved&&b.GAMBLE_STARTAndCOLLECTNeverAutomaticallySent,'AG integrity: GDM own NOVA optional gamble scope');
+   const expected:Record<string,string>={"BaseWinStateSHA256":"bfeeee21e7ab6ffbed7ba83e37ec8878234d3258727a0eead2eb6112dd93b35c","GambleStartStateSHA256":"010e214d3d7b3d45c81680553a9f9d8979310cf06c06a09f724e70cc88048250","optionalGambleButtonOnlySHA256":"523c030d5452d79c3d0790974aede48084981bc736d26aec1a7b32134e99edfc","GADecoderSHA256":"25748d317559581250336512f70d0e8f9b8f89afc3e36834cdf54ef1676ed39d"};
+   for(const[k,value]of Object.entries(expected))assert(b[k]===value,'AG integrity: GDM own NOVA optional gamble source');
+  }
   this.quickHitNextRequestBinding();
   return {c,q,r};
  }
@@ -1366,7 +1373,7 @@ else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&
   if(first){this.roundStart=this.balance;this.totalWin=0;this.rootFlowSteps=[];this.quickHitSecondFeature=false;}this.lastRequest={event,parameters:{...parameters}};
   const step=await this.exchange(event,parameters);try{
    const p=this.decode(step,event);assert(p.B!==undefined&&p.TW!==undefined,'AG integrity: GDM required original AG money');
-   assert(p.GA==='0'&&(p.GCT===undefined||p.GCT==='0'),'AG integrity: GDM unmapped active root flow');
+   assert((p.GA==='0'||q.ownNOVAOptionalGambleAvailability&&p.GA==='1')&&(p.GCT===undefined||p.GCT==='0'),'AG integrity: GDM unmapped active root flow');
    for(const k of r.promotionalKeysForbidden)assert(p[k]===undefined,'AG integrity: GDM unmapped promotional flow');
    assert(p.REC===undefined,'AG integrity: GDM recovered flow unmapped');
    if(!q.ownBundleFlow)for(const k of Object.keys(r.freeRequestParams).filter(k=>k!=='GN'))assert(p[k]===undefined||p[k]===(q.ownQuickHitFG2TNextRequest?parameters[k]:r.freeRequestParams[k]),'AG integrity: GDM actual wager changed');
