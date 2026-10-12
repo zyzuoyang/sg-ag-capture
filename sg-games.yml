@@ -11278,3 +11278,139 @@ games:
             unmappedPickAndOtherFlowStops: true
             noDisplayCashOrBudgetEquations: true
             rawWirePreserved: true
+  - provider: sg
+    gameId: '32837'
+    name: Road Trip 66
+    dbName: sg_roadtripsixtysix96
+    backendId: roadtripsixtysix96
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33197
+      runtimeSlug: roadtripsixtysix96
+      betRaw: 200
+      requestParams:
+        GN: roadtripsixtysix96
+        AP: 'false'
+        BPR: '10'
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v3
+        gameId: '32837'
+        dbName: sg_roadtripsixtysix96
+        runtimeGameId: 33197
+        runtimeSlug: roadtripsixtysix96
+        betRaw: 200
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - RTP
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - B
+          - AB
+          - TW
+          - MSGID
+          - GA
+        ordinaryGSDKeys: []
+        ownSDKFileSHA256: bab035e6f430b8458b73449753e17a8e76281943912cc0bb9b326e60bb2cab4c
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            SDKSourceSHA256: 2f028fc8672c316fcb1ed366cfedad72b9c8b05541132d8d4213215c176e1fcc
+        rootInactiveFlags:
+          - wireKey: GA
+            explicitSDKDefault: '0'
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+        SDKFinalGetterSourceSHA256: 9b775d741858b6fc3ad63add51106f1d99fe54c1dd659d5232ec89dc3c04a371
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32837'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: roadtripsixtysix96
+            BPR: '10'
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+        ownRootNFGFlowOnlyCapture:
+          version: own-bundle-NFG-flow-only-v3
+          gameId: '32837'
+          ownSDKFileSHA256: bab035e6f430b8458b73449753e17a8e76281943912cc0bb9b326e60bb2cab4c
+          SDKFinalGetterSourceSHA256: 9b775d741858b6fc3ad63add51106f1d99fe54c1dd659d5232ec89dc3c04a371
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          ownBundleFlow:
+            version: own-bundle-SDK-NFG-next-end-v1
+            gameId: '32837'
+            ownSDKFileSHA256: bab035e6f430b8458b73449753e17a8e76281943912cc0bb9b326e60bb2cab4c
+            ownFreeRequestSourceSHA256: a042dec5e420f5f16c598fd3f1358a883f0db432f2f3309acab0f2dadb26bbe5
+            ownTerminalSourceSHA256: 9b775d741858b6fc3ad63add51106f1d99fe54c1dd659d5232ec89dc3c04a371
+            ownNFGDecoderSHA256: 2f028fc8672c316fcb1ed366cfedad72b9c8b05541132d8d4213215c176e1fcc
+            ownFeatureLookupSHA256: 3b270fc5360ea824f6606a2a8c50c64434d8209107f1b748df95925788c3089b
+            actualFreeFeatureModes:
+              - 0
+            remainingDecoder: signed-minus-one-is-pending
+            sourceDefinedModesOnly: true
+            unmappedPickAndOtherFlowStops: true
+            noDisplayCashOrBudgetEquations: true
+            rawWirePreserved: true
