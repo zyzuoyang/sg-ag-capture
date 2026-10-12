@@ -1557,6 +1557,24 @@ games:
           unusedDisplayAndBudgetFieldsDoNotBlock: true
           noPreviouslySeenWholeVariationGate: true
           unmappedActiveFlagsStillStop: true
+          ownCrossLinkFlow:
+            version: own-Free-to-CrossLink-next-end-v1
+            gameId: '32500'
+            ownSDKFileSHA256: 4c1937cea505d822a207c1e950e367b5c9a41b9dec5a3004c794b25b127245a4
+            ownFreeToCrossLinkSHA256: e7bbd6f2ffc1f83387910dc265d20a2f794a9e30016aee6e77cbf41c7a621ce9
+            ownActualRequestSelectorSHA256: b7c106e0bcd86f3407b2de51e7b6611e73fe0481264db778d4838156357b183d
+            ownFirstFIDSetterSHA256: e33008095736715bcdf02726de1dd332d247e30c02688ffcc8877fc8441dd6db
+            ownCrossLinkNFGSetterSHA256: c7addf5e3b4da87aece3393d2e4d410a2fd80a8fadad0d4edaff5bcddba7ab3d
+            ownCrossLinkEndSHA256: 8b540018a675a922e541c54cd9f61c0b9e2e922cd8152028d31c59babea92b57
+            freeMode: 0
+            crossLinkMode: 1
+            modeWireKey: FID
+            remainingWireKey: NFG
+            nextEvent: FREE_GAME
+            sameOwnFreeRequestParameters: true
+            noWireCounterInvented: true
+            noGuessedFEATURE_END: true
+            rawWirePreserved: true
   - provider: sg
     gameId: '32532'
     name: Golden Fire Link Dragon Song
