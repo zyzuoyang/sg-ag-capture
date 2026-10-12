@@ -11876,3 +11876,573 @@ games:
       - 4000
       - 4500
       - 5000
+  - provider: sg
+    gameId: '32666'
+    name: The Wild 3
+    dbName: sg_thewildthree
+    backendId: thewildthree
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33090
+      runtimeSlug: thewildthree
+      betRaw: 50
+      requestParams:
+        GN: thewildthree
+        BPL: '5'
+        LB: '10'
+        ABPM: '0'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v3
+        gameId: '32666'
+        dbName: sg_thewildthree
+        runtimeGameId: 33090
+        runtimeSlug: thewildthree
+        betRaw: 50
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - ABPM
+          - B
+          - BPL
+          - CFGG
+          - CW
+          - FGT
+          - FGTW
+          - FID
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NFG
+          - NRID
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TFG
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - MSGID
+          - TW
+        ordinaryGSDKeys: []
+        ownSDKFileSHA256: f7778c05e93e67ea364ab62727449f8909032dbaf20853073dad905db5e846ef
+        SDKFinalGetterSourceSHA256: c04fa7b00652434d266523c143d658a3b6efe68d184e00cb0286a100c7faba14
+        pendingClauses:
+          - kind: SDK-base-false
+            SDKSourceSHA256: 00a0dc3c3b99e8c6248288d1e9689fd4fea711936ae51aa84cf75a0235082da8
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            SDKSourceSHA256: f4658de4bc35abfc01b476dabaea01ef640d8082f93480317d5f9b622097a762
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 9b32dbf9c14a9142c14d210928c33a8bedbc6fe11f42dce7b8340fdd05fcc97c
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 25748d317559581250336512f70d0e8f9b8f89afc3e36834cdf54ef1676ed39d
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            ownUnmappedRootGuardKept: true
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32666'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: thewildthree
+            BPL: '5'
+            LB: '10'
+            ABPM: '0'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+            - FTV_0
+            - FTV_1
+            - FTV_2
+            - FTV_3
+            - FTV_4
+        ownRootNFGFlowOnlyCapture:
+          version: own-NOVA-account-NFG-next-end-flow-only-v4
+          gameId: '32666'
+          ownSDKFileSHA256: f7778c05e93e67ea364ab62727449f8909032dbaf20853073dad905db5e846ef
+          SDKFinalGetterSourceSHA256: c04fa7b00652434d266523c143d658a3b6efe68d184e00cb0286a100c7faba14
+          ownNOVAAccountRequestSelection:
+            version: own-NOVA-three-source-account-selection-v83
+            gameId: '32666'
+            dbName: sg_thewildthree
+            runtimeGameId: 33090
+            runtimeSlug: thewildthree
+            ownSDKFileSHA256: f7778c05e93e67ea364ab62727449f8909032dbaf20853073dad905db5e846ef
+            ownConfigFileSHA256: 32b4031b629d4d6f10da35abe043a392ffa2f891633f2039e9c3a3b744f98019
+            ownFixedInitSHA256: ab5a5237cc46064bab000c500bd1c48f7c0455f3d0a26feaa8263d0fb15cded9
+            ownSourceSnapshotSHA256: 5a15714e0a1caee08f6b0011fecaabe025f9655f3f43e2dd71b931691b58941c
+            ownOriginalRecordsSHA256: 8e2617a09705e40d67f6416b7d4d98788b19c9d309a3299f665af6b98995997c
+            ownLegacyRequestParamsSHA256: cfec1fb09bfa1548ee576dcc7740b88cbf115f575ce39f86c592e2090f579e48
+            ownFutureRequestParamsSHA256: f2ad49c0de460cdd577efbcf401b3c85d16b3c3205ff4982dfe78964fa8d9bc3
+            futureRequestParams:
+              GN: thewildthree
+              BPL: '5'
+              LB: '10'
+              ABPM: '0'
+            betRaw: 50
+            selectedAllowedBet: 5
+            selectedBetWireKey: BPL
+            explicitNewSelectionNotClaimedAsDefault: false
+            futureRequestNotClaimedAsPreviouslyCaptured: true
+            freshInitAllowedBetRequired: true
+            freshRecoveryForbidden: true
+            ownSelectedReels: null
+            ownSelectedRBMMultiplier: null
+            ownFixedFreshLines: 10
+            ownAnteBetAdjustment: 0
+            optionalGADoesNotDetermineNextEnd: true
+            noAutomaticGambleRequest: true
+            returnedWagerDoesNotChangeAccount: true
+            originalBAndTWCashRequired: true
+            noDisplayCashOrCountEquations: true
+            legacyRawPacketsUnchanged: true
+            paidEntryWireKey: FGT
+            paidEntryPositiveSelectsOneFreeRequest: true
+            paidEntryPendingIsNotSyntheticNFG: true
+            followupRemainingWireKey: NFG
+            terminalRemaining: 0
+            followupEndFreeSourceTrue: true
+            ownUnmappedTerminalGSDKeys:
+              - MSCE
+              - MWI
+            sourceHashes:
+              InitState: 343df3c884f9f3e3da6e674ebd5a3747d12540f53f90ef72b8d8852d144e8f87
+              BaseSpinningStartState: abfe406af612b016cb9528350f44fe97260037c87f4a6fe2672006c08c196253
+              BaseWinState: 9acb041f4ebb08a1b3986cdaca50646db0cc82118a5a3b236f127c0571817b62
+              FreeGameSpinningStartState: ea5b49299f9fac923b0f08d6cf6ac32f1cd986ec6b106758857e49f08a945b96
+              FreeGameIdleState: c04fa7b00652434d266523c143d658a3b6efe68d184e00cb0286a100c7faba14
+              FreeGameWinState: ebc797cd0fd25ccafa0a9a6c138076740459db2ded6919ecd618571076265771
+            NFGDecoderSHA256: f4658de4bc35abfc01b476dabaea01ef640d8082f93480317d5f9b622097a762
+            FGTDecoderSHA256: 1b5d4e8108f73dec54bbc085e62ce6244b57e7a46fe868d8d8c3b266bda76a8e
+            rawWirePreserved: true
+            noSyntheticTerminal: true
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+    rtpBuckets:
+      - 0
+      - 30
+      - 50
+      - 100
+      - 200
+      - 300
+      - 500
+      - 1000
+      - 1500
+      - 2000
+      - 2500
+      - 3000
+      - 3500
+      - 4000
+      - 4500
+      - 5000
+  - provider: sg
+    gameId: '32588'
+    name: Merlin's Money Burst
+    dbName: sg_merlinsmoneyburst95
+    backendId: merlinsmoneyburst95
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33063
+      runtimeSlug: merlinsmoneyburst95
+      betRaw: 150
+      requestParams:
+        GN: merlinsmoneyburst95
+        BPL: '5'
+        LB: '60'
+        ABPM: '0'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v3
+        gameId: '32588'
+        dbName: sg_merlinsmoneyburst95
+        runtimeGameId: 33063
+        runtimeSlug: merlinsmoneyburst95
+        betRaw: 150
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - ABPM
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - MSGID
+          - TW
+        ordinaryGSDKeys: []
+        ownSDKFileSHA256: 9b004739e96be29c36d3cc8a61cebf2d3062ea93eeb13fff970db41eab7afeb1
+        SDKFinalGetterSourceSHA256: bee7cdfd824e8d30e1db89dc1529003b46aa56ca6d188c770d742e9debb9693f
+        pendingClauses:
+          - kind: SDK-base-false
+            SDKSourceSHA256: 00a0dc3c3b99e8c6248288d1e9689fd4fea711936ae51aa84cf75a0235082da8
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            SDKSourceSHA256: f4658de4bc35abfc01b476dabaea01ef640d8082f93480317d5f9b622097a762
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 9b32dbf9c14a9142c14d210928c33a8bedbc6fe11f42dce7b8340fdd05fcc97c
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 25748d317559581250336512f70d0e8f9b8f89afc3e36834cdf54ef1676ed39d
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            ownUnmappedRootGuardKept: true
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32588'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: merlinsmoneyburst95
+            BPL: '5'
+            LB: '60'
+            ABPM: '0'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+            - FTV_0
+            - FTV_1
+            - FTV_2
+            - FTV_3
+            - FTV_4
+        ownRootNFGFlowOnlyCapture:
+          version: own-NOVA-account-NFG-next-end-flow-only-v4
+          gameId: '32588'
+          ownSDKFileSHA256: 9b004739e96be29c36d3cc8a61cebf2d3062ea93eeb13fff970db41eab7afeb1
+          SDKFinalGetterSourceSHA256: bee7cdfd824e8d30e1db89dc1529003b46aa56ca6d188c770d742e9debb9693f
+          ownNOVAAccountRequestSelection:
+            version: own-NOVA-three-source-account-selection-v83
+            gameId: '32588'
+            dbName: sg_merlinsmoneyburst95
+            runtimeGameId: 33063
+            runtimeSlug: merlinsmoneyburst95
+            ownSDKFileSHA256: 9b004739e96be29c36d3cc8a61cebf2d3062ea93eeb13fff970db41eab7afeb1
+            ownConfigFileSHA256: f69d7ef68716d56cc5a2d49e91cdce350ade2da419272e574c86c32d36f61d76
+            ownFixedInitSHA256: f273d24edebd72ecbcec99b3df696676c518e0a72e0c22c71bdf3c8d0e0a2d8c
+            ownSourceSnapshotSHA256: 7aa6dadc91f58efffa56776e62ee87e24abe5d5e6b18e5c227b006841c2d0e19
+            ownOriginalRecordsSHA256: 70537a056dc78b8a718d03a5558596a53d5b27b2e46104b4abe3951b3c9652a5
+            ownLegacyRequestParamsSHA256: 1f2530ec3683c07324ae5520155822e0801cc1dc442098399a2117cccd835acf
+            ownFutureRequestParamsSHA256: 44c0696c3977c294ac3ddf8d3910a48e3e2fa9097d0f403dcd68379aebde6879
+            futureRequestParams:
+              GN: merlinsmoneyburst95
+              BPL: '5'
+              LB: '60'
+              ABPM: '0'
+            betRaw: 150
+            selectedAllowedBet: 5
+            selectedBetWireKey: BPL
+            explicitNewSelectionNotClaimedAsDefault: false
+            futureRequestNotClaimedAsPreviouslyCaptured: true
+            freshInitAllowedBetRequired: true
+            freshRecoveryForbidden: true
+            ownSelectedReels: null
+            ownSelectedRBMMultiplier: null
+            ownFixedFreshLines: 60
+            ownAnteBetAdjustment: -30
+            optionalGADoesNotDetermineNextEnd: true
+            noAutomaticGambleRequest: true
+            returnedWagerDoesNotChangeAccount: true
+            originalBAndTWCashRequired: true
+            noDisplayCashOrCountEquations: true
+            legacyRawPacketsUnchanged: true
+            paidEntryWireKey: FGT
+            paidEntryPositiveSelectsOneFreeRequest: true
+            paidEntryPendingIsNotSyntheticNFG: true
+            followupRemainingWireKey: NFG
+            terminalRemaining: 0
+            followupEndFreeSourceTrue: true
+            ownUnmappedTerminalGSDKeys: []
+            sourceHashes:
+              InitState: 343df3c884f9f3e3da6e674ebd5a3747d12540f53f90ef72b8d8852d144e8f87
+              BaseSpinningStartState: d19c75c130c081bd33560c5b9b72d2809b4d8d23ef486757e4adf555b144cd90
+              BaseWinState: 98b070e8822c6d8bb57ff43ac6b6b1180ef81bfe5ecea0e6c960fcec2a3ff0e0
+              FreeGameSpinningStartState: 84f18dc6f0b5b080ff4d987a9a6a8178bc459ca40258dec1ae156a8cfcffc608
+              FreeGameIdleState: bee7cdfd824e8d30e1db89dc1529003b46aa56ca6d188c770d742e9debb9693f
+              FreeGameWinState: 8813e7553ff918f22c58bd7fb6dc7e9b5319307047ac5d9238ef8ccb40f11f2a
+            NFGDecoderSHA256: f4658de4bc35abfc01b476dabaea01ef640d8082f93480317d5f9b622097a762
+            FGTDecoderSHA256: 1b5d4e8108f73dec54bbc085e62ce6244b57e7a46fe868d8d8c3b266bda76a8e
+            rawWirePreserved: true
+            noSyntheticTerminal: true
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+    rtpBuckets:
+      - 0
+      - 30
+      - 50
+      - 100
+      - 200
+      - 300
+      - 500
+      - 1000
+      - 1500
+      - 2000
+      - 2500
+      - 3000
+      - 3500
+      - 4000
+      - 4500
+      - 5000
+  - provider: sg
+    gameId: '32739'
+    name: The Demon Code
+    dbName: sg_thedemoncodecap250c96
+    backendId: thedemoncodecap250c96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33139
+      runtimeSlug: thedemoncodecap250c96
+      betRaw: 100
+      requestParams:
+        GN: thedemoncodecap250c96
+        BPR: '10'
+        RB: '6'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v3
+        gameId: '32739'
+        dbName: sg_thedemoncodecap250c96
+        runtimeGameId: 33139
+        runtimeSlug: thedemoncodecap250c96
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - CFGG
+          - CW
+          - FGT
+          - FGTW
+          - FID
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NFG
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TFG
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+        requiredResponseKeys:
+          - AB
+          - B
+          - MSGID
+          - TW
+        ordinaryGSDKeys: []
+        ownSDKFileSHA256: c3327610020e409155c59cd19ff22d3aec5251f4a1f57d478d2ac80baf14295c
+        SDKFinalGetterSourceSHA256: af0d8b2e4f700ea3c4a29839d07a0eee9aade756f26f54bfabead99f1e6db4a6
+        pendingClauses:
+          - kind: SDK-base-false
+            SDKSourceSHA256: 00a0dc3c3b99e8c6248288d1e9689fd4fea711936ae51aa84cf75a0235082da8
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            SDKSourceSHA256: f4658de4bc35abfc01b476dabaea01ef640d8082f93480317d5f9b622097a762
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 9b32dbf9c14a9142c14d210928c33a8bedbc6fe11f42dce7b8340fdd05fcc97c
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 25748d317559581250336512f70d0e8f9b8f89afc3e36834cdf54ef1676ed39d
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            ownUnmappedRootGuardKept: true
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32739'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: thedemoncodecap250c96
+            BPR: '10'
+            RB: '6'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+            - FTV_0
+            - FTV_1
+            - FTV_2
+            - FTV_3
+            - FTV_4
+        ownRootNFGFlowOnlyCapture:
+          version: own-NOVA-account-NFG-next-end-flow-only-v4
+          gameId: '32739'
+          ownSDKFileSHA256: c3327610020e409155c59cd19ff22d3aec5251f4a1f57d478d2ac80baf14295c
+          SDKFinalGetterSourceSHA256: af0d8b2e4f700ea3c4a29839d07a0eee9aade756f26f54bfabead99f1e6db4a6
+          ownNOVAAccountRequestSelection:
+            version: own-NOVA-three-source-account-selection-v83
+            gameId: '32739'
+            dbName: sg_thedemoncodecap250c96
+            runtimeGameId: 33139
+            runtimeSlug: thedemoncodecap250c96
+            ownSDKFileSHA256: c3327610020e409155c59cd19ff22d3aec5251f4a1f57d478d2ac80baf14295c
+            ownConfigFileSHA256: ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356
+            ownFixedInitSHA256: 171421db5110e1b075fd3246a10b71ad018c5ccdcf3c77d5def56f48c7b34ec6
+            ownSourceSnapshotSHA256: bec024b3184f3df8c72255d0d216a6979f536af80e9fe45abb418bf67bb8dfda
+            ownOriginalRecordsSHA256: a2659a2ec74ca88cda34cee0636edac75f46a9f98e13f204410f487f187f22bf
+            ownLegacyRequestParamsSHA256: c058a622ce2d2fa3a4336cf4cd1f41a5c8e3c0fe9e4f3e0605123648a78f0a52
+            ownFutureRequestParamsSHA256: dc5c376a6f0b77c9460b7df7ecb6549751aba2d1aab951a2e65a2ba190d35700
+            futureRequestParams:
+              GN: thedemoncodecap250c96
+              BPR: '10'
+              RB: '6'
+            betRaw: 100
+            selectedAllowedBet: 10
+            selectedBetWireKey: BPR
+            explicitNewSelectionNotClaimedAsDefault: true
+            futureRequestNotClaimedAsPreviouslyCaptured: true
+            freshInitAllowedBetRequired: true
+            freshRecoveryForbidden: true
+            ownSelectedReels: 6
+            ownSelectedRBMMultiplier: 10
+            ownFixedFreshLines: null
+            ownAnteBetAdjustment: 0
+            optionalGADoesNotDetermineNextEnd: true
+            noAutomaticGambleRequest: true
+            returnedWagerDoesNotChangeAccount: true
+            originalBAndTWCashRequired: true
+            noDisplayCashOrCountEquations: true
+            legacyRawPacketsUnchanged: true
+            paidEntryWireKey: FGT
+            paidEntryPositiveSelectsOneFreeRequest: true
+            paidEntryPendingIsNotSyntheticNFG: true
+            followupRemainingWireKey: NFG
+            terminalRemaining: 0
+            followupEndFreeSourceTrue: true
+            ownUnmappedTerminalGSDKeys: []
+            sourceHashes:
+              InitState: 343df3c884f9f3e3da6e674ebd5a3747d12540f53f90ef72b8d8852d144e8f87
+              BaseSpinningStartState: 766adc8da8f2be8da7be31ff479ddf9ad01b7f028431aca557d216217936f5eb
+              BaseWinState: bfeeee21e7ab6ffbed7ba83e37ec8878234d3258727a0eead2eb6112dd93b35c
+              FreeGameSpinningStartState: 599afceeca47f00ed096cee501ca9ceadb4b9ef55be4c9dae8731b6f9c398119
+              FreeGameIdleState: af0d8b2e4f700ea3c4a29839d07a0eee9aade756f26f54bfabead99f1e6db4a6
+              FreeGameWinState: 8813e7553ff918f22c58bd7fb6dc7e9b5319307047ac5d9238ef8ccb40f11f2a
+            NFGDecoderSHA256: f4658de4bc35abfc01b476dabaea01ef640d8082f93480317d5f9b622097a762
+            FGTDecoderSHA256: 1b5d4e8108f73dec54bbc085e62ce6244b57e7a46fe868d8d8c3b266bda76a8e
+            rawWirePreserved: true
+            noSyntheticTerminal: true
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+    rtpBuckets:
+      - 0
+      - 30
+      - 50
+      - 100
+      - 200
+      - 300
+      - 500
+      - 1000
+      - 1500
+      - 2000
+      - 2500
+      - 3000
+      - 3500
+      - 4000
+      - 4500
+      - 5000
