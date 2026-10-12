@@ -8498,9 +8498,7 @@ games:
             actualSDKSelectorSource: m.prototype.KM=function(p,q){return p.Vb.pi&&!p.state.Tl?n.gj.ca.Hba:p.buyPass.Ava?n.gj.ca.AI:g.prototype.KM.call(this,p,q)}
             SDKSelectorSHA256: 42e5c00463054ef5666a31c40c6b330bee32b28fdb0c8ff82afeeaef97878549
             ownLeafSelectorOverrides:
-              - >-
-                f.prototype.KM=function(d,c){return
-                d.mode!==a.tc.Wc.Fg&&(a.ma.Ic.Da.RM(d)||a.ma.Ic.Da.BU(d))||d.Vb.pi&&!d.state.Tl?L.GDM.ob.gj.ca.Hba:h.prototype.KM.call(this,d,c)}
+              - f.prototype.KM=function(d,c){return d.mode!==a.tc.Wc.Fg&&(a.ma.Ic.Da.RM(d)||a.ma.Ic.Da.BU(d))||d.Vb.pi&&!d.state.Tl?L.GDM.ob.gj.ca.Hba:h.prototype.KM.call(this,d,c)}
             ownLeafSelectorSHA256: 6c8e90360af420171977917dfc76a6ff69b7be74cb3ee85fbd4e1714d5ce98ed
             NFGSetterSHA256: a01d2333df26b04e51be08571f33842cd791e530e7c243e4aee7e68162afd27e
             NFGDecoderSHA256: c9b6fa14b2ad5aed3ed1150c1e7385e6046432fd05ddbbe8268bc47d5a475474
@@ -8593,20 +8591,12 @@ games:
             currentGetter: fT
             auxiliaryProperty: GPa
             auxiliaryInfoProperty: FD
-            getterDefinitionSource: >-
-              Object.defineProperties(e.prototype,{rh:{get:function(){return
-              this.ic},enumerable:!1,configurable:!0},fT:{get:function(){return
-              null==this.o3?this.ic:this.o3},enumerable:!1,configurable:!0},xj:{get:function(){return this.isFinal?
-
-              this.$x-this.rh:this.$x},enumerable:!1,configurable:!0},mr:{get:function(){return
-              this.isFinal?this.$x:this.xj},enumerable:!1,configurable:!0},isFinal:{get:function(){return
-              this.Tl?!0:!this.EM()},enumerable:!1,configurable:!0}});
-            currentPayoutCopySource: >-
-              d.prototype.OXa=function(b){var e,g,m,p,q;b.Hb.fT=this.o3;b.Hb.qb=null!==(e=this.qb)&&void
-              0!==e?e:null;b.Hb.ic=null!==(g=this.ic)&&void 0!==g?g:0;b.Hb.GD=null!==(m=this.GD)&&void 0!==m?
-
-              m:null;b.Hb.wz=a.Utils.Array.jI(null!==(p=this.Ue.wz)&&void 0!==p?p:[]);b.Hb.zva=null!==(q=this.Ue.WJa)&&void
-              0!==q?q:null;b.Hb.b5a=a.ma.wc.iC(this.Ue.VJa);b.Hb.BV=a.ma.wc.iC(this.Ue.tLa);b.Hb.Q4a=this.uRa(b)}
+            getterDefinitionSource: |-
+              Object.defineProperties(e.prototype,{rh:{get:function(){return this.ic},enumerable:!1,configurable:!0},fT:{get:function(){return null==this.o3?this.ic:this.o3},enumerable:!1,configurable:!0},xj:{get:function(){return this.isFinal?
+              this.$x-this.rh:this.$x},enumerable:!1,configurable:!0},mr:{get:function(){return this.isFinal?this.$x:this.xj},enumerable:!1,configurable:!0},isFinal:{get:function(){return this.Tl?!0:!this.EM()},enumerable:!1,configurable:!0}});
+            currentPayoutCopySource: |-
+              d.prototype.OXa=function(b){var e,g,m,p,q;b.Hb.fT=this.o3;b.Hb.qb=null!==(e=this.qb)&&void 0!==e?e:null;b.Hb.ic=null!==(g=this.ic)&&void 0!==g?g:0;b.Hb.GD=null!==(m=this.GD)&&void 0!==m?
+              m:null;b.Hb.wz=a.Utils.Array.jI(null!==(p=this.Ue.wz)&&void 0!==p?p:[]);b.Hb.zva=null!==(q=this.Ue.WJa)&&void 0!==q?q:null;b.Hb.b5a=a.ma.wc.iC(this.Ue.VJa);b.Hb.BV=a.ma.wc.iC(this.Ue.tLa);b.Hb.Q4a=this.uRa(b)}
             auxiliaryInfoSetterSource: m.prototype.fZa=function(q){q.Sl=this.VTa;q.lu=this.i4;q.pi=this.GT;q.FD=this.GPa;q.W3=this.HPa}
             noMissingCashDefault: true
             noFakeTerminal: true
@@ -8617,11 +8607,8 @@ games:
             version: own-SDK-primary-with-nested-free-counter-v3
             gameId: '32719'
             ownSDKFileSHA256: 7897950e66d862f5823a13f9a2ce56f0973d4d40391ed429502fe9fef16d03c2
-            SDKBackupSetterSource: >-
-              d.prototype.LXa=function(b){var e,g,m,p,q;b=b.features.Vb;b.ui=null!==(e=this.Ue.SPa)&&void
-              0!==e?e:this.i4;b.xZa=null!==(g=b.We)&&void 0!==g?g:0;b.We=null!==(m=this.Ue.Ema)&&void
-              0!==m?m:this.GT;b.Uka=null!==(p=this.Ue.yZa)&&void 0!==p?p:[];b.c7=null!==(q=this.Ue.c7)&&
-
+            SDKBackupSetterSource: |-
+              d.prototype.LXa=function(b){var e,g,m,p,q;b=b.features.Vb;b.ui=null!==(e=this.Ue.SPa)&&void 0!==e?e:this.i4;b.xZa=null!==(g=b.We)&&void 0!==g?g:0;b.We=null!==(m=this.Ue.Ema)&&void 0!==m?m:this.GT;b.Uka=null!==(p=this.Ue.yZa)&&void 0!==p?p:[];b.c7=null!==(q=this.Ue.c7)&&
               void 0!==q?q:[];b.rva=this.ic}
             SDKBackupSetterSHA256: 9bbf25ec86dbda7b955bbddf2df01601e23863857a547c542d3330d2fa4a5394
             SDKPendingMethodSHA256: a64f95ff91f672d75aebd24ae0a921e7c457c8c180bb2a95efbbbca46911d0c9
@@ -8657,9 +8644,7 @@ games:
             noCounterDefaults: true
             noSyntheticTerminal: true
             unseenExtraStageActionStillFatal: true
-            SDKLeafSelectorSource: >-
-              f.prototype.KM=function(d,c){return
-              d.mode!==a.tc.Wc.Fg&&(a.ma.Ic.Da.RM(d)||a.ma.Ic.Da.BU(d))||d.Vb.pi&&!d.state.Tl?L.GDM.ob.gj.ca.Hba:h.prototype.KM.call(this,d,c)}
+            SDKLeafSelectorSource: f.prototype.KM=function(d,c){return d.mode!==a.tc.Wc.Fg&&(a.ma.Ic.Da.RM(d)||a.ma.Ic.Da.BU(d))||d.Vb.pi&&!d.state.Tl?L.GDM.ob.gj.ca.Hba:h.prototype.KM.call(this,d,c)}
             SDKLeafSelectorSHA256: 6c8e90360af420171977917dfc76a6ff69b7be74cb3ee85fbd4e1714d5ce98ed
             SDKStageHelpers:
               - h.RM=function(f){f=f.features;var d=f.Vb,c=f.bg,b=f.Vy;return f.sr===n.sk.Da&&b===n.sk.Ua&&0===c.We&&0===d.ui}
@@ -8669,9 +8654,7 @@ games:
             SDKStageHelperSHA256:
               - 9d3f589815dddc03ab5ae6b9b29f5b4d496f3a874886558713e90615e3ecbaba
               - bbd2e32b5dd6ffa4f638d8d1cf9f03fea4f42b563ef21cb1555bc7a2c98ce218
-            SDKFIDSetterSource: >-
-              d.prototype.JXa=function(b){var e,g,m,p;b.features.sr=null!==(g=null===(e=this.fM)||void 0===e?void 0:e[0])&&void
-              0!==g?g:null;b.features.Vy=null!==(p=null===(m=this.fM)||void 0===m?void 0:m[1])&&void 0!==p?p:null;this.LXa(b);this.MXa(b)}
+            SDKFIDSetterSource: d.prototype.JXa=function(b){var e,g,m,p;b.features.sr=null!==(g=null===(e=this.fM)||void 0===e?void 0:e[0])&&void 0!==g?g:null;b.features.Vy=null!==(p=null===(m=this.fM)||void 0===m?void 0:m[1])&&void 0!==p?p:null;this.LXa(b);this.MXa(b)}
             SDKFIDSetterSHA256: ae2b4895d9a2f3ab7affc87470f23fb2f01dfbc2ae970bff9f76c577ad379bdd
             zeroRootWithSavedPrimaryUsesOwnFreeSelector: true
             paidNestedIntroKeepsUnplayedPrimary: true
@@ -9217,9 +9200,7 @@ games:
             actualSDKSelectorSource: m.prototype.dN=function(p,q){return p.Yb.ri&&!p.state.Zl?n.gj.da.mca:p.buyPass.owa?n.gj.da.SI:g.prototype.dN.call(this,p,q)}
             SDKSelectorSHA256: 7c7c20989fc8dc7842a1ba2f69e8e47ae9125509a36318c6ec94d2696cfc0cef
             ownLeafSelectorOverrides:
-              - >-
-                f.prototype.dN=function(d,c){return
-                d.mode!==a.ac.Cc.Kf&&(a.ma.Bc.Ea.lN(d)||a.ma.Bc.Ea.jN(d))||d.Yb.ri&&!d.state.Zl?L.GDM.qb.gj.da.mca:h.prototype.dN.call(this,d,c)}
+              - f.prototype.dN=function(d,c){return d.mode!==a.ac.Cc.Kf&&(a.ma.Bc.Ea.lN(d)||a.ma.Bc.Ea.jN(d))||d.Yb.ri&&!d.state.Zl?L.GDM.qb.gj.da.mca:h.prototype.dN.call(this,d,c)}
             ownLeafSelectorSHA256: e7d82ad35a7340e92bbac1db1fc6e91092891256107ce523d936aa32fcf88585
             NFGSetterSHA256: 279b03585f141b46a07e15ad628e8caf86ee3c87542b541a6892fe8a848b4d13
             NFGDecoderSHA256: 10b260e2cb0223f7e95b6644b5c24d2a1af97cb9f63bece417f5ef192fe38a45
@@ -9307,20 +9288,12 @@ games:
             currentGetter: BT
             auxiliaryProperty: $Qa
             auxiliaryInfoProperty: PD
-            getterDefinitionSource: >-
-              Object.defineProperties(e.prototype,{wh:{get:function(){return
-              this.hc},enumerable:!1,configurable:!0},BT:{get:function(){return
-              null==this.O3?this.hc:this.O3},enumerable:!1,configurable:!0},xj:{get:function(){return this.isFinal?
-
-              this.ly-this.wh:this.ly},enumerable:!1,configurable:!0},vr:{get:function(){return
-              this.isFinal?this.ly:this.xj},enumerable:!1,configurable:!0},isFinal:{get:function(){return
-              this.Zl?!0:!this.XM()},enumerable:!1,configurable:!0}});
-            currentPayoutCopySource: >-
-              d.prototype.vZa=function(b){var e,g,m,p,q;b.Ob.BT=this.O3;b.Ob.sb=null!==(e=this.sb)&&void
-              0!==e?e:null;b.Ob.hc=null!==(g=this.hc)&&void 0!==g?g:0;b.Ob.QD=null!==(m=this.QD)&&void 0!==m?
-
-              m:null;b.Ob.Dz=a.Utils.Array.xI(null!==(p=this.Ve.Dz)&&void 0!==p?p:[]);b.Ob.nwa=null!==(q=this.Ve.XKa)&&void
-              0!==q?q:null;b.Ob.X6a=a.ma.Vb.oC(this.Ve.WKa);b.Ob.VV=a.ma.Vb.oC(this.Ve.HMa);b.Ob.N6a=this.XSa(b)}
+            getterDefinitionSource: |-
+              Object.defineProperties(e.prototype,{wh:{get:function(){return this.hc},enumerable:!1,configurable:!0},BT:{get:function(){return null==this.O3?this.hc:this.O3},enumerable:!1,configurable:!0},xj:{get:function(){return this.isFinal?
+              this.ly-this.wh:this.ly},enumerable:!1,configurable:!0},vr:{get:function(){return this.isFinal?this.ly:this.xj},enumerable:!1,configurable:!0},isFinal:{get:function(){return this.Zl?!0:!this.XM()},enumerable:!1,configurable:!0}});
+            currentPayoutCopySource: |-
+              d.prototype.vZa=function(b){var e,g,m,p,q;b.Ob.BT=this.O3;b.Ob.sb=null!==(e=this.sb)&&void 0!==e?e:null;b.Ob.hc=null!==(g=this.hc)&&void 0!==g?g:0;b.Ob.QD=null!==(m=this.QD)&&void 0!==m?
+              m:null;b.Ob.Dz=a.Utils.Array.xI(null!==(p=this.Ve.Dz)&&void 0!==p?p:[]);b.Ob.nwa=null!==(q=this.Ve.XKa)&&void 0!==q?q:null;b.Ob.X6a=a.ma.Vb.oC(this.Ve.WKa);b.Ob.VV=a.ma.Vb.oC(this.Ve.HMa);b.Ob.N6a=this.XSa(b)}
             auxiliaryInfoSetterSource: m.prototype.S_a=function(q){q.Yl=this.xVa;q.qu=this.I4;q.ri=this.bU;q.PD=this.$Qa;q.y4=this.aRa}
             noMissingCashDefault: true
             noFakeTerminal: true
@@ -9331,11 +9304,8 @@ games:
             version: own-SDK-primary-with-nested-free-counter-v3
             gameId: '32720'
             ownSDKFileSHA256: c3b23a2c481fad8bde0d0d1d9ba36b32e3addc567d505318421020eae560a8b0
-            SDKBackupSetterSource: >-
-              d.prototype.sZa=function(b){var e,g,m,p;b=b.features.Yb;b.Oj=null!==(e=this.Ve.mRa)&&void
-              0!==e?e:this.I4;b.ata=null!==(g=b.Qe)&&void 0!==g?g:0;b.Qe=null!==(m=this.Ve.ina)&&void
-              0!==m?m:this.bU;b.fM=null!==(p=this.Ve.n0a)&&void 0!==p?p:null;b.fwa=this.hc;b.i8a=
-
+            SDKBackupSetterSource: |-
+              d.prototype.sZa=function(b){var e,g,m,p;b=b.features.Yb;b.Oj=null!==(e=this.Ve.mRa)&&void 0!==e?e:this.I4;b.ata=null!==(g=b.Qe)&&void 0!==g?g:0;b.Qe=null!==(m=this.Ve.ina)&&void 0!==m?m:this.bU;b.fM=null!==(p=this.Ve.n0a)&&void 0!==p?p:null;b.fwa=this.hc;b.i8a=
               this.Ve.nRa}
             SDKBackupSetterSHA256: 10b744fda6344ae89040980e19eab2fe046be9e7f504a600af83f88c517196f8
             SDKPendingMethodSHA256: b053226da7fbed27b6094bb59592af1267f9c5337b47dbf23970fe885d072778
@@ -9371,9 +9341,7 @@ games:
             noCounterDefaults: true
             noSyntheticTerminal: true
             unseenExtraStageActionStillFatal: true
-            SDKLeafSelectorSource: >-
-              f.prototype.dN=function(d,c){return
-              d.mode!==a.ac.Cc.Kf&&(a.ma.Bc.Ea.lN(d)||a.ma.Bc.Ea.jN(d))||d.Yb.ri&&!d.state.Zl?L.GDM.qb.gj.da.mca:h.prototype.dN.call(this,d,c)}
+            SDKLeafSelectorSource: f.prototype.dN=function(d,c){return d.mode!==a.ac.Cc.Kf&&(a.ma.Bc.Ea.lN(d)||a.ma.Bc.Ea.jN(d))||d.Yb.ri&&!d.state.Zl?L.GDM.qb.gj.da.mca:h.prototype.dN.call(this,d,c)}
             SDKLeafSelectorSHA256: e7d82ad35a7340e92bbac1db1fc6e91092891256107ce523d936aa32fcf88585
             SDKStageHelpers:
               - h.lN=function(f){f=f.features;var d=f.Yb,c=f.dg,b=f.bz;return f.Ar===n.vk.Ea&&b===n.vk.La&&0===c.Qe&&0===d.Oj}
@@ -9383,9 +9351,7 @@ games:
             SDKStageHelperSHA256:
               - 82e903725cd2108692099b7b1c2c4e3266bb7d1922d498cd0449746a77ca6ea8
               - 3167af4f4b9ef853a0fbeec2e9aa6c892b02171da8897ac3115d7c233c0abefb
-            SDKFIDSetterSource: >-
-              d.prototype.qZa=function(b){var e,g,m,p;b.features.Ar=null!==(g=null===(e=this.yM)||void 0===e?void 0:e[0])&&void
-              0!==g?g:null;b.features.bz=null!==(p=null===(m=this.yM)||void 0===m?void 0:m[1])&&void 0!==p?p:null;this.sZa(b);this.tZa(b)}
+            SDKFIDSetterSource: d.prototype.qZa=function(b){var e,g,m,p;b.features.Ar=null!==(g=null===(e=this.yM)||void 0===e?void 0:e[0])&&void 0!==g?g:null;b.features.bz=null!==(p=null===(m=this.yM)||void 0===m?void 0:m[1])&&void 0!==p?p:null;this.sZa(b);this.tZa(b)}
             SDKFIDSetterSHA256: 2e749146305643586fbf91cd153d722e4af68d4da8f12bc3fbb8846de57a5eb5
             zeroRootWithSavedPrimaryUsesOwnFreeSelector: true
             paidNestedIntroKeepsUnplayedPrimary: true
@@ -9930,17 +9896,9 @@ games:
               - GA
             ownSDKMissingFieldFunctionSHA256: 51c3eb03537361a47737a0956481dc1028da6cda4769b515f7defdb42159f8f2
             missingFieldVM:
-              functionSource: >-
-                function d(D,G){var H=w.get(D,a.Ed.yn.Instance),I;for(I in H){var M=H[I];if(M)try{var O=M.key;if(M.Sr){var
-                R=O.indexOf("{#}"),da=O.substr(0,R),X=
-
-                O.substr(R+3),ba=D[I]=[],J;for(J in G)if(J.substr(0,R)===da){var
-                K=parseInt(J.substr(R));if(a.D.number(K)&&J.substr(R+"".concat(K).length)===X){var
-                N=G[J];try{ba[K]=M.type.an(N)}catch(S){throw new a.jx("Could not deserialise
-                '".concat(N,"'"),S);}}}if(M.required&&0===ba.length)throw Error("Property not found in message");}else if(O in
-                G){N=G[O];try{D[I]=M.type.an(N)}catch(S){throw new a.jx("Could not deserialise '".concat(N,"'"),S);}}else
-                if(null!=M.defaultValue)D[I]=M.defaultValue;else{if(M.required)throw Error("Property not found in message");
-
+              functionSource: |-
+                function d(D,G){var H=w.get(D,a.Ed.yn.Instance),I;for(I in H){var M=H[I];if(M)try{var O=M.key;if(M.Sr){var R=O.indexOf("{#}"),da=O.substr(0,R),X=
+                O.substr(R+3),ba=D[I]=[],J;for(J in G)if(J.substr(0,R)===da){var K=parseInt(J.substr(R));if(a.D.number(K)&&J.substr(R+"".concat(K).length)===X){var N=G[J];try{ba[K]=M.type.an(N)}catch(S){throw new a.jx("Could not deserialise '".concat(N,"'"),S);}}}if(M.required&&0===ba.length)throw Error("Property not found in message");}else if(O in G){N=G[O];try{D[I]=M.type.an(N)}catch(S){throw new a.jx("Could not deserialise '".concat(N,"'"),S);}}else if(null!=M.defaultValue)D[I]=M.defaultValue;else{if(M.required)throw Error("Property not found in message");
                 D[I]=null}}catch(S){var P=c(I,M,!0);if(M.required)throw new a.jx(P,S);M.silent||(n.wb.error(P,S),D[I]=null)}}}
               functionName: d
               metadataProvider: w
@@ -9961,9 +9919,7 @@ games:
             actualSDKSelectorSource: m.prototype.ZM=function(p,q){return p.ac.zi&&!p.state.cm?n.gj.da.ica:p.buyPass.zwa?n.gj.da.QI:g.prototype.ZM.call(this,p,q)}
             SDKSelectorSHA256: d2174f8b3db82a6cff8c478b0ff66e1f27eee10d4e8a7cfe68089b3e657fa78c
             ownLeafSelectorOverrides:
-              - >-
-                f.prototype.ZM=function(d,c){return
-                d.mode!==a.Zb.Ec.Kf&&(a.ma.Dc.Ea.gN(d)||a.ma.Dc.Ea.eN(d))||d.ac.zi&&!d.state.cm?L.GDM.rb.gj.da.ica:h.prototype.ZM.call(this,d,c)}
+              - f.prototype.ZM=function(d,c){return d.mode!==a.Zb.Ec.Kf&&(a.ma.Dc.Ea.gN(d)||a.ma.Dc.Ea.eN(d))||d.ac.zi&&!d.state.cm?L.GDM.rb.gj.da.ica:h.prototype.ZM.call(this,d,c)}
             ownLeafSelectorSHA256: 2634bf40f9ec95b66d5bb121bb42feb7b04bd4deb27d0045d4768c2ad6def0c4
             NFGSetterSHA256: fd1ef7abc5e74e047d50b0d144646d0fcc845ccccfb6b0bce561d36dff3f30d3
             NFGDecoderSHA256: f2af21ac03e2773e1004eddde059936f655a765cefd3df634c3fbfd2916c42bd
@@ -10035,20 +9991,12 @@ games:
             currentGetter: wT
             auxiliaryProperty: pRa
             auxiliaryInfoProperty: RD
-            getterDefinitionSource: >-
-              Object.defineProperties(e.prototype,{yh:{get:function(){return
-              this.ec},enumerable:!1,configurable:!0},wT:{get:function(){return
-              null==this.K3?this.ec:this.K3},enumerable:!1,configurable:!0},xj:{get:function(){return this.isFinal?
-
-              this.ky-this.yh:this.ky},enumerable:!1,configurable:!0},ur:{get:function(){return
-              this.isFinal?this.ky:this.xj},enumerable:!1,configurable:!0},isFinal:{get:function(){return
-              this.cm?!0:!this.TM()},enumerable:!1,configurable:!0}});
-            currentPayoutCopySource: >-
-              d.prototype.PZa=function(b){var e,g,m,p,q;b.Pb.wT=this.K3;b.Pb.qb=null!==(e=this.qb)&&void
-              0!==e?e:null;b.Pb.ec=null!==(g=this.ec)&&void 0!==g?g:0;b.Pb.SD=null!==(m=this.SD)&&void 0!==m?
-
-              m:null;b.Pb.Dz=a.Utils.Array.wI(null!==(p=this.df.Dz)&&void 0!==p?p:[]);b.Pb.ywa=null!==(q=this.df.jLa)&&void
-              0!==q?q:null;b.Pb.u7a=a.ma.jc.rC(this.df.iLa);b.Pb.TV=a.ma.jc.rC(this.df.VMa);b.Pb.l7a=this.pTa(b)}
+            getterDefinitionSource: |-
+              Object.defineProperties(e.prototype,{yh:{get:function(){return this.ec},enumerable:!1,configurable:!0},wT:{get:function(){return null==this.K3?this.ec:this.K3},enumerable:!1,configurable:!0},xj:{get:function(){return this.isFinal?
+              this.ky-this.yh:this.ky},enumerable:!1,configurable:!0},ur:{get:function(){return this.isFinal?this.ky:this.xj},enumerable:!1,configurable:!0},isFinal:{get:function(){return this.cm?!0:!this.TM()},enumerable:!1,configurable:!0}});
+            currentPayoutCopySource: |-
+              d.prototype.PZa=function(b){var e,g,m,p,q;b.Pb.wT=this.K3;b.Pb.qb=null!==(e=this.qb)&&void 0!==e?e:null;b.Pb.ec=null!==(g=this.ec)&&void 0!==g?g:0;b.Pb.SD=null!==(m=this.SD)&&void 0!==m?
+              m:null;b.Pb.Dz=a.Utils.Array.wI(null!==(p=this.df.Dz)&&void 0!==p?p:[]);b.Pb.ywa=null!==(q=this.df.jLa)&&void 0!==q?q:null;b.Pb.u7a=a.ma.jc.rC(this.df.iLa);b.Pb.TV=a.ma.jc.rC(this.df.VMa);b.Pb.l7a=this.pTa(b)}
             auxiliaryInfoSetterSource: m.prototype.r0a=function(q){q.bm=this.RVa;q.ru=this.E4;q.zi=this.XT;q.RD=this.pRa;q.u4=this.qRa}
             noMissingCashDefault: true
             noFakeTerminal: true
@@ -10075,11 +10023,8 @@ games:
             version: own-SDK-primary-with-nested-free-counter-v3
             gameId: '32721'
             ownSDKFileSHA256: fd11152a04daf94fa730bcdd4a4309085fb5a7d1aac93c7a1a8c055369942cfc
-            SDKBackupSetterSource: >-
-              d.prototype.MZa=function(b){var e,g,m,p;b=b.features.ac;b.Qj=null!==(e=this.df.CRa)&&void
-              0!==e?e:this.E4;b.pta=null!==(g=b.Qe)&&void 0!==g?g:0;b.Qe=null!==(m=this.df.sna)&&void
-              0!==m?m:this.XT;b.qwa=this.ec;b.bxa=null!==(p=this.df.DRa)&&void 0!==p?p:[];b.lYa=
-
+            SDKBackupSetterSource: |-
+              d.prototype.MZa=function(b){var e,g,m,p;b=b.features.ac;b.Qj=null!==(e=this.df.CRa)&&void 0!==e?e:this.E4;b.pta=null!==(g=b.Qe)&&void 0!==g?g:0;b.Qe=null!==(m=this.df.sna)&&void 0!==m?m:this.XT;b.qwa=this.ec;b.bxa=null!==(p=this.df.DRa)&&void 0!==p?p:[];b.lYa=
               a.ma.Dc.Na.lOa(b.bxa)}
             SDKBackupSetterSHA256: 8140c9c4b1a1979095206f0c9ebfd2f9475c0bebe01447eec800ff30ad66b3f6
             SDKPendingMethodSHA256: 74c68ce14e464d552b0ed79c6fa731ef25246a80fdb0be42976926751ef49483
@@ -10115,9 +10060,7 @@ games:
             noCounterDefaults: true
             noSyntheticTerminal: true
             unseenExtraStageActionStillFatal: true
-            SDKLeafSelectorSource: >-
-              f.prototype.ZM=function(d,c){return
-              d.mode!==a.Zb.Ec.Kf&&(a.ma.Dc.Ea.gN(d)||a.ma.Dc.Ea.eN(d))||d.ac.zi&&!d.state.cm?L.GDM.rb.gj.da.ica:h.prototype.ZM.call(this,d,c)}
+            SDKLeafSelectorSource: f.prototype.ZM=function(d,c){return d.mode!==a.Zb.Ec.Kf&&(a.ma.Dc.Ea.gN(d)||a.ma.Dc.Ea.eN(d))||d.ac.zi&&!d.state.cm?L.GDM.rb.gj.da.ica:h.prototype.ZM.call(this,d,c)}
             SDKLeafSelectorSHA256: 2634bf40f9ec95b66d5bb121bb42feb7b04bd4deb27d0045d4768c2ad6def0c4
             SDKStageHelpers:
               - h.gN=function(f){f=f.features;var d=f.ac,c=f.gg,b=f.Zy;return f.zr===n.vk.Ea&&b===n.vk.Na&&0===c.Qe&&0===d.Qj}
@@ -10127,9 +10070,7 @@ games:
             SDKStageHelperSHA256:
               - d32ed8772b1d09ac488872837f50c1c514ebd15c7eea50f8d99aaacab6393338
               - b9da8eac88c85fdd9a2dd7c713fd7bfa2245bec27b01226544fa5384a88880d7
-            SDKFIDSetterSource: >-
-              d.prototype.KZa=function(b){var e,g,m,p;b.features.zr=null!==(g=null===(e=this.vM)||void 0===e?void 0:e[0])&&void
-              0!==g?g:null;b.features.Zy=null!==(p=null===(m=this.vM)||void 0===m?void 0:m[1])&&void 0!==p?p:null;this.MZa(b);this.NZa(b)}
+            SDKFIDSetterSource: d.prototype.KZa=function(b){var e,g,m,p;b.features.zr=null!==(g=null===(e=this.vM)||void 0===e?void 0:e[0])&&void 0!==g?g:null;b.features.Zy=null!==(p=null===(m=this.vM)||void 0===m?void 0:m[1])&&void 0!==p?p:null;this.MZa(b);this.NZa(b)}
             SDKFIDSetterSHA256: 9a0b1b2dd1cb3b90b272bae0956668b9afb1fdae02cf8bf57856967baed21b7e
             zeroRootWithSavedPrimaryUsesOwnFreeSelector: true
             paidNestedIntroKeepsUnplayedPrimary: true
@@ -10512,11 +10453,9 @@ games:
                 sourceSHA256: 30850b3ece4852034bfb055311b2f6e272c67380c2c6d11f9184c008621e8ffa
                 source: '{key:"FID",type:e.ja.re(e.ja.Ab)}'
             SDKMissingValue: 'null'
-            ownArrayValidatorSource: >-
+            ownArrayValidatorSource: |-
               d.re=function(a){return{validate:function(c){if(null==
-
-              c)return null;if(!h(c))return"must be an array";for(var b=0;b<c.length;b++){var d=a.validate(c[b]);if(d)return"members
-              ".concat(d)}return null}}}
+              c)return null;if(!h(c))return"must be an array";for(var b=0;b<c.length;b++){var d=a.validate(c[b]);if(d)return"members ".concat(d)}return null}}}
             ownArrayValidatorSHA256: 5a83d029cca9320a02e650432c0866f3e6043a1f727842c60f4e6971c6b1f39e
         rootInactiveFlags:
           - wireKey: IFG
@@ -10549,11 +10488,9 @@ games:
               sourceSHA256: 30850b3ece4852034bfb055311b2f6e272c67380c2c6d11f9184c008621e8ffa
               source: '{key:"FID",type:e.ja.re(e.ja.Ab)}'
           SDKMissingValue: 'null'
-          ownArrayValidatorSource: >-
+          ownArrayValidatorSource: |-
             d.re=function(a){return{validate:function(c){if(null==
-
-            c)return null;if(!h(c))return"must be an array";for(var b=0;b<c.length;b++){var d=a.validate(c[b]);if(d)return"members
-            ".concat(d)}return null}}}
+            c)return null;if(!h(c))return"must be an array";for(var b=0;b<c.length;b++){var d=a.validate(c[b]);if(d)return"members ".concat(d)}return null}}}
           ownArrayValidatorSHA256: 5a83d029cca9320a02e650432c0866f3e6043a1f727842c60f4e6971c6b1f39e
         ownGSDDataSchema:
           version: own-exact-SDK-GSD-types-v1
@@ -10620,7 +10557,7 @@ games:
       runtimeGameId: 33157
       runtimeSlug: quickhitsuperwheelwildred
       ownQuickHitPaidContract:
-        version: own-quick-hit-client-free-cash-wheel-v6
+        version: own-quick-hit-client-paid-cash-wheel-v8
         gameId: '32797'
         dbName: sg_quickhitsuperwheelwildred
         runtimeGameId: 33157
@@ -10720,6 +10657,7 @@ games:
         ownClientSemanticProofSHA256: c7951467d86d52f716238e187940eb3355ff786e0383c4637bf0329b01ce0217
         ownObservedFreeIntroductionsSHA256: 2ae1bc7f435cd2b4f5bb7320a047d5cebfd3d6eb1990f3132045e7adbb3ad7d3
         ownFreeCashWheelClientProofSHA256: b6fb54de5e3920441f783a5f2b7ff9619164832d23f03971a486232740eb57e7
+        ownPaidQuickHitWheelClientProofSHA256: 4363ed40c86bc8db350a6c280dd77483bd4afa8ff20298cba698935b20b773cf
   - provider: sg
     gameId: '32798'
     name: Quick Hit Ultra Pays - Sun Dragon
