@@ -1413,6 +1413,178 @@ export class SGWmsSession {
     close() { if(this.closed)return;this.closed=true;this.cookies.clear();if(this.journal!==null){fs.fsyncSync(this.journal);fs.closeSync(this.journal);this.journal=null;} }
 }
 
+
+// Own original-UFL source DATA; unchanged leaf functions scoped to avoid
+// shadowing unrelated provider helper names. No SG handling code imported.
+namespace OwnOriginalUFLData {
+
+export type OwnOriginalUFLRequest = {event:string;parameters:Record<string,string>};
+export type OwnOriginalUFLProfile = {gameId:string;dbName:string;runtimeGameId:number;runtimeSlug:string;ownSDKFileSHA256:string;SDKFinalGetterSourceSHA256:string;paidRequestParams:Record<string,string>;freeRequestParams:Record<string,string>;betRaw:number;freeModes:number[];pickerMode:number|null;pickRound:number|null;sourceChoiceDomain:number[];explicitChoice:number|null;sourceEvidenceSHA256:string};
+export type OwnOriginalUFLState = {next?:OwnOriginalUFLRequest;activeFree:Record<string,{remaining:number;intro:boolean}>;picker:'inactive'|'start'|'pick'|'end';sentFreeMode?:number;closed:boolean;country?:any};
+export function createOwnOriginalUFLState():OwnOriginalUFLState {return{activeFree:{},picker:'inactive',closed:false};}
+export function beginOwnOriginalUFLRound(s:OwnOriginalUFLState):void {assert(!s.next&&!s.closed,'AG integrity: own original UFL previous round pending');s.activeFree={};s.picker='inactive';s.sentFreeMode=undefined;s.country=undefined;}
+function integer(v:string|undefined,label:string,optionalDefault?:number):number {if(v===undefined&&optionalDefault!==undefined)return optionalDefault;assert(typeof v==='string'&&/^(0|[1-9]\d*)$/.test(v)&&Number.isSafeInteger(Number(v)),'AG integrity: own original UFL '+label);return Number(v);}
+function bool(v:string|undefined,label:string):boolean {if(v===undefined)return false;assert(['0','1','false','true'].includes(v),'AG integrity: own original UFL '+label);return v==='1'||v==='true';}
+function ownModeIds(p:OwnOriginalUFLProfile,w:Record<string,string>):number[] {if(w.FID===undefined)return[];const pieces=w.FID.split('|').filter(Boolean);assert(pieces.length>0&&pieces.length<=2,'AG integrity: own original UFL actual FID');const ids=pieces.map(v=>integer(v,'FID'));assert(ids.every(v=>p.freeModes.includes(v)||v===p.pickerMode),'AG integrity: own original UFL actual next mode unmapped');return ids;}
+function request(p:OwnOriginalUFLProfile,event:string,extra:Record<string,string>={}):OwnOriginalUFLRequest {return{event,parameters:event==='FREE_GAME'?{...p.freeRequestParams}:{GN:p.runtimeSlug,REC:'0',CFG:String(p.pickerMode),...extra}};}
+function select(p:OwnOriginalUFLProfile,s:OwnOriginalUFLState):OwnOriginalUFLRequest|undefined {
+ // The own source creates the Fire Link free branch before its picker and
+ // keeps the ordinary free branch last. Country has two free branches only.
+ const special=p.freeModes[0],a=s.activeFree[String(special)];
+ if(a&&(a.intro||a.remaining>0)){s.sentFreeMode=special;return request(p,'FREE_GAME');}
+ if(s.picker==='start')return request(p,'FEATURE_START');
+ if(s.picker==='pick'){assert(p.pickRound!==null&&p.explicitChoice!==null&&p.sourceChoiceDomain.includes(p.explicitChoice),'AG integrity: own original UFL source choice absent');return request(p,'FEATURE_PICK',{FP:`${p.pickRound}|1|${p.explicitChoice}`});}
+ if(s.picker==='end')return request(p,'FEATURE_END');
+ for(const mode of p.freeModes.slice(1)){const q=s.activeFree[String(mode)];if(q&&(q.intro||q.remaining>0)){s.sentFreeMode=mode;return request(p,'FREE_GAME');}}
+ s.sentFreeMode=undefined;return undefined;
+}
+export function getOwnOriginalUFLNext(s:OwnOriginalUFLState):OwnOriginalUFLRequest|undefined {return s.next?structuredClone(s.next):undefined;}
+export function updateOwnOriginalUFLNext(p:OwnOriginalUFLProfile,s:OwnOriginalUFLState,event:string,w:Record<string,string>):void {
+ assert(!s.closed,'AG integrity: own original UFL state closed');
+ if(event!=='BET')assert(s.next?.event===event,'AG integrity: own original UFL response order');
+ assert(['BET','FREE_GAME','FEATURE_START','FEATURE_PICK','FEATURE_END'].includes(event),'AG integrity: own original UFL event unmapped');
+ if(p.gameId==='32743'){
+  assert(event==='BET'||event==='FREE_GAME','AG integrity: own Country network event unmapped');
+  const signed=(value:string|undefined,label:string)=>{if(value===undefined)return undefined;assert(/^-?\d+$/.test(value)&&Number.isSafeInteger(Number(value)),'AG integrity: own Country '+label);return Number(value);};
+  const decoded:any={NFG:signed(w.NFG,'NFG'),TFG:signed(w.TFG,'TFG'),GCT:bool(w.GCT,'GCT'),FID:ownModeIds(p,w)};
+  if(w.GSD!==undefined){const field=w.GSD.split('#').find(v=>v.startsWith('flBonus~'));if(field!==undefined){const value=JSON.parse(field.slice('flBonus~'.length));assert(value&&Array.isArray(value.fireballs),'AG integrity: own Country Link fireballs');decoded.linkCellCount=value.fireballs.length;}}
+  const result=selectCountryNext(s.country,decoded);s.country=result.state;s.next=result.next?request(p,result.next):undefined;return;
+ }
+ const cap=bool(w.GCT,'GCT'),remaining=integer(w.NFG,'NFG',0),ids=ownModeIds(p,w);
+ if(cap){s.activeFree={};s.picker='inactive';s.next=undefined;return;}
+ if(event==='FEATURE_START'){
+  // Own successful start callers set GZ/I3=true locally, then enter picker.
+  // FS_n and FPM_n are recovery metadata; they are not fresh-session gates.
+  assert(p.pickerMode!==null&&s.picker==='start','AG integrity: own original UFL source start scope');s.picker='pick';
+ }else if(event==='FEATURE_PICK'){
+  assert(p.pickerMode!==null&&s.picker==='pick','AG integrity: own original UFL source pick scope');s.picker='end';
+ }else if(event==='FEATURE_END'){
+  assert(p.pickerMode!==null&&s.picker==='end','AG integrity: own original UFL source end scope');
+  // Own FEATURE_END response clears the old game model before restoring its
+  // actual ordinary free counter. No stale outer round is synthesized.
+  s.activeFree={};s.picker='inactive';
+  if(remaining>0)s.activeFree[String(p.freeModes[p.freeModes.length-1])]={remaining,intro:false};
+ }else{
+  for(const mode of ids){
+   if(mode===p.pickerMode){if(s.picker==='inactive')s.picker='start';}
+   else if(!s.activeFree[String(mode)])s.activeFree[String(mode)]={remaining:0,intro:event==='BET'||mode!==s.sentFreeMode};
+  }
+  const ownCurrent=ids.length&&p.freeModes.includes(ids[0])?ids[0]:event==='FREE_GAME'?s.sentFreeMode:undefined;
+  if(ownCurrent!==undefined){const q=s.activeFree[String(ownCurrent)]||(s.activeFree[String(ownCurrent)]={remaining:0,intro:false});q.remaining=remaining;if(event==='FREE_GAME'&&s.sentFreeMode===ownCurrent)q.intro=false;if(event==='FREE_GAME'&&q.remaining===0&&!q.intro)delete s.activeFree[String(ownCurrent)];}
+  else if(remaining>0){assert(event==='BET'&&ids.length===0,'AG integrity: own original UFL counter target unmapped');s.activeFree[String(p.freeModes[p.freeModes.length-1])]={remaining,intro:false};}
+ }
+ s.next=select(p,s);
+}
+
+
+
+// Isolated protocol DATA proposal. Not installed in any live program.
+// Fixed own SDK: 9cf163fe2b584bd14b7b2ab2c7bdd0f590d94637cc110e54376c8a0d0dbfa79a.
+// Inputs are already decoded fields, after the existing successful-envelope guard.
+// This module neither sends requests nor synthesizes response packets.
+
+function initialCountryState() {
+  // Own Da.Gb / Da.Xb clear + G.ba.Da.Xb clear.
+  return {
+    dc: { pending: false, remaining: null, linkCellCount: 0 },
+    tb: { pending: false, remaining: null, total: 0 },
+  };
+}
+
+function countField(value, fallback, name) {
+  if (value === undefined) return fallback; // Only own explicit SDK defaults.
+  if (!Number.isSafeInteger(value)) throw new Error(`SG own Country invalid ${name}`);
+  return value;
+}
+
+function selectCountryNext(previous, decoded) {
+  const prior = previous || initialCountryState();
+  const state = { dc: { ...prior.dc }, tb: { ...prior.tb } };
+  const nfg = countField(decoded.NFG, 0, 'NFG');
+  const tfg = countField(decoded.TFG, 0, 'TFG');
+  const gct = decoded.GCT === undefined ? false : decoded.GCT;
+  if (typeof gct !== 'boolean') throw new Error('SG own Country invalid GCT');
+  const ids = decoded.FID === undefined ? [] : decoded.FID;
+  if (!Array.isArray(ids) || ids.length > 2 || ids.some(id => id !== 0 && id !== 1)) {
+    throw new Error('SG own Country unmapped actual FID');
+  }
+
+  // Own Mi invokes kCa for only the first two FID entries.
+  for (const id of ids) {
+    if (id === 0) state.dc.pending = true;
+    if (id === 1) {
+      state.tb.pending = true;
+      state.tb.total = tfg;
+    }
+  }
+
+  // Exact Q7a target: dc.rs && (FID[0] == 0 || io) ? dc : tb.
+  // G.ba.Da.Xb.clear only clears this target; jCa then binds its Lj = NFG.
+  // The other stage's counter survives a response for the current stage.
+  const target = state.dc.pending && (ids[0] === 0 || gct) ? 'dc' : 'tb';
+  state[target].remaining = nfg;
+
+  // Optional own flBonus.fireballs count is a real next/end input:
+  // JN.Gb.$da tests 40 == dc.ye.length. It is not a display equation.
+  // The caller may derive this from its own decoded GSD; no cash values needed.
+  if (decoded.linkCellCount !== undefined) {
+    if (!Number.isSafeInteger(decoded.linkCellCount) || decoded.linkCellCount < 0) {
+      throw new Error('SG own Country invalid Link cell count');
+    }
+    state.dc.linkCellCount = decoded.linkCellCount;
+  }
+
+  // Keep the existing original-AG GCT cap handling. Do not request after cap.
+  if (gct) return { state, next: null, end: true, reason: 'own-GCT-cap' };
+
+  // Exact own Link controller continuation/removal conditions. CZa selects AZa,
+  // whose fixed messageType is FREE_GAME; there is no own FEATURE_PICK caller.
+  if (state.dc.pending) {
+    const outerReady = state.tb.pending && state.tb.remaining > 0;
+    const linkClosed = state.dc.remaining === 0 || state.dc.linkCellCount === 40 || outerReady;
+    if (!linkClosed) {
+      if (state.dc.remaining === null) throw new Error('SG own Country Link remaining unresolved');
+      return { state, next: 'FREE_GAME', end: false, reason: 'own-CZa-AZa' };
+    }
+    // Source JN.Gb clears dc before joining the outer tb feature flow.
+    state.dc.pending = false;
+    state.dc.remaining = null;
+    state.dc.linkCellCount = 0;
+  }
+
+  if (state.tb.remaining > 0) {
+    // Own normal active-free yfa -> k_a -> i_a -> FREE_GAME.
+    return { state, next: 'FREE_GAME', end: false, reason: 'own-k_a-i_a' };
+  }
+  if (state.tb.pending && state.tb.remaining === null) {
+    // New combined flow has no actual outer-stage count yet. Preserve the state;
+    // don't borrow another game's counter or manufacture an end packet.
+    throw new Error('SG own Country outer Free remaining unresolved');
+  }
+  if (state.tb.remaining < 0) {
+    throw new Error('SG own Country unmapped actual negative Free remaining');
+  }
+  state.tb.pending = false;
+  return { state, next: null, end: true, reason: 'own-all-next-counters-closed' };
+}
+
+
+
+
+const ownProfiles:OwnOriginalUFLProfile[]=[{"gameId":"32687","dbName":"sg_uflchinastreet","runtimeGameId":33096,"runtimeSlug":"uflchinastreet","ownSDKFileSHA256":"382ed58bb4745e4921f0f35346e30113bcc3ae423ace387d99c7396f07119bf6","SDKFinalGetterSourceSHA256":"38c3d5f2e9882458e52b34be4cd82e5b8d47cef4261d0b2b0eb76c5ea50baf41","paidRequestParams":{"BPL":"5","GN":"uflchinastreet","LB":"50","REC":"0"},"freeRequestParams":{"BPL":"5","GN":"uflchinastreet","LB":"50","REC":"0"},"betRaw":100,"freeModes":[0,2],"pickerMode":1,"pickRound":0,"sourceChoiceDomain":[0,1,2,3,4,5],"explicitChoice":1,"sourceEvidenceSHA256":"3f8d7c45db545662f98edd884bcbb26b1ebb49678ec7648b729b3d503c799f85"},{"gameId":"32743","dbName":"sg_ultimatefirelinkcountrylights96","runtimeGameId":33143,"runtimeSlug":"ultimatefirelinkcountrylights96","ownSDKFileSHA256":"9cf163fe2b584bd14b7b2ab2c7bdd0f590d94637cc110e54376c8a0d0dbfa79a","SDKFinalGetterSourceSHA256":"5e7fabb58cd844b87b12cd202785333c1f818f9261e684b4c7ee3d853807dd57","paidRequestParams":{"BPL":"5","GN":"ultimatefirelinkcountrylights96","LB":"150","REC":"0"},"freeRequestParams":{"BPL":"5","GN":"ultimatefirelinkcountrylights96","LB":"150","REC":"0"},"betRaw":100,"freeModes":[0,1],"pickerMode":null,"pickRound":null,"sourceChoiceDomain":[],"explicitChoice":null,"sourceEvidenceSHA256":"2462270f75a6af6b5feaa642c364acfd9f48619f3796b5e89653191bbc9c472a"},{"gameId":"32744","dbName":"sg_uflriverwalk96","runtimeGameId":33144,"runtimeSlug":"uflriverwalk96","ownSDKFileSHA256":"b834eb56aef577215e64256513015828624440c8f26cde80b1fd1deac36ec070","SDKFinalGetterSourceSHA256":"f9fde762db7df4461f3766065a56f6bb5d9a251a322c3a47f3542521bac7393c","paidRequestParams":{"BPL":"5","GN":"uflriverwalk96","LB":"50","REC":"0"},"freeRequestParams":{"BPL":"5","GN":"uflriverwalk96","LB":"50","REC":"0"},"betRaw":100,"freeModes":[1,0],"pickerMode":2,"pickRound":1,"sourceChoiceDomain":[0,1,2,3,4,5],"explicitChoice":1,"sourceEvidenceSHA256":"e9603707ffd057dd865c002dd9cdf40c420e462beefd9985f3a0991fbb3ddc5b"}];
+export function ownOriginalUFLSourceProfile(game:any):OwnOriginalUFLProfile|undefined {
+ const c=game.sg?.ownGDMContract,q=c?.ownRootNFGFlowOnlyCapture,b=q?.ownOriginalUFLSourceFlow;if(!b)return undefined;
+ const p=ownProfiles.find(v=>v.gameId===game.gameId);assert(p&&game.provider==='sg'&&game.dbName===p.dbName&&game.sg.runtimeGameId===p.runtimeGameId&&game.sg.runtimeSlug===p.runtimeSlug&&c.ownSDKFileSHA256===p.ownSDKFileSHA256&&c.SDKFinalGetterSourceSHA256===p.SDKFinalGetterSourceSHA256&&c.betRaw===p.betRaw&&game.sg.betRaw===p.betRaw,'AG integrity: own original UFL source identity');
+ assert.deepStrictEqual(b,p,'AG integrity: own original UFL source input binding');assert.deepStrictEqual(game.sg.requestParams,p.paidRequestParams);assert.deepStrictEqual(c.freeBudgetContract.freeRequestParams,p.freeRequestParams);return p;
+}
+
+}
+export const ownOriginalUFLSourceProfile=OwnOriginalUFLData.ownOriginalUFLSourceProfile;
+export const createOwnOriginalUFLState=OwnOriginalUFLData.createOwnOriginalUFLState;
+export const beginOwnOriginalUFLRound=OwnOriginalUFLData.beginOwnOriginalUFLRound;
+export const getOwnOriginalUFLNext=OwnOriginalUFLData.getOwnOriginalUFLNext;
+export const updateOwnOriginalUFLNext=OwnOriginalUFLData.updateOwnOriginalUFLNext;
+
 // SG GDM connection/protocol DATA provider for the unchanged original AG.
 // No legacy SG imports, transport retries, source-result guesses or SG storage.
 
@@ -1738,7 +1910,7 @@ export class SGGdmSession{
  private async exchange(event:string,parameters:Record<string,any>):Promise<GDMWireStep>{
   assert(!this.closed,'AG integrity: GDM session permanently closed');const payload=this.form(event,parameters),ordinal=++this.ordinal;
   const gameplay=event!=='INIT'&&event!=='REELSTRIP';if(gameplay)this.gameplaySent=true;
-  const ownFeatureFollowup=(this.ownCIProfile||ownNOVAFeatureProfile(this.game))&&['FEATURE_START','FEATURE_PICK','FEATURE_END'].includes(event);
+  const ownFeatureFollowup=(ownOriginalUFLSourceProfile(this.game)||this.ownCIProfile||ownNOVAFeatureProfile(this.game))&&['FEATURE_START','FEATURE_PICK','FEATURE_END'].includes(event);
   const context={event,ordinal,requestKind:event==='FREE_GAME'||ownFeatureFollowup?'round-follow-up' as const:gameplay?'round-start' as const:'initialization' as const,gameplayRequestHasBeenSent:this.gameplaySent};
   if(this.transport){let step:GDMWireStep;try{step=await this.transport(event,payload);}catch{this.close();throw new SGSourceFault(gameplay?'execution-unknown':'recoverable-initialization',context);}assert(!this.closed,'AG integrity: GDM late response after permanent closure');if(step.httpStatus!==undefined&&step.httpStatus!==200){this.close();throw new SGSourceFault(gameplay?'execution-unknown':'protocol', {...context,httpStatus:step.httpStatus});}return step;}
   const operator=process.env.SG_GDM_OPERATOR_ID;assert(operator&&/^[A-Za-z0-9_-]+$/.test(operator),'AG integrity: GDM own operator configuration missing');
@@ -1759,7 +1931,7 @@ export class SGGdmSession{
  }
  getHandshakeData(){return null;}getBalance(){return this.balance/100;}getFallbackBet(){return this.game.sg.betRaw/100;}
  getSpinParams(){return {...this.game.sg.requestParams};}getInitialRoundRequest(){return{event:'BET',parameters:this.getSpinParams()};}
- getExactFollowUpRequest(action:string){const ufl=ownUFLSourceProfile(this.game);if(ufl){assert(action==='FREE_SPIN'&&this.ownUFLPending,'AG integrity: UFL actual next absent');return{event:'FREE_GAME',parameters:{...ufl.freeRequestParams}};}if(this.ownCIProfile){assert(action==='FREE_SPIN','AG integrity: Samurai CI own next action');const exact=getOwnSamuraiCINext(this.ownCIState,this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams);assert(exact,'AG integrity: Samurai CI own next absent');return exact;}if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){if(ownNOVAFeatureProfile(this.game)){assert(action==='FREE_SPIN','AG integrity: GDM own NOVA feature next action');const exact=getOwnNOVAFeatureNext(this.ownNOVAFeatureState,this.rootFlowFreeRequest());assert(exact,'AG integrity: GDM own NOVA feature next absent');return exact;}assert(action==='FREE_SPIN'&&(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry),'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:this.rootFlowFreeRequest()};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
+ getExactFollowUpRequest(action:string){const ownOriginal=ownOriginalUFLSourceProfile(this.game);if(ownOriginal){assert(action==='FREE_SPIN','AG integrity: own original UFL next action');const exact=getOwnOriginalUFLNext(this.ownOriginalUFLState);assert(exact,'AG integrity: own original UFL next absent');return exact;}const ufl=ownUFLSourceProfile(this.game);if(ufl){assert(action==='FREE_SPIN'&&this.ownUFLPending,'AG integrity: UFL actual next absent');return{event:'FREE_GAME',parameters:{...ufl.freeRequestParams}};}if(this.ownCIProfile){assert(action==='FREE_SPIN','AG integrity: Samurai CI own next action');const exact=getOwnSamuraiCINext(this.ownCIState,this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams);assert(exact,'AG integrity: Samurai CI own next absent');return exact;}if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){if(ownNOVAFeatureProfile(this.game)){assert(action==='FREE_SPIN','AG integrity: GDM own NOVA feature next action');const exact=getOwnNOVAFeatureNext(this.ownNOVAFeatureState,this.rootFlowFreeRequest());assert(exact,'AG integrity: GDM own NOVA feature next absent');return exact;}assert(action==='FREE_SPIN'&&(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry),'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:this.rootFlowFreeRequest()};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
  getLastGameRequest(){return this.lastRequest;}getPickParams(){throw new Error('AG integrity: GDM own selection not mapped');}
  isRoundTerminalAction(action:string){return action==='SPIN';}
  private ownExtraStageCounter(p:Record<string,string>,prior:any){
@@ -1865,6 +2037,7 @@ export class SGGdmSession{
   assert(value===undefined||value==='0'||value==='1','AG integrity: GDM own Quick Hit FG2T boolean');
   this.quickHitSecondFeature=value==='1';
  }
+ private ownOriginalUFLState=createOwnOriginalUFLState();
  private rootFlowRemaining:number|undefined;
  private rootFlowPendingCrossLink:boolean=false;private rootFlowPendingNOVAEntry=false;private ownUFLPending=false;private ownNOVAWinCapReached=false;
  private rootFlowSteps:GDMWireStep[]=[];
@@ -1881,10 +2054,11 @@ export class SGGdmSession{
  }
  private rootFlowBinding(){
   const c=gdmBinding(this.game),q=c.ownRootNFGFlowOnlyCapture,r=c.freeBudgetContract,b=r?.ownSDKFreeRequestBinding;
-  assert(['own-SDK-root-NFG-flow-only-v1','own-SDK-root-NFG-natural-chain-flow-only-v2','own-bundle-NFG-flow-only-v3','own-NOVA-account-NFG-next-end-flow-only-v4','own-bundle-network-feature-next-end-flow-only-v5','own-UFL-source-next-end-flow-only-v6'].includes(q?.version)&&q.gameId===this.game.gameId&&q.ownSDKFileSHA256===c.ownSDKFileSHA256&&q.SDKFinalGetterSourceSHA256===c.SDKFinalGetterSourceSHA256,'AG integrity: GDM own root flow identity');
+  assert(['own-SDK-root-NFG-flow-only-v1','own-SDK-root-NFG-natural-chain-flow-only-v2','own-bundle-NFG-flow-only-v3','own-NOVA-account-NFG-next-end-flow-only-v4','own-bundle-network-feature-next-end-flow-only-v5','own-UFL-source-next-end-flow-only-v6','own-original-UFL-source-next-end-flow-v7'].includes(q?.version)&&q.gameId===this.game.gameId&&q.ownSDKFileSHA256===c.ownSDKFileSHA256&&q.SDKFinalGetterSourceSHA256===c.SDKFinalGetterSourceSHA256,'AG integrity: GDM own root flow identity');
   if(q.version==='own-SDK-root-NFG-flow-only-v1'){assert(b?.ownSDKFileSHA256===c.ownSDKFileSHA256,'AG integrity: GDM own root flow identity');for(const k of ['SDKSelectorSHA256','NFGSetterSHA256','NFGDecoderSHA256','GCTDecoderSHA256','ownRequestConstructorSHA256'])assert(q[k]===b[k],'AG integrity: GDM own root next/end selector');}
      else if(q.version==='own-bundle-NFG-flow-only-v3'){const b=q.ownBundleFlow;assert(b?.version==='own-bundle-SDK-NFG-next-end-v1'&&b.gameId===this.game.gameId&&b.ownSDKFileSHA256===c.ownSDKFileSHA256&&b.ownTerminalSourceSHA256===c.SDKFinalGetterSourceSHA256&&b.sourceDefinedModesOnly&&b.unmappedPickAndOtherFlowStops&&b.rawWirePreserved,'AG integrity: GDM own bundle flow binding');for(const k of ['ownFreeRequestSourceSHA256','ownTerminalSourceSHA256','ownNFGDecoderSHA256','ownFeatureLookupSHA256'])assert(/^[a-f0-9]{64}$/.test(b[k]),'AG integrity: GDM own bundle SDK bytes');if(b.remainingDecoder){assert(b.remainingDecoder==='signed-minus-one-is-pending'&&b.ownNFGDecoderSHA256===crypto.createHash('sha256').update('i=void 0!==t.NFG&&-1==Number(t.NFG)?1:0').digest('hex'),'AG integrity: GDM own signed next/end decoder');}assert(Array.isArray(b.actualFreeFeatureModes)&&b.actualFreeFeatureModes.length>0&&b.actualFreeFeatureModes.every((v:any)=>Number.isSafeInteger(v)&&v>=0),'AG integrity: GDM own bundle feature selector');}
 else if(q.version==='own-NOVA-account-NFG-next-end-flow-only-v4'){this.ownNOVAAccountRequestBinding();}
+else if(q.version==='own-original-UFL-source-next-end-flow-v7'){assert(ownOriginalUFLSourceProfile(this.game),'AG integrity: own original UFL source scope absent');}
 else if(q.version==='own-UFL-source-next-end-flow-only-v6'){assert(ownUFLSourceProfile(this.game),'AG integrity: UFL own source flow absent');}
 else if(q.version==='own-bundle-network-feature-next-end-flow-only-v5'){assert(isOwnBundleFeatureProfile(ownNOVAFeatureProfile(this.game)),'AG integrity: GDM own bundle source network scope');}
 else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&&n.ownSDKFileSHA256===c.ownSDKFileSHA256&&n.ownPaidAndFreeRequestBytesUsed&&n.noSyntheticTerminal&&n.ownCompleteNaturalRecordsSHA256===q.ownCompleteNaturalRecordsSHA256&&n.ownActualFreeRequestParamsSHA256===q.ownActualFreeRequestParamsSHA256,'AG integrity: GDM own natural request/terminal binding');const ordered=Object.fromEntries(Object.entries(r.freeRequestParams).sort(([a],[b])=>a.localeCompare(b)));assert(crypto.createHash('sha256').update(JSON.stringify(ordered)).digest('hex')===q.ownActualFreeRequestParamsSHA256&&c.pendingClauses.some((x:any)=>x.wireKey==='NFG'),'AG integrity: GDM actual natural free request');}
@@ -1921,6 +2095,21 @@ else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&
   }catch(error){this.close();throw error;}
  }
 
+
+ private async ownOriginalUFLCall(event:string,parameters:Record<string,any>|null){
+  const profile=ownOriginalUFLSourceProfile(this.game),{c}=this.rootFlowBinding(),first=event==='BET';assert(profile&&!this.closed&&parameters,'AG integrity: own original UFL session closed');
+  if(first){beginOwnOriginalUFLRound(this.ownOriginalUFLState);assert.deepStrictEqual(parameters,profile.paidRequestParams);this.roundStart=this.balance;this.totalWin=0;this.rootFlowSteps=[];}
+  else {const exact=getOwnOriginalUFLNext(this.ownOriginalUFLState);assert(exact&&exact.event===event,'AG integrity: own original UFL actual next request');assert.deepStrictEqual(parameters,exact.parameters);}
+  this.lastRequest={event,parameters:{...parameters}};const step=await this.exchange(event,parameters);try{
+   const wire=this.decode(step,event);assert(wire.REC===undefined&&(wire.R===undefined||wire.R==='0'),'AG integrity: own original UFL recovered request unmapped');
+   const end=gdmInteger(wire.B,'actual own original UFL balance'),total=gdmInteger(wire.TW,'actual own original UFL whole cash');assert(end===this.roundStart-c.betRaw+total,'AG integrity: GDM original whole cash conservation');
+   if(step.responseBalance!==undefined)assert(step.responseBalance===gdmInteger(wire.AB===undefined?wire.B:wire.AB,'actual own original UFL source balance'),'AG integrity: GDM source captured balance differs');
+   updateOwnOriginalUFLNext(profile,this.ownOriginalUFLState,event,wire);this.balance=end;this.totalWin=total;this.rootFlowSteps.push({...step,responseBalance:end});
+   const pending=!!getOwnOriginalUFLNext(this.ownOriginalUFLState),steps=pending?this.rootFlowSteps.slice(-1):this.rootFlowSteps;
+   return {NextActionInfo:{nextAction:pending?'FREE_SPIN':'SPIN'},PlayerBalanceInfo:{preWagerBalance:this.roundStart/100,balance:end/100,wager:c.betRaw/100,resultAmount:total/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,startBalance:this.roundStart/100,endBalance:end/100,totalWin:total/100,stepCount:steps.length,msgIds:steps.map(x=>x.msgId),steps:structuredClone(steps),SGWireResponse:wire,SGDecodedResponseXML:step.responseXml,SGOwnSDKDecision:{ownSDKFileSHA256:c.ownSDKFileSHA256,ownOriginalUFLActualNextEndOnly:true,noSyntheticTerminal:true},money:{startBalanceRaw:this.roundStart,endBalanceRaw:end,betRaw:c.betRaw,totalWinRaw:total}};
+  }catch(error){this.close();throw error;}
+ }
+
  private async ownUFLCall(event:string,parameters:Record<string,any>|null){
   const profile=ownUFLSourceProfile(this.game),{c}=this.rootFlowBinding(),first=event==='BET';
   assert(profile&&!this.closed&&parameters,'AG integrity: UFL own session closed');
@@ -1938,6 +2127,7 @@ else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&
   }catch(error){this.close();throw error;}
  }
  private async rootFlowCall(event:string,parameters:Record<string,any>|null){
+  if(ownOriginalUFLSourceProfile(this.game))return this.ownOriginalUFLCall(event,parameters);
   if(ownUFLSourceProfile(this.game))return this.ownUFLCall(event,parameters);
   if(this.ownCIProfile)return this.ownSamuraiCICall(event,parameters);
   const {c,q,r}=this.rootFlowBinding(),first=event==='BET';assert(!this.closed&&parameters,'AG integrity: GDM own root session closed');

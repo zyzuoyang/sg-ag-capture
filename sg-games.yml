@@ -12564,3 +12564,407 @@ games:
   - {"provider":"sg","gameId":"32740","name":"Ultimate Fire Link Cash Falls By The Bay","dbName":"sg_uflcashfallsbythebay96","backendId":"uflcashfallsbythebay96","rtpBuckets":[0,30,100,300,500,1000,2500,5000,10000,1001,2001,5001,10001],"sg":{"protocol":"gdm","endpoint":"https://ogs-gdm-usnj.nyxop.net/nextgen/","runtimeGameId":33140,"runtimeSlug":"uflcashfallsbythebay96","betRaw":200,"requestParams":{"BPR":"10","GN":"uflcashfallsbythebay96","RB":"5"},"ownGDMContract":{"version":"own-SDK-free-game-chain-v2","gameId":"32740","dbName":"sg_uflcashfallsbythebay96","runtimeGameId":33140,"runtimeSlug":"uflcashfallsbythebay96","fixedGitCommit":"885f862bcc04841406820a932ef14c38c7759f1d","ownSDKFileSHA256":"f620c08cf1504048592b157a37d220dc798dd60696cd774069c64d3cbb82a16f","SDKFinalGetterSourceSHA256":"5f7c4e5fd999bbaa6149ccab530534469d4ac1a01566650a680eabfe2260ae93","betRaw":200,"balanceScale":1,"winScale":1,"ordinaryOnly":false,"requiresNoPreviousFeature":true,"pendingClauses":[{"kind":"SDK-base-false"},{"kind":"fresh-ordinary-SDK-NFG","wireKey":"NFG","explicitSDKDefault":"0"}],"rootInactiveFlags":[{"wireKey":"GA"},{"wireKey":"GCT"},{"wireKey":"IFG"}],"responseKeys":["AB","B","BPR","CFGG","CW","FGT","FGTW","FID","FRBAL","GA","GSD","IFG","MSGID","MUL","NFG","NRID","RB","RID","RS","SID","SUB","TFG","TW","VER","WC","WM","WS"],"requiredResponseKeys":["B","TW","MSGID"],"freeBudgetContract":{"version":"own-SDK-NFG-without-promotional-FreeRounds-v1","gameId":"32740","paidEvent":"BET","freeEvent":"FREE_GAME","freeRequestParams":{"BPR":"10","GN":"uflcashfallsbythebay96","RB":"5"},"promotionalKeysForbidden":[]},"ownRootNFGFlowOnlyCapture":{"version":"own-UFL-source-next-end-flow-only-v6","gameId":"32740","ownSDKFileSHA256":"f620c08cf1504048592b157a37d220dc798dd60696cd774069c64d3cbb82a16f","SDKFinalGetterSourceSHA256":"5f7c4e5fd999bbaa6149ccab530534469d4ac1a01566650a680eabfe2260ae93","nextEvent":"FREE_GAME","remainingWireKey":"NFG","terminalRemaining":0,"usesOwnRequestAndTerminalOnly":true,"rawWirePreserved":true,"originalAGAmountReplayMongoChecksRequired":true,"noSyntheticTerminal":true,"noOldUnknownPOSTReplay":true,"unusedDisplayAndBudgetFieldsDoNotBlock":true,"noPreviouslySeenWholeVariationGate":true,"unmappedActiveFlagsStillStop":true,"ownUFLSourceFlow":{"version":"own-UFL-source-current-response-next-end-v1","gameId":"32740","dbName":"sg_uflcashfallsbythebay96","runtimeGameId":33140,"runtimeSlug":"uflcashfallsbythebay96","ownSDKFileSHA256":"f620c08cf1504048592b157a37d220dc798dd60696cd774069c64d3cbb82a16f","SDKFinalGetterSourceSHA256":"5f7c4e5fd999bbaa6149ccab530534469d4ac1a01566650a680eabfe2260ae93","ownPendingMethodSourceSHA256":"ebbfa66836516d914ded1832a602bb7f285d59ccdfda489e0f5e49306704d8c0","paidRequestParams":{"BPR":"10","GN":"uflcashfallsbythebay96","RB":"5"},"freeRequestParams":{"BPR":"10","GN":"uflcashfallsbythebay96","RB":"5"},"betRaw":200,"ownNextEvent":"FREE_GAME","primaryRemainingWireKey":"NFG","extraFreeCurrentIndexWireKey":"FGCR","extraFreeIntroRemainingWireKey":"FGRT","extraFreeRemainingWireKey":"FGRR","ownTriggerFlagWireKey":"FLRT","ownTriggerFlagTrueValue":1,"ownNextTriggerNumericPresenceWireKey":"FLNTR","numericZeroNextTriggerStillPending":true,"sourceGCTStopsBeforePending":true,"optionalMetadataRawPreserved":true,"noDisplayOrStageMoneyEquations":true,"oldUnknownPOSTNeverReplayed":true,"noSyntheticProviderACKOrTerminal":true}}}}}
   - {"provider":"sg","gameId":"32741","name":"Ultimate Fire Link Cash Falls China Street","dbName":"sg_uflcashfallschinastreet96","backendId":"uflcashfallschinastreet96","rtpBuckets":[0,30,100,300,500,1000,2500,5000,10000,1001,2001,5001,10001],"sg":{"protocol":"gdm","endpoint":"https://ogs-gdm-usnj.nyxop.net/nextgen/","runtimeGameId":33141,"runtimeSlug":"uflcashfallschinastreet96","betRaw":100,"requestParams":{"BPR":"5","GN":"uflcashfallschinastreet96","RB":"5"},"ownGDMContract":{"version":"own-SDK-free-game-chain-v2","gameId":"32741","dbName":"sg_uflcashfallschinastreet96","runtimeGameId":33141,"runtimeSlug":"uflcashfallschinastreet96","fixedGitCommit":"885f862bcc04841406820a932ef14c38c7759f1d","ownSDKFileSHA256":"98178e8b2e2190436b46d784d8ea0bed7655df8ae340f2cb6e602e9093fb4a3a","SDKFinalGetterSourceSHA256":"b824e2371a44e479df3cf13767683c23f660cb859e5ffc137bfa2312c9ad0b25","betRaw":100,"balanceScale":1,"winScale":1,"ordinaryOnly":false,"requiresNoPreviousFeature":true,"pendingClauses":[{"kind":"SDK-base-false"},{"kind":"fresh-ordinary-SDK-NFG","wireKey":"NFG","explicitSDKDefault":"0"}],"rootInactiveFlags":[{"wireKey":"GA"},{"wireKey":"GCT"},{"wireKey":"IFG"}],"responseKeys":["AB","B","BPR","FRBAL","GA","GSD","IFG","MSGID","MUL","NRID","RB","RID","RS","SID","SUB","TW","VER","WC","WM","WS"],"requiredResponseKeys":["B","TW","MSGID"],"freeBudgetContract":{"version":"own-SDK-NFG-without-promotional-FreeRounds-v1","gameId":"32741","paidEvent":"BET","freeEvent":"FREE_GAME","freeRequestParams":{"BPR":"5","GN":"uflcashfallschinastreet96","RB":"5"},"promotionalKeysForbidden":[]},"ownRootNFGFlowOnlyCapture":{"version":"own-UFL-source-next-end-flow-only-v6","gameId":"32741","ownSDKFileSHA256":"98178e8b2e2190436b46d784d8ea0bed7655df8ae340f2cb6e602e9093fb4a3a","SDKFinalGetterSourceSHA256":"b824e2371a44e479df3cf13767683c23f660cb859e5ffc137bfa2312c9ad0b25","nextEvent":"FREE_GAME","remainingWireKey":"NFG","terminalRemaining":0,"usesOwnRequestAndTerminalOnly":true,"rawWirePreserved":true,"originalAGAmountReplayMongoChecksRequired":true,"noSyntheticTerminal":true,"noOldUnknownPOSTReplay":true,"unusedDisplayAndBudgetFieldsDoNotBlock":true,"noPreviouslySeenWholeVariationGate":true,"unmappedActiveFlagsStillStop":true,"ownUFLSourceFlow":{"version":"own-UFL-source-current-response-next-end-v1","gameId":"32741","dbName":"sg_uflcashfallschinastreet96","runtimeGameId":33141,"runtimeSlug":"uflcashfallschinastreet96","ownSDKFileSHA256":"98178e8b2e2190436b46d784d8ea0bed7655df8ae340f2cb6e602e9093fb4a3a","SDKFinalGetterSourceSHA256":"b824e2371a44e479df3cf13767683c23f660cb859e5ffc137bfa2312c9ad0b25","ownPendingMethodSourceSHA256":"9f6d2ef1c27e436782042f11d616fce1da69ca5a73d1ed830ba2837d5ad79c35","paidRequestParams":{"BPR":"5","GN":"uflcashfallschinastreet96","RB":"5"},"freeRequestParams":{"BPR":"5","GN":"uflcashfallschinastreet96","RB":"5"},"betRaw":100,"ownNextEvent":"FREE_GAME","primaryRemainingWireKey":"NFG","extraFreeCurrentIndexWireKey":"FGCR","extraFreeIntroRemainingWireKey":"FGRT","extraFreeRemainingWireKey":"FGRR","ownTriggerFlagWireKey":"FLRT","ownTriggerFlagTrueValue":1,"ownNextTriggerNumericPresenceWireKey":"FLNTR","numericZeroNextTriggerStillPending":true,"sourceGCTStopsBeforePending":true,"optionalMetadataRawPreserved":true,"noDisplayOrStageMoneyEquations":true,"oldUnknownPOSTNeverReplayed":true,"noSyntheticProviderACKOrTerminal":true}}}}}
   - {"provider":"sg","gameId":"32742","name":"Ultimate Fire Link Cash Falls Glacier Gold","dbName":"sg_uflcashfallsglaciergold96","backendId":"uflcashfallsglaciergold96","rtpBuckets":[0,30,100,300,500,1000,2500,5000,10000,1001,2001,5001,10001],"sg":{"protocol":"gdm","endpoint":"https://ogs-gdm-usnj.nyxop.net/nextgen/","runtimeGameId":33142,"runtimeSlug":"uflcashfallsglaciergold96","betRaw":100,"requestParams":{"BPR":"5","GN":"uflcashfallsglaciergold96","RB":"5"},"ownGDMContract":{"version":"own-SDK-free-game-chain-v2","gameId":"32742","dbName":"sg_uflcashfallsglaciergold96","runtimeGameId":33142,"runtimeSlug":"uflcashfallsglaciergold96","fixedGitCommit":"885f862bcc04841406820a932ef14c38c7759f1d","ownSDKFileSHA256":"02e56569f099f43fb81b48cb78d04fb702330901a2005432451ff2f15fba0d25","SDKFinalGetterSourceSHA256":"cfab520cb2c0fc58a4b33e42e924fc67a28413e8b1d18d958d8e03eefd3b12bd","betRaw":100,"balanceScale":1,"winScale":1,"ordinaryOnly":false,"requiresNoPreviousFeature":true,"pendingClauses":[{"kind":"SDK-base-false"},{"kind":"fresh-ordinary-SDK-NFG","wireKey":"NFG","explicitSDKDefault":"0"}],"rootInactiveFlags":[{"wireKey":"GA"},{"wireKey":"GCT"},{"wireKey":"IFG"}],"responseKeys":["AB","B","BPR","FRBAL","GA","GSD","IFG","MSGID","MUL","NRID","RB","RID","RS","SID","SUB","TW","VER","WC","WM","WS"],"requiredResponseKeys":["B","TW","MSGID"],"freeBudgetContract":{"version":"own-SDK-NFG-without-promotional-FreeRounds-v1","gameId":"32742","paidEvent":"BET","freeEvent":"FREE_GAME","freeRequestParams":{"BPR":"5","GN":"uflcashfallsglaciergold96","RB":"5"},"promotionalKeysForbidden":[]},"ownRootNFGFlowOnlyCapture":{"version":"own-UFL-source-next-end-flow-only-v6","gameId":"32742","ownSDKFileSHA256":"02e56569f099f43fb81b48cb78d04fb702330901a2005432451ff2f15fba0d25","SDKFinalGetterSourceSHA256":"cfab520cb2c0fc58a4b33e42e924fc67a28413e8b1d18d958d8e03eefd3b12bd","nextEvent":"FREE_GAME","remainingWireKey":"NFG","terminalRemaining":0,"usesOwnRequestAndTerminalOnly":true,"rawWirePreserved":true,"originalAGAmountReplayMongoChecksRequired":true,"noSyntheticTerminal":true,"noOldUnknownPOSTReplay":true,"unusedDisplayAndBudgetFieldsDoNotBlock":true,"noPreviouslySeenWholeVariationGate":true,"unmappedActiveFlagsStillStop":true,"ownUFLSourceFlow":{"version":"own-UFL-source-current-response-next-end-v1","gameId":"32742","dbName":"sg_uflcashfallsglaciergold96","runtimeGameId":33142,"runtimeSlug":"uflcashfallsglaciergold96","ownSDKFileSHA256":"02e56569f099f43fb81b48cb78d04fb702330901a2005432451ff2f15fba0d25","SDKFinalGetterSourceSHA256":"cfab520cb2c0fc58a4b33e42e924fc67a28413e8b1d18d958d8e03eefd3b12bd","ownPendingMethodSourceSHA256":"e118255b97dea802910780cbc847580b06909db710429ca2f31ba55d92e7ca06","paidRequestParams":{"BPR":"5","GN":"uflcashfallsglaciergold96","RB":"5"},"freeRequestParams":{"BPR":"5","GN":"uflcashfallsglaciergold96","RB":"5"},"betRaw":100,"ownNextEvent":"FREE_GAME","primaryRemainingWireKey":"NFG","extraFreeCurrentIndexWireKey":"FGCR","extraFreeIntroRemainingWireKey":"FGRT","extraFreeRemainingWireKey":"FGRR","ownTriggerFlagWireKey":"FLRT","ownTriggerFlagTrueValue":1,"ownNextTriggerNumericPresenceWireKey":"FLNTR","numericZeroNextTriggerStillPending":true,"sourceGCTStopsBeforePending":true,"optionalMetadataRawPreserved":true,"noDisplayOrStageMoneyEquations":true,"oldUnknownPOSTNeverReplayed":true,"noSyntheticProviderACKOrTerminal":true}}}}}
+  - provider: sg
+    gameId: '32687'
+    name: uflchinastreet
+    dbName: sg_uflchinastreet
+    backendId: uflchinastreet
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33096
+      runtimeSlug: uflchinastreet
+      betRaw: 100
+      requestParams:
+        BPL: '5'
+        GN: uflchinastreet
+        LB: '50'
+        REC: '0'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v2
+        gameId: '32687'
+        dbName: sg_uflchinastreet
+        runtimeGameId: 33096
+        runtimeSlug: uflchinastreet
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ownSDKFileSHA256: 382ed58bb4745e4921f0f35346e30113bcc3ae423ace387d99c7396f07119bf6
+        SDKFinalGetterSourceSHA256: 38c3d5f2e9882458e52b34be4cd82e5b8d47cef4261d0b2b0eb76c5ea50baf41
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+        rootInactiveFlags:
+          - wireKey: GA
+          - wireKey: GCT
+          - wireKey: IFG
+        responseKeys:
+          - AB
+          - B
+          - BGRS
+          - BPL
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - B
+          - TW
+          - MSGID
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32687'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            BPL: '5'
+            GN: uflchinastreet
+            LB: '50'
+            REC: '0'
+          promotionalKeysForbidden: []
+        ownRootNFGFlowOnlyCapture:
+          version: own-original-UFL-source-next-end-flow-v7
+          gameId: '32687'
+          ownSDKFileSHA256: 382ed58bb4745e4921f0f35346e30113bcc3ae423ace387d99c7396f07119bf6
+          SDKFinalGetterSourceSHA256: 38c3d5f2e9882458e52b34be4cd82e5b8d47cef4261d0b2b0eb76c5ea50baf41
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          ownOriginalUFLSourceFlow:
+            gameId: '32687'
+            dbName: sg_uflchinastreet
+            runtimeGameId: 33096
+            runtimeSlug: uflchinastreet
+            ownSDKFileSHA256: 382ed58bb4745e4921f0f35346e30113bcc3ae423ace387d99c7396f07119bf6
+            SDKFinalGetterSourceSHA256: 38c3d5f2e9882458e52b34be4cd82e5b8d47cef4261d0b2b0eb76c5ea50baf41
+            paidRequestParams:
+              BPL: '5'
+              GN: uflchinastreet
+              LB: '50'
+              REC: '0'
+            freeRequestParams:
+              BPL: '5'
+              GN: uflchinastreet
+              LB: '50'
+              REC: '0'
+            betRaw: 100
+            freeModes:
+              - 0
+              - 2
+            pickerMode: 1
+            pickRound: 0
+            sourceChoiceDomain:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+            explicitChoice: 1
+            sourceEvidenceSHA256: 3f8d7c45db545662f98edd884bcbb26b1ebb49678ec7648b729b3d503c799f85
+  - provider: sg
+    gameId: '32743'
+    name: ultimatefirelinkcountrylights96
+    dbName: sg_ultimatefirelinkcountrylights96
+    backendId: ultimatefirelinkcountrylights96
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33143
+      runtimeSlug: ultimatefirelinkcountrylights96
+      betRaw: 100
+      requestParams:
+        BPL: '5'
+        GN: ultimatefirelinkcountrylights96
+        LB: '150'
+        REC: '0'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v2
+        gameId: '32743'
+        dbName: sg_ultimatefirelinkcountrylights96
+        runtimeGameId: 33143
+        runtimeSlug: ultimatefirelinkcountrylights96
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ownSDKFileSHA256: 9cf163fe2b584bd14b7b2ab2c7bdd0f590d94637cc110e54376c8a0d0dbfa79a
+        SDKFinalGetterSourceSHA256: 5e7fabb58cd844b87b12cd202785333c1f818f9261e684b4c7ee3d853807dd57
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+        rootInactiveFlags:
+          - wireKey: GA
+          - wireKey: GCT
+          - wireKey: IFG
+        responseKeys:
+          - AB
+          - B
+          - BGRS
+          - BPL
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - B
+          - TW
+          - MSGID
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32743'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            BPL: '5'
+            GN: ultimatefirelinkcountrylights96
+            LB: '150'
+            REC: '0'
+          promotionalKeysForbidden: []
+        ownRootNFGFlowOnlyCapture:
+          version: own-original-UFL-source-next-end-flow-v7
+          gameId: '32743'
+          ownSDKFileSHA256: 9cf163fe2b584bd14b7b2ab2c7bdd0f590d94637cc110e54376c8a0d0dbfa79a
+          SDKFinalGetterSourceSHA256: 5e7fabb58cd844b87b12cd202785333c1f818f9261e684b4c7ee3d853807dd57
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          ownOriginalUFLSourceFlow:
+            gameId: '32743'
+            dbName: sg_ultimatefirelinkcountrylights96
+            runtimeGameId: 33143
+            runtimeSlug: ultimatefirelinkcountrylights96
+            ownSDKFileSHA256: 9cf163fe2b584bd14b7b2ab2c7bdd0f590d94637cc110e54376c8a0d0dbfa79a
+            SDKFinalGetterSourceSHA256: 5e7fabb58cd844b87b12cd202785333c1f818f9261e684b4c7ee3d853807dd57
+            paidRequestParams:
+              BPL: '5'
+              GN: ultimatefirelinkcountrylights96
+              LB: '150'
+              REC: '0'
+            freeRequestParams:
+              BPL: '5'
+              GN: ultimatefirelinkcountrylights96
+              LB: '150'
+              REC: '0'
+            betRaw: 100
+            freeModes:
+              - 0
+              - 1
+            pickerMode: null
+            pickRound: null
+            sourceChoiceDomain: []
+            explicitChoice: null
+            sourceEvidenceSHA256: 2462270f75a6af6b5feaa642c364acfd9f48619f3796b5e89653191bbc9c472a
+  - provider: sg
+    gameId: '32744'
+    name: uflriverwalk96
+    dbName: sg_uflriverwalk96
+    backendId: uflriverwalk96
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33144
+      runtimeSlug: uflriverwalk96
+      betRaw: 100
+      requestParams:
+        BPL: '5'
+        GN: uflriverwalk96
+        LB: '50'
+        REC: '0'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v2
+        gameId: '32744'
+        dbName: sg_uflriverwalk96
+        runtimeGameId: 33144
+        runtimeSlug: uflriverwalk96
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ownSDKFileSHA256: b834eb56aef577215e64256513015828624440c8f26cde80b1fd1deac36ec070
+        SDKFinalGetterSourceSHA256: f9fde762db7df4461f3766065a56f6bb5d9a251a322c3a47f3542521bac7393c
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+        rootInactiveFlags:
+          - wireKey: GA
+          - wireKey: GCT
+          - wireKey: IFG
+        responseKeys:
+          - AB
+          - B
+          - BPL
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - LB
+          - MSGID
+          - MUL
+          - NRID
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WS
+        requiredResponseKeys:
+          - B
+          - TW
+          - MSGID
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32744'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            BPL: '5'
+            GN: uflriverwalk96
+            LB: '50'
+            REC: '0'
+          promotionalKeysForbidden: []
+        ownRootNFGFlowOnlyCapture:
+          version: own-original-UFL-source-next-end-flow-v7
+          gameId: '32744'
+          ownSDKFileSHA256: b834eb56aef577215e64256513015828624440c8f26cde80b1fd1deac36ec070
+          SDKFinalGetterSourceSHA256: f9fde762db7df4461f3766065a56f6bb5d9a251a322c3a47f3542521bac7393c
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          ownOriginalUFLSourceFlow:
+            gameId: '32744'
+            dbName: sg_uflriverwalk96
+            runtimeGameId: 33144
+            runtimeSlug: uflriverwalk96
+            ownSDKFileSHA256: b834eb56aef577215e64256513015828624440c8f26cde80b1fd1deac36ec070
+            SDKFinalGetterSourceSHA256: f9fde762db7df4461f3766065a56f6bb5d9a251a322c3a47f3542521bac7393c
+            paidRequestParams:
+              BPL: '5'
+              GN: uflriverwalk96
+              LB: '50'
+              REC: '0'
+            freeRequestParams:
+              BPL: '5'
+              GN: uflriverwalk96
+              LB: '50'
+              REC: '0'
+            betRaw: 100
+            freeModes:
+              - 1
+              - 0
+            pickerMode: 2
+            pickRound: 1
+            sourceChoiceDomain:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+            explicitChoice: 1
+            sourceEvidenceSHA256: e9603707ffd057dd865c002dd9cdf40c420e462beefd9985f3a0991fbb3ddc5b
