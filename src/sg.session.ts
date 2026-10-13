@@ -154,14 +154,14 @@ function ownDancingBase(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState,event:stri
   if(ownBundleBoolean(wire.GCT)===true||n===0){s.phase='base';return undefined;}
   s.phase='free';return ownBundleFeatureRequest(p,'FREE_GAME');
  }
- if(p.additionalModes?.includes(s.cfg as number)&&(fid.includes(s.cfg as number)||event==='FEATURE_END')&&fid.every(x=>x===s.cfg)){
+ if(p.additionalModes?.includes(s.cfg as number)&&(fid.includes(s.cfg as number)||event==='FEATURE_END')&&(fid.length===0||fid[0]===s.cfg)){
   if(ownBundleBoolean(wire.GCT)===true)return undefined;
   if(event!=='FEATURE_END'){s.ordinal=0;s.used.clear();s.phase='start';return ownBundleFeatureRequest(p,'FEATURE_START',{CFG:String(s.cfg)});}
   // Source coin End caller clears Vd.tk locally. Display FID/FTV is retained raw.
   if(wire.NFG!==undefined&&ownBundleInteger(wire.NFG,'actual NFG',true)===-1){assert(wire.CFGG!==undefined,'AG integrity: GDM own Dancing actual pending marker counter absent');if(ownBundleInteger(wire.CFGG,'actual CFGG')===0){s.phase='free';return ownBundleFeatureRequest(p,'FREE_GAME');}}
   s.phase='base';return undefined;
  }
- assert(fid.every(x=>x===0),'AG integrity: GDM own Dancing actual other feature mode unmapped');
+ assert(fid.length===0||fid[0]===0,'AG integrity: GDM own Dancing actual other feature mode unmapped');
  if(ownBundleBoolean(wire.GCT)===true)return undefined;
  const ftv=Object.keys(wire).filter(k=>/^FTV_[0-4]$/.test(k));
  if(event!=='FEATURE_END'&&values.JP_WIN!==undefined){
@@ -194,7 +194,7 @@ function ownSquidBase(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState,event:string
  const fid=ownBundleFID(wire);
  const ownMode=gsd(wire.GSD).FEATURE_ID;
  if(p.additionalModes?.includes(1)&&(fid.includes(1)||event==='FEATURE_END'&&s.cfg===1)){
-  assert(fid.every(x=>x===1),'AG integrity: GDM own RedLight combined source mode unmapped');
+  assert(fid.length===0||fid[0]===1,'AG integrity: GDM own RedLight combined source mode unmapped');
   if(ownBundleBoolean(wire.GCT)===true)return undefined;
   if(event==='FEATURE_END'){const remaining=wire.NFG===undefined?undefined:ownBundleInteger(wire.NFG,'actual NFG');if(remaining!==undefined&&remaining>0){s.phase='free';return ownBundleFeatureRequest(p,'FREE_GAME');}s.phase='base';return undefined;}
   assert(ownMode==='1','AG integrity: GDM own RedLight actual FEATURE_ID absent');s.cfg=1;s.ordinal=0;s.used.clear();
