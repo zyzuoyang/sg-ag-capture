@@ -13,19 +13,21 @@ import { AGDiscardedRoundError } from './ag.round';
 export type OwnNOVAFeatureRequest = {event:string;parameters:Record<string,string>};
 export type OwnNOVAFeatureProfile = {
  gameId:string;dbName:string;runtimeGameId:number;runtimeSlug:string;ownSDKFileSHA256:string;
- cfg:number;ftvKey:string;kind:'rhino-wheel'|'wild-grid';
+ cfg:number;ftvKey:string;kind:'rhino-wheel'|'wild-grid'|'drums-two-round-cards'|'squid-bridge';
 };
 const profiles:Record<string,OwnNOVAFeatureProfile>={
  '32733':{gameId:'32733',dbName:'sg_ragingrhinorampagecap250c96',runtimeGameId:33133,runtimeSlug:'ragingrhinorampagecap250c96',ownSDKFileSHA256:'1f7b2b35f03e6aaba2552e6ff465725342feae927301f9987963d1e1460107c2',cfg:0,ftvKey:'FTV_0',kind:'rhino-wheel'},
  '32666':{gameId:'32666',dbName:'sg_thewildthree',runtimeGameId:33090,runtimeSlug:'thewildthree',ownSDKFileSHA256:'f7778c05e93e67ea364ab62727449f8909032dbaf20853073dad905db5e846ef',cfg:2,ftvKey:'FTV_2',kind:'wild-grid'},
 };
 const expectedBindings:Record<string,any>={"32666":{"version":"own-NOVA-source-feature-next-v88","paidNormalFGTFirst":true,"ongoingFreeNFGFirst":true,"CFGValidatedOnlyWhenOwnFeatureBranchActuallySelected":true,"entrySelectorsUseActualFTVAndActualOrSourceRetainedCFG":true,"noSynthesizedNFGFromIFGT":true,"startEvent":"FEATURE_START","pickEvent":"FEATURE_PICK","endEvent":"FEATURE_END","requestFieldsFromOwnSourceOnly":true,"sourceAbsentSelectorDoesNotInventValue":true,"originalAGBAndTWMoneyAndSuccessfulEnvelopeRemainRequired":true,"noDisplayTWorCWorFTVPrizeEquationGate":true,"allOriginalRawRequestsResponsesAndUnknownPreserved":true,"oldUnknownPOSTNeverReplayed":true,"boundedOriginalAGFeatureRequestBudgetRequired":true,"summaryNextState":"BASE_IDLE","postFeatureEndNextFromActualResponseNotInvented":true,"ownNaturalFeatureProviderResponsesObserved":0,"gameId":"32666","dbName":"sg_thewildthree","runtimeGameId":33090,"runtimeSlug":"thewildthree","ownSDKFileSHA256":"f7778c05e93e67ea364ab62727449f8909032dbaf20853073dad905db5e846ef","ownCFG":"2","ownEntryFTVKey":"FTV_2","sourceHashes":{"FeatureStartState":"8f992a7f0a6809bc29a07a1f383a0d89c0309d94b2aac25c1e51ace95a2d4f02","FeaturePickState":"a680ea1e1a0657e1e31d18a21e558ebbe261240afab9d360be6784e5397e2a8c","FeatureEndState":"445bc68f10dfdd6ecf1ff54d0d667b5df66d59b43971db71a58ebbb985c48a95","ownPickSelect":"faff8544b348c808dc0d5b373c11308f377e16e51ca5033c9772cefa406a7e9e","FTVFeatureTriggerDecoder":"bb1a4009b3a9d03b8ae00e897f448deecb73a42a2b5178555553c5fb6cde37df","CFGSourceStateDecoder":"4032bacfd673ed1b95e1098fee6b37abe4498e301f52a0da29558ef7f79638b4","ownPostPickMPRDecision":"81eab1b0168ecaf541f987f31ffbf32b3c83f264adca5a974eb76f1b64aee477","ownFeatureIntroCaller":"49f1de2808f28b7087343179f2da6f226f496870258721468b596705dbdda67a","ownFiniteGrid":"81049cee0b54a54e66899abfa9e735d4166552d76db17499c42d4a69a6b79198","ownPickButtonCallback":"990697c082e7dbb65b2b98037bf278b4f390ad964a7977b9ebd0977d14803bdb","ownPickStartReset":"a7c693eda4361fa3622903880e021798f7ad21b2c8357c36f8d29c7d6c041f60","ownButtonAppearance":"da852c1312bbff91adc62d9f33ee9bd779317b43f8ac51b631c46133e59c4a51","ownButtonEnabled":"dbfa0713e342dbe3fcff1b4e254c5bd213a124b0a74e5abab3a69602b2558664","ownButtonConsumed":"f02001b1b5ff8f4e3137107318ff90e5be8bde34a0f3ec524297967504e971d2","ownSummaryExit":"b42ab08976020b4c2f68c689ecefdf042b2348944d8de6955e1c9f3ba7fdb883"},"profile":"own-Wild3-CFG2-fifteen-grid","sourcePickRoundFixed":1,"sourceLocalPickOrdinalInitial":0,"sourceLocalPickOrdinalIncrementBeforeCallback":true,"sourceChoiceInitialIndices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],"sourceChosenIndexDisabledUntilNewOwnFeature":true,"sourceChoicePolicyMustExplicitlySelectOneOwnAvailableIndex":true,"sourceMaxDistinctChoicesPerFeature":15,"postPickSelector":"current-GSD-MPR-parseInt-positive","sourceMPRAbsentOrNaNSelectsFeatureEnd":true,"sourceMPRNotRetainedFromPreviousPacket":true,"summaryLocalEvent":"CLOSE_FEATURE_SUMMARY2","summaryOwnExitCode":1,"ownCAPSEarlyFeatureEndSkip":false,"ownSDKHasCAPSToken":false},"32733":{"version":"own-NOVA-source-feature-next-v88","paidNormalFGTFirst":true,"ongoingFreeNFGFirst":true,"CFGValidatedOnlyWhenOwnFeatureBranchActuallySelected":true,"entrySelectorsUseActualFTVAndActualOrSourceRetainedCFG":true,"noSynthesizedNFGFromIFGT":true,"startEvent":"FEATURE_START","pickEvent":"FEATURE_PICK","endEvent":"FEATURE_END","requestFieldsFromOwnSourceOnly":true,"sourceAbsentSelectorDoesNotInventValue":true,"originalAGBAndTWMoneyAndSuccessfulEnvelopeRemainRequired":true,"noDisplayTWorCWorFTVPrizeEquationGate":true,"allOriginalRawRequestsResponsesAndUnknownPreserved":true,"oldUnknownPOSTNeverReplayed":true,"boundedOriginalAGFeatureRequestBudgetRequired":true,"summaryNextState":"BASE_IDLE","postFeatureEndNextFromActualResponseNotInvented":true,"ownNaturalFeatureProviderResponsesObserved":0,"gameId":"32733","dbName":"sg_ragingrhinorampagecap250c96","runtimeGameId":33133,"runtimeSlug":"ragingrhinorampagecap250c96","ownSDKFileSHA256":"1f7b2b35f03e6aaba2552e6ff465725342feae927301f9987963d1e1460107c2","ownCFG":"0","ownEntryFTVKey":"FTV_0","sourceHashes":{"FeatureStartState":"8f992a7f0a6809bc29a07a1f383a0d89c0309d94b2aac25c1e51ace95a2d4f02","FeaturePickState":"eba4eba6fb2fc9a3b5175da434cf7d71aa17b8c2d402f8bde6b644431f56df20","FeatureEndState":"52f8f776bd2d339f873a789241094133092d0ba603499209dec6566eb826ead4","FTVFeatureTriggerDecoder":"bb1a4009b3a9d03b8ae00e897f448deecb73a42a2b5178555553c5fb6cde37df","CFGSourceStateDecoder":"4032bacfd673ed1b95e1098fee6b37abe4498e301f52a0da29558ef7f79638b4","ownCFRPresenceUpdate":"e771ec9e8b4276c5178ab77f5446f551f403354cec3127c2771a1b55a005e7a4","ownCFPPresenceUpdate":"d6c2db03be9dab1c02882d1bb750c00c6ab018ac1e4c380ff3df08e986f89d28","ownFeatureDataInitialEmpty":"6bca2a6a58b6853e1f06a31e762a08099f445c9907929d3c62262b7362cc25b0","ownWheelReset":"50084c2aadb9765c804e029804aa98ff75748b42bdd578fd164ee1b133b4428a","ownPickButtonCallback":"cdbeef8c996a8e777a290c15c9fecaf31bbad9981db0c1875d8df446d7d6ae2e","ownPickSelect":"9c9d4eca205a047e066951b93966c4fa3d7b286f8d5191cd5bb2aa0b95d3c803","ownPostPickDecision":"787dc417e8f26089849116c83f7d1e097faadf6d1200dbed305ba7dcdae1fa65","ownIFGTDisplay":"01db3361f11f4b2754e790f6f91a698defb173692bd2b5cb9b02fa8af148ee41","ownIFGTTextboxOnly":"ff152a54742916860d08fea45f95b954f34a0fc5315e71b48cd73523a90cfb6f","ownSummaryExit":"b4e573e2a7179f5b309ad7bc4b6fbe72a40a568f2067d18715cbb4267d807042","ownCAPSPresenceObservedAtPostPick":"56c9aa2113f32db395490da6a3254c2acdf27ba9774e8d4315841a5f7ccc8bd8","ownCAPSSkipsFeatureEndRequest":"9b2686ab5979f6b17297bb0364c45147308f72befa0ceb65c75911c1ce53b9bb","ownNextStateTable":"abbbcc443c7dc421a0f8f2452f038211d5d0e9d490a8b06e8c44ae81d83768df"},"profile":"own-RhinoRampage-CFG0-wheel","sourceLocalRoundOrdinalInitial":0,"sourceLocalRoundOrdinalIncrementAfterCallback":true,"sourcePickNumberFixed":0,"sourcePickValueFixed":0,"sourceNoCardArrayChoiceRequired":true,"postPickSelector":"own-presence-updated-CFP-le-FTV-roundCount-at-own-CFR-minus-one-and-not-own-cap","sourceFeatureDataInitiallyEmpty":true,"sourceCFRAndCFPUpdatedOnlyWhenActuallyPresent":true,"sourceCFRAndCFPAbsentRetainsOnlyOwnPreviouslyDecodedValue":true,"sourceUndefinedComparisonSelectsFeatureEnd":true,"sourceFPMDecodedButNotNormalPickRequestConstructor":true,"sourceIFGTIsTextboxOnly":true,"summaryLocalEvent":"CLOSE_FEATURE_SUMMARY","summaryOwnExitCodeWhenCFG0":1,"ownCAPSEarlyFeatureEndSkip":true,"ownCAPSPositiveObservedAtOwnFeaturePostPick":true,"ownCAPSValueIsFlowSelectorNotPrizeMath":true,"sourceOptionalPickGSDOnlyWhenOwnActualPickGSDNonempty":true}};
+Object.assign(profiles,{"32707":{"gameId":"32707","dbName":"sg_dancingdrumsprosperity96","runtimeGameId":33107,"runtimeSlug":"dancingdrumsprosperity96","ownSDKFileSHA256":"183aa27737161a22c4f51a97216777fe57d8d1582b799c57da4c45b96a6a71c8","cfg":0,"ftvKey":"FTV_0","kind":"drums-two-round-cards"},"32736":{"gameId":"32736","dbName":"sg_squidgameoneluckyday96","runtimeGameId":33136,"runtimeSlug":"squidgameoneluckyday96","ownSDKFileSHA256":"2d3886a4aa6e2933676db592889674fa948a5b020321dc0594d2b18dbc3f352f","cfg":3,"ftvKey":"FTV_3","kind":"squid-bridge"}});
+const expectedBundleFeatureBindings:Record<string,any>={"32707":{"version":"own-bundle-source-network-feature-next-draft-v1","gameId":"32707","dbName":"sg_dancingdrumsprosperity96","runtimeGameId":33107,"runtimeSlug":"dancingdrumsprosperity96","ownSDKFileSHA256":"183aa27737161a22c4f51a97216777fe57d8d1582b799c57da4c45b96a6a71c8","profile":"drums-two-round-cards","requestCFG":0,"sourceHashes":{"ownFeatureCtor":"ae129ec389b137346cecfe20744c9f422f50b74faac9b865fceeb93a52dd097c","ownSourceFeatureSequence":"eba5bab61fcde579b408887bd5b70dc8ead46367f42565f315abbee1e7579019","ownSourceJackpotIntro":"bcc1a6af739b0541c3ae593f404a8244c36244dd89ace29efd1a6169382dd94a","ownSourcePickCallback":"9b173a72d0b3650963c36f415f638690ca9368ec1c30221e4533f218f1a15bec","ownSourceEndCaller":"97ef62db862fb21d98ba80668579a7438f6ed0e336c0f0bc5efc7e976c27d214","ownSourceEnabledCards":"b81668a791e76aad7f3649891b37b3ddb46418513b663a1180ab3b2d1bbbd55a","ownSourceGridCreate":"11c79731b08610e76c5a4785753f12f0858a9614120310c42fe6e1fbe1e305b2","ownSourceCardConsumption":"09f6f6ccc5024814cf24990800275c9e44a83516986706cdd17bca82e9c8ef52","ownOwnCardCallback":"090951a251c9dc35b2e671f47a435c6a1d15a0738c8e84b7185c475fa964bdac","ownPortraitGrid":"6f187f127469d89398d220639fb2d82b55893a8daa94c6e25da5925d795a0335","ownLandscapeGrid":"6e91e831de0a9843f8541dc896d15af3dfc56c372e4255b7087ab5260a8134ca","ownSourceSerializer":"942f06bb56f89aff23fcbccc15d1e861953ae28eba9704870ffc75086e7e047a","ownSourceFeatureEntry":"3a9d8e39b426ecd34ead454672cfcc6abbb69542c35094dfb653f6a0b502300b","ownSourceTypeDispatch":"0134b9519b14304bd13c9dc471782b4a59b3bc035717da3aceaf194ca46a9d9c","ownSourceFreeRequestCtor":"6d93f9c4774f88b1f3708a891d5924bfd78bb410e23b590d02ea6a95599439d5","ownSourceFreeRequestCaller":"cba80a91a035ad08a1048fc2a6d43a62ecdb58eab6f69dd1b3575052f12012e9","ownSourceFreeEventSelector":"8cc5014bc3df42bcea5b26c8ef54791ef84e28c9d98f6d1cd8ad0217032eb89d"},"sourceProofSHA256":"dce7dc568198fc65945f140c5417c911cfa4aab5f7472e86c55f652c8940b502","sourceTerminalCallbackProofSHA256":null,"exactGSDWireBindingCorrectionSHA256":null,"freeRequestParams":{"GN":"dancingdrumsprosperity96","BPR":"108","RB":"5"},"featureRequestParams":{"GN":"dancingdrumsprosperity96","CFG":"0"},"FPSerializer":"infix-round-ordinal-enabled-card-no-trailing-delimiter","explicitLegalChoicePolicy":"first-source-enabled-unconsumed-card","sourceChoiceDomain":[0,1,2,3,4,5,6,7,8,9,10,11],"actualTerminalSourceSelector":"own-K0-minus-one-and-CFGG-zero-or-source-FEATURE_END-local-exit","sourceContextModeIsNotResponseCFG":false,"requestFieldsOnlyFromOwnActualCaller":true,"ownCurrentPaidPrefixesObserved":1,"ownNaturalFeatureProviderResponsesObserved":0,"ownNaturalFeatureTerminalCoverage":0,"currentPacketAndAllRawRequestsResponsesPreserved":true,"originalAGCashEnvelopeReplayMongoRequired":true,"oldUnknownPOSTNeverReplayed":true,"unknownDBWritesNeverRetried":true,"noDefaultAmountOrBonus":true,"noSyntheticNFGOrTerminal":true,"boundedOriginalAGFollowupBudgetRequired":true,"otherActualNetworkModesRemainFatal":true,"sourceLocalTerminalDoesNotInventWrapperEndGameACK":true},"32736":{"version":"own-bundle-source-network-feature-next-draft-v1","gameId":"32736","dbName":"sg_squidgameoneluckyday96","runtimeGameId":33136,"runtimeSlug":"squidgameoneluckyday96","ownSDKFileSHA256":"2d3886a4aa6e2933676db592889674fa948a5b020321dc0594d2b18dbc3f352f","profile":"squid-bridge","requestCFG":3,"sourceHashes":{"null-optional-property-serialization":"80667a5973e05d6caa9e0810cec21f35fbadc662c6863ca23e490f07b24113db","infix-serialization-no-empty-trailing-fields":"004d48b22318bb251968af546968a1e6507819ce6ce92861c7ff396ccf4fdb66","Ox-object-array-infix":"10eefaa328b9504b48c6463de083e378be788f35feffd3a170765b9242250872","own-FP-type-and-request-constructor":"415e7c460643af392f53012961ca3d8d48b7bdbbda242ede5c72fe2c8326d9cb","current-bridge-fields-and-FID4-map":"20a4ab09bd611cab18e43d137de9795c83b8d53d23c61b3754b25fcd1e2721d4","bridge-real-start-pick-caller":"620df8c89cf9c325853eac644b8d6ee789bde5863765d175a6858a83497649b2","bridge-current-survived-presence-pick-stop":"c38867dc2f0ea31580e023237a1a8d0ea155c7d957db05258f5c6b5d7ff9c81d","bridge-skip-feature-end-if-FID4":"4d4bf8a94cf98142291d0da4a925a3ab807e5524c361e26f93ec570bf20ef6e9","actual-request-selector":"7e99c6c30ca26f878454f2af4dfab2fcdaed44a1582f49b9e1a193951365585b","generic-free-request-BPL-LB-constructor":"4f16cd28b9712dd3432a475c11806ac2b67c79de6790a4f5ccbb5daf61d7987b","own-Hna-always-current-stake-and-lines":"a8bd6e136d6a69ea4427659b433c1a81ce9b9ecd0553cfb55adf297a21cd88d3","generic-NFG-free-request-selector":"b19ef3795f9646d66788a743e180f54599f497db1a778e592e85136c75c4d05a","current-NFG-free-counter-and-free-pending":"9e5a509361a1123319496a5f93b8fff5735d14436ea52918a53111be80721b11","bridge-free-GCT-stop-and-zero-counter-handling":"d26d3fa86f3221502c15e81cdf761be0ce2f327d0f991a78ed39930b1205e4e4","bridge-free-on-endplay":"fe0640867f79777133df93e483da5bbc18f31e3fe460efd57d38aa1b9ecd62b9","own-qO-pending-feature-IDs":"dc64557c0887bb4b2506b3996e3c58800186be3b61df91a8dfb56d843fe46ad2","FID-NFG-GCT-serialization-fields":"e9236a8370075e02f69a49416cec3075f97ec7c5bcf5f2191253d6e22b5e2c96","source-enumeration-Bridge3-Free4":"37afac8d1a00b1a4807636d309c5bc611771221627862528311f22bcb712fedb","generic-MSGID-and-REC-request-only":"bfd0524a4b1177eba12f15498b76f8c2e8ac39b2cc8d1f9569f527223e903ded","own-ui-real-mg-wrapper":"50c70489984e761b39ca6ea79ae59aefe7871fb01fdd6d096fa8e121c471e79a"},"sourceProofSHA256":"58a88d4de943b2cb64798dc9aa7a3a533429b5bc7ad9b9f6f294e869f980dd01","sourceTerminalCallbackProofSHA256":"d268fd00d49ee752e71710b7b83dbedc224e812343be650fdc1674e91169696b","exactGSDWireBindingCorrectionSHA256":"086da279feee3d819b63f6f80e9470bf873ff2136b56f0b4e95107e5ce9bf5e8","freeRequestParams":{"GN":"squidgameoneluckyday96","BPL":"5","LB":"10"},"featureRequestParams":{"GN":"squidgameoneluckyday96","BPL":"5","CFG":"3"},"FPSerializer":"infix-skip-null-only-own-left-right-round","explicitLegalChoicePolicy":"left-option-zero-from-own-two-choices","sourceChoiceDomain":[0,1],"actualTerminalSourceSelector":"actual-GSD.FEATURE_ID4-no-FID3-NFG0-source-Ready-ROUND0","sourceContextModeIsNotResponseCFG":true,"requestFieldsOnlyFromOwnActualCaller":true,"ownCurrentPaidPrefixesObserved":1,"ownNaturalFeatureProviderResponsesObserved":0,"ownNaturalFeatureTerminalCoverage":0,"currentPacketAndAllRawRequestsResponsesPreserved":true,"originalAGCashEnvelopeReplayMongoRequired":true,"oldUnknownPOSTNeverReplayed":true,"unknownDBWritesNeverRetried":true,"noDefaultAmountOrBonus":true,"noSyntheticNFGOrTerminal":true,"boundedOriginalAGFollowupBudgetRequired":true,"otherActualNetworkModesRemainFatal":true,"sourceLocalTerminalDoesNotInventWrapperEndGameACK":true}};
 export function ownNOVAFeatureProfile(game:any):OwnNOVAFeatureProfile|undefined {
- const c=game.sg.ownGDMContract,b=c.ownRootNFGFlowOnlyCapture?.ownNOVAFeatureNextRequest;
+ const c=game.sg.ownGDMContract,q=c.ownRootNFGFlowOnlyCapture;assert(!(q?.ownNOVAFeatureNextRequest&&q?.ownBundleFeatureNextRequest),'AG integrity: GDM own source network profile ambiguity');const b=q?.ownNOVAFeatureNextRequest??q?.ownBundleFeatureNextRequest;
  if(!b)return undefined;
  const p=profiles[game.gameId];
  assert(p&&game.dbName===p.dbName&&game.sg.runtimeGameId===p.runtimeGameId&&game.sg.runtimeSlug===p.runtimeSlug&&c.ownSDKFileSHA256===p.ownSDKFileSHA256,'AG integrity: GDM own NOVA feature identity');
- assert.deepStrictEqual(b,expectedBindings[game.gameId],'AG integrity: GDM own NOVA feature source binding');
+ assert.deepStrictEqual(b,expectedBindings[game.gameId]??expectedBundleFeatureBindings[game.gameId],'AG integrity: GDM own NOVA feature source binding');
  return p;
 }
 export type OwnNOVAFeatureState={
@@ -67,8 +69,128 @@ function base(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState,wire:Record<string,s
  assert(ftv.length===1&&ftv[0]===p.ftvKey&&s.cfg===p.cfg,'AG integrity: GDM own NOVA feature next unmapped');
  s.ordinal=0;s.used.clear();s.cap=false;s.phase='start';return request(p,'FEATURE_START');
 }
+// Draft SG protocol selectors only. Inputs here are source control fields,
+// never manufactured provider XML, cash, NFG, feature ACKs or terminal ACKs.
+export function isOwnBundleFeatureProfile(p:OwnNOVAFeatureProfile|undefined):boolean {
+ return !!p&&['drums-two-round-cards','squid-bridge'].includes(p.kind);
+}
+function ownBundleInteger(value:string|undefined,label:string,signed=false):number {
+ assert(typeof value==='string'&&(signed?/^-?\d+$/:/^\d+$/).test(value)&&Number.isSafeInteger(Number(value)),'AG integrity: GDM own bundle '+label);
+ return Number(value);
+}
+function ownBundleBoolean(value:string|undefined):boolean|undefined {
+ if(value===undefined)return undefined;
+ // Both fixed clients use the original GDM Boolean decoder: finite numeric
+ // values are truthy iff nonzero; textual literals are exactly source-defined.
+ if(value.trim()!==''&&Number.isFinite(Number(value)))return Number(value)!==0;
+ const lower=value.toLowerCase();
+ if(['true','y','yes'].includes(lower))return true;
+ if(['false','n','no'].includes(lower))return false;
+ assert.fail('AG integrity: GDM own bundle Boolean selector unmapped');
+}
+function ownBundleFID(wire:Record<string,string>):number[] {
+ if(wire.FID===undefined||wire.FID==='')return [];
+ const values=wire.FID.split('|').filter(x=>x!=='');
+ assert(values.length>0,'AG integrity: GDM own bundle empty FID');
+ return values.map(x=>ownBundleInteger(x,'actual FID'));
+}
+function ownBundleFeatureRequest(p:OwnNOVAFeatureProfile,event:string,extra:Record<string,string>={}):OwnNOVAFeatureRequest {
+ return {event,parameters:{GN:p.runtimeSlug,...(event==='FREE_GAME'?{}:{...(p.kind==='squid-bridge'?{BPL:'5'}:{}),CFG:String(p.cfg)}),...extra}};
+}
+function ownBundlePick(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState):OwnNOVAFeatureRequest {
+ assert(s.cfg===p.cfg,'AG integrity: GDM own bundle selected CFG');
+ if(p.kind==='squid-bridge')return ownBundleFeatureRequest(p,'FEATURE_PICK',{FP:'0'});
+ assert(p.kind==='drums-two-round-cards'&&s.counts&&s.counts.length>0&&s.counts.length<=2,'AG integrity: GDM own Dancing actual round counts absent');
+ const first=s.counts[0],total=s.counts.reduce((a,b)=>a+b,0);
+ assert(s.ordinal<total,'AG integrity: GDM own Dancing completed pick cursor');
+ const choice=Array.from({length:12},(_,i)=>i).find(i=>!s.used.has(i));
+ assert(choice!==undefined,'AG integrity: GDM own Dancing no source-enabled card');
+ const round=s.ordinal<first?1:2,ordinal=s.ordinal<first?s.ordinal+1:s.ordinal-first+1;
+ // Own nI + Infix serializer, not NOVA's postfix tuple.
+ return ownBundleFeatureRequest(p,'FEATURE_PICK',{FP:`${round}|${ordinal}|${choice}`});
+}
+function ownDancingBase(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState,event:string,wire:Record<string,string>):OwnNOVAFeatureRequest|undefined {
+ const fid=ownBundleFID(wire),values=gsd(wire.GSD);
+ assert(fid.every(x=>x===0),'AG integrity: GDM own Dancing actual other feature mode unmapped');
+ if(ownBundleBoolean(wire.GCT)===true)return undefined;
+ const ftv=Object.keys(wire).filter(k=>/^FTV_[0-4]$/.test(k));
+ if(event!=='FEATURE_END'&&values.JP_WIN!==undefined){
+  assert(s.cfg===0&&wire.FTV_0!==undefined&&ftv.length===1&&ftv[0]==='FTV_0','AG integrity: GDM own Dancing actual feature entry unmapped');
+  const rows=wire.FTV_0.split('|').filter(x=>x!=='');
+  assert(rows.length>0,'AG integrity: GDM own Dancing actual FTV counts absent');
+  // P6a only consumes the first two rows; monetary/prize columns stay raw.
+  s.counts=rows.slice(0,2).map(x=>ownBundleInteger(x.split(';')[1],'actual round pick count'));
+  assert(s.counts.reduce((a,b)=>a+b,0)>0,'AG integrity: GDM own Dancing no source pick branch');
+  s.ordinal=0;s.used.clear();s.phase='start';return ownBundleFeatureRequest(p,'FEATURE_START');
+ }
+ assert(ftv.length===0||event==='FEATURE_END'&&ftv.every(k=>k==='FTV_0'),'AG integrity: GDM own Dancing other actual feature entry unmapped');
+ // Exact own response K0. Do not turn -1 into a provider NFG or normalize raw.
+ if(wire.NFG!==undefined&&ownBundleInteger(wire.NFG,'actual NFG',true)===-1){
+  assert(wire.CFGG!==undefined,'AG integrity: GDM own Dancing actual pending marker counter absent');
+  if(ownBundleInteger(wire.CFGG,'actual CFGG')===0){s.phase='free';return ownBundleFeatureRequest(p,'FREE_GAME');}
+ }
+ s.phase='base';return undefined;
+}
+function ownSquidBase(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState,event:string,wire:Record<string,string>):OwnNOVAFeatureRequest|undefined {
+ const fid=ownBundleFID(wire);
+ assert(fid.every(x=>x===3||x===4),'AG integrity: GDM own Squid actual other feature mode unmapped');
+ if(ownBundleBoolean(wire.GCT)===true)return undefined;
+ const remaining=wire.NFG===undefined?0:ownBundleInteger(wire.NFG,'actual NFG');
+ const values=gsd(wire.GSD);
+ const actualMode=values.FEATURE_ID===undefined?undefined:ownBundleInteger(values.FEATURE_ID,'actual GSD FEATURE_ID');
+ assert(actualMode===undefined||actualMode===3||actualMode===4,'AG integrity: GDM own Squid other actual GSD feature mode unmapped');
+ if(fid.includes(3)){
+  assert(event==='BET'||event==='FREE_GAME','AG integrity: GDM own Squid unresolved Bridge after actual end');
+  assert(actualMode===3||actualMode===4,'AG integrity: GDM own Squid actual Bridge source mode absent');
+  // tXa routes FEATURE_ID4 with current FID3 back through the Bridge3 caller.
+  // The request CFG is context.$b, never a copied response CFG/display value.
+  s.cfg=3;
+  assert(values.BRIDGE_STEP===undefined||ownBundleInteger(values.BRIDGE_STEP,'actual bridge step')===0,'AG integrity: GDM own Squid recovered Bridge not admitted');
+  s.ordinal=0;s.used.clear();s.phase='start';return ownBundleFeatureRequest(p,'FEATURE_START');
+ }
+ if(remaining>0){s.phase='free';return ownBundleFeatureRequest(p,'FREE_GAME');}
+ // Source BridgeFreeSpins.tD -> BaseIdle Ready2 -> platform ROUND Stopped0.
+ // FID4 remains in the original packet; no extra GDM request or fake ACK.
+ if(fid.includes(4)||actualMode===4){
+  assert((event==='FREE_GAME'||event==='FEATURE_PICK'||event==='FEATURE_END')&&actualMode===4,'AG integrity: GDM own Squid BridgeFreeSpins terminal context unmapped');
+  s.phase='base';return undefined;
+ }
+ assert(actualMode!==3||event==='FEATURE_END','AG integrity: GDM own Squid unresolved actual Bridge source mode');
+ s.phase='base';return undefined;
+}
+export function updateOwnBundleFeatureNext(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState,event:string,wire:Record<string,string>):void {
+ assert(isOwnBundleFeatureProfile(p),'AG integrity: GDM own bundle source profile');
+ if(wire.GCT!==undefined)ownBundleBoolean(wire.GCT);
+ if(p.kind==='drums-two-round-cards'&&wire.CFG!==undefined)s.cfg=ownBundleInteger(wire.CFG,'actual CFG');
+ if(event==='BET'||event==='FREE_GAME'){
+  s.next=p.kind==='drums-two-round-cards'?ownDancingBase(p,s,event,wire):ownSquidBase(p,s,event,wire);return;
+ }
+ assert(s.next?.event===event,'AG integrity: GDM own bundle actual source response stage');
+ if(event==='FEATURE_START'){
+  assert(s.cfg===p.cfg,'AG integrity: GDM own bundle actual FEATURE_START CFG');
+  s.phase='pick';s.next=ownBundlePick(p,s);return;
+ }
+ if(event==='FEATURE_PICK'){
+  if(p.kind==='drums-two-round-cards'){
+   s.used.add(ownBundleInteger(s.next.parameters.FP.split('|')[2],'emitted own card'));
+   s.ordinal+=1;assert(s.counts,'AG integrity: GDM own Dancing current source pick counts');
+   if(s.ordinal<s.counts.reduce((a,b)=>a+b,0)){s.phase='pick';s.next=ownBundlePick(p,s);}
+   else{s.phase='end';s.next=ownBundleFeatureRequest(p,'FEATURE_END');}
+  }else{
+   const survived=ownBundleBoolean(gsd(wire.GSD).BRIDGE_SURVIVED);
+   if(survived===undefined){s.phase='pick';s.next=ownBundlePick(p,s);}
+   else if(ownBundleFID(wire).includes(4))s.next=ownSquidBase(p,s,event,wire);
+   else{s.phase='end';s.next=ownBundleFeatureRequest(p,'FEATURE_END');}
+  }
+  return;
+ }
+ assert(event==='FEATURE_END','AG integrity: GDM own bundle actual event unmapped');
+ s.next=p.kind==='drums-two-round-cards'?ownDancingBase(p,s,event,wire):ownSquidBase(p,s,event,wire);
+}
+
 /** Source-selector inputs only; this function never manufactures wire fields. */
 export function updateOwnNOVAFeatureNext(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState,event:string,wire:Record<string,string>):void {
+ if(isOwnBundleFeatureProfile(p)){updateOwnBundleFeatureNext(p,s,event,wire);return;}
  if(wire.CFG!==undefined)s.cfg=number(wire.CFG,'CFG');
  if(wire[p.ftvKey]!==undefined)s.rawFTV=wire[p.ftvKey];
  if(p.kind==='rhino-wheel'){
@@ -1186,6 +1308,121 @@ export class SGWmsSession {
 // SG GDM connection/protocol DATA provider for the unchanged original AG.
 // No legacy SG imports, transport retries, source-result guesses or SG storage.
 
+const OWN_SAMURAI_CI_EXPECTED_BINDING={"version":"own-SamuraiStorm-CI-source-next-end-v90","gameId":"32671","dbName":"sg_thunderdrumssamuraistorm96","runtimeGameId":33091,"runtimeSlug":"thunderdrumssamuraistorm96","ownSDKFileSHA256":"9f52bade9da5a47a71e0c8035383d7e801da187bb54c15fc2af4355ed87fbf7c","ownIndexSHA256":"c1b000d1a689ce15b63f7b136b03cd68b5fc9a4a2c778b5f2e6ab70569b1f7ac","sourceHashes":{"inheritedRequests":"f657e272eca765757ff34c4e89fb03b3a4926702fd1b0acf0f4e2c577d330700","ownPaidRequest":"af3d666d3a8a906f72377915357ff509e7cecfd1e1577bcf8e2cac9808bf19f9","ownPickRequest":"1c35f4b15b11f7f9e197c947e069b89bedcb730c2013751d91be7d5fe3efe72d","ownBETFeatureEntry":"f8d2384455d176a3e64e1963aea492c1447b8066746856788ddbb45a9f0212ee","ownStake":"c4c85bfeabf29fe10692c64f1a9fb03a30a72f0fcaf9c8dc7f7c70a5f95ca6f7","ownPostPickAndEnd":"43f97e091e1ad20ebdb8e46200df8a8f6cd40ac3770cbbab1a2970a9bace1454","ownAckPickDecoder":"88ee628db65f39e98cd00e2a6ce9e608f873a7ce30b4a7159d9cd4867fc0f87a","ownFreeTerminal":"eb225ed4e6f87dcb2b4b7173ab0baa74bd4d57e18cb043a5ab28d49821e2bfc5","ownFreeCaller":"9ada5cbd6dd56106db5b026e21ad092754d7d6a6d477614d1ba6ae6639ce2793","ownPickCaller":"04f86d145e8ef03bd32a3ca32eb465b07674ebdbd98cf0ef51be6ebed27a8c46","ownInterpreterRegistration":"0ea2d4cd2fb5a8f14fb4a860a044efac73de59589301c7178df639a1a7860bb4","ownOuterFreeStack":"1900fbc55a50f0f061748b24699a0abfedb92b2912298efb7ef401b9bcef6e98","ownDrumConstruction":"7714c41169c50905460aa77cf45562a0f1ed1edae13c0f8ccab0a117e0214cd7","ownPickNetworkCallback":"9951843c0ec45120ef8f4970da6053c4b532ce9921a8c73eb872ea4327a3594e","ownConsumedChoiceDisabled":"4ef025d0ef03c5c7c0132d61cada0357e1fb62c5b1f4e0fbf272e3fbf9c47c71","ownActiveFactory":"e921e6aab543ba6409d165d7c5e93618eadd92e7e8a906ebc38417378e83cf8d","ownInitialWalletSource":"ee45bcb64e1c5f381b5e8c678e35b303ec536e70779790354c0d1b008077e3b3","ownBETWalletSource":"6a940727d5bc926c5585e643becc918ad712470b37e481eadb3bb4239966b57d"},"ownSixLegacySourceSHA256s":["edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789","edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789","edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789","edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789","edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789","edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789"],"paidRequestParams":{"GN":"thunderdrumssamuraistorm96","BPL":"5","LB":"25","ABPM":"0"},"freeRequestParams":{"GN":"thunderdrumssamuraistorm96","BPL":"5","LB":"25","ABPM":"0"},"betRaw":100,"ownStakeFormula":"20*BPL+BPL*ABPM","walletWireKey":"AB","walletSourceIsOwnInitAndEachResponseSameAccount":true,"cashResultUsesActualWalletDeltaForSinglePaidBETOnly":true,"allFeatureAndFreeFollowupsHaveNoNewPaidBET":true,"TW_CW_B_ABRawUnmodified":true,"ownCFG":"1","ownChoiceIndices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"sourceAckPickCountAndUsedIDsOnly":true,"pickFPHasTrailingDelimiter":false,"startEvent":"FEATURE_START","pickEvent":"FEATURE_PICK","endEvent":"FEATURE_END","freeEvent":"FREE_GAME","currentJackpotAwardedNonemptySelectsEnd":true,"ownGCTTrueOr1SelectsFreeTerminal":true,"ownPriorFreeStateRestoredAfterFeature":true,"rawWirePreserved":true,"noSyntheticNFGOrTerminal":true,"oldUnknownPOSTNeverReplayed":true,"automaticUnknownResetOFF":true,"originalAGAmountReplayMongoChecksRequired":true,"naturalProviderFreeOrFeatureACKCoverage":0};
+// Own CI source selectors only. No provider-response or terminal fabrication.
+export type OwnSamuraiCIProfile={gameId:string;runtimeSlug:string;cfg:number;betRaw:number};
+export type OwnSamuraiCIRequest={event:string;parameters:Record<string,string>};
+export type OwnSamuraiCIState={phase:'base'|'free'|'start'|'pick'|'end';next?:OwnSamuraiCIRequest;
+ freeRemaining?:number;resumeFree:boolean;ackPickCount:number;used:Set<number>};
+function ownCIInteger(value:string|undefined,label:string):number {
+ assert(typeof value==='string'&&/^(0|[1-9]\d*)$/.test(value)&&Number.isSafeInteger(Number(value)),
+  'AG integrity: Samurai CI '+label);return Number(value);
+}
+function ownCIWalletInteger(value:string|undefined,label:string):number {
+ assert(typeof value==='string'&&value.trim()!=='','AG integrity: Samurai CI '+label);
+ const amount=Number(value);
+ assert(Number.isSafeInteger(amount)&&amount>=0,'AG integrity: Samurai CI '+label);
+ return amount;
+}
+export function ownSamuraiCIProfile(game:any):OwnSamuraiCIProfile|undefined {
+ const c=game.sg?.ownGDMContract,q=c?.ownRootNFGFlowOnlyCapture,b=q?.ownSamuraiCIFlow;
+ if(!b)return undefined;
+ assert(game.provider==='sg'&&game.gameId==='32671'&&game.dbName==='sg_thunderdrumssamuraistorm96'
+  &&game.backendId==='thunderdrumssamuraistorm96'&&game.sg.runtimeGameId===33091
+  &&game.sg.runtimeSlug==='thunderdrumssamuraistorm96'&&game.sg.betRaw===100&&c.betRaw===100
+  &&c.ownSDKFileSHA256==='9f52bade9da5a47a71e0c8035383d7e801da187bb54c15fc2af4355ed87fbf7c'
+  &&q.version==='own-CI-SamuraiStorm-next-end-flow-v90','AG integrity: Samurai CI own identity');
+ assert.deepStrictEqual(b,OWN_SAMURAI_CI_EXPECTED_BINDING,'AG integrity: Samurai CI own source binding');
+ assert.deepStrictEqual(game.sg.requestParams,b.paidRequestParams,'AG integrity: Samurai CI paid request');
+ assert.deepStrictEqual(c.freeBudgetContract.freeRequestParams,b.freeRequestParams,'AG integrity: Samurai CI free request');
+ return {gameId:'32671',runtimeSlug:'thunderdrumssamuraistorm96',cfg:1,betRaw:100};
+}
+export function createOwnSamuraiCIState():OwnSamuraiCIState {
+ return {phase:'base',resumeFree:false,ackPickCount:0,used:new Set()};
+}
+export function beginOwnSamuraiCIRound(s:OwnSamuraiCIState):void {
+ assert(!s.next,'AG integrity: Samurai CI previous round pending');
+ s.phase='base';s.freeRemaining=undefined;s.resumeFree=false;s.ackPickCount=0;s.used.clear();
+}
+function ownCIRequest(p:OwnSamuraiCIProfile,event:string,extra:Record<string,string>={}):OwnSamuraiCIRequest {
+ return {event,parameters:{GN:p.runtimeSlug,...(event==='FREE_GAME'?{}:{CFG:String(p.cfg)}),...extra}};
+}
+function ownCIPick(p:OwnSamuraiCIProfile,s:OwnSamuraiCIState):OwnSamuraiCIRequest {
+ const choice=Array.from({length:16},(_,i)=>i).find(i=>!s.used.has(i));
+ assert(choice!==undefined,'AG integrity: Samurai CI no source-enabled choice');
+ return ownCIRequest(p,'FEATURE_PICK',{FP:`${s.ackPickCount+1}|1|${choice}`});
+}
+function ownCINormal(p:OwnSamuraiCIProfile,s:OwnSamuraiCIState,event:string,wire:Record<string,string>):void {
+ // Source translateBETResponse sends FEATURE_START before returning its
+ // feature/free state; do not replace that actual network call by UI flags.
+ const cap=event==='FREE_GAME'&&(wire.GCT==='true'||wire.GCT==='1');
+ if(wire.FID!==undefined){const ids=wire.FID.split('|').filter(v=>v!=='');
+  assert(ids.length>0&&ids.every(v=>v==='0'||v==='1'),'AG integrity: Samurai CI actual feature identity unmapped');}
+ if(wire.NFG!==undefined)s.freeRemaining=ownCIInteger(wire.NFG,'actual NFG');
+ else if(event==='BET')s.freeRemaining=undefined;
+ if(cap)s.freeRemaining=undefined;
+ const rawCFG=wire.CFG;
+ let start=false;
+ if(rawCFG!==undefined&&rawCFG!==''){
+  const cfg=ownCIInteger(rawCFG,'actual CFG');
+  assert(cfg===p.cfg,'AG integrity: Samurai CI actual feature CFG unmapped');
+  const fs=wire['FS_'+rawCFG];start=fs===undefined||ownCIInteger(fs,'actual FS')===0;
+ }
+ const fallback=wire.FID==='0|1|'&&wire.FPM_1==='|'&&wire.RID==='1'&&wire.NRID==='0';
+ const intro=(wire.FID==='1|'||wire.FID==='0|1|')&&wire.FPM_1==='|';
+ if(start||fallback){
+  s.resumeFree=s.freeRemaining!==undefined&&s.freeRemaining>0;
+  s.ackPickCount=0;s.used.clear();s.phase='start';s.next=ownCIRequest(p,'FEATURE_START');return;
+ }
+ if(intro){
+  assert(rawCFG==='1','AG integrity: Samurai CI active pick has no own actual CFG');
+  s.resumeFree=s.freeRemaining!==undefined&&s.freeRemaining>0;
+  s.ackPickCount=0;s.used.clear();s.phase='pick';s.next=ownCIPick(p,s);return;
+ }
+ if(s.freeRemaining!==undefined&&s.freeRemaining>0){s.phase='free';s.next=ownCIRequest(p,'FREE_GAME');}
+ else{s.phase='base';s.next=undefined;}
+}
+export function updateOwnSamuraiCINext(p:OwnSamuraiCIProfile,s:OwnSamuraiCIState,event:string,wire:Record<string,string>):void {
+ if(event==='BET'){assert(!s.next,'AG integrity: Samurai CI pending BET');ownCINormal(p,s,event,wire);return;}
+ assert(s.next?.event===event,'AG integrity: Samurai CI actual network event');
+ if(event==='FREE_GAME'){ownCINormal(p,s,event,wire);return;}
+ if(event==='FEATURE_START'){s.phase='pick';s.next=ownCIPick(p,s);return;}
+ if(event==='FEATURE_PICK'){
+  const values=gsd(wire.GSD);
+  assert(wire.CFG==='1'&&typeof wire.FPM_1==='string'&&typeof values.PICK_RESULT_JACKPOT==='string',
+   'AG integrity: Samurai CI own acknowledged picks missing');
+  // Exactly the current source decoder's fields, not a guessed local ++.
+  const results=values.PICK_RESULT_JACKPOT.split(','),rawIDs=wire.FPM_1.split('|');
+  const ids=results.map((_,i)=>{
+   assert(rawIDs[i]!==undefined,'AG integrity: Samurai CI acknowledged choice missing');
+   const id=ownCIInteger(rawIDs[i].replace(';',''),'actual acknowledged choice');
+   assert(id<16,'AG integrity: Samurai CI choice outside actual source grid');return id;
+  });
+  assert(results.length>0&&results.length<=16&&new Set(ids).size===ids.length,
+   'AG integrity: Samurai CI acknowledged choice state');
+  s.ackPickCount=results.length;s.used=new Set(ids);
+  if(values.JACKPOT_AWARDED!==undefined&&values.JACKPOT_AWARDED!==''){
+   s.phase='end';s.next=ownCIRequest(p,'FEATURE_END');
+  }else{s.phase='pick';s.next=ownCIPick(p,s);}return;
+ }
+ assert(event==='FEATURE_END','AG integrity: Samurai CI network action unmapped');
+ // Own FEATURE_END restores delayedResponse. Its optional NFG is not the
+ // FREE_GAME decoder. Restore only the actual retained outer free state.
+ if(s.resumeFree&&s.freeRemaining!==undefined&&s.freeRemaining>0){s.phase='free';s.next=ownCIRequest(p,'FREE_GAME');}
+ else{s.phase='base';s.next=undefined;}s.resumeFree=false;
+}
+export function getOwnSamuraiCINext(s:OwnSamuraiCIState,freeParams:Record<string,string>):OwnSamuraiCIRequest|undefined {
+ if(!s.next)return undefined;
+ return {event:s.next.event,parameters:s.next.event==='FREE_GAME'?{...freeParams}:{...s.next.parameters}};
+}
+export function ownSamuraiCIWalletAmount(start:number,betRaw:number,wire:Record<string,string>){
+ assert(Number.isSafeInteger(start)&&start>=0&&betRaw===100,'AG integrity: Samurai CI actual paid cash origin');
+ const end=ownCIWalletInteger(wire.AB,'actual same-account wallet AB');
+ const win=end-start+betRaw;
+ assert(Number.isSafeInteger(win)&&win>=0,'AG integrity: Samurai CI original whole cash conservation');
+ return {end,win}; // All original B/AB/TW/CW stay untouched in SGWireResponse.
+}
+
 type GDMWireStep={msgId:string;methodName:string;requestPayload:string;responsePayload:string;responseXml:string;responseBalance?:number;httpStatus?:number;elapsedMs?:number};
 type GDMTransport=(event:string,payload:string)=>Promise<GDMWireStep>;
 const gdmParser=new XMLParser({ignoreAttributes:false,attributeNamePrefix:'',parseTagValue:false,parseAttributeValue:false});
@@ -1339,7 +1576,9 @@ export class SGGdmSession{
  private readonly freshFreeId='Free:'+crypto.randomBytes(16).toString('hex');
  private readonly pid='gdmgcm'+this.freshFreeId;private cookies=new Map<string,string>();private ordinal=0;
  private journal:number|null=null;private journalPath:string|null=null;private gameplaySent=false;
- constructor(private readonly game:AGGameConfig,private readonly transport?:GDMTransport,initialBalance?:number){gdmBinding(game);if(initialBalance!==undefined){assert(Number.isSafeInteger(initialBalance)&&initialBalance>=0);this.balance=initialBalance;}}
+ private readonly ownCIProfile:OwnSamuraiCIProfile|undefined;
+ private readonly ownCIState=createOwnSamuraiCIState();
+ constructor(private readonly game:AGGameConfig,private readonly transport?:GDMTransport,initialBalance?:number){gdmBinding(game);this.ownCIProfile=ownSamuraiCIProfile(game);if(initialBalance!==undefined){assert(Number.isSafeInteger(initialBalance)&&initialBalance>=0);this.balance=initialBalance;}}
  private evidence(value:Record<string,unknown>){
   if(this.transport)return;
   if(this.journal===null){const dir=path.resolve(process.env.SG_EVIDENCE_DIR||'.sg-evidence');fs.mkdirSync(dir,{recursive:true});
@@ -1362,7 +1601,7 @@ export class SGGdmSession{
  private async exchange(event:string,parameters:Record<string,any>):Promise<GDMWireStep>{
   assert(!this.closed,'AG integrity: GDM session permanently closed');const payload=this.form(event,parameters),ordinal=++this.ordinal;
   const gameplay=event!=='INIT'&&event!=='REELSTRIP';if(gameplay)this.gameplaySent=true;
-  const ownFeatureFollowup=ownNOVAFeatureProfile(this.game)&&['FEATURE_START','FEATURE_PICK','FEATURE_END'].includes(event);
+  const ownFeatureFollowup=(this.ownCIProfile||ownNOVAFeatureProfile(this.game))&&['FEATURE_START','FEATURE_PICK','FEATURE_END'].includes(event);
   const context={event,ordinal,requestKind:event==='FREE_GAME'||ownFeatureFollowup?'round-follow-up' as const:gameplay?'round-start' as const:'initialization' as const,gameplayRequestHasBeenSent:this.gameplaySent};
   if(this.transport){let step:GDMWireStep;try{step=await this.transport(event,payload);}catch{this.close();throw new SGSourceFault(gameplay?'execution-unknown':'recoverable-initialization',context);}assert(!this.closed,'AG integrity: GDM late response after permanent closure');if(step.httpStatus!==undefined&&step.httpStatus!==200){this.close();throw new SGSourceFault(gameplay?'execution-unknown':'protocol', {...context,httpStatus:step.httpStatus});}return step;}
   const operator=process.env.SG_GDM_OPERATOR_ID;assert(operator&&/^[A-Za-z0-9_-]+$/.test(operator),'AG integrity: GDM own operator configuration missing');
@@ -1378,11 +1617,12 @@ export class SGGdmSession{
  async connect(){
   assert(!this.closed,'AG integrity: GDM session closed');if(this.transport){assert(Number.isSafeInteger(this.balance));return;}
   assert(process.env.SG_AG_ALLOW_SOURCE==='1','AG integrity: GDM live source not enabled');
+  if(this.ownCIProfile){try{const p=this.decode(await this.exchange('INIT',{GN:this.game.sg.runtimeSlug}),'INIT');this.balance=ownCIWalletInteger(p.AB,'actual initial same-account AB');assert(p.R===undefined||p.R==='0','AG integrity: Samurai CI fresh recovery unmapped');assert(p.FID===undefined&&p.CFG===undefined&&p.REC===undefined&&(p.NFG===undefined||p.NFG==='0'),'AG integrity: Samurai CI prior round at fresh Init');assert(typeof p.BD==='string'&&p.BD.split('|').some(v=>v!==''&&Number(v)===5),'AG integrity: Samurai CI own BPL5 unavailable');this.decode(await this.exchange('REELSTRIP',{GN:this.game.sg.runtimeSlug}),'REELSTRIP');return;}catch(error){this.close();throw error;}}
   try{const ownNOVA=this.ownNOVAAccountRequestBinding(),p=this.decode(await this.exchange('INIT',{GN:this.game.sg.runtimeSlug}),'INIT');assert(p.B!==undefined&&p.AB===p.B&&(ownNOVA||p.GA==='0')&&(p.IFG===undefined||p.IFG==='0')&&(p.NFG===undefined||p.NFG==='0')&&p.FID===undefined&&p.REC===undefined,'AG integrity: GDM initialization cash or recovery');if(ownNOVA){assert(p.R===undefined||p.R==='0','AG integrity: GDM own NOVA fresh recovery flag');assert(typeof p.BD==='string'&&p.BD.split('|').filter(Boolean).every((v:string)=>/^[1-9]\d*$/.test(v))&&p.BD.split('|').includes(String(ownNOVA.selectedAllowedBet)),'AG integrity: GDM own NOVA selected wager unavailable');if(ownNOVA.ownSelectedReels!==null){assert(typeof p.RBM==='string','AG integrity: GDM own NOVA selected reel multiplier missing');const values=p.RBM.split('|').filter(Boolean).map((v:string)=>gdmInteger(v,'own allowed reel multiplier'));assert(values.length>=ownNOVA.ownSelectedReels&&values[ownNOVA.ownSelectedReels-1]===ownNOVA.ownSelectedRBMMultiplier,'AG integrity: GDM own NOVA explicit reel choice unavailable');}}if(this.game.sg.ownGDMContract.freeBudgetContract)for(const k of this.game.sg.ownGDMContract.freeBudgetContract.promotionalKeysForbidden)assert(p[k]===undefined,'AG integrity: GDM promotional initialization not mapped');this.balance=gdmInteger(p.B,'initial balance');this.decode(await this.exchange('REELSTRIP',{GN:this.game.sg.runtimeSlug}),'REELSTRIP');}catch(e){this.close();throw e;}
  }
  getHandshakeData(){return null;}getBalance(){return this.balance/100;}getFallbackBet(){return this.game.sg.betRaw/100;}
  getSpinParams(){return {...this.game.sg.requestParams};}getInitialRoundRequest(){return{event:'BET',parameters:this.getSpinParams()};}
- getExactFollowUpRequest(action:string){if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){if(ownNOVAFeatureProfile(this.game)){assert(action==='FREE_SPIN','AG integrity: GDM own NOVA feature next action');const exact=getOwnNOVAFeatureNext(this.ownNOVAFeatureState,this.rootFlowFreeRequest());assert(exact,'AG integrity: GDM own NOVA feature next absent');return exact;}assert(action==='FREE_SPIN'&&(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry),'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:this.rootFlowFreeRequest()};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
+ getExactFollowUpRequest(action:string){if(this.ownCIProfile){assert(action==='FREE_SPIN','AG integrity: Samurai CI own next action');const exact=getOwnSamuraiCINext(this.ownCIState,this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams);assert(exact,'AG integrity: Samurai CI own next absent');return exact;}if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){if(ownNOVAFeatureProfile(this.game)){assert(action==='FREE_SPIN','AG integrity: GDM own NOVA feature next action');const exact=getOwnNOVAFeatureNext(this.ownNOVAFeatureState,this.rootFlowFreeRequest());assert(exact,'AG integrity: GDM own NOVA feature next absent');return exact;}assert(action==='FREE_SPIN'&&(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry),'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:this.rootFlowFreeRequest()};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
  getLastGameRequest(){return this.lastRequest;}getPickParams(){throw new Error('AG integrity: GDM own selection not mapped');}
  isRoundTerminalAction(action:string){return action==='SPIN';}
  private ownExtraStageCounter(p:Record<string,string>,prior:any){
@@ -1432,21 +1672,30 @@ export class SGGdmSession{
  private ownPendingFree(){return !!this.freeState&&(this.freeState.remaining>0||(['own-SDK-returned-cash-stage-followup-trial-v7','own-SDK-returned-cash-stage-reentry-trial-v8'].includes(this.game.sg.ownGDMContract.version)&&!!this.freeState.outer&&this.freeState.outer.remaining>0));}
 
  private huffActualRequestMode:number|undefined;
+ private huffActualWheelStop:number|undefined;
  private huffActualNextRequestBinding(){
   const c=this.game.sg.ownGDMContract,b=c.ownRootNFGFlowOnlyCapture?.ownHuffSourceNextRequest;
   if(!b)return undefined;
-  assert(b.version==='own-Huff-source-selected-next-request-v1'&&this.game.gameId===b.gameId&&b.gameId==='32718'&&this.game.dbName===b.dbName&&b.dbName==='sg_huffnmorepuffhighlimit96'&&this.game.sg.runtimeGameId===b.runtimeGameId&&b.runtimeGameId===33118&&this.game.sg.runtimeSlug===b.runtimeSlug&&b.runtimeSlug==='huffnmorepuffhighlimit96'&&b.ownSDKFileSHA256===c.ownSDKFileSHA256&&b.ownSDKFileSHA256==='48898ee09234a8c2388358e6f1f0f760e79f18f7f9290f14b8f87e42a6ffd469','AG integrity: GDM own Huff actual request identity');
+  assert(['own-Huff-source-selected-next-request-v1','own-Huff-source-caller-next-request-v2'].includes(b.version)&&this.game.gameId===b.gameId&&b.gameId==='32718'&&this.game.dbName===b.dbName&&b.dbName==='sg_huffnmorepuffhighlimit96'&&this.game.sg.runtimeGameId===b.runtimeGameId&&b.runtimeGameId===33118&&this.game.sg.runtimeSlug===b.runtimeSlug&&b.runtimeSlug==='huffnmorepuffhighlimit96'&&b.ownSDKFileSHA256===c.ownSDKFileSHA256&&b.ownSDKFileSHA256==='48898ee09234a8c2388358e6f1f0f760e79f18f7f9290f14b8f87e42a6ffd469','AG integrity: GDM own Huff actual request identity');
   assert(b.controlWireKey==='FID'&&b.firstFeatureModeOnly&&b.normalMode===0&&b.wheelMode===2&&b.passiveBaseMode===1&&b.ownLines==='20'&&b.ownBPL==='100'&&this.game.sg.betRaw===2000&&this.game.sg.requestParams.BPR==='100'&&this.game.sg.requestParams.RB==='5'&&b.presentFirstFIDUpdatesSourceMode&&b.absentFIDKeepsPriorSourceMode&&b.missingInitialModeDoesNotDefaultToZero&&b.unmappedActiveModeStops&&b.paidRequestUnchanged&&b.rawWirePreserved&&b.noSyntheticTerminal&&b.noOldUnknownPOSTReplay,'AG integrity: GDM own Huff actual request contract');
   assert.deepStrictEqual(b.normalFields,{BPL:'100',LB:'20',BPR:'100',RB:'5'},'AG integrity: GDM own Huff normal request fields');
   assert.deepStrictEqual(b.wheelFields,{BPL:'100',LB:'20'},'AG integrity: GDM own Huff wheel request fields');
   const expected:Record<string,string>={"actualControllerConfigurationSHA256":"a9c239914e4577bbd7bb2569bb0aad762dd19a22db61c721a70a2c045a7b9762","actualRequestOverrideSHA256":"f0d4084055e2e2f409ce2f1d90c9b20f9372f8de2611f4c3e588f7452ac6a9f9","ownNormalCallerOptionsSHA256":"5974be08b253e08da90df47a2795e1a7a7927acd53b96fc64d3c49e476b98bc0","ownCallerConstantSHA256":"01c3edef9e4a193c4077c145d0bf7f6271fc6b718492b64cb3d4cb06789a405c","ownRequestOptionsProjectionSHA256":"31137c247d82bd18f641235cba866e0046d09952aa415986352f7cde20782fa5","ownWheelRequestOptionsSHA256":"242dadb250bfe8289719cc9b287ca75f11b8162e39f410db0a4df60224b9551b","ownWheelOptionsBridgeSHA256":"03115bc705f456c1a4dcebc5015f7e01266f14335a88a79dd9d3be2b76e937df","ownWheelSubmitSHA256":"25345ebd0d03f85c253e5ef717583d4f43b9941f1c94fb48d0f4a1a068705db5","ownFIDStateProjectionSHA256":"0fa1cab6df6e0d5bd564f4f53b7db1e006df22ac962a284f21d49713a8907761","ownFeatureModesSHA256":"678529d456948187152f21582b377764875192a67f704f95e4e39d72f1bec27b","ownPaylineConfigurationSHA256":"1369293a7d5196f725060e132c186fe8358a506779834449631127792e36e875","genericInheritedRequestConstructorSHA256":"3c383c3f95b46b93a489a3add024aead9df25ebabc5343a050dd6d14a960df8f"};
   for(const[k,value]of Object.entries(expected))assert(b[k]===value,'AG integrity: GDM own Huff actual source binding');
+  if(b.version==='own-Huff-source-caller-next-request-v2'){
+   assert(b.sourceBaseGameMode===1&&b.wheelResultGSDKey==='WHSTOP'&&b.sourceModeUpdatesOnlyWithOwnGSD&&b.sourceWheelResultUpdatesOnlyWithOwnGSD&&b.absentOwnGSDKeepsPriorCallerState&&b.actualWheelIntroFactorySelectsProviderCaller&&b.returnedWheelResultIsLocalPresentation&&b.sourceBaseGameMayHaveRemainingNFG&&b.noObservedFIDCombinationWhitelist&&b.knownSourceModesOnly&&b.originalCashAndRawChecksUnchanged&&b.sourceNullPresentationUsesNormalCaller&&b.sourceWheelOutroClearsPresentationMode&&b.wheelIntroPredicateAloneSelectsSpecialRequest,'AG integrity: GDM own Huff source caller contract');
+   const control:Record<string,string>={"ownWheelStopDecoderSHA256":"fc4f0b86c513c019befb044eb41d64fdf00d7bd2a48f121a20f6515427d867bf","ownWheelStopStateCopySHA256":"13b94a069ebe9918746b1b5fea06742c4e1dd996b7d1fb1cdbbffd8b7bdda832","ownFactoryActualWheelIntroRequiredSHA256":"3bc5d1f8b18806ee4c4fe65899b4663bbe866faef4bd1e836f75c093d0f5b42b","ownWheelIntroSourceSelectorSHA256":"b32b8d0cb6d634963bacbfeb1fcec707076fbdf9dbca5ba1237638847d0d8c99","ownZeroOrBaseModeLocalWheelPresentationSHA256":"794313f93f30df4a7d45487ea4fb93c2542c9b493994e264fdcb002a3438b35a","ownWheelOutroCallbackSHA256":"3d3e74a7d911f84f36a85ed2ebafbab34194bcc0f7d5613534d9b902164e8e65","ownWheelPresentationModeResetSHA256":"944cb487a23d6febb862e8de910476f768693726f1ca21417cea87fd653c2c12"};
+   for(const[k,value]of Object.entries(control))assert(b[k]===value,'AG integrity: GDM own Huff caller source binding');
+  }
   return b;
  }
  private updateHuffActualRequestMode(p:Record<string,string>,remaining:number){
   const b=this.huffActualNextRequestBinding();if(!b)return;
-  if(p.FID!==undefined){const fields=p.FID.split('|').filter(v=>v!=='');assert(fields.length>0,'AG integrity: GDM own Huff empty actual mode');const mode=gdmInteger(fields[0],'own Huff first FID');assert(mode===b.normalMode||mode===b.wheelMode||mode===b.passiveBaseMode,'AG integrity: GDM own Huff unmapped actual mode');this.huffActualRequestMode=mode;}
-  if(remaining>0)assert(this.huffActualRequestMode===b.normalMode||this.huffActualRequestMode===b.wheelMode,'AG integrity: GDM own Huff missing or unmapped active mode');
+  const caller=b.version==='own-Huff-source-caller-next-request-v2';
+  // The own Rh setter copies mode and WHSTOP only when own GSD was decoded.
+  if(caller&&p.GSD!==undefined){const fields=ownGDMFields(p.GSD,'#','~');this.huffActualWheelStop=fields[b.wheelResultGSDKey]===undefined?undefined:gdmInteger(fields[b.wheelResultGSDKey],'own Huff actual wheel stop');}
+  if(p.FID!==undefined&&(!caller||p.GSD!==undefined)){const fields=p.FID.split('|').filter(v=>v!=='');assert(fields.length>0,'AG integrity: GDM own Huff empty actual mode');const mode=gdmInteger(fields[0],'own Huff first FID');assert(mode===b.normalMode||mode===b.wheelMode||mode===b.passiveBaseMode,'AG integrity: GDM own Huff unmapped actual mode');this.huffActualRequestMode=mode;}
+  if(!caller&&remaining>0)assert(this.huffActualRequestMode===b.normalMode||this.huffActualRequestMode===b.wheelMode,'AG integrity: GDM own Huff missing or unmapped active mode');
  }
  private quickHitSecondFeature=false;
  private quickHitNextRequestBinding(){
@@ -1460,7 +1709,15 @@ export class SGGdmSession{
  }
  private rootFlowFreeRequest(){
   const h=this.huffActualNextRequestBinding();
-  if(h){assert(this.huffActualRequestMode===h.normalMode||this.huffActualRequestMode===h.wheelMode,'AG integrity: GDM own Huff actual next mode');return {GN:this.game.sg.runtimeSlug,...(this.huffActualRequestMode===h.wheelMode?h.wheelFields:h.normalFields)};}
+  if(h){
+   const caller=h.version==='own-Huff-source-caller-next-request-v2';
+   assert(this.huffActualRequestMode===h.normalMode||this.huffActualRequestMode===h.wheelMode||caller&&(this.huffActualRequestMode===undefined||this.huffActualRequestMode===h.sourceBaseGameMode),'AG integrity: GDM own Huff actual next mode');
+   const wheelIntro=this.huffActualRequestMode===h.wheelMode&&(!caller||!this.huffActualWheelStop);
+   const parameters={GN:this.game.sg.runtimeSlug,...(wheelIntro?h.wheelFields:h.normalFields)};
+   // Own WheelOutro's d_a clears presentation Pm. It does not end NFG or invent a new wire mode.
+   if(caller&&!wheelIntro&&this.huffActualWheelStop!==undefined)this.huffActualRequestMode=undefined;
+   return parameters;
+  }
   const params={...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams},b=this.quickHitNextRequestBinding();
   if(b){params.BPL=this.game.sg.requestParams.BPL;params.LB=this.quickHitSecondFeature?b.secondFeatureLines:b.normalLines;}
   return params;
@@ -1486,10 +1743,11 @@ export class SGGdmSession{
  }
  private rootFlowBinding(){
   const c=gdmBinding(this.game),q=c.ownRootNFGFlowOnlyCapture,r=c.freeBudgetContract,b=r?.ownSDKFreeRequestBinding;
-  assert(['own-SDK-root-NFG-flow-only-v1','own-SDK-root-NFG-natural-chain-flow-only-v2','own-bundle-NFG-flow-only-v3','own-NOVA-account-NFG-next-end-flow-only-v4'].includes(q?.version)&&q.gameId===this.game.gameId&&q.ownSDKFileSHA256===c.ownSDKFileSHA256&&q.SDKFinalGetterSourceSHA256===c.SDKFinalGetterSourceSHA256,'AG integrity: GDM own root flow identity');
+  assert(['own-SDK-root-NFG-flow-only-v1','own-SDK-root-NFG-natural-chain-flow-only-v2','own-bundle-NFG-flow-only-v3','own-NOVA-account-NFG-next-end-flow-only-v4','own-bundle-network-feature-next-end-flow-only-v5'].includes(q?.version)&&q.gameId===this.game.gameId&&q.ownSDKFileSHA256===c.ownSDKFileSHA256&&q.SDKFinalGetterSourceSHA256===c.SDKFinalGetterSourceSHA256,'AG integrity: GDM own root flow identity');
   if(q.version==='own-SDK-root-NFG-flow-only-v1'){assert(b?.ownSDKFileSHA256===c.ownSDKFileSHA256,'AG integrity: GDM own root flow identity');for(const k of ['SDKSelectorSHA256','NFGSetterSHA256','NFGDecoderSHA256','GCTDecoderSHA256','ownRequestConstructorSHA256'])assert(q[k]===b[k],'AG integrity: GDM own root next/end selector');}
      else if(q.version==='own-bundle-NFG-flow-only-v3'){const b=q.ownBundleFlow;assert(b?.version==='own-bundle-SDK-NFG-next-end-v1'&&b.gameId===this.game.gameId&&b.ownSDKFileSHA256===c.ownSDKFileSHA256&&b.ownTerminalSourceSHA256===c.SDKFinalGetterSourceSHA256&&b.sourceDefinedModesOnly&&b.unmappedPickAndOtherFlowStops&&b.rawWirePreserved,'AG integrity: GDM own bundle flow binding');for(const k of ['ownFreeRequestSourceSHA256','ownTerminalSourceSHA256','ownNFGDecoderSHA256','ownFeatureLookupSHA256'])assert(/^[a-f0-9]{64}$/.test(b[k]),'AG integrity: GDM own bundle SDK bytes');if(b.remainingDecoder){assert(b.remainingDecoder==='signed-minus-one-is-pending'&&b.ownNFGDecoderSHA256===crypto.createHash('sha256').update('i=void 0!==t.NFG&&-1==Number(t.NFG)?1:0').digest('hex'),'AG integrity: GDM own signed next/end decoder');}assert(Array.isArray(b.actualFreeFeatureModes)&&b.actualFreeFeatureModes.length>0&&b.actualFreeFeatureModes.every((v:any)=>Number.isSafeInteger(v)&&v>=0),'AG integrity: GDM own bundle feature selector');}
 else if(q.version==='own-NOVA-account-NFG-next-end-flow-only-v4'){this.ownNOVAAccountRequestBinding();}
+else if(q.version==='own-bundle-network-feature-next-end-flow-only-v5'){assert(isOwnBundleFeatureProfile(ownNOVAFeatureProfile(this.game)),'AG integrity: GDM own bundle source network scope');}
 else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&&n.ownSDKFileSHA256===c.ownSDKFileSHA256&&n.ownPaidAndFreeRequestBytesUsed&&n.noSyntheticTerminal&&n.ownCompleteNaturalRecordsSHA256===q.ownCompleteNaturalRecordsSHA256&&n.ownActualFreeRequestParamsSHA256===q.ownActualFreeRequestParamsSHA256,'AG integrity: GDM own natural request/terminal binding');const ordered=Object.fromEntries(Object.entries(r.freeRequestParams).sort(([a],[b])=>a.localeCompare(b)));assert(crypto.createHash('sha256').update(JSON.stringify(ordered)).digest('hex')===q.ownActualFreeRequestParamsSHA256&&c.pendingClauses.some((x:any)=>x.wireKey==='NFG'),'AG integrity: GDM actual natural free request');}
   assert(q.nextEvent==='FREE_GAME'&&q.remainingWireKey==='NFG'&&q.terminalRemaining===0&&q.usesOwnRequestAndTerminalOnly&&q.rawWirePreserved&&q.originalAGAmountReplayMongoChecksRequired&&q.noSyntheticTerminal&&q.noOldUnknownPOSTReplay&&q.unusedDisplayAndBudgetFieldsDoNotBlock&&q.noPreviouslySeenWholeVariationGate&&q.unmappedActiveFlagsStillStop,'AG integrity: GDM own root flow contract');
   if(q.ownCrossLinkFlow){const b=q.ownCrossLinkFlow;assert(b.version==='own-Free-to-CrossLink-next-end-v1'&&b.gameId===this.game.gameId&&b.ownSDKFileSHA256===c.ownSDKFileSHA256&&b.freeMode===0&&b.crossLinkMode===1&&b.modeWireKey==='FID'&&b.remainingWireKey==='NFG'&&b.nextEvent==='FREE_GAME'&&b.sameOwnFreeRequestParameters&&b.noWireCounterInvented&&b.noGuessedFEATURE_END&&b.rawWirePreserved,'AG integrity: GDM own CrossLink flow binding');for(const k of ['ownFreeToCrossLinkSHA256','ownActualRequestSelectorSHA256','ownFirstFIDSetterSHA256','ownCrossLinkNFGSetterSHA256','ownCrossLinkEndSHA256'])assert(/^[a-f0-9]{64}$/.test(b[k]),'AG integrity: GDM own CrossLink SDK source');}
@@ -1505,16 +1763,36 @@ else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&
   ownNOVAFeatureProfile(this.game);
   return {c,q,r};
  }
+ private async ownSamuraiCICall(event:string,parameters:Record<string,any>|null){
+  const profile=this.ownCIProfile;assert(profile&&!this.closed&&parameters,'AG integrity: Samurai CI own session');
+  const c=gdmBinding(this.game),first=event==='BET';
+  if(first){assert.deepStrictEqual(parameters,this.game.sg.requestParams,'AG integrity: Samurai CI actual paid request');beginOwnSamuraiCIRound(this.ownCIState);this.roundStart=this.balance;this.totalWin=0;this.rootFlowSteps=[];}
+  else{const exact=getOwnSamuraiCINext(this.ownCIState,c.freeBudgetContract.freeRequestParams);assert(exact&&exact.event===event,'AG integrity: Samurai CI actual follow-up event');assert.deepStrictEqual(parameters,exact.parameters,'AG integrity: Samurai CI actual follow-up fields');}
+  this.lastRequest={event,parameters:{...parameters}};const step=await this.exchange(event,parameters);
+  try{
+   const wire=this.decode(step,event);for(const key of c.freeBudgetContract.promotionalKeysForbidden)assert(wire[key]===undefined,'AG integrity: Samurai CI promotional action unmapped');
+   assert(wire.REC===undefined&&(wire.R===undefined||wire.R==='0'),'AG integrity: Samurai CI recovered response unmapped');
+   const amount=ownSamuraiCIWalletAmount(this.roundStart,c.betRaw,wire);
+   if(step.responseBalance!==undefined)assert(step.responseBalance===amount.end,'AG integrity: Samurai CI captured actual wallet differs');
+   updateOwnSamuraiCINext(profile,this.ownCIState,event,wire);
+   const exact=getOwnSamuraiCINext(this.ownCIState,c.freeBudgetContract.freeRequestParams),pending=!!exact;
+   this.balance=amount.end;this.totalWin=amount.win;this.rootFlowSteps.push({...step,responseBalance:amount.end});
+   const steps=pending?this.rootFlowSteps.slice(-1):this.rootFlowSteps;
+   return {NextActionInfo:{nextAction:pending?'FREE_SPIN':'SPIN'},PlayerBalanceInfo:{preWagerBalance:this.roundStart/100,balance:amount.end/100,wager:c.betRaw/100,resultAmount:amount.win/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,startBalance:this.roundStart/100,endBalance:amount.end/100,totalWin:amount.win/100,stepCount:steps.length,msgIds:steps.map(x=>x.msgId),steps:structuredClone(steps),SGWireResponse:wire,SGDecodedResponseXML:step.responseXml,SGOwnSDKDecision:{ownSDKFileSHA256:c.ownSDKFileSHA256,ownCISamuraiActualNextEndOnly:true,ownSameAccountWalletAB:true,noSyntheticTerminal:true},money:{startBalanceRaw:this.roundStart,endBalanceRaw:amount.end,betRaw:c.betRaw,totalWinRaw:amount.win}};
+  }catch(error){this.close();throw error;}
+ }
+
  private async rootFlowCall(event:string,parameters:Record<string,any>|null){
+  if(this.ownCIProfile)return this.ownSamuraiCICall(event,parameters);
   const {c,q,r}=this.rootFlowBinding(),first=event==='BET';assert(!this.closed&&parameters,'AG integrity: GDM own root session closed');
-  const ownFeature=ownNOVAFeatureProfile(this.game);
+  const ownFeature=ownNOVAFeatureProfile(this.game),ownBundleFeature=isOwnBundleFeatureProfile(ownFeature);
   if(ownFeature){if(first){assert(!this.ownNOVAFeatureState.next,'AG integrity: GDM own NOVA feature pending BET');assert.deepStrictEqual(parameters,this.game.sg.requestParams,'AG integrity: GDM own root request');beginOwnNOVAFeatureRound(this.ownNOVAFeatureState);}else{const exact=getOwnNOVAFeatureNext(this.ownNOVAFeatureState,this.rootFlowFreeRequest());assert(exact&&exact.event===event,'AG integrity: GDM own NOVA feature actual event');assert.deepStrictEqual(parameters,exact.parameters,'AG integrity: GDM own NOVA feature actual fields');}}else{
   assert(first?this.rootFlowRemaining===undefined&&!this.rootFlowPendingCrossLink&&!this.rootFlowPendingNOVAEntry:(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry)&&event==='FREE_GAME','AG integrity: GDM actual root action');
   assert.deepStrictEqual(parameters,first?this.game.sg.requestParams:this.rootFlowFreeRequest(),'AG integrity: GDM own root request');}
   if(first){this.roundStart=this.balance;this.totalWin=0;this.rootFlowSteps=[];this.quickHitSecondFeature=false;}this.lastRequest={event,parameters:{...parameters}};
   const step=await this.exchange(event,parameters);try{
    const p=this.decode(step,event);assert(p.B!==undefined&&p.TW!==undefined,'AG integrity: GDM required original AG money');
-   const ownNOVA=this.ownNOVAAccountRequestBinding();assert((ownNOVA||p.GA==='0'||q.ownNOVAOptionalGambleAvailability&&p.GA==='1')&&(p.GCT===undefined||p.GCT==='0'),'AG integrity: GDM unmapped active root flow');
+   const ownNOVA=this.ownNOVAAccountRequestBinding();assert((ownNOVA||p.GA==='0'||q.ownNOVAOptionalGambleAvailability&&p.GA==='1')&&(ownBundleFeature||p.GCT===undefined||p.GCT==='0'),'AG integrity: GDM unmapped active root flow');
    for(const k of r.promotionalKeysForbidden)if(!ownFeature||k!==ownFeature.ftvKey)assert(p[k]===undefined,'AG integrity: GDM unmapped promotional flow');
    assert(p.REC===undefined,'AG integrity: GDM recovered flow unmapped');
    if(ownNOVA)assert(p.R===undefined||p.R==='0','AG integrity: GDM own NOVA recovered response unmapped');
@@ -1526,9 +1804,9 @@ else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&
      for(const k of activeKeys)assert(gsd[k]===undefined||k==='CSC'&&ownNOVA.ownIgnoreCSCWhenWinCapReached&&this.ownNOVAWinCapReached,'AG integrity: GDM own NOVA active interactive next unmapped');
     }
    }
-   if(!q.ownBundleFlow&&!ownNOVA)for(const k of Object.keys(r.freeRequestParams).filter(k=>k!=='GN'))assert(p[k]===undefined||p[k]===(q.ownQuickHitFG2TNextRequest?parameters[k]:r.freeRequestParams[k]),'AG integrity: GDM actual wager changed');
+   if(!q.ownBundleFlow&&!ownNOVA&&!ownBundleFeature)for(const k of Object.keys(r.freeRequestParams).filter(k=>k!=='GN'))assert(p[k]===undefined||p[k]===(q.ownQuickHitFG2TNextRequest?parameters[k]:r.freeRequestParams[k]),'AG integrity: GDM actual wager changed');
    if(q.ownHuffSourceNextRequest)for(const k of ['BPL','LB'])if(parameters[k]!==undefined)assert(p[k]===undefined||p[k]===parameters[k],'AG integrity: GDM own Huff actual request wager changed');
-   let remaining:number|undefined;if(ownNOVA&&first||ownFeature&&event!=='FREE_GAME')remaining=undefined;else if(q.ownBundleFlow?.remainingDecoder==='signed-minus-one-is-pending'){if(p.NFG===undefined&&first)remaining=0;else{assert(typeof p.NFG==='string'&&/^-?\d+$/.test(p.NFG)&&Number.isSafeInteger(Number(p.NFG))&&Number(p.NFG)>=-1,'AG integrity: GDM own signed next/end NFG');remaining=Number(p.NFG)===-1?1:0;}}else remaining=p.NFG===undefined&&first?0:gdmInteger(p.NFG,'own actual NFG');const total=gdmInteger(p.TW,'own actual total cash'),end=gdmInteger(p.B,'own actual balance');
+   let remaining:number|undefined;if(ownBundleFeature||ownNOVA&&first||ownFeature&&event!=='FREE_GAME')remaining=undefined;else if(q.ownBundleFlow?.remainingDecoder==='signed-minus-one-is-pending'){if(p.NFG===undefined&&first)remaining=0;else{assert(typeof p.NFG==='string'&&/^-?\d+$/.test(p.NFG)&&Number.isSafeInteger(Number(p.NFG))&&Number(p.NFG)>=-1,'AG integrity: GDM own signed next/end NFG');remaining=Number(p.NFG)===-1?1:0;}}else remaining=p.NFG===undefined&&first?0:gdmInteger(p.NFG,'own actual NFG');const total=gdmInteger(p.TW,'own actual total cash'),end=gdmInteger(p.B,'own actual balance');
    assert(end===this.roundStart-c.betRaw+total,'AG integrity: GDM original whole cash conservation');
    if(step.responseBalance!==undefined)assert(step.responseBalance===gdmInteger(p.AB===undefined?p.B:p.AB,'own source balance'),'AG integrity: GDM source captured balance differs');
        if(q.ownBundleFlow&&p.FID!==undefined){const modes=p.FID.split('|').filter((v:string)=>v!=='').map((v:string)=>gdmInteger(v,'own bundle feature mode'));assert(modes.length>0&&modes.every((v:number)=>q.ownBundleFlow.actualFreeFeatureModes.includes(v)),'AG integrity: GDM unmapped bundle next/end');}

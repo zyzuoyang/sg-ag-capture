@@ -4699,7 +4699,7 @@ games:
           noPreviouslySeenWholeVariationGate: true
           unmappedActiveFlagsStillStop: true
           ownHuffSourceNextRequest:
-            version: own-Huff-source-selected-next-request-v1
+            version: own-Huff-source-caller-next-request-v2
             gameId: '32718'
             dbName: sg_huffnmorepuffhighlimit96
             runtimeGameId: 33118
@@ -4740,6 +4740,27 @@ games:
             ownFeatureModesSHA256: 678529d456948187152f21582b377764875192a67f704f95e4e39d72f1bec27b
             ownPaylineConfigurationSHA256: 1369293a7d5196f725060e132c186fe8358a506779834449631127792e36e875
             genericInheritedRequestConstructorSHA256: 3c383c3f95b46b93a489a3add024aead9df25ebabc5343a050dd6d14a960df8f
+            sourceBaseGameMode: 1
+            wheelResultGSDKey: WHSTOP
+            sourceModeUpdatesOnlyWithOwnGSD: true
+            sourceWheelResultUpdatesOnlyWithOwnGSD: true
+            absentOwnGSDKeepsPriorCallerState: true
+            actualWheelIntroFactorySelectsProviderCaller: true
+            returnedWheelResultIsLocalPresentation: true
+            sourceBaseGameMayHaveRemainingNFG: true
+            noObservedFIDCombinationWhitelist: true
+            sourceNullPresentationUsesNormalCaller: true
+            sourceWheelOutroClearsPresentationMode: true
+            wheelIntroPredicateAloneSelectsSpecialRequest: true
+            knownSourceModesOnly: true
+            originalCashAndRawChecksUnchanged: true
+            ownWheelStopDecoderSHA256: fc4f0b86c513c019befb044eb41d64fdf00d7bd2a48f121a20f6515427d867bf
+            ownWheelStopStateCopySHA256: 13b94a069ebe9918746b1b5fea06742c4e1dd996b7d1fb1cdbbffd8b7bdda832
+            ownFactoryActualWheelIntroRequiredSHA256: 3bc5d1f8b18806ee4c4fe65899b4663bbe866faef4bd1e836f75c093d0f5b42b
+            ownWheelIntroSourceSelectorSHA256: b32b8d0cb6d634963bacbfeb1fcec707076fbdf9dbca5ba1237638847d0d8c99
+            ownZeroOrBaseModeLocalWheelPresentationSHA256: 794313f93f30df4a7d45487ea4fb93c2542c9b493994e264fdcb002a3438b35a
+            ownWheelOutroCallbackSHA256: 3d3e74a7d911f84f36a85ed2ebafbab34194bcc0f7d5613534d9b902164e8e65
+            ownWheelPresentationModeResetSHA256: 944cb487a23d6febb862e8de910476f768693726f1ca21417cea87fd653c2c12
     rtpBuckets:
       - 0
       - 30
@@ -10593,7 +10614,7 @@ games:
         GN: dancingdrumsprosperity96
         RB: '5'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-game-chain-v3
         gameId: '32707'
         dbName: sg_dancingdrumsprosperity96
         runtimeGameId: 33107
@@ -10602,7 +10623,7 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
@@ -10849,6 +10870,109 @@ games:
             rootUnknownsRemainFatal: true
             rawDictionaryPreserved: true
             noCashOrNextActionFromUnconsumedDictionaryFields: true
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32707'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: dancingdrumsprosperity96
+            BPR: '108'
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+        ownRootNFGFlowOnlyCapture:
+          version: own-bundle-network-feature-next-end-flow-only-v5
+          gameId: '32707'
+          ownSDKFileSHA256: 183aa27737161a22c4f51a97216777fe57d8d1582b799c57da4c45b96a6a71c8
+          SDKFinalGetterSourceSHA256: bef86aea2f705224746735994827930bbebec34472003a32bc027df6d56fdf02
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          ownBundleFeatureNextRequest:
+            version: own-bundle-source-network-feature-next-draft-v1
+            gameId: '32707'
+            dbName: sg_dancingdrumsprosperity96
+            runtimeGameId: 33107
+            runtimeSlug: dancingdrumsprosperity96
+            ownSDKFileSHA256: 183aa27737161a22c4f51a97216777fe57d8d1582b799c57da4c45b96a6a71c8
+            profile: drums-two-round-cards
+            requestCFG: 0
+            sourceHashes:
+              ownFeatureCtor: ae129ec389b137346cecfe20744c9f422f50b74faac9b865fceeb93a52dd097c
+              ownSourceFeatureSequence: eba5bab61fcde579b408887bd5b70dc8ead46367f42565f315abbee1e7579019
+              ownSourceJackpotIntro: bcc1a6af739b0541c3ae593f404a8244c36244dd89ace29efd1a6169382dd94a
+              ownSourcePickCallback: 9b173a72d0b3650963c36f415f638690ca9368ec1c30221e4533f218f1a15bec
+              ownSourceEndCaller: 97ef62db862fb21d98ba80668579a7438f6ed0e336c0f0bc5efc7e976c27d214
+              ownSourceEnabledCards: b81668a791e76aad7f3649891b37b3ddb46418513b663a1180ab3b2d1bbbd55a
+              ownSourceGridCreate: 11c79731b08610e76c5a4785753f12f0858a9614120310c42fe6e1fbe1e305b2
+              ownSourceCardConsumption: 09f6f6ccc5024814cf24990800275c9e44a83516986706cdd17bca82e9c8ef52
+              ownOwnCardCallback: 090951a251c9dc35b2e671f47a435c6a1d15a0738c8e84b7185c475fa964bdac
+              ownPortraitGrid: 6f187f127469d89398d220639fb2d82b55893a8daa94c6e25da5925d795a0335
+              ownLandscapeGrid: 6e91e831de0a9843f8541dc896d15af3dfc56c372e4255b7087ab5260a8134ca
+              ownSourceSerializer: 942f06bb56f89aff23fcbccc15d1e861953ae28eba9704870ffc75086e7e047a
+              ownSourceFeatureEntry: 3a9d8e39b426ecd34ead454672cfcc6abbb69542c35094dfb653f6a0b502300b
+              ownSourceTypeDispatch: 0134b9519b14304bd13c9dc471782b4a59b3bc035717da3aceaf194ca46a9d9c
+              ownSourceFreeRequestCtor: 6d93f9c4774f88b1f3708a891d5924bfd78bb410e23b590d02ea6a95599439d5
+              ownSourceFreeRequestCaller: cba80a91a035ad08a1048fc2a6d43a62ecdb58eab6f69dd1b3575052f12012e9
+              ownSourceFreeEventSelector: 8cc5014bc3df42bcea5b26c8ef54791ef84e28c9d98f6d1cd8ad0217032eb89d
+            sourceProofSHA256: dce7dc568198fc65945f140c5417c911cfa4aab5f7472e86c55f652c8940b502
+            sourceTerminalCallbackProofSHA256: null
+            exactGSDWireBindingCorrectionSHA256: null
+            freeRequestParams:
+              GN: dancingdrumsprosperity96
+              BPR: '108'
+              RB: '5'
+            featureRequestParams:
+              GN: dancingdrumsprosperity96
+              CFG: '0'
+            FPSerializer: infix-round-ordinal-enabled-card-no-trailing-delimiter
+            explicitLegalChoicePolicy: first-source-enabled-unconsumed-card
+            sourceChoiceDomain:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+              - 7
+              - 8
+              - 9
+              - 10
+              - 11
+            actualTerminalSourceSelector: own-K0-minus-one-and-CFGG-zero-or-source-FEATURE_END-local-exit
+            sourceContextModeIsNotResponseCFG: false
+            requestFieldsOnlyFromOwnActualCaller: true
+            ownCurrentPaidPrefixesObserved: 1
+            ownNaturalFeatureProviderResponsesObserved: 0
+            ownNaturalFeatureTerminalCoverage: 0
+            currentPacketAndAllRawRequestsResponsesPreserved: true
+            originalAGCashEnvelopeReplayMongoRequired: true
+            oldUnknownPOSTNeverReplayed: true
+            unknownDBWritesNeverRetried: true
+            noDefaultAmountOrBonus: true
+            noSyntheticNFGOrTerminal: true
+            boundedOriginalAGFollowupBudgetRequired: true
+            otherActualNetworkModesRemainFatal: true
+            sourceLocalTerminalDoesNotInventWrapperEndGameACK: true
   - provider: sg
     gameId: '32736'
     name: Squid Game One Lucky Day
@@ -10866,7 +10990,7 @@ games:
         BPL: '5'
         LB: '10'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-game-chain-v3
         gameId: '32736'
         dbName: sg_squidgameoneluckyday96
         runtimeGameId: 33136
@@ -10875,7 +10999,7 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
@@ -11002,6 +11126,103 @@ games:
           nullableSDKNumberValidatorSHA256: a5f591a89affffbb7686769b7f8371d9d289bb62eb7748d6d81a29f76f01eea0
           ownObservedGSDFieldsOnly: true
           wholeObjectProjectionNotClaimed: true
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32736'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: squidgameoneluckyday96
+            BPL: '5'
+            LB: '10'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+        ownRootNFGFlowOnlyCapture:
+          version: own-bundle-network-feature-next-end-flow-only-v5
+          gameId: '32736'
+          ownSDKFileSHA256: 2d3886a4aa6e2933676db592889674fa948a5b020321dc0594d2b18dbc3f352f
+          SDKFinalGetterSourceSHA256: f98f2b98e0150f1ef527a43dc7d57647810bd4baf4b8a1895832e003632c28a1
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          ownBundleFeatureNextRequest:
+            version: own-bundle-source-network-feature-next-draft-v1
+            gameId: '32736'
+            dbName: sg_squidgameoneluckyday96
+            runtimeGameId: 33136
+            runtimeSlug: squidgameoneluckyday96
+            ownSDKFileSHA256: 2d3886a4aa6e2933676db592889674fa948a5b020321dc0594d2b18dbc3f352f
+            profile: squid-bridge
+            requestCFG: 3
+            sourceHashes:
+              null-optional-property-serialization: 80667a5973e05d6caa9e0810cec21f35fbadc662c6863ca23e490f07b24113db
+              infix-serialization-no-empty-trailing-fields: 004d48b22318bb251968af546968a1e6507819ce6ce92861c7ff396ccf4fdb66
+              Ox-object-array-infix: 10eefaa328b9504b48c6463de083e378be788f35feffd3a170765b9242250872
+              own-FP-type-and-request-constructor: 415e7c460643af392f53012961ca3d8d48b7bdbbda242ede5c72fe2c8326d9cb
+              current-bridge-fields-and-FID4-map: 20a4ab09bd611cab18e43d137de9795c83b8d53d23c61b3754b25fcd1e2721d4
+              bridge-real-start-pick-caller: 620df8c89cf9c325853eac644b8d6ee789bde5863765d175a6858a83497649b2
+              bridge-current-survived-presence-pick-stop: c38867dc2f0ea31580e023237a1a8d0ea155c7d957db05258f5c6b5d7ff9c81d
+              bridge-skip-feature-end-if-FID4: 4d4bf8a94cf98142291d0da4a925a3ab807e5524c361e26f93ec570bf20ef6e9
+              actual-request-selector: 7e99c6c30ca26f878454f2af4dfab2fcdaed44a1582f49b9e1a193951365585b
+              generic-free-request-BPL-LB-constructor: 4f16cd28b9712dd3432a475c11806ac2b67c79de6790a4f5ccbb5daf61d7987b
+              own-Hna-always-current-stake-and-lines: a8bd6e136d6a69ea4427659b433c1a81ce9b9ecd0553cfb55adf297a21cd88d3
+              generic-NFG-free-request-selector: b19ef3795f9646d66788a743e180f54599f497db1a778e592e85136c75c4d05a
+              current-NFG-free-counter-and-free-pending: 9e5a509361a1123319496a5f93b8fff5735d14436ea52918a53111be80721b11
+              bridge-free-GCT-stop-and-zero-counter-handling: d26d3fa86f3221502c15e81cdf761be0ce2f327d0f991a78ed39930b1205e4e4
+              bridge-free-on-endplay: fe0640867f79777133df93e483da5bbc18f31e3fe460efd57d38aa1b9ecd62b9
+              own-qO-pending-feature-IDs: dc64557c0887bb4b2506b3996e3c58800186be3b61df91a8dfb56d843fe46ad2
+              FID-NFG-GCT-serialization-fields: e9236a8370075e02f69a49416cec3075f97ec7c5bcf5f2191253d6e22b5e2c96
+              source-enumeration-Bridge3-Free4: 37afac8d1a00b1a4807636d309c5bc611771221627862528311f22bcb712fedb
+              generic-MSGID-and-REC-request-only: bfd0524a4b1177eba12f15498b76f8c2e8ac39b2cc8d1f9569f527223e903ded
+              own-ui-real-mg-wrapper: 50c70489984e761b39ca6ea79ae59aefe7871fb01fdd6d096fa8e121c471e79a
+            sourceProofSHA256: 58a88d4de943b2cb64798dc9aa7a3a533429b5bc7ad9b9f6f294e869f980dd01
+            sourceTerminalCallbackProofSHA256: d268fd00d49ee752e71710b7b83dbedc224e812343be650fdc1674e91169696b
+            exactGSDWireBindingCorrectionSHA256: 086da279feee3d819b63f6f80e9470bf873ff2136b56f0b4e95107e5ce9bf5e8
+            freeRequestParams:
+              GN: squidgameoneluckyday96
+              BPL: '5'
+              LB: '10'
+            featureRequestParams:
+              GN: squidgameoneluckyday96
+              BPL: '5'
+              CFG: '3'
+            FPSerializer: infix-skip-null-only-own-left-right-round
+            explicitLegalChoicePolicy: left-option-zero-from-own-two-choices
+            sourceChoiceDomain:
+              - 0
+              - 1
+            actualTerminalSourceSelector: actual-GSD.FEATURE_ID4-no-FID3-NFG0-source-Ready-ROUND0
+            sourceContextModeIsNotResponseCFG: true
+            requestFieldsOnlyFromOwnActualCaller: true
+            ownCurrentPaidPrefixesObserved: 1
+            ownNaturalFeatureProviderResponsesObserved: 0
+            ownNaturalFeatureTerminalCoverage: 0
+            currentPacketAndAllRawRequestsResponsesPreserved: true
+            originalAGCashEnvelopeReplayMongoRequired: true
+            oldUnknownPOSTNeverReplayed: true
+            unknownDBWritesNeverRetried: true
+            noDefaultAmountOrBonus: true
+            noSyntheticNFGOrTerminal: true
+            boundedOriginalAGFollowupBudgetRequired: true
+            otherActualNetworkModesRemainFatal: true
+            sourceLocalTerminalDoesNotInventWrapperEndGameACK: true
   - provider: sg
     gameId: '32797'
     name: Quick Hit Super Wheel Wild Red
@@ -12954,3 +13175,5 @@ games:
       - 2001
       - 5001
       - 10001
+
+  - {"provider":"sg","gameId":"32671","name":"Thunder Drums Samurai Storm","dbName":"sg_thunderdrumssamuraistorm96","backendId":"thunderdrumssamuraistorm96","rtpBuckets":[0,30,100,300,500,1000,2500,5000,10000,1001,2001,5001,10001],"sg":{"protocol":"gdm","endpoint":"https://ogs-gdm-usnj.nyxop.net/nextgen/","runtimeGameId":33091,"runtimeSlug":"thunderdrumssamuraistorm96","betRaw":100,"requestParams":{"GN":"thunderdrumssamuraistorm96","BPL":"5","LB":"25","ABPM":"0"},"ownGDMContract":{"version":"own-SDK-free-game-chain-v3","gameId":"32671","dbName":"sg_thunderdrumssamuraistorm96","runtimeGameId":33091,"runtimeSlug":"thunderdrumssamuraistorm96","ownSDKFileSHA256":"9f52bade9da5a47a71e0c8035383d7e801da187bb54c15fc2af4355ed87fbf7c","betRaw":100,"balanceScale":1,"winScale":1,"fixedGitCommit":"885f862bcc04841406820a932ef14c38c7759f1d","ordinaryOnly":false,"requiresNoPreviousFeature":true,"responseKeys":["MSGID","B","AB","TW","CW","VER","RID","NRID","BPL","LB","ABPM","RS","WC","IFG","MUL","SUB","PD","VA","RTP","JV","GA","FRBAL","SID","GSD","WS","NFG","CFGG","FGT","TFG","FGTW","GCT","FID","CFG","FS_1","FTV_1","FPM_1","NFR_1","CFR_1","CFP_1","R","REC"],"requiredResponseKeys":["MSGID","AB"],"ordinaryGSDKeys":[],"SDKFinalGetterSourceSHA256":"eb225ed4e6f87dcb2b4b7173ab0baa74bd4d57e18cb043a5ab28d49821e2bfc5","pendingClauses":[{"kind":"SDK-base-false","sourceSHA256":"f8d2384455d176a3e64e1963aea492c1447b8066746856788ddbb45a9f0212ee"},{"kind":"fresh-ordinary-SDK-NFG","wireKey":"NFG","explicitSDKDefault":"0","sourceSHA256":"f8d2384455d176a3e64e1963aea492c1447b8066746856788ddbb45a9f0212ee"}],"rootInactiveFlags":[{"wireKey":"GA","explicitSDKDefault":"0"},{"wireKey":"GCT","explicitSDKDefault":"0"},{"wireKey":"IFG","explicitSDKDefault":"0"}],"freeBudgetContract":{"version":"own-SDK-NFG-without-promotional-FreeRounds-v1","gameId":"32671","paidEvent":"BET","freeEvent":"FREE_GAME","freeRequestParams":{"GN":"thunderdrumssamuraistorm96","BPL":"5","LB":"25","ABPM":"0"},"promotionalKeysForbidden":["FRT","FRR","FRTR","FRTW","FRABM","FRBPL","FREXP","FRC","FRMSG","IFR"]},"ownRootNFGFlowOnlyCapture":{"version":"own-CI-SamuraiStorm-next-end-flow-v90","gameId":"32671","ownSDKFileSHA256":"9f52bade9da5a47a71e0c8035383d7e801da187bb54c15fc2af4355ed87fbf7c","SDKFinalGetterSourceSHA256":"eb225ed4e6f87dcb2b4b7173ab0baa74bd4d57e18cb043a5ab28d49821e2bfc5","ownSamuraiCIFlow":{"version":"own-SamuraiStorm-CI-source-next-end-v90","gameId":"32671","dbName":"sg_thunderdrumssamuraistorm96","runtimeGameId":33091,"runtimeSlug":"thunderdrumssamuraistorm96","ownSDKFileSHA256":"9f52bade9da5a47a71e0c8035383d7e801da187bb54c15fc2af4355ed87fbf7c","ownIndexSHA256":"c1b000d1a689ce15b63f7b136b03cd68b5fc9a4a2c778b5f2e6ab70569b1f7ac","sourceHashes":{"inheritedRequests":"f657e272eca765757ff34c4e89fb03b3a4926702fd1b0acf0f4e2c577d330700","ownPaidRequest":"af3d666d3a8a906f72377915357ff509e7cecfd1e1577bcf8e2cac9808bf19f9","ownPickRequest":"1c35f4b15b11f7f9e197c947e069b89bedcb730c2013751d91be7d5fe3efe72d","ownBETFeatureEntry":"f8d2384455d176a3e64e1963aea492c1447b8066746856788ddbb45a9f0212ee","ownStake":"c4c85bfeabf29fe10692c64f1a9fb03a30a72f0fcaf9c8dc7f7c70a5f95ca6f7","ownPostPickAndEnd":"43f97e091e1ad20ebdb8e46200df8a8f6cd40ac3770cbbab1a2970a9bace1454","ownAckPickDecoder":"88ee628db65f39e98cd00e2a6ce9e608f873a7ce30b4a7159d9cd4867fc0f87a","ownFreeTerminal":"eb225ed4e6f87dcb2b4b7173ab0baa74bd4d57e18cb043a5ab28d49821e2bfc5","ownFreeCaller":"9ada5cbd6dd56106db5b026e21ad092754d7d6a6d477614d1ba6ae6639ce2793","ownPickCaller":"04f86d145e8ef03bd32a3ca32eb465b07674ebdbd98cf0ef51be6ebed27a8c46","ownInterpreterRegistration":"0ea2d4cd2fb5a8f14fb4a860a044efac73de59589301c7178df639a1a7860bb4","ownOuterFreeStack":"1900fbc55a50f0f061748b24699a0abfedb92b2912298efb7ef401b9bcef6e98","ownDrumConstruction":"7714c41169c50905460aa77cf45562a0f1ed1edae13c0f8ccab0a117e0214cd7","ownPickNetworkCallback":"9951843c0ec45120ef8f4970da6053c4b532ce9921a8c73eb872ea4327a3594e","ownConsumedChoiceDisabled":"4ef025d0ef03c5c7c0132d61cada0357e1fb62c5b1f4e0fbf272e3fbf9c47c71","ownActiveFactory":"e921e6aab543ba6409d165d7c5e93618eadd92e7e8a906ebc38417378e83cf8d","ownInitialWalletSource":"ee45bcb64e1c5f381b5e8c678e35b303ec536e70779790354c0d1b008077e3b3","ownBETWalletSource":"6a940727d5bc926c5585e643becc918ad712470b37e481eadb3bb4239966b57d"},"ownSixLegacySourceSHA256s":["edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789","edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789","edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789","edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789","edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789","edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789"],"paidRequestParams":{"GN":"thunderdrumssamuraistorm96","BPL":"5","LB":"25","ABPM":"0"},"freeRequestParams":{"GN":"thunderdrumssamuraistorm96","BPL":"5","LB":"25","ABPM":"0"},"betRaw":100,"ownStakeFormula":"20*BPL+BPL*ABPM","walletWireKey":"AB","walletSourceIsOwnInitAndEachResponseSameAccount":true,"cashResultUsesActualWalletDeltaForSinglePaidBETOnly":true,"allFeatureAndFreeFollowupsHaveNoNewPaidBET":true,"TW_CW_B_ABRawUnmodified":true,"ownCFG":"1","ownChoiceIndices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"sourceAckPickCountAndUsedIDsOnly":true,"pickFPHasTrailingDelimiter":false,"startEvent":"FEATURE_START","pickEvent":"FEATURE_PICK","endEvent":"FEATURE_END","freeEvent":"FREE_GAME","currentJackpotAwardedNonemptySelectsEnd":true,"ownGCTTrueOr1SelectsFreeTerminal":true,"ownPriorFreeStateRestoredAfterFeature":true,"rawWirePreserved":true,"noSyntheticNFGOrTerminal":true,"oldUnknownPOSTNeverReplayed":true,"automaticUnknownResetOFF":true,"originalAGAmountReplayMongoChecksRequired":true,"naturalProviderFreeOrFeatureACKCoverage":0},"nextEvent":"FREE_GAME","remainingWireKey":"NFG","terminalRemaining":0,"usesOwnRequestAndTerminalOnly":true,"rawWirePreserved":true,"originalAGAmountReplayMongoChecksRequired":true,"noSyntheticTerminal":true,"noOldUnknownPOSTReplay":true,"unusedDisplayAndBudgetFieldsDoNotBlock":true,"noPreviouslySeenWholeVariationGate":true,"unmappedActiveFlagsStillStop":true},"ownActualDeployedRTP":{"schema":"own-CI-32671-real-workbook-and-target-RTP-DATA-v1","gameId":"32671","dbName":"sg_thunderdrumssamuraistorm96","runtimeGameId":33091,"configPath":"/api/api_new/server/slots/sg-nx/sg_thunderdrumssamuraistorm96/config.yaml","configSHA256":"08a501d7d44932517d44b79365363c339b44bff595814e30317d36589f39618c","rtpPath":"/api/api_new/server/slots/sg-nx/sg_thunderdrumssamuraistorm96/rtp.xlsx","rtpSHA256":"9339f7fe9b36236d6f8d5271e67612497c48b3681e4b03050e7d61562cb8bc4b","rtpBuckets":[0,30,100,300,500,1000,2500,5000,10000,1001,2001,5001,10001],"actualProofSHA256":"2c0a592924ac7ec8c07ed580a8628aa6315a2202a5e86dbf7464992ff3f4dd7f","ownActualBindingSHA256":"75c702ab2bff34aecfd58c11af98638c1377395af66cd82630f8dce21155745e","actualCopiedProofFile":"own-32671-actual-RTP-source-result.json","catalogAndServerTargetBoundExactly":true,"declaredRTPWasNotUsedAsBuckets":true}}}}
