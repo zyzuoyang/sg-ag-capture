@@ -12054,6 +12054,79 @@ games:
           unusedDisplayAndBudgetFieldsDoNotBlock: true
           noPreviouslySeenWholeVariationGate: true
           unmappedActiveFlagsStillStop: true
+          ownNOVAFeatureNextRequest:
+            version: own-NOVA-source-feature-next-v88
+            paidNormalFGTFirst: true
+            ongoingFreeNFGFirst: true
+            CFGValidatedOnlyWhenOwnFeatureBranchActuallySelected: true
+            entrySelectorsUseActualFTVAndActualOrSourceRetainedCFG: true
+            noSynthesizedNFGFromIFGT: true
+            startEvent: FEATURE_START
+            pickEvent: FEATURE_PICK
+            endEvent: FEATURE_END
+            requestFieldsFromOwnSourceOnly: true
+            sourceAbsentSelectorDoesNotInventValue: true
+            originalAGBAndTWMoneyAndSuccessfulEnvelopeRemainRequired: true
+            noDisplayTWorCWorFTVPrizeEquationGate: true
+            allOriginalRawRequestsResponsesAndUnknownPreserved: true
+            oldUnknownPOSTNeverReplayed: true
+            boundedOriginalAGFeatureRequestBudgetRequired: true
+            summaryNextState: BASE_IDLE
+            postFeatureEndNextFromActualResponseNotInvented: true
+            ownNaturalFeatureProviderResponsesObserved: 0
+            gameId: '32666'
+            dbName: sg_thewildthree
+            runtimeGameId: 33090
+            runtimeSlug: thewildthree
+            ownSDKFileSHA256: f7778c05e93e67ea364ab62727449f8909032dbaf20853073dad905db5e846ef
+            ownCFG: '2'
+            ownEntryFTVKey: FTV_2
+            sourceHashes:
+              FeatureStartState: 8f992a7f0a6809bc29a07a1f383a0d89c0309d94b2aac25c1e51ace95a2d4f02
+              FeaturePickState: a680ea1e1a0657e1e31d18a21e558ebbe261240afab9d360be6784e5397e2a8c
+              FeatureEndState: 445bc68f10dfdd6ecf1ff54d0d667b5df66d59b43971db71a58ebbb985c48a95
+              ownPickSelect: faff8544b348c808dc0d5b373c11308f377e16e51ca5033c9772cefa406a7e9e
+              FTVFeatureTriggerDecoder: bb1a4009b3a9d03b8ae00e897f448deecb73a42a2b5178555553c5fb6cde37df
+              CFGSourceStateDecoder: 4032bacfd673ed1b95e1098fee6b37abe4498e301f52a0da29558ef7f79638b4
+              ownPostPickMPRDecision: 81eab1b0168ecaf541f987f31ffbf32b3c83f264adca5a974eb76f1b64aee477
+              ownFeatureIntroCaller: 49f1de2808f28b7087343179f2da6f226f496870258721468b596705dbdda67a
+              ownFiniteGrid: 81049cee0b54a54e66899abfa9e735d4166552d76db17499c42d4a69a6b79198
+              ownPickButtonCallback: 990697c082e7dbb65b2b98037bf278b4f390ad964a7977b9ebd0977d14803bdb
+              ownPickStartReset: a7c693eda4361fa3622903880e021798f7ad21b2c8357c36f8d29c7d6c041f60
+              ownButtonAppearance: da852c1312bbff91adc62d9f33ee9bd779317b43f8ac51b631c46133e59c4a51
+              ownButtonEnabled: dbfa0713e342dbe3fcff1b4e254c5bd213a124b0a74e5abab3a69602b2558664
+              ownButtonConsumed: f02001b1b5ff8f4e3137107318ff90e5be8bde34a0f3ec524297967504e971d2
+              ownSummaryExit: b42ab08976020b4c2f68c689ecefdf042b2348944d8de6955e1c9f3ba7fdb883
+            profile: own-Wild3-CFG2-fifteen-grid
+            sourcePickRoundFixed: 1
+            sourceLocalPickOrdinalInitial: 0
+            sourceLocalPickOrdinalIncrementBeforeCallback: true
+            sourceChoiceInitialIndices:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+              - 6
+              - 7
+              - 8
+              - 9
+              - 10
+              - 11
+              - 12
+              - 13
+              - 14
+            sourceChosenIndexDisabledUntilNewOwnFeature: true
+            sourceChoicePolicyMustExplicitlySelectOneOwnAvailableIndex: true
+            sourceMaxDistinctChoicesPerFeature: 15
+            postPickSelector: current-GSD-MPR-parseInt-positive
+            sourceMPRAbsentOrNaNSelectsFeatureEnd: true
+            sourceMPRNotRetainedFromPreviousPacket: true
+            summaryLocalEvent: CLOSE_FEATURE_SUMMARY2
+            summaryOwnExitCode: 1
+            ownCAPSEarlyFeatureEndSkip: false
+            ownSDKHasCAPSToken: false
     rtpBuckets:
       - 0
       - 30
@@ -12618,6 +12691,71 @@ games:
           unusedDisplayAndBudgetFieldsDoNotBlock: true
           noPreviouslySeenWholeVariationGate: true
           unmappedActiveFlagsStillStop: true
+          ownNOVAFeatureNextRequest:
+            version: own-NOVA-source-feature-next-v88
+            paidNormalFGTFirst: true
+            ongoingFreeNFGFirst: true
+            CFGValidatedOnlyWhenOwnFeatureBranchActuallySelected: true
+            entrySelectorsUseActualFTVAndActualOrSourceRetainedCFG: true
+            noSynthesizedNFGFromIFGT: true
+            startEvent: FEATURE_START
+            pickEvent: FEATURE_PICK
+            endEvent: FEATURE_END
+            requestFieldsFromOwnSourceOnly: true
+            sourceAbsentSelectorDoesNotInventValue: true
+            originalAGBAndTWMoneyAndSuccessfulEnvelopeRemainRequired: true
+            noDisplayTWorCWorFTVPrizeEquationGate: true
+            allOriginalRawRequestsResponsesAndUnknownPreserved: true
+            oldUnknownPOSTNeverReplayed: true
+            boundedOriginalAGFeatureRequestBudgetRequired: true
+            summaryNextState: BASE_IDLE
+            postFeatureEndNextFromActualResponseNotInvented: true
+            ownNaturalFeatureProviderResponsesObserved: 0
+            gameId: '32733'
+            dbName: sg_ragingrhinorampagecap250c96
+            runtimeGameId: 33133
+            runtimeSlug: ragingrhinorampagecap250c96
+            ownSDKFileSHA256: 1f7b2b35f03e6aaba2552e6ff465725342feae927301f9987963d1e1460107c2
+            ownCFG: '0'
+            ownEntryFTVKey: FTV_0
+            sourceHashes:
+              FeatureStartState: 8f992a7f0a6809bc29a07a1f383a0d89c0309d94b2aac25c1e51ace95a2d4f02
+              FeaturePickState: eba4eba6fb2fc9a3b5175da434cf7d71aa17b8c2d402f8bde6b644431f56df20
+              FeatureEndState: 52f8f776bd2d339f873a789241094133092d0ba603499209dec6566eb826ead4
+              FTVFeatureTriggerDecoder: bb1a4009b3a9d03b8ae00e897f448deecb73a42a2b5178555553c5fb6cde37df
+              CFGSourceStateDecoder: 4032bacfd673ed1b95e1098fee6b37abe4498e301f52a0da29558ef7f79638b4
+              ownCFRPresenceUpdate: e771ec9e8b4276c5178ab77f5446f551f403354cec3127c2771a1b55a005e7a4
+              ownCFPPresenceUpdate: d6c2db03be9dab1c02882d1bb750c00c6ab018ac1e4c380ff3df08e986f89d28
+              ownFeatureDataInitialEmpty: 6bca2a6a58b6853e1f06a31e762a08099f445c9907929d3c62262b7362cc25b0
+              ownWheelReset: 50084c2aadb9765c804e029804aa98ff75748b42bdd578fd164ee1b133b4428a
+              ownPickButtonCallback: cdbeef8c996a8e777a290c15c9fecaf31bbad9981db0c1875d8df446d7d6ae2e
+              ownPickSelect: 9c9d4eca205a047e066951b93966c4fa3d7b286f8d5191cd5bb2aa0b95d3c803
+              ownPostPickDecision: 787dc417e8f26089849116c83f7d1e097faadf6d1200dbed305ba7dcdae1fa65
+              ownIFGTDisplay: 01db3361f11f4b2754e790f6f91a698defb173692bd2b5cb9b02fa8af148ee41
+              ownIFGTTextboxOnly: ff152a54742916860d08fea45f95b954f34a0fc5315e71b48cd73523a90cfb6f
+              ownSummaryExit: b4e573e2a7179f5b309ad7bc4b6fbe72a40a568f2067d18715cbb4267d807042
+              ownCAPSPresenceObservedAtPostPick: 56c9aa2113f32db395490da6a3254c2acdf27ba9774e8d4315841a5f7ccc8bd8
+              ownCAPSSkipsFeatureEndRequest: 9b2686ab5979f6b17297bb0364c45147308f72befa0ceb65c75911c1ce53b9bb
+              ownNextStateTable: abbbcc443c7dc421a0f8f2452f038211d5d0e9d490a8b06e8c44ae81d83768df
+            profile: own-RhinoRampage-CFG0-wheel
+            sourceLocalRoundOrdinalInitial: 0
+            sourceLocalRoundOrdinalIncrementAfterCallback: true
+            sourcePickNumberFixed: 0
+            sourcePickValueFixed: 0
+            sourceNoCardArrayChoiceRequired: true
+            postPickSelector: own-presence-updated-CFP-le-FTV-roundCount-at-own-CFR-minus-one-and-not-own-cap
+            sourceFeatureDataInitiallyEmpty: true
+            sourceCFRAndCFPUpdatedOnlyWhenActuallyPresent: true
+            sourceCFRAndCFPAbsentRetainsOnlyOwnPreviouslyDecodedValue: true
+            sourceUndefinedComparisonSelectsFeatureEnd: true
+            sourceFPMDecodedButNotNormalPickRequestConstructor: true
+            sourceIFGTIsTextboxOnly: true
+            summaryLocalEvent: CLOSE_FEATURE_SUMMARY
+            summaryOwnExitCodeWhenCFG0: 1
+            ownCAPSEarlyFeatureEndSkip: true
+            ownCAPSPositiveObservedAtOwnFeaturePostPick: true
+            ownCAPSValueIsFlowSelectorNotPrizeMath: true
+            sourceOptionalPickGSDOnlyWhenOwnActualPickGSDNonempty: true
     rtpBuckets:
       - 0
       - 30

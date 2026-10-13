@@ -7,6 +7,112 @@ import path from 'path';
 import { XMLParser } from 'fast-xml-parser';
 import { AGGameConfig } from './ag.types';
 import { AGDiscardedRoundError } from './ag.round';
+
+// Own NOVA protocol DATA only. The original AG loop still owns every request.
+
+export type OwnNOVAFeatureRequest = {event:string;parameters:Record<string,string>};
+export type OwnNOVAFeatureProfile = {
+ gameId:string;dbName:string;runtimeGameId:number;runtimeSlug:string;ownSDKFileSHA256:string;
+ cfg:number;ftvKey:string;kind:'rhino-wheel'|'wild-grid';
+};
+const profiles:Record<string,OwnNOVAFeatureProfile>={
+ '32733':{gameId:'32733',dbName:'sg_ragingrhinorampagecap250c96',runtimeGameId:33133,runtimeSlug:'ragingrhinorampagecap250c96',ownSDKFileSHA256:'1f7b2b35f03e6aaba2552e6ff465725342feae927301f9987963d1e1460107c2',cfg:0,ftvKey:'FTV_0',kind:'rhino-wheel'},
+ '32666':{gameId:'32666',dbName:'sg_thewildthree',runtimeGameId:33090,runtimeSlug:'thewildthree',ownSDKFileSHA256:'f7778c05e93e67ea364ab62727449f8909032dbaf20853073dad905db5e846ef',cfg:2,ftvKey:'FTV_2',kind:'wild-grid'},
+};
+const expectedBindings:Record<string,any>={"32666":{"version":"own-NOVA-source-feature-next-v88","paidNormalFGTFirst":true,"ongoingFreeNFGFirst":true,"CFGValidatedOnlyWhenOwnFeatureBranchActuallySelected":true,"entrySelectorsUseActualFTVAndActualOrSourceRetainedCFG":true,"noSynthesizedNFGFromIFGT":true,"startEvent":"FEATURE_START","pickEvent":"FEATURE_PICK","endEvent":"FEATURE_END","requestFieldsFromOwnSourceOnly":true,"sourceAbsentSelectorDoesNotInventValue":true,"originalAGBAndTWMoneyAndSuccessfulEnvelopeRemainRequired":true,"noDisplayTWorCWorFTVPrizeEquationGate":true,"allOriginalRawRequestsResponsesAndUnknownPreserved":true,"oldUnknownPOSTNeverReplayed":true,"boundedOriginalAGFeatureRequestBudgetRequired":true,"summaryNextState":"BASE_IDLE","postFeatureEndNextFromActualResponseNotInvented":true,"ownNaturalFeatureProviderResponsesObserved":0,"gameId":"32666","dbName":"sg_thewildthree","runtimeGameId":33090,"runtimeSlug":"thewildthree","ownSDKFileSHA256":"f7778c05e93e67ea364ab62727449f8909032dbaf20853073dad905db5e846ef","ownCFG":"2","ownEntryFTVKey":"FTV_2","sourceHashes":{"FeatureStartState":"8f992a7f0a6809bc29a07a1f383a0d89c0309d94b2aac25c1e51ace95a2d4f02","FeaturePickState":"a680ea1e1a0657e1e31d18a21e558ebbe261240afab9d360be6784e5397e2a8c","FeatureEndState":"445bc68f10dfdd6ecf1ff54d0d667b5df66d59b43971db71a58ebbb985c48a95","ownPickSelect":"faff8544b348c808dc0d5b373c11308f377e16e51ca5033c9772cefa406a7e9e","FTVFeatureTriggerDecoder":"bb1a4009b3a9d03b8ae00e897f448deecb73a42a2b5178555553c5fb6cde37df","CFGSourceStateDecoder":"4032bacfd673ed1b95e1098fee6b37abe4498e301f52a0da29558ef7f79638b4","ownPostPickMPRDecision":"81eab1b0168ecaf541f987f31ffbf32b3c83f264adca5a974eb76f1b64aee477","ownFeatureIntroCaller":"49f1de2808f28b7087343179f2da6f226f496870258721468b596705dbdda67a","ownFiniteGrid":"81049cee0b54a54e66899abfa9e735d4166552d76db17499c42d4a69a6b79198","ownPickButtonCallback":"990697c082e7dbb65b2b98037bf278b4f390ad964a7977b9ebd0977d14803bdb","ownPickStartReset":"a7c693eda4361fa3622903880e021798f7ad21b2c8357c36f8d29c7d6c041f60","ownButtonAppearance":"da852c1312bbff91adc62d9f33ee9bd779317b43f8ac51b631c46133e59c4a51","ownButtonEnabled":"dbfa0713e342dbe3fcff1b4e254c5bd213a124b0a74e5abab3a69602b2558664","ownButtonConsumed":"f02001b1b5ff8f4e3137107318ff90e5be8bde34a0f3ec524297967504e971d2","ownSummaryExit":"b42ab08976020b4c2f68c689ecefdf042b2348944d8de6955e1c9f3ba7fdb883"},"profile":"own-Wild3-CFG2-fifteen-grid","sourcePickRoundFixed":1,"sourceLocalPickOrdinalInitial":0,"sourceLocalPickOrdinalIncrementBeforeCallback":true,"sourceChoiceInitialIndices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],"sourceChosenIndexDisabledUntilNewOwnFeature":true,"sourceChoicePolicyMustExplicitlySelectOneOwnAvailableIndex":true,"sourceMaxDistinctChoicesPerFeature":15,"postPickSelector":"current-GSD-MPR-parseInt-positive","sourceMPRAbsentOrNaNSelectsFeatureEnd":true,"sourceMPRNotRetainedFromPreviousPacket":true,"summaryLocalEvent":"CLOSE_FEATURE_SUMMARY2","summaryOwnExitCode":1,"ownCAPSEarlyFeatureEndSkip":false,"ownSDKHasCAPSToken":false},"32733":{"version":"own-NOVA-source-feature-next-v88","paidNormalFGTFirst":true,"ongoingFreeNFGFirst":true,"CFGValidatedOnlyWhenOwnFeatureBranchActuallySelected":true,"entrySelectorsUseActualFTVAndActualOrSourceRetainedCFG":true,"noSynthesizedNFGFromIFGT":true,"startEvent":"FEATURE_START","pickEvent":"FEATURE_PICK","endEvent":"FEATURE_END","requestFieldsFromOwnSourceOnly":true,"sourceAbsentSelectorDoesNotInventValue":true,"originalAGBAndTWMoneyAndSuccessfulEnvelopeRemainRequired":true,"noDisplayTWorCWorFTVPrizeEquationGate":true,"allOriginalRawRequestsResponsesAndUnknownPreserved":true,"oldUnknownPOSTNeverReplayed":true,"boundedOriginalAGFeatureRequestBudgetRequired":true,"summaryNextState":"BASE_IDLE","postFeatureEndNextFromActualResponseNotInvented":true,"ownNaturalFeatureProviderResponsesObserved":0,"gameId":"32733","dbName":"sg_ragingrhinorampagecap250c96","runtimeGameId":33133,"runtimeSlug":"ragingrhinorampagecap250c96","ownSDKFileSHA256":"1f7b2b35f03e6aaba2552e6ff465725342feae927301f9987963d1e1460107c2","ownCFG":"0","ownEntryFTVKey":"FTV_0","sourceHashes":{"FeatureStartState":"8f992a7f0a6809bc29a07a1f383a0d89c0309d94b2aac25c1e51ace95a2d4f02","FeaturePickState":"eba4eba6fb2fc9a3b5175da434cf7d71aa17b8c2d402f8bde6b644431f56df20","FeatureEndState":"52f8f776bd2d339f873a789241094133092d0ba603499209dec6566eb826ead4","FTVFeatureTriggerDecoder":"bb1a4009b3a9d03b8ae00e897f448deecb73a42a2b5178555553c5fb6cde37df","CFGSourceStateDecoder":"4032bacfd673ed1b95e1098fee6b37abe4498e301f52a0da29558ef7f79638b4","ownCFRPresenceUpdate":"e771ec9e8b4276c5178ab77f5446f551f403354cec3127c2771a1b55a005e7a4","ownCFPPresenceUpdate":"d6c2db03be9dab1c02882d1bb750c00c6ab018ac1e4c380ff3df08e986f89d28","ownFeatureDataInitialEmpty":"6bca2a6a58b6853e1f06a31e762a08099f445c9907929d3c62262b7362cc25b0","ownWheelReset":"50084c2aadb9765c804e029804aa98ff75748b42bdd578fd164ee1b133b4428a","ownPickButtonCallback":"cdbeef8c996a8e777a290c15c9fecaf31bbad9981db0c1875d8df446d7d6ae2e","ownPickSelect":"9c9d4eca205a047e066951b93966c4fa3d7b286f8d5191cd5bb2aa0b95d3c803","ownPostPickDecision":"787dc417e8f26089849116c83f7d1e097faadf6d1200dbed305ba7dcdae1fa65","ownIFGTDisplay":"01db3361f11f4b2754e790f6f91a698defb173692bd2b5cb9b02fa8af148ee41","ownIFGTTextboxOnly":"ff152a54742916860d08fea45f95b954f34a0fc5315e71b48cd73523a90cfb6f","ownSummaryExit":"b4e573e2a7179f5b309ad7bc4b6fbe72a40a568f2067d18715cbb4267d807042","ownCAPSPresenceObservedAtPostPick":"56c9aa2113f32db395490da6a3254c2acdf27ba9774e8d4315841a5f7ccc8bd8","ownCAPSSkipsFeatureEndRequest":"9b2686ab5979f6b17297bb0364c45147308f72befa0ceb65c75911c1ce53b9bb","ownNextStateTable":"abbbcc443c7dc421a0f8f2452f038211d5d0e9d490a8b06e8c44ae81d83768df"},"profile":"own-RhinoRampage-CFG0-wheel","sourceLocalRoundOrdinalInitial":0,"sourceLocalRoundOrdinalIncrementAfterCallback":true,"sourcePickNumberFixed":0,"sourcePickValueFixed":0,"sourceNoCardArrayChoiceRequired":true,"postPickSelector":"own-presence-updated-CFP-le-FTV-roundCount-at-own-CFR-minus-one-and-not-own-cap","sourceFeatureDataInitiallyEmpty":true,"sourceCFRAndCFPUpdatedOnlyWhenActuallyPresent":true,"sourceCFRAndCFPAbsentRetainsOnlyOwnPreviouslyDecodedValue":true,"sourceUndefinedComparisonSelectsFeatureEnd":true,"sourceFPMDecodedButNotNormalPickRequestConstructor":true,"sourceIFGTIsTextboxOnly":true,"summaryLocalEvent":"CLOSE_FEATURE_SUMMARY","summaryOwnExitCodeWhenCFG0":1,"ownCAPSEarlyFeatureEndSkip":true,"ownCAPSPositiveObservedAtOwnFeaturePostPick":true,"ownCAPSValueIsFlowSelectorNotPrizeMath":true,"sourceOptionalPickGSDOnlyWhenOwnActualPickGSDNonempty":true}};
+export function ownNOVAFeatureProfile(game:any):OwnNOVAFeatureProfile|undefined {
+ const c=game.sg.ownGDMContract,b=c.ownRootNFGFlowOnlyCapture?.ownNOVAFeatureNextRequest;
+ if(!b)return undefined;
+ const p=profiles[game.gameId];
+ assert(p&&game.dbName===p.dbName&&game.sg.runtimeGameId===p.runtimeGameId&&game.sg.runtimeSlug===p.runtimeSlug&&c.ownSDKFileSHA256===p.ownSDKFileSHA256,'AG integrity: GDM own NOVA feature identity');
+ assert.deepStrictEqual(b,expectedBindings[game.gameId],'AG integrity: GDM own NOVA feature source binding');
+ return p;
+}
+export type OwnNOVAFeatureState={
+ cfg?:number;rawFTV?:string;counts?:number[];cfr?:number;cfp?:number;next?:OwnNOVAFeatureRequest;
+ phase:'base'|'free'|'start'|'pick'|'end';ordinal:number;used:Set<number>;cap:boolean;
+};
+export function createOwnNOVAFeatureState():OwnNOVAFeatureState{return {phase:'base',ordinal:0,used:new Set(),cap:false};}
+export function beginOwnNOVAFeatureRound(s:OwnNOVAFeatureState):void {
+ assert(!s.next,'AG integrity: GDM own NOVA feature pending round');
+ // featureData CFG/counts remain presence-updated like the client's object.
+ s.phase='base';s.cap=false;
+}
+function number(value:string|undefined,label:string):number {
+ assert(typeof value==='string'&&/^\d+$/.test(value)&&Number.isSafeInteger(Number(value)),'AG integrity: GDM own NOVA feature '+label);
+ return Number(value);
+}
+function gsd(value:string|undefined):Record<string,string>{
+ if(value===undefined)return {};
+ const result:Record<string,string>={};
+ for(const pair of value.split('#')){const at=pair.indexOf('~');assert(at>0&&!Object.prototype.hasOwnProperty.call(result,pair.slice(0,at)),'AG integrity: GDM own NOVA feature GSD');result[pair.slice(0,at)]=pair.slice(at+1);}
+ return result;
+}
+function request(p:OwnNOVAFeatureProfile,event:string,extra:Record<string,string>={}):OwnNOVAFeatureRequest {
+ return {event,parameters:{GN:p.runtimeSlug,...(event==='FREE_GAME'?{}:{CFG:String(p.cfg)}),...extra}};
+}
+function pick(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState):OwnNOVAFeatureRequest {
+ assert(s.cfg===p.cfg,'AG integrity: GDM own NOVA feature selected CFG');
+ if(p.kind==='rhino-wheel')return request(p,'FEATURE_PICK',{FP:`${s.ordinal}|0|0|`});
+ const slot=Array.from({length:15},(_,i)=>i).find(i=>!s.used.has(i));
+ assert(slot!==undefined,'AG integrity: GDM own Wild no source-enabled pick slot');
+ return request(p,'FEATURE_PICK',{FP:`1|${s.ordinal+1}|${slot}|`});
+}
+function base(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState,wire:Record<string,string>):OwnNOVAFeatureRequest|undefined {
+ s.phase='base';
+ // These flags are response-local. Old retained FTV is never a new trigger.
+ if(wire.FGT!==undefined&&number(wire.FGT,'FGT')>0){s.phase='free';return request(p,'FREE_GAME');}
+ const ftv=Object.keys(wire).filter(k=>/^FTV_[0-4]$/.test(k));
+ if(!ftv.length)return undefined;
+ assert(ftv.length===1&&ftv[0]===p.ftvKey&&s.cfg===p.cfg,'AG integrity: GDM own NOVA feature next unmapped');
+ s.ordinal=0;s.used.clear();s.cap=false;s.phase='start';return request(p,'FEATURE_START');
+}
+/** Source-selector inputs only; this function never manufactures wire fields. */
+export function updateOwnNOVAFeatureNext(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState,event:string,wire:Record<string,string>):void {
+ if(wire.CFG!==undefined)s.cfg=number(wire.CFG,'CFG');
+ if(wire[p.ftvKey]!==undefined)s.rawFTV=wire[p.ftvKey];
+ if(p.kind==='rhino-wheel'){
+  if(wire.CFR_0!==undefined)s.cfr=number(wire.CFR_0,'CFR');
+  if(wire.CFP_0!==undefined)s.cfp=number(wire.CFP_0,'CFP');
+ }
+ if(event==='BET'){s.next=base(p,s,wire);return;}
+ if(event==='FREE_GAME'){
+  if(number(wire.NFG,'NFG')>0){s.phase='free';s.next=request(p,'FREE_GAME');}
+  else s.next=base(p,s,wire);
+  return;
+ }
+ assert(s.next?.event===event&&s.cfg===p.cfg,'AG integrity: GDM own NOVA feature response stage');
+ if(event==='FEATURE_START'){s.phase='pick';s.next=pick(p,s);return;}
+ if(event==='FEATURE_PICK'){
+  const emitted=s.next.parameters.FP;
+  if(p.kind==='wild-grid')s.used.add(number(emitted.split('|')[2],'emitted slot'));
+  s.ordinal+=1;
+  const values=gsd(wire.GSD);
+  let more:boolean;
+  if(p.kind==='rhino-wheel'){
+   if(values.CAPS!==undefined&&Number(values.CAPS)>0)s.cap=true;
+   // Source featureData starts undefined; absent fields are not made zero.
+   let ownRoundCount:number|undefined;
+   if(s.cfr!==undefined&&s.cfp!==undefined&&s.rawFTV!==undefined){const rounds=s.rawFTV.split('|').filter(v=>v!=='');const round=rounds[s.cfr-1];if(round!==undefined){ownRoundCount=number(round.split(';')[1],'actual used FTV pick count');}}
+   more=(s.cfp as number)<=ownRoundCount&&!s.cap;
+  }else{
+   // The own source uses current parseInt(MPR)>0; absence is its false branch.
+   more=parseInt(values.MPR)>0;
+  }
+  if(more){s.phase='pick';s.next=pick(p,s);}
+  else if(p.kind==='rhino-wheel'&&s.cap){s.cap=false;s.next=base(p,s,wire);}
+  else{s.phase='end';s.next=request(p,'FEATURE_END');}
+  return;
+ }
+ assert(event==='FEATURE_END','AG integrity: GDM own NOVA feature event unmapped');
+ s.next=base(p,s,wire);
+}
+/** Pure getter. Reading a request cannot increment FP or consume a slot. */
+export function getOwnNOVAFeatureNext(s:OwnNOVAFeatureState,freeParams:Record<string,string>):OwnNOVAFeatureRequest|undefined {
+ if(!s.next)return undefined;
+ return {event:s.next.event,parameters:s.next.event==='FREE_GAME'?{...freeParams}:{...s.next.parameters}};
+}
+
 // SG transport evidence mapped into the unchanged original AG error policy.
 // This file never retries a request or changes AG scheduling/round handling.
 export type SGFaultCategory = 'recoverable-initialization' | 'protocol' | 'execution-unknown';
@@ -1256,7 +1362,8 @@ export class SGGdmSession{
  private async exchange(event:string,parameters:Record<string,any>):Promise<GDMWireStep>{
   assert(!this.closed,'AG integrity: GDM session permanently closed');const payload=this.form(event,parameters),ordinal=++this.ordinal;
   const gameplay=event!=='INIT'&&event!=='REELSTRIP';if(gameplay)this.gameplaySent=true;
-  const context={event,ordinal,requestKind:event==='FREE_GAME'?'round-follow-up' as const:gameplay?'round-start' as const:'initialization' as const,gameplayRequestHasBeenSent:this.gameplaySent};
+  const ownFeatureFollowup=ownNOVAFeatureProfile(this.game)&&['FEATURE_START','FEATURE_PICK','FEATURE_END'].includes(event);
+  const context={event,ordinal,requestKind:event==='FREE_GAME'||ownFeatureFollowup?'round-follow-up' as const:gameplay?'round-start' as const:'initialization' as const,gameplayRequestHasBeenSent:this.gameplaySent};
   if(this.transport){let step:GDMWireStep;try{step=await this.transport(event,payload);}catch{this.close();throw new SGSourceFault(gameplay?'execution-unknown':'recoverable-initialization',context);}assert(!this.closed,'AG integrity: GDM late response after permanent closure');if(step.httpStatus!==undefined&&step.httpStatus!==200){this.close();throw new SGSourceFault(gameplay?'execution-unknown':'protocol', {...context,httpStatus:step.httpStatus});}return step;}
   const operator=process.env.SG_GDM_OPERATOR_ID;assert(operator&&/^[A-Za-z0-9_-]+$/.test(operator),'AG integrity: GDM own operator configuration missing');
   const body=`<gdmRequest><clienttype>flash</clienttype><lang>en_us</lang><currency>USD</currency><mode>demo</mode><token>${gdmEscape(this.freshFreeId+'@'+operator)}</token><methodName>processGameMessage</methodName><payload>${gdmEscape(payload)}</payload></gdmRequest>`;
@@ -1275,7 +1382,7 @@ export class SGGdmSession{
  }
  getHandshakeData(){return null;}getBalance(){return this.balance/100;}getFallbackBet(){return this.game.sg.betRaw/100;}
  getSpinParams(){return {...this.game.sg.requestParams};}getInitialRoundRequest(){return{event:'BET',parameters:this.getSpinParams()};}
- getExactFollowUpRequest(action:string){if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){assert(action==='FREE_SPIN'&&(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry),'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:this.rootFlowFreeRequest()};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
+ getExactFollowUpRequest(action:string){if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){if(ownNOVAFeatureProfile(this.game)){assert(action==='FREE_SPIN','AG integrity: GDM own NOVA feature next action');const exact=getOwnNOVAFeatureNext(this.ownNOVAFeatureState,this.rootFlowFreeRequest());assert(exact,'AG integrity: GDM own NOVA feature next absent');return exact;}assert(action==='FREE_SPIN'&&(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry),'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:this.rootFlowFreeRequest()};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
  getLastGameRequest(){return this.lastRequest;}getPickParams(){throw new Error('AG integrity: GDM own selection not mapped');}
  isRoundTerminalAction(action:string){return action==='SPIN';}
  private ownExtraStageCounter(p:Record<string,string>,prior:any){
@@ -1367,6 +1474,7 @@ export class SGGdmSession{
  private rootFlowRemaining:number|undefined;
  private rootFlowPendingCrossLink:boolean=false;private rootFlowPendingNOVAEntry=false;private ownNOVAWinCapReached=false;
  private rootFlowSteps:GDMWireStep[]=[];
+ private ownNOVAFeatureState=createOwnNOVAFeatureState();
  private ownNOVAAccountRequestBinding(){
   const c=this.game.sg.ownGDMContract,q=c.ownRootNFGFlowOnlyCapture,r=c.freeBudgetContract,b=q?.ownNOVAAccountRequestSelection;
   if(q?.version!=='own-NOVA-account-NFG-next-end-flow-only-v4'){assert(b===undefined,'AG integrity: GDM NOVA account proof outside own scope');return undefined;}
@@ -1394,17 +1502,20 @@ else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&
   }
   this.quickHitNextRequestBinding();
   this.huffActualNextRequestBinding();
+  ownNOVAFeatureProfile(this.game);
   return {c,q,r};
  }
  private async rootFlowCall(event:string,parameters:Record<string,any>|null){
   const {c,q,r}=this.rootFlowBinding(),first=event==='BET';assert(!this.closed&&parameters,'AG integrity: GDM own root session closed');
+  const ownFeature=ownNOVAFeatureProfile(this.game);
+  if(ownFeature){if(first){assert(!this.ownNOVAFeatureState.next,'AG integrity: GDM own NOVA feature pending BET');assert.deepStrictEqual(parameters,this.game.sg.requestParams,'AG integrity: GDM own root request');beginOwnNOVAFeatureRound(this.ownNOVAFeatureState);}else{const exact=getOwnNOVAFeatureNext(this.ownNOVAFeatureState,this.rootFlowFreeRequest());assert(exact&&exact.event===event,'AG integrity: GDM own NOVA feature actual event');assert.deepStrictEqual(parameters,exact.parameters,'AG integrity: GDM own NOVA feature actual fields');}}else{
   assert(first?this.rootFlowRemaining===undefined&&!this.rootFlowPendingCrossLink&&!this.rootFlowPendingNOVAEntry:(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry)&&event==='FREE_GAME','AG integrity: GDM actual root action');
-  assert.deepStrictEqual(parameters,first?this.game.sg.requestParams:this.rootFlowFreeRequest(),'AG integrity: GDM own root request');
+  assert.deepStrictEqual(parameters,first?this.game.sg.requestParams:this.rootFlowFreeRequest(),'AG integrity: GDM own root request');}
   if(first){this.roundStart=this.balance;this.totalWin=0;this.rootFlowSteps=[];this.quickHitSecondFeature=false;}this.lastRequest={event,parameters:{...parameters}};
   const step=await this.exchange(event,parameters);try{
    const p=this.decode(step,event);assert(p.B!==undefined&&p.TW!==undefined,'AG integrity: GDM required original AG money');
    const ownNOVA=this.ownNOVAAccountRequestBinding();assert((ownNOVA||p.GA==='0'||q.ownNOVAOptionalGambleAvailability&&p.GA==='1')&&(p.GCT===undefined||p.GCT==='0'),'AG integrity: GDM unmapped active root flow');
-   for(const k of r.promotionalKeysForbidden)assert(p[k]===undefined,'AG integrity: GDM unmapped promotional flow');
+   for(const k of r.promotionalKeysForbidden)if(!ownFeature||k!==ownFeature.ftvKey)assert(p[k]===undefined,'AG integrity: GDM unmapped promotional flow');
    assert(p.REC===undefined,'AG integrity: GDM recovered flow unmapped');
    if(ownNOVA)assert(p.R===undefined||p.R==='0','AG integrity: GDM own NOVA recovered response unmapped');
    if(ownNOVA){
@@ -1417,18 +1528,20 @@ else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&
    }
    if(!q.ownBundleFlow&&!ownNOVA)for(const k of Object.keys(r.freeRequestParams).filter(k=>k!=='GN'))assert(p[k]===undefined||p[k]===(q.ownQuickHitFG2TNextRequest?parameters[k]:r.freeRequestParams[k]),'AG integrity: GDM actual wager changed');
    if(q.ownHuffSourceNextRequest)for(const k of ['BPL','LB'])if(parameters[k]!==undefined)assert(p[k]===undefined||p[k]===parameters[k],'AG integrity: GDM own Huff actual request wager changed');
-   let remaining:number|undefined;if(ownNOVA&&first)remaining=undefined;else if(q.ownBundleFlow?.remainingDecoder==='signed-minus-one-is-pending'){if(p.NFG===undefined&&first)remaining=0;else{assert(typeof p.NFG==='string'&&/^-?\d+$/.test(p.NFG)&&Number.isSafeInteger(Number(p.NFG))&&Number(p.NFG)>=-1,'AG integrity: GDM own signed next/end NFG');remaining=Number(p.NFG)===-1?1:0;}}else remaining=p.NFG===undefined&&first?0:gdmInteger(p.NFG,'own actual NFG');const total=gdmInteger(p.TW,'own actual total cash'),end=gdmInteger(p.B,'own actual balance');
+   let remaining:number|undefined;if(ownNOVA&&first||ownFeature&&event!=='FREE_GAME')remaining=undefined;else if(q.ownBundleFlow?.remainingDecoder==='signed-minus-one-is-pending'){if(p.NFG===undefined&&first)remaining=0;else{assert(typeof p.NFG==='string'&&/^-?\d+$/.test(p.NFG)&&Number.isSafeInteger(Number(p.NFG))&&Number(p.NFG)>=-1,'AG integrity: GDM own signed next/end NFG');remaining=Number(p.NFG)===-1?1:0;}}else remaining=p.NFG===undefined&&first?0:gdmInteger(p.NFG,'own actual NFG');const total=gdmInteger(p.TW,'own actual total cash'),end=gdmInteger(p.B,'own actual balance');
    assert(end===this.roundStart-c.betRaw+total,'AG integrity: GDM original whole cash conservation');
    if(step.responseBalance!==undefined)assert(step.responseBalance===gdmInteger(p.AB===undefined?p.B:p.AB,'own source balance'),'AG integrity: GDM source captured balance differs');
        if(q.ownBundleFlow&&p.FID!==undefined){const modes=p.FID.split('|').filter((v:string)=>v!=='').map((v:string)=>gdmInteger(v,'own bundle feature mode'));assert(modes.length>0&&modes.every((v:number)=>q.ownBundleFlow.actualFreeFeatureModes.includes(v)),'AG integrity: GDM unmapped bundle next/end');}
 let pendingCrossLink=false;
    if(q.ownCrossLinkFlow){const b=q.ownCrossLinkFlow;let mode:number|undefined;if(p.FID!==undefined){const fields=p.FID.split('|').filter((v:string)=>v!=='');assert(fields.length>0,'AG integrity: GDM empty actual stage');mode=gdmInteger(fields[0],'own first feature mode');assert(mode===b.freeMode||mode===b.crossLinkMode,'AG integrity: GDM unmapped actual CrossLink mode');}if(remaining!==undefined&&remaining>0)assert(mode!==undefined,'AG integrity: GDM active feature has no stage');pendingCrossLink=remaining===0&&mode===b.freeMode;}
-   const pendingNOVAEntry=!!ownNOVA&&first&&(p.FGT===undefined?0:gdmInteger(p.FGT,'own actual paid free entry'))>0;
-   if(ownNOVA&&!pendingNOVAEntry&&(first||remaining===0)){const gsd=p.GSD===undefined?{}:ownGDMFields(p.GSD,'#','~');for(const k of ownNOVA.ownUnmappedTerminalGSDKeys)assert(gsd[k]===undefined,'AG integrity: GDM own NOVA terminal mission flow unmapped');}
+   if(ownFeature)updateOwnNOVAFeatureNext(ownFeature,this.ownNOVAFeatureState,event,p);
+   const ownFeatureExact=ownFeature?getOwnNOVAFeatureNext(this.ownNOVAFeatureState,this.rootFlowFreeRequest()):undefined;
+   const pendingNOVAEntry=ownFeature?ownFeatureExact?.event==='FREE_GAME'&&!(remaining!==undefined&&remaining>0):!!ownNOVA&&first&&(p.FGT===undefined?0:gdmInteger(p.FGT,'own actual paid free entry'))>0;
+   if(ownNOVA&&(ownFeature?!ownFeatureExact:!pendingNOVAEntry&&(first||remaining===0))){const gsd=p.GSD===undefined?{}:ownGDMFields(p.GSD,'#','~');for(const k of ownNOVA.ownUnmappedTerminalGSDKeys)assert(gsd[k]===undefined,'AG integrity: GDM own NOVA terminal mission flow unmapped');}
    this.updateQuickHitRequestState(p);
    this.updateHuffActualRequestMode(p,remaining);
    this.balance=end;this.totalWin=total;this.rootFlowRemaining=remaining!==undefined&&remaining>0?remaining:undefined;this.rootFlowPendingCrossLink=pendingCrossLink;this.rootFlowPendingNOVAEntry=pendingNOVAEntry;this.rootFlowSteps.push({...step,responseBalance:end});
-   const pending=this.rootFlowRemaining!==undefined||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry,steps=pending?this.rootFlowSteps.slice(-1):this.rootFlowSteps;
+   const pending=ownFeature?!!ownFeatureExact:this.rootFlowRemaining!==undefined||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry,steps=pending?this.rootFlowSteps.slice(-1):this.rootFlowSteps;
    return {NextActionInfo:{nextAction:pending?'FREE_SPIN':'SPIN'},PlayerBalanceInfo:{preWagerBalance:this.roundStart/100,balance:end/100,wager:c.betRaw/100,resultAmount:total/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,startBalance:this.roundStart/100,endBalance:end/100,totalWin:total/100,stepCount:steps.length,msgIds:steps.map(s=>s.msgId),steps:structuredClone(steps),SGWireResponse:p,SGDecodedResponseXML:step.responseXml,SGOwnSDKDecision:{ownSDKFileSHA256:c.ownSDKFileSHA256,ownRootNFGNextEndOnly:true,noSyntheticTerminal:true},money:{startBalanceRaw:this.roundStart,endBalanceRaw:end,betRaw:c.betRaw,totalWinRaw:total}};
   }catch(e){this.close();throw e;}
  }
