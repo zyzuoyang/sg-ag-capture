@@ -12787,11 +12787,10 @@ games:
             rawWirePreserved: true
             noSyntheticTerminal: true
             ownExplicitSelectedLines: 30
-            ownUnmappedActiveGSDKeys:
-              - CSC
+            ownUnmappedActiveGSDKeys: []
             ownIgnoreCSCWhenWinCapReached: true
             ownWinCapPositiveGSDKey: CAPS
-            ownUnmappedActiveGSDPhase: FREE_GAME
+            ownUnmappedActiveGSDPhase: null
           nextEvent: FREE_GAME
           remainingWireKey: NFG
           terminalRemaining: 0
