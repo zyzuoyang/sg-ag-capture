@@ -1844,7 +1844,7 @@ export type CoinProfile={gameId:'32590'|'32729';runtimeSlug:string;cfg:1|2;
   freeRequestParams:Record<string,string>;freeCFGs:number[];inactiveCFGs:number[];
   pickTotal:'own-FTV-first-row-index-one'|'own-GSD-JPS-length'};
 export type CoinState={next?:CoinRequest;lastRequested?:CoinRequest;
-  freeRemaining?:number;totalPicks?:number;featureActive?:boolean;choices:number[]};
+  freeRemaining?:number;totalPicks?:number;featureActive?:boolean;choices:number[];own32590FTV?:string};
 export const createCoinState=():CoinState=>({choices:[]});
 const ownCoinInteger=(raw:string,label:string)=>{
   assert(raw.trim()!=='','AG integrity: Coin Combo '+label);
@@ -1884,9 +1884,13 @@ export function updateOwnCoinComboNext(p:CoinProfile,s:CoinState,event:string,
     'AG integrity: Coin Combo exact own profile');
   assert(wire.REC===undefined&&(wire.R===undefined||wire.R==='0'),
     'AG integrity: Coin Combo recovery unmapped');
-  if(event==='BET'){assert(!s.next,'AG integrity: Coin Combo previous round pending');s.choices=[];s.totalPicks=undefined;s.freeRemaining=undefined;s.featureActive=false;}
+  if(event==='BET'){assert(!s.next,'AG integrity: Coin Combo previous round pending');s.choices=[];s.totalPicks=undefined;s.freeRemaining=undefined;s.featureActive=false;if(p.gameId==='32590')s.own32590FTV=undefined;}
   else {assert(s.lastRequested?.event===event,'AG integrity: Coin Combo own requested event absent');}
-  s.freeRemaining=wire.NFG===undefined?undefined:ownCoinInteger(wire.NFG,'actual NFG');
+  // Called only after this own response passed envelope/event and original AG cash checks.
+  const own32590EndCallback=p.gameId==='32590'&&event==='FEATURE_END';
+  if(own32590EndCallback){s.featureActive=false;s.choices=[];s.totalPicks=undefined;s.own32590FTV=undefined;}
+  // Own response decoder defaults missing NFG to zero; after real END callback no picker remains.
+  s.freeRemaining=wire.NFG===undefined?(own32590EndCallback?0:undefined):ownCoinInteger(wire.NFG,'actual NFG');
   // Only an explicit own terminal flag closes an active path without an actual
   // terminal counter. A missing active NFG is not fabricated as zero.
   if(wire.GCT!==undefined&&ownCoinBoolean(wire.GCT,'actual GCT')){s.next=undefined;s.lastRequested=undefined;return;}
@@ -1898,8 +1902,14 @@ export function updateOwnCoinComboNext(p:CoinProfile,s:CoinState,event:string,
       'AG integrity: Coin Combo actual own physical request');
     s.choices.push(fp[2]);
   }
-  // Own LNa/eKa selects FREE_GAME before consulting feature-specific fields.
-  if(s.freeRemaining!==undefined&&s.freeRemaining>0){
+  // Own32590 nbb keeps its active model unless absent/zero CFG plus FID selects clearing it.
+  if(p.gameId==='32590'&&s.featureActive===true&&(!wire.CFG||Number(wire.CFG)===0)&&
+    wire.FID!==undefined&&wire.FID.split('|').slice(0,-1).some(id=>Number(id)===p.cfg))s.featureActive=false;
+  // Own FTV is an outer Postfix array: empty decoded rows do not initialize the Jackpot.
+  const own32590FTV=wire[`FTV_${p.cfg}`];
+  const own32590PickerDispatch=p.gameId==='32590'&&!own32590EndCallback&&(s.featureActive===true||
+    Number(wire.CFG)===p.cfg&&own32590FTV!==undefined&&own32590FTV.split('|').slice(0,-1).length>0);
+  if(s.freeRemaining!==undefined&&s.freeRemaining>0&&!own32590PickerDispatch){
     s.next=ownCoinRequest(p,'FREE_GAME');s.lastRequested=undefined;return;
   }
   const cfg=wire.CFG===undefined||wire.CFG===''?undefined:ownCoinInteger(wire.CFG,'actual CFG');
@@ -1908,12 +1918,16 @@ export function updateOwnCoinComboNext(p:CoinProfile,s:CoinState,event:string,
   if(wire.FID!==undefined){const ids=ownCoinVector(wire.FID,'|','postfix','actual FID');assert(ids.every(i=>i===p.cfg||p.freeCFGs.includes(i)),'AG integrity: Coin Combo actual FID next unmapped');}
   // The completed request's CFG is consumed before the response CFG selects
   // another stage. There is no tuple whitelist or forced End response.
-  if(cfg===p.cfg){
+  const own32590RetainedCallback=p.gameId==='32590'&&s.featureActive===true&&cfg===undefined&&
+    (event==='FEATURE_START'||event==='FEATURE_PICK');
+  if((cfg===p.cfg||own32590RetainedCallback)&&!own32590EndCallback){
     const rawStarted=wire[`FS_${p.cfg}`];
-    const started=rawStarted===undefined?false:ownCoinBoolean(rawStarted,'actual FS');
+    // Own START callback sets started after its real successful response; omitted CFG retains its model.
+    const started=p.gameId==='32590'&&event==='FEATURE_START'||own32590RetainedCallback?true:
+      rawStarted===undefined?false:ownCoinBoolean(rawStarted,'actual FS');
     if(p.pickTotal==='own-FTV-first-row-index-one'){
       const ftv=wire[`FTV_${p.cfg}`];
-      if(ftv!==undefined){const rows=ftv.split('|');rows.pop();assert(rows.length>0,'AG integrity: Coin Combo own FTV first row absent');const row=rows[0].split(';');row.pop();assert(row.length>=2,'AG integrity: Coin Combo actual FTV pick count absent');s.totalPicks=ownCoinInteger(row[1],'own NumberOfPicks');s.featureActive=true;}
+      if(ftv!==undefined){const rows=ftv.split('|');rows.pop();if(rows.length>0){s.own32590FTV=ftv;s.featureActive=true;}}
     }else if(wire[`FTV_${p.cfg}`]!==undefined){
       assert(ownGSD.JPS!==undefined,'AG integrity: Coin Combo own JPS absent');
       s.totalPicks=ownCoinVector(ownGSD.JPS,';','infix','own JPS').length;s.featureActive=true;
@@ -1923,11 +1937,14 @@ export function updateOwnCoinComboNext(p:CoinProfile,s:CoinState,event:string,
     else {
       // Fresh scope has nr=false. Own SDK hydrates FPM choices only for nr===true;
       // this candidate keeps recovery unmapped and retains only its own current requests.
+      // START requires only active state. Decode its own retained FTV count when a PICK is actually needed.
+      if(p.gameId==='32590'&&s.own32590FTV!==undefined){const rows=s.own32590FTV.split('|');rows.pop();assert(rows.length>0,'AG integrity: Coin Combo own FTV first row absent');const row=rows[0].split(';');row.pop();assert(row.length>=2,'AG integrity: Coin Combo actual FTV pick count absent');s.totalPicks=ownCoinInteger(row[1],'own NumberOfPicks');}
       assert(s.totalPicks!==undefined&&s.totalPicks>0&&s.totalPicks<=15,
         'AG integrity: Coin Combo actual finite physical picks absent');
       s.next=ownCoinChoose(p,s);
     }
   }else if(s.freeRemaining!==undefined){
+    if(own32590EndCallback&&s.freeRemaining<=0)assert(cfg!==p.cfg,'AG integrity: Coin Combo own END returned pending CFG unmapped');
     s.next=s.freeRemaining>0?ownCoinRequest(p,'FREE_GAME'):undefined;
   }else {
     assert(event==='BET'&&wire.FID===undefined&&(cfg===undefined||p.inactiveCFGs.includes(cfg)),
