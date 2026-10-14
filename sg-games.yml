@@ -4060,7 +4060,7 @@ games:
         GN: hnempgrand96
         RB: '5'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32716'
         dbName: sg_hnempgrand96
         runtimeGameId: 33116
@@ -4069,7 +4069,7 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
@@ -4092,25 +4092,19 @@ games:
           - WC
           - WM
           - WS
+          - CW
+          - NFG
+          - FGT
+          - TFG
+          - CFGG
+          - FGTW
+          - FID
         requiredResponseKeys:
-          - AB
           - B
-          - BPR
-          - FRBAL
-          - GA
-          - GSD
-          - IFG
-          - MSGID
-          - MUL
-          - NRID
-          - RB
-          - RID
-          - RS
-          - SID
-          - SUB
+          - AB
           - TW
-          - VER
-          - WC
+          - MSGID
+          - GA
         ordinaryGSDKeys:
           - BGHHPOS
           - BMS
@@ -4376,6 +4370,74 @@ games:
           noCashOrNextActionDerivedFromOptionalGSD: true
           preserveNullableSDKArrayCells: true
           nullableSDKNumberValidatorSHA256: b9875888f75d1efead4c1d956edb34d2021514f853bc635a61970919f6b37aab
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32716'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: hnempgrand96
+            BPR: '10'
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: 6d949797520cb4e0d2af8fc0dd33d928c11ccb88a46f320ab1916a98151d360e
+            SDKSelectorSHA256: 75cafcbb1dc60685b948a90025d3b1d0cfec36c41a3346191406abc59f23121a
+            NFGSetterSHA256: e22d5883c75e8707e7f3d824512effa29eff98e489ed86d4ab9b2e0cb3feab90
+            NFGDecoderSHA256: f96f6dba4f62ef3744f77205d553428255406f6dc1c1d3ae837d12d3a1e123fa
+            GCTDecoderSHA256: 63e857b218b4c6109bc91a0a1c0bd6298d515741701ac293ffd54f3bb67751ed
+            ownRequestConstructorSHA256: 6fd40b802a3c50f5d23b32ec0aaf9a593dbcc1ab9f214826403b885c454c9420
+            fieldBindings:
+              - wireKey: BPR
+                type:
+                  kind: integer
+                  SDKTypeAlias: $b
+                  ownAliasValidatorSHA256: f4c50e882724e574322b66d7b2864aaca1d41854315e77e85e67e5fe6f445533
+                sourceSHA256: 6fd40b802a3c50f5d23b32ec0aaf9a593dbcc1ab9f214826403b885c454c9420
+              - wireKey: RB
+                type:
+                  kind: integer
+                  SDKTypeAlias: $b
+                  ownAliasValidatorSHA256: f4c50e882724e574322b66d7b2864aaca1d41854315e77e85e67e5fe6f445533
+                sourceSHA256: 6fd40b802a3c50f5d23b32ec0aaf9a593dbcc1ab9f214826403b885c454c9420
+            actualPaidIntroCases: 1
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32716'
+          ownSDKFileSHA256: 6d949797520cb4e0d2af8fc0dd33d928c11ccb88a46f320ab1916a98151d360e
+          SDKSelectorSHA256: 75cafcbb1dc60685b948a90025d3b1d0cfec36c41a3346191406abc59f23121a
+          NFGSetterSHA256: e22d5883c75e8707e7f3d824512effa29eff98e489ed86d4ab9b2e0cb3feab90
+          NFGDecoderSHA256: f96f6dba4f62ef3744f77205d553428255406f6dc1c1d3ae837d12d3a1e123fa
+          GCTDecoderSHA256: 63e857b218b4c6109bc91a0a1c0bd6298d515741701ac293ffd54f3bb67751ed
+          ownRequestConstructorSHA256: 6fd40b802a3c50f5d23b32ec0aaf9a593dbcc1ab9f214826403b885c454c9420
+          SDKFinalGetterSourceSHA256: 35212e766561265f25089b91af9d431f9f28105e2a085b35c84083b7fdaa6511
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          own32716NextEndOnly: true
   - provider: sg
     gameId: '32718'
     name: Huff N' More Puff High Limit

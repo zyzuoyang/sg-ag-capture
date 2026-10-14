@@ -2219,6 +2219,7 @@ else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&
   const step=await this.exchange(event,parameters);try{
    const p=this.decode(step,event);assert(p.B!==undefined&&p.TW!==undefined,'AG integrity: GDM required original AG money');
    if(q.own32629NextEndOnly){assert(this.game.gameId==='32629'&&c.ownSDKFileSHA256==='6ccffa14540925e4b14b1e9f0f8158bfb1b5f72a5faabb1eab7b0dfa813aeb9a','AG integrity: own32629 next/end scope');ownGDMFreeEnvelope(this.game,p,event);gdmInteger(p.AB,'own32629 actual available balance');}
+   if(q.own32716NextEndOnly){assert(this.game.gameId==='32716'&&c.ownSDKFileSHA256==='6d949797520cb4e0d2af8fc0dd33d928c11ccb88a46f320ab1916a98151d360e','AG integrity: own32716 next/end scope');gdmInteger(p.AB,'own32716 actual available balance');}
    const ownNOVA=this.ownNOVAAccountRequestBinding();assert((ownNOVA||p.GA==='0'||q.ownNOVAOptionalGambleAvailability&&p.GA==='1')&&(ownBundleFeature||p.GCT===undefined||p.GCT==='0'),'AG integrity: GDM unmapped active root flow');
    for(const k of r.promotionalKeysForbidden)if(!ownFeature||k!==ownFeature.ftvKey)assert(p[k]===undefined,'AG integrity: GDM unmapped promotional flow');
    assert(p.REC===undefined,'AG integrity: GDM recovered flow unmapped');
