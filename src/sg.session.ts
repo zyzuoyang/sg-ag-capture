@@ -1869,7 +1869,7 @@ export type CoinProfile={gameId:'32590'|'32729';runtimeSlug:string;cfg:1|2;
   freeRequestParams:Record<string,string>;freeCFGs:number[];inactiveCFGs:number[];
   pickTotal:'own-FTV-first-row-index-one'|'own-GSD-JPS-length'};
 export type CoinState={next?:CoinRequest;lastRequested?:CoinRequest;
-  freeRemaining?:number;totalPicks?:number;featureActive?:boolean;choices:number[];own32590FTV?:string};
+  freeRemaining?:number;totalPicks?:number;featureActive?:boolean;choices:number[];own32590FTV?:string;own32729Picker?:Own32729PickerState};
 export const createCoinState=():CoinState=>({choices:[]});
 const ownCoinInteger=(raw:string,label:string)=>{
   assert(raw.trim()!=='','AG integrity: Coin Combo '+label);
@@ -1896,16 +1896,142 @@ function ownCoinChoose(p:CoinProfile,s:CoinState):CoinRequest{
   assert(slot!==undefined,'AG integrity: Coin Combo no unconsumed physical choice');
   return ownCoinRequest(p,'FEATURE_PICK',{FP:`1|${s.choices.length+1}|${slot}`});
 }
+// Exact Perfect Peacock 32729 SDK06245. No provider response/ACK is made here.
+type Own32729PickerState={started:boolean;cfg:number;ordinal:number};
+function own32729Boolean(raw:string,label:string):boolean{
+  const numeric=raw===''?null:Number(raw);
+  if(numeric!==null&&!Number.isNaN(numeric))return numeric!==0;
+  const value=raw.toLowerCase();if(['true','y','yes'].includes(value))return true;
+  assert(['false','n','no'].includes(value),'AG integrity: own32729 '+label);return false;
+}
+function own32729ClearPicker(s:CoinState):void{
+  s.featureActive=false;s.totalPicks=undefined;s.choices=[];
+  s.own32729Picker={started:false,cfg:-1,ordinal:-1};
+}
+function own32729FeatureRequest(p:CoinProfile,s:CoinState,event:string,extra:Record<string,string>={}):CoinRequest{
+  assert(s.own32729Picker,'AG integrity: own32729 picker state absent');
+  // Own Iaa returns actual model $K, including its logged -1. No CFG tuple whitelist.
+  return {event,parameters:{GN:p.runtimeSlug,CFG:String(s.own32729Picker.cfg),...extra}};
+}
+function own32729BuildFeatureRequest(p:CoinProfile,s:CoinState,event:string):CoinRequest{
+  const model=s.own32729Picker;
+  assert(model&&s.featureActive===true,'AG integrity: own32729 actual feature selector unmapped');
+  if(!model.started)return own32729FeatureRequest(p,s,event);
+  assert(s.totalPicks!==undefined,'AG integrity: own32729 actual JPS count absent');
+  if(model.ordinal>=s.totalPicks)return own32729FeatureRequest(p,s,event);
+  const slot=Array.from({length:15},(_,i)=>i).find(i=>!s.choices.includes(i));
+  assert(slot!==undefined,'AG integrity: own32729 no unconsumed physical choice');
+  return own32729FeatureRequest(p,s,event,{FP:`1|${s.choices.length+1}|${slot}`});
+}
+function own32729DecodedFTVIsTruthy(wire:Record<string,string>):boolean{
+  // Own hw optional decoder starts with [] and changes the entire property to
+  // null only on a decoding error. Values themselves are unused by the picker.
+  for(const [key,raw] of Object.entries(wire)){
+    const suffix=key.startsWith('FTV_')?key.slice(4):'';
+    const index=Number.parseInt(suffix,10);
+    if(suffix===''||Number.isNaN(index)||String(index)!==suffix)continue;
+    const rows=raw.split('|');rows.pop();
+    for(const row of rows){const values=row.split(';');values.pop();
+      if(values.some(value=>value.trim()===''||Number.isNaN(Number(value))))return false;
+    }
+  }
+  return true;
+}
+function own32729DecodedStarted(wire:Record<string,string>,cfg:number):boolean{
+  let started=false;
+  // The own hw decoder decodes the full indexed FS property before y6a
+  // indexes it. A bad indexed value makes that property null, never true.
+  for(const [key,raw] of Object.entries(wire)){
+    const suffix=key.startsWith('FS_')?key.slice(3):'',index=Number.parseInt(suffix,10);
+    if(suffix===''||Number.isNaN(index)||String(index)!==suffix)continue;
+    const value=own32729Boolean(raw,'FS');if(index===cfg)started=value;
+  }
+  return started;
+}
+export function updateOwn32729Next(p:CoinProfile,s:CoinState,event:string,
+  wire:Record<string,string>,ownGSD:Record<string,string>):void{
+  assert(p.gameId==='32729'&&p.cfg===2&&p.pickTotal==='own-GSD-JPS-length',
+    'AG integrity: own32729 exact profile');
+  assert(wire.REC===undefined&&(wire.R===undefined||wire.R==='0'),
+    'AG integrity: own32729 recovery unmapped');
+  if(event==='BET'){
+    assert(!s.next,'AG integrity: own32729 previous round pending');
+    own32729ClearPicker(s);
+  }else assert(s.lastRequested?.event===event,'AG integrity: own32729 requested event absent');
+  // Own NFG Integer decoder declares default 0, independently on every response.
+  s.freeRemaining=wire.NFG===undefined?0:ownCoinInteger(wire.NFG,'own32729 NFG');
+  const cfg=wire.CFG===undefined?undefined:ownCoinInteger(wire.CFG,'own32729 CFG');
+  const model=s.own32729Picker!;
+  // Own Wl.ij calls p6a before J9a: its GSD.FID JSON selection clears tc.tf
+  // when absent/empty. Hy is this same parsed value, not root FID's Postfix array.
+  const selected=ownGSD.FID===undefined?null:JSON.parse(ownGSD.FID);
+  if(!(selected&&0<selected.length))s.featureActive=false;
+  // Own J9a/y6a. hw fields decode to [] even when no FTV key exists; neither
+  // nonempty FTV rows nor a future display-value count initializes this model.
+  if(cfg===2||s.featureActive===true){
+    if(cfg){
+      if(own32729DecodedFTVIsTruthy(wire)){
+        assert(ownGSD.JPS!==undefined,'AG integrity: own32729 actual GSD JPS absent');
+        const prizes=ownGSD.JPS.split(';');
+        assert(prizes.every(value=>value.trim()!==''&&Number.isInteger(Number(value))),
+          'AG integrity: own32729 actual JPS Integer array');
+        s.totalPicks=prizes.length;
+        s.featureActive=true;model.cfg=cfg;
+      }
+      model.started=own32729DecodedStarted(wire,cfg);
+    }else if(selected&&selected.some((id:unknown)=>id===2)){
+      s.featureActive=false;
+    }
+  }else own32729ClearPicker(s);
+  // The three callbacks run only after the actual response passed the common
+  // success/envelope/event and original AG cash checks. Request construction
+  // already consumed a PICK in retainRequestedCoinAction, just like own X1a.
+  if(event==='FEATURE_END')own32729ClearPicker(s);
+  else if(event==='FEATURE_START'){
+    s.own32729Picker!.started=true;
+    assert(s.featureActive===true,'AG integrity: own32729 START callback feature selector unmapped');
+  }else if(event==='FEATURE_PICK'){
+    assert(s.featureActive===true,'AG integrity: own32729 PICK callback feature selector unmapped');
+  }
+  // Own Fk orders active Jackpot before FreeSpins; Yqa takes first non-null cz.
+  // This is the own dispatcher, not the FREE request factory's local fallback.
+  if(s.featureActive===true){
+    // Actual callback chooses the message entry; own MH independently chooses
+    // its body from current tf/Uy/UL/uH. Do not replace that with a CFG tuple.
+    const nextEvent=event==='FEATURE_START'?'FEATURE_PICK':event==='FEATURE_PICK'?
+      (s.choices.length>=s.totalPicks!?'FEATURE_END':'FEATURE_PICK'):
+      (s.own32729Picker!.started?'FEATURE_PICK':'FEATURE_START');
+    s.next=own32729BuildFeatureRequest(p,s,nextEvent);
+  }
+  else if(wire.GCT!==undefined&&own32729Boolean(wire.GCT,'GCT'))s.next=undefined;
+  else if(s.freeRemaining>0)s.next=ownCoinRequest(p,'FREE_GAME');
+  else {
+    // Fresh GoldJackpotPick is not initialized by J9a. It needs its own real
+    // positive bridge; do not pretend that unsupported feature is a terminal.
+    assert(event==='FEATURE_END'||cfg===undefined||cfg===0||cfg===1||cfg===-1,
+      'AG integrity: own32729 actual next/end unmapped');
+    s.next=undefined;
+  }
+  s.lastRequested=undefined;
+}
+
 export function retainRequestedCoinAction(s:CoinState,actual:CoinRequest):void{
   assert(s.next,'AG integrity: Coin Combo no mapped next request');
   assert.deepStrictEqual(actual,s.next,'AG integrity: Coin Combo actual next fields');
   // Called for a newly selected request, never to retry a prior POST.
   s.lastRequested=structuredClone(actual);
+  if(s.own32729Picker&&actual.event==='FEATURE_PICK'&&actual.parameters.FP!==undefined){
+    // Own MH.$Ua calls X1a during construction, before this POST or its ACK.
+    const fp=ownCoinVector(actual.parameters.FP,'|','infix','own32729 requested FP');
+    assert(fp.length===3&&s.totalPicks!==undefined&&s.own32729Picker.ordinal<s.totalPicks,
+      'AG integrity: own32729 actual PICK construction');
+    s.choices.push(fp[2]);s.own32729Picker.ordinal=s.choices.length;
+  }
 }
 export function updateOwnCoinComboNext(p:CoinProfile,s:CoinState,event:string,
   wire:Record<string,string>,ownGSD:Record<string,string>):void{
-  assert((p.gameId==='32590'&&p.cfg===1&&p.pickTotal==='own-FTV-first-row-index-one')||
-    (p.gameId==='32729'&&p.cfg===2&&p.pickTotal==='own-GSD-JPS-length'),
+  if(p.gameId==='32729')return updateOwn32729Next(p,s,event,wire,ownGSD);
+  assert(p.gameId==='32590'&&p.cfg===1&&p.pickTotal==='own-FTV-first-row-index-one',
     'AG integrity: Coin Combo exact own profile');
   assert(wire.REC===undefined&&(wire.R===undefined||wire.R==='0'),
     'AG integrity: Coin Combo recovery unmapped');
@@ -1981,7 +2107,7 @@ export function updateOwnCoinComboNext(p:CoinProfile,s:CoinState,event:string,
 }
 
 
-const ownCoinComboProfiles:Record<string,any>={"32590":{"gameId":"32590","runtimeSlug":"mightymonkeycoincombo96","cfg":1,"freeRequestParams":{"GN":"mightymonkeycoincombo96","BPR":"108","RB":"5"},"freeCFGs":[0],"pickTotal":"own-FTV-first-row-index-one","ownSDKFileSHA256":"00995533ce53fcbc060385d71c251fddc6a7545ca0f95824a35c0d2c793c2a8b","dbName":"sg_mightymonkeycoincombo96","runtimeGameId":33064,"sourcePointProofSHA256":"95874b356bfdd385832d7dbefe11bb089d84ddaa4a732e005cfc240189c6221e","physicalChoices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],"originalAGAmountReplayMongoChecksRequired":true,"noOldUnknownPOSTReplay":true,"unmappedActualNextStops":true,"providerFeatureACKsObservedInThisPackage":0,"inactiveCFGs":[]},"32729":{"gameId":"32729","runtimeSlug":"coincomboperfectpeacock96","cfg":2,"freeRequestParams":{"BPR":"88","GN":"coincomboperfectpeacock96","RB":"5"},"freeCFGs":[0,1],"pickTotal":"own-GSD-JPS-length","ownSDKFileSHA256":"06245d78fdff91ed48d7790545be5f7cbe051246a957093845f8f8b100d3b2b0","dbName":"sg_coincomboperfectpeacock96","runtimeGameId":33129,"sourcePointProofSHA256":"95874b356bfdd385832d7dbefe11bb089d84ddaa4a732e005cfc240189c6221e","physicalChoices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],"originalAGAmountReplayMongoChecksRequired":true,"noOldUnknownPOSTReplay":true,"unmappedActualNextStops":true,"providerFeatureACKsObservedInThisPackage":0,"inactiveCFGs":[-1]}};
+const ownCoinComboProfiles:Record<string,any>={"32590":{"gameId":"32590","runtimeSlug":"mightymonkeycoincombo96","cfg":1,"freeRequestParams":{"GN":"mightymonkeycoincombo96","BPR":"108","RB":"5"},"freeCFGs":[0],"pickTotal":"own-FTV-first-row-index-one","ownSDKFileSHA256":"00995533ce53fcbc060385d71c251fddc6a7545ca0f95824a35c0d2c793c2a8b","dbName":"sg_mightymonkeycoincombo96","runtimeGameId":33064,"sourcePointProofSHA256":"95874b356bfdd385832d7dbefe11bb089d84ddaa4a732e005cfc240189c6221e","physicalChoices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],"originalAGAmountReplayMongoChecksRequired":true,"noOldUnknownPOSTReplay":true,"unmappedActualNextStops":true,"providerFeatureACKsObservedInThisPackage":0,"inactiveCFGs":[]},"32729":{"gameId":"32729","runtimeSlug":"coincomboperfectpeacock96","cfg":2,"freeRequestParams":{"BPR":"88","GN":"coincomboperfectpeacock96","RB":"5"},"freeCFGs":[0,1],"pickTotal":"own-GSD-JPS-length","ownSDKFileSHA256":"06245d78fdff91ed48d7790545be5f7cbe051246a957093845f8f8b100d3b2b0","dbName":"sg_coincomboperfectpeacock96","runtimeGameId":33129,"sourcePointProofSHA256":"95874b356bfdd385832d7dbefe11bb089d84ddaa4a732e005cfc240189c6221e","physicalChoices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],"originalAGAmountReplayMongoChecksRequired":true,"noOldUnknownPOSTReplay":true,"unmappedActualNextStops":true,"providerFeatureACKsObservedInThisPackage":0,"inactiveCFGs":[-1],"own32729DispatchContract":"own32729-SDK06245-p6a-MH-callback-v1","own32729NewPointProofsSHA256":{"own32729-serializer-points-v2.json":"e1f22139081b5aa471d1f1b6b1092e0fe506682acc23303fbb3d1008d8518839","own32729-callback-points-v3.json":"eafd2e355ee4ffc46eccf99dc33d7f16c5ecf6c19f0668f655b1c34787bede14","own32729-dispatch-points-v3.json":"f45cd60b7f9981ef50b1ad6c019df34205729e437829d067c045cb706bae0707","own32729-response-order-p6a-review.json":"a3de7bb3bed4fb3fd3aca7e816db5c365005c827f94845873b0d4214082c651e","own32729-scalar-points-v4.json":"239c4be16a237bc5da661ece6b15b5745777768264f12ee14a41db1dfcbefe9d"}}};
 export function ownCoinComboProfile(game:AGGameConfig):CoinProfile|undefined {
  const c=game.sg?.ownGDMContract,b=c?.ownCoinComboNextEndOnly;if(!b)return undefined;
  const p=ownCoinComboProfiles[game.gameId];

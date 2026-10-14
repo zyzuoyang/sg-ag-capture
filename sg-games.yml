@@ -14239,6 +14239,13 @@ games:
           noOldUnknownPOSTReplay: true
           unmappedActualNextStops: true
           providerFeatureACKsObservedInThisPackage: 0
+          own32729DispatchContract: own32729-SDK06245-p6a-MH-callback-v1
+          own32729NewPointProofsSHA256:
+            own32729-serializer-points-v2.json: e1f22139081b5aa471d1f1b6b1092e0fe506682acc23303fbb3d1008d8518839
+            own32729-callback-points-v3.json: eafd2e355ee4ffc46eccf99dc33d7f16c5ecf6c19f0668f655b1c34787bede14
+            own32729-dispatch-points-v3.json: f45cd60b7f9981ef50b1ad6c019df34205729e437829d067c045cb706bae0707
+            own32729-response-order-p6a-review.json: a3de7bb3bed4fb3fd3aca7e816db5c365005c827f94845873b0d4214082c651e
+            own32729-scalar-points-v4.json: 239c4be16a237bc5da661ece6b15b5745777768264f12ee14a41db1dfcbefe9d
           inactiveCFGs:
             - -1
 
