@@ -1922,13 +1922,7 @@ export function ownGDMSDKTypedGSD(game:AGGameConfig,gsd:Record<string,string>){
   const field=schema?.fields?.[key];
   if(field){assert(/^[a-f0-9]{64}$/.test(field.ownSDKFieldSHA256),'AG integrity: GDM unbound SDK field');check(value,field.type);}
   else if(projection){
-   // Own GoldenFire ordinary terminal getter consumes NFG/IFG/GA/GCT;
-   // CSFBS is a display object. Keep its raw dictionary value without
-   // requiring its unrelated object codec to finish an ordinary round.
-   const ownGoldenFireDisplay=game.gameId==='32532'&&c.ownSDKFileSHA256==='b6382ca56e7b6699838cfa368f6d70078e5e2f20728d6bcc5c9e89ee3340899b'
-    &&c.version==='own-SDK-ordinary-typed-final-v2'&&c.ordinaryOnly===true&&c.requiresNoPreviousFeature===true
-    &&c.SDKFinalGetterSourceSHA256==='7062d38da16e3117e985ae41630cbe94e95cd89016055546c36b348c05225376'&&key==='CSFBS';
-   assert(!projection.effectiveFieldKeys.includes(key)||ownGoldenFireDisplay,'AG integrity: GDM known unsupported own object field');
+   assert(!projection.effectiveFieldKeys.includes(key),'AG integrity: GDM known unsupported own object field');
    // This game's complete Object decoder constructs without the dictionary
    // and reads only its bound metadata. Preserve extra display metadata in
    // the raw response; never use it to derive cash or a follow-up request.
