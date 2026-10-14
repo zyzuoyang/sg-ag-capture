@@ -1834,6 +1834,121 @@ export function ownUFLSourcePending(p:any,wire:Record<string,string>):boolean {
  // Source isNumber/presence predicate, not a >0 counter. Numeric zero is next.
  if(data.FLNTR!==undefined){value(data.FLNTR,'FLNTR');return true;}return false;
 }
+// Private candidate only. It is not admitted to any production entry.
+// Raw responses, successful-envelope checks and original AG money/Mongo remain
+// owned by SGGdmSession. No response or terminal ACK is created here.
+
+
+export type CoinRequest={event:string;parameters:Record<string,string>};
+export type CoinProfile={gameId:'32590'|'32729';runtimeSlug:string;cfg:1|2;
+  freeRequestParams:Record<string,string>;freeCFGs:number[];inactiveCFGs:number[];
+  pickTotal:'own-FTV-first-row-index-one'|'own-GSD-JPS-length'};
+export type CoinState={next?:CoinRequest;lastRequested?:CoinRequest;
+  freeRemaining?:number;totalPicks?:number;featureActive?:boolean;choices:number[]};
+export const createCoinState=():CoinState=>({choices:[]});
+const ownCoinInteger=(raw:string,label:string)=>{
+  assert(raw.trim()!=='','AG integrity: Coin Combo '+label);
+  const n=Number(raw);assert(Number.isSafeInteger(n),'AG integrity: Coin Combo '+label);return n;
+};
+const ownCoinBoolean=(raw:string,label:string)=>{
+  const n=Number(raw);if(raw.trim()!==''&&Number.isFinite(n))return n!==0;
+  const text=raw.toLowerCase();if(['true','y','yes'].includes(text))return true;
+  assert(['false','n','no'].includes(text),'AG integrity: Coin Combo '+label);return false;
+};
+const ownCoinVector=(raw:string,separator:string,strategy:'infix'|'postfix',label:string)=>{
+  const values=raw.split(separator);if(strategy==='postfix')values.pop();
+  return values.map(v=>ownCoinInteger(v,label));
+};
+function ownCoinRequest(p:CoinProfile,event:string,extra:Record<string,string>={}):CoinRequest{
+  return {event,parameters:event==='FREE_GAME'?{...p.freeRequestParams}:{GN:p.runtimeSlug,CFG:String(p.cfg),...extra}};
+}
+function ownCoinChoose(p:CoinProfile,s:CoinState):CoinRequest{
+  assert(s.totalPicks!==undefined,'AG integrity: Coin Combo actual pick total absent');
+  if(s.choices.length>=s.totalPicks)return ownCoinRequest(p,'FEATURE_END');
+  // Both own fixed SDKs construct a 3*5 physical grid and emit its zero-based
+  // index. This domain is not inherited from a different game's picker.
+  const slot=Array.from({length:15},(_,i)=>i).find(i=>!s.choices.includes(i));
+  assert(slot!==undefined,'AG integrity: Coin Combo no unconsumed physical choice');
+  return ownCoinRequest(p,'FEATURE_PICK',{FP:`1|${s.choices.length+1}|${slot}`});
+}
+export function retainRequestedCoinAction(s:CoinState,actual:CoinRequest):void{
+  assert(s.next,'AG integrity: Coin Combo no mapped next request');
+  assert.deepStrictEqual(actual,s.next,'AG integrity: Coin Combo actual next fields');
+  // Called for a newly selected request, never to retry a prior POST.
+  s.lastRequested=structuredClone(actual);
+}
+export function updateOwnCoinComboNext(p:CoinProfile,s:CoinState,event:string,
+  wire:Record<string,string>,ownGSD:Record<string,string>):void{
+  assert((p.gameId==='32590'&&p.cfg===1&&p.pickTotal==='own-FTV-first-row-index-one')||
+    (p.gameId==='32729'&&p.cfg===2&&p.pickTotal==='own-GSD-JPS-length'),
+    'AG integrity: Coin Combo exact own profile');
+  assert(wire.REC===undefined&&(wire.R===undefined||wire.R==='0'),
+    'AG integrity: Coin Combo recovery unmapped');
+  if(event==='BET'){assert(!s.next,'AG integrity: Coin Combo previous round pending');s.choices=[];s.totalPicks=undefined;s.freeRemaining=undefined;s.featureActive=false;}
+  else {assert(s.lastRequested?.event===event,'AG integrity: Coin Combo own requested event absent');}
+  s.freeRemaining=wire.NFG===undefined?undefined:ownCoinInteger(wire.NFG,'actual NFG');
+  // Only an explicit own terminal flag closes an active path without an actual
+  // terminal counter. A missing active NFG is not fabricated as zero.
+  if(wire.GCT!==undefined&&ownCoinBoolean(wire.GCT,'actual GCT')){s.next=undefined;s.lastRequested=undefined;return;}
+  if(event==='FEATURE_PICK'){
+    assert(s.lastRequested?.parameters.CFG===String(p.cfg),
+      'AG integrity: Coin Combo prior request CFG absent');
+    const fp=ownCoinVector(s.lastRequested.parameters.FP,'|','infix','own requested FP');
+    assert(fp.length===3&&fp[0]===1&&fp[1]===s.choices.length+1&&fp[2]>=0&&fp[2]<15&&!s.choices.includes(fp[2]),
+      'AG integrity: Coin Combo actual own physical request');
+    s.choices.push(fp[2]);
+  }
+  // Own LNa/eKa selects FREE_GAME before consulting feature-specific fields.
+  if(s.freeRemaining!==undefined&&s.freeRemaining>0){
+    s.next=ownCoinRequest(p,'FREE_GAME');s.lastRequested=undefined;return;
+  }
+  const cfg=wire.CFG===undefined||wire.CFG===''?undefined:ownCoinInteger(wire.CFG,'actual CFG');
+  assert(cfg===undefined||cfg===p.cfg||p.freeCFGs.includes(cfg)||p.inactiveCFGs.includes(cfg),
+    'AG integrity: Coin Combo actual CFG next unmapped');
+  if(wire.FID!==undefined){const ids=ownCoinVector(wire.FID,'|','postfix','actual FID');assert(ids.every(i=>i===p.cfg||p.freeCFGs.includes(i)),'AG integrity: Coin Combo actual FID next unmapped');}
+  // The completed request's CFG is consumed before the response CFG selects
+  // another stage. There is no tuple whitelist or forced End response.
+  if(cfg===p.cfg){
+    const rawStarted=wire[`FS_${p.cfg}`];
+    const started=rawStarted===undefined?false:ownCoinBoolean(rawStarted,'actual FS');
+    if(p.pickTotal==='own-FTV-first-row-index-one'){
+      const ftv=wire[`FTV_${p.cfg}`];
+      if(ftv!==undefined){const rows=ftv.split('|');rows.pop();assert(rows.length>0,'AG integrity: Coin Combo own FTV first row absent');const row=rows[0].split(';');row.pop();assert(row.length>=2,'AG integrity: Coin Combo actual FTV pick count absent');s.totalPicks=ownCoinInteger(row[1],'own NumberOfPicks');s.featureActive=true;}
+    }else if(wire[`FTV_${p.cfg}`]!==undefined){
+      assert(ownGSD.JPS!==undefined,'AG integrity: Coin Combo own JPS absent');
+      s.totalPicks=ownCoinVector(ownGSD.JPS,';','infix','own JPS').length;s.featureActive=true;
+    }
+    assert(s.featureActive===true,'AG integrity: Coin Combo feature next not initialized by own FTV');
+    if(!started){if(event==='FEATURE_END')s.choices=[];s.next=ownCoinRequest(p,'FEATURE_START');}
+    else {
+      // Fresh scope has nr=false. Own SDK hydrates FPM choices only for nr===true;
+      // this candidate keeps recovery unmapped and retains only its own current requests.
+      assert(s.totalPicks!==undefined&&s.totalPicks>0&&s.totalPicks<=15,
+        'AG integrity: Coin Combo actual finite physical picks absent');
+      s.next=ownCoinChoose(p,s);
+    }
+  }else if(s.freeRemaining!==undefined){
+    s.next=s.freeRemaining>0?ownCoinRequest(p,'FREE_GAME'):undefined;
+  }else {
+    assert(event==='BET'&&wire.FID===undefined&&(cfg===undefined||p.inactiveCFGs.includes(cfg)),
+      'AG integrity: Coin Combo active next/end evidence absent');
+    // This exact fresh ordinary scope uses the own SDK's declared NFG default.
+    s.next=undefined;
+  }
+  s.lastRequested=undefined;
+}
+
+
+const ownCoinComboProfiles:Record<string,any>={"32590":{"gameId":"32590","runtimeSlug":"mightymonkeycoincombo96","cfg":1,"freeRequestParams":{"GN":"mightymonkeycoincombo96","BPR":"108","RB":"5"},"freeCFGs":[0],"pickTotal":"own-FTV-first-row-index-one","ownSDKFileSHA256":"00995533ce53fcbc060385d71c251fddc6a7545ca0f95824a35c0d2c793c2a8b","dbName":"sg_mightymonkeycoincombo96","runtimeGameId":33064,"sourcePointProofSHA256":"95874b356bfdd385832d7dbefe11bb089d84ddaa4a732e005cfc240189c6221e","physicalChoices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],"originalAGAmountReplayMongoChecksRequired":true,"noOldUnknownPOSTReplay":true,"unmappedActualNextStops":true,"providerFeatureACKsObservedInThisPackage":0,"inactiveCFGs":[]},"32729":{"gameId":"32729","runtimeSlug":"coincomboperfectpeacock96","cfg":2,"freeRequestParams":{"BPR":"88","GN":"coincomboperfectpeacock96","RB":"5"},"freeCFGs":[0,1],"pickTotal":"own-GSD-JPS-length","ownSDKFileSHA256":"06245d78fdff91ed48d7790545be5f7cbe051246a957093845f8f8b100d3b2b0","dbName":"sg_coincomboperfectpeacock96","runtimeGameId":33129,"sourcePointProofSHA256":"95874b356bfdd385832d7dbefe11bb089d84ddaa4a732e005cfc240189c6221e","physicalChoices":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],"originalAGAmountReplayMongoChecksRequired":true,"noOldUnknownPOSTReplay":true,"unmappedActualNextStops":true,"providerFeatureACKsObservedInThisPackage":0,"inactiveCFGs":[-1]}};
+export function ownCoinComboProfile(game:AGGameConfig):CoinProfile|undefined {
+ const c=game.sg?.ownGDMContract,b=c?.ownCoinComboNextEndOnly;if(!b)return undefined;
+ const p=ownCoinComboProfiles[game.gameId];
+ assert(p&&game.provider==='sg'&&game.dbName===p.dbName&&game.sg.runtimeGameId===p.runtimeGameId&&game.sg.runtimeSlug===p.runtimeSlug&&c.ownSDKFileSHA256===p.ownSDKFileSHA256,'AG integrity: Coin Combo own identity');
+ assert.deepStrictEqual(b,p,'AG integrity: Coin Combo fixed SDK next/end binding');
+ assert.deepStrictEqual(game.sg.requestParams,p.freeRequestParams,'AG integrity: Coin Combo own paid request');
+ assert.deepStrictEqual(c.freeBudgetContract.freeRequestParams,p.freeRequestParams,'AG integrity: Coin Combo own FREE request');return p;
+}
+
 type GDMWireStep={msgId:string;methodName:string;requestPayload:string;responsePayload:string;responseXml:string;responseBalance?:number;httpStatus?:number;elapsedMs?:number};
 type GDMTransport=(event:string,payload:string)=>Promise<GDMWireStep>;
 const gdmParser=new XMLParser({ignoreAttributes:false,attributeNamePrefix:'',parseTagValue:false,parseAttributeValue:false});
@@ -1996,7 +2111,8 @@ export class SGGdmSession{
  private journal:number|null=null;private journalPath:string|null=null;private gameplaySent=false;
  private readonly ownCIProfile:OwnSamuraiCIProfile|undefined;
  private readonly ownCIState=createOwnSamuraiCIState();
- constructor(private readonly game:AGGameConfig,private readonly transport?:GDMTransport,initialBalance?:number){gdmBinding(game);this.ownCIProfile=ownSamuraiCIProfile(game);if(initialBalance!==undefined){assert(Number.isSafeInteger(initialBalance)&&initialBalance>=0);this.balance=initialBalance;}}
+ private readonly ownCoinState=createCoinState();
+ constructor(private readonly game:AGGameConfig,private readonly transport?:GDMTransport,initialBalance?:number){gdmBinding(game);ownCoinComboProfile(game);this.ownCIProfile=ownSamuraiCIProfile(game);if(initialBalance!==undefined){assert(Number.isSafeInteger(initialBalance)&&initialBalance>=0);this.balance=initialBalance;}}
  private evidence(value:Record<string,unknown>){
   if(this.transport)return;
   if(this.journal===null){const dir=path.resolve(process.env.SG_EVIDENCE_DIR||'.sg-evidence');fs.mkdirSync(dir,{recursive:true});
@@ -2019,7 +2135,7 @@ export class SGGdmSession{
  private async exchange(event:string,parameters:Record<string,any>):Promise<GDMWireStep>{
   assert(!this.closed,'AG integrity: GDM session permanently closed');const payload=this.form(event,parameters),ordinal=++this.ordinal;
   const gameplay=event!=='INIT'&&event!=='REELSTRIP';if(gameplay)this.gameplaySent=true;
-  const ownFeatureFollowup=(ownOriginalUFLSourceProfile(this.game)||this.ownCIProfile||ownNOVAFeatureProfile(this.game))&&['FEATURE_START','FEATURE_PICK','FEATURE_END'].includes(event);
+  const ownFeatureFollowup=(ownOriginalUFLSourceProfile(this.game)||this.ownCIProfile||ownNOVAFeatureProfile(this.game)||ownCoinComboProfile(this.game))&&['FEATURE_START','FEATURE_PICK','FEATURE_END'].includes(event);
   const context={event,ordinal,requestKind:event==='FREE_GAME'||ownFeatureFollowup?'round-follow-up' as const:gameplay?'round-start' as const:'initialization' as const,gameplayRequestHasBeenSent:this.gameplaySent};
   if(this.transport){let step:GDMWireStep;try{step=await this.transport(event,payload);}catch{this.close();throw new SGSourceFault(gameplay?'execution-unknown':'recoverable-initialization',context);}assert(!this.closed,'AG integrity: GDM late response after permanent closure');if(step.httpStatus!==undefined&&step.httpStatus!==200){this.close();throw new SGSourceFault(gameplay?'execution-unknown':'protocol', {...context,httpStatus:step.httpStatus});}return step;}
   const operator=process.env.SG_GDM_OPERATOR_ID;assert(operator&&/^[A-Za-z0-9_-]+$/.test(operator),'AG integrity: GDM own operator configuration missing');
@@ -2040,7 +2156,7 @@ export class SGGdmSession{
  }
  getHandshakeData(){return null;}getBalance(){return this.balance/100;}getFallbackBet(){return this.game.sg.betRaw/100;}
  getSpinParams(){return {...this.game.sg.requestParams};}getInitialRoundRequest(){return{event:'BET',parameters:this.getSpinParams()};}
- getExactFollowUpRequest(action:string){const ownOriginal=ownOriginalUFLSourceProfile(this.game);if(ownOriginal){assert(action==='FREE_SPIN','AG integrity: own original UFL next action');const exact=getOwnOriginalUFLNext(this.ownOriginalUFLState);assert(exact,'AG integrity: own original UFL next absent');return exact;}const ufl=ownUFLSourceProfile(this.game);if(ufl){assert(action==='FREE_SPIN'&&this.ownUFLPending,'AG integrity: UFL actual next absent');return{event:'FREE_GAME',parameters:{...ufl.freeRequestParams}};}if(this.ownCIProfile){assert(action==='FREE_SPIN','AG integrity: Samurai CI own next action');const exact=getOwnSamuraiCINext(this.ownCIState,this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams);assert(exact,'AG integrity: Samurai CI own next absent');return exact;}if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){if(ownNOVAFeatureProfile(this.game)){assert(action==='FREE_SPIN','AG integrity: GDM own NOVA feature next action');const exact=getOwnNOVAFeatureNext(this.ownNOVAFeatureState,this.rootFlowFreeRequest());assert(exact,'AG integrity: GDM own NOVA feature next absent');return exact;}assert(action==='FREE_SPIN'&&(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry),'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:this.rootFlowFreeRequest()};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
+ getExactFollowUpRequest(action:string){const coin=ownCoinComboProfile(this.game);if(coin){assert(action==='FREE_SPIN'&&this.ownCoinState.next,'AG integrity: Coin Combo mapped next absent');return structuredClone(this.ownCoinState.next);}const ownOriginal=ownOriginalUFLSourceProfile(this.game);if(ownOriginal){assert(action==='FREE_SPIN','AG integrity: own original UFL next action');const exact=getOwnOriginalUFLNext(this.ownOriginalUFLState);assert(exact,'AG integrity: own original UFL next absent');return exact;}const ufl=ownUFLSourceProfile(this.game);if(ufl){assert(action==='FREE_SPIN'&&this.ownUFLPending,'AG integrity: UFL actual next absent');return{event:'FREE_GAME',parameters:{...ufl.freeRequestParams}};}if(this.ownCIProfile){assert(action==='FREE_SPIN','AG integrity: Samurai CI own next action');const exact=getOwnSamuraiCINext(this.ownCIState,this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams);assert(exact,'AG integrity: Samurai CI own next absent');return exact;}if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){if(ownNOVAFeatureProfile(this.game)){assert(action==='FREE_SPIN','AG integrity: GDM own NOVA feature next action');const exact=getOwnNOVAFeatureNext(this.ownNOVAFeatureState,this.rootFlowFreeRequest());assert(exact,'AG integrity: GDM own NOVA feature next absent');return exact;}assert(action==='FREE_SPIN'&&(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry),'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:this.rootFlowFreeRequest()};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
  getLastGameRequest(){return this.lastRequest;}getPickParams(){throw new Error('AG integrity: GDM own selection not mapped');}
  isRoundTerminalAction(action:string){return action==='SPIN';}
  private ownExtraStageCounter(p:Record<string,string>,prior:any){
@@ -2289,6 +2405,25 @@ let pendingCrossLink=false;
   }catch(e){this.close();throw e;}
  }
 
+
+ private async ownCoinComboCall(event:string,parameters:Record<string,any>|null){
+  const profile=ownCoinComboProfile(this.game),c=gdmBinding(this.game),first=event==='BET';
+  assert(profile&&!this.closed&&parameters,'AG integrity: Coin Combo own session closed');
+  if(first){assert(!this.ownCoinState.next,'AG integrity: Coin Combo previous round pending');assert.deepStrictEqual(parameters,this.game.sg.requestParams,'AG integrity: Coin Combo own BET fields');this.roundStart=this.balance;this.totalWin=0;this.rootFlowSteps=[];}
+  else retainRequestedCoinAction(this.ownCoinState,{event,parameters:{...parameters}});
+  this.lastRequest={event,parameters:{...parameters}};const step=await this.exchange(event,parameters);
+  try{
+   const wire=this.decode(step,event);const end=gdmInteger(wire.B,'Coin Combo actual B'),total=gdmInteger(wire.TW,'Coin Combo actual TW'),available=gdmInteger(wire.AB,'Coin Combo actual AB');
+   assert(end===this.roundStart-c.betRaw+total,'AG integrity: GDM original whole cash conservation');
+   if(step.responseBalance!==undefined)assert(step.responseBalance===available,'AG integrity: GDM source captured balance differs');
+   for(const k of c.freeBudgetContract.promotionalKeysForbidden.filter((k:string)=>k!=='IFR'))assert(wire[k]===undefined,'AG integrity: Coin Combo promotional controller next unmapped');
+   updateOwnCoinComboNext(profile,this.ownCoinState,event,wire,wire.GSD===undefined?{}:ownGDMFields(wire.GSD,'#','~'));
+   this.balance=end;this.totalWin=total;this.rootFlowSteps.push({...step,responseBalance:end});
+   const pending=!!this.ownCoinState.next,steps=pending?this.rootFlowSteps.slice(-1):this.rootFlowSteps;
+   return {NextActionInfo:{nextAction:pending?'FREE_SPIN':'SPIN'},PlayerBalanceInfo:{preWagerBalance:this.roundStart/100,balance:end/100,wager:c.betRaw/100,resultAmount:total/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,startBalance:this.roundStart/100,endBalance:end/100,totalWin:total/100,stepCount:steps.length,msgIds:steps.map(x=>x.msgId),steps:structuredClone(steps),SGWireResponse:wire,SGDecodedResponseXML:step.responseXml,SGOwnSDKDecision:{ownSDKFileSHA256:c.ownSDKFileSHA256,ownCoinComboRequestNextEnd:true,noSyntheticTerminal:true},money:{startBalanceRaw:this.roundStart,endBalanceRaw:end,betRaw:c.betRaw,totalWinRaw:total}};
+  }catch(error){this.close();throw error;}
+ }
+
  private async freeCall(event:string,parameters:Record<string,any>|null){
   const c=gdmBinding(this.game),rule=c.freeBudgetContract;assert(!this.closed&&parameters&&rule,'AG integrity: GDM free session closed');
   const first=event==='BET';assert(first?!this.freeState:this.ownPendingFree()&&event==='FREE_GAME','AG integrity: GDM own free action');
@@ -2315,6 +2450,7 @@ let pendingCrossLink=false;
   }catch(e){this.close();throw e;}
  }
  async callGameData(event:string,parameters:Record<string,any>|null){
+  if(ownCoinComboProfile(this.game))return this.ownCoinComboCall(event,parameters);
   if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture)return this.rootFlowCall(event,parameters);
   if(this.game.sg.ownGDMContract.freeBudgetContract)return this.freeCall(event,parameters);
   assert(!this.closed&&event==='BET'&&parameters,'AG integrity: GDM own ordinary request');assert.deepStrictEqual(parameters,this.game.sg.requestParams,'AG integrity: GDM own request parameters changed');

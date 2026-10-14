@@ -13869,3 +13869,374 @@ games:
           noPreviouslySeenWholeVariationGate: true
           unmappedActiveFlagsStillStop: true
           own32497NextEndOnly: true
+  - provider: sg
+    gameId: '32590'
+    name: Mighty Monkey Coin Combo
+    dbName: sg_mightymonkeycoincombo96
+    backendId: mightymonkeycoincombo96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33064
+      runtimeSlug: mightymonkeycoincombo96
+      betRaw: 108
+      requestParams:
+        GN: mightymonkeycoincombo96
+        BPR: '108'
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v2
+        gameId: '32590'
+        dbName: sg_mightymonkeycoincombo96
+        runtimeGameId: 33064
+        runtimeSlug: mightymonkeycoincombo96
+        betRaw: 108
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - '0'
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+          - AB
+          - B
+          - BD
+          - BDD
+          - BPF
+          - BPL
+          - BPR
+          - BUYPASS_OPTION
+          - CAP
+          - CBF
+          - CFG
+          - CFGG
+          - CFP_{#}
+          - CFR_{#}
+          - CW
+          - EID
+          - ENC
+          - FGT
+          - FGTW
+          - FID
+          - FRABM
+          - FRBAL
+          - FRBPL
+          - FRC
+          - FREXP
+          - FRMSG
+          - FRR
+          - FRT
+          - FRTR
+          - FRTW
+          - FS_{#}
+          - GA
+          - GAM
+          - GCT
+          - GSD
+          - IFG
+          - IFR
+          - LB
+          - LIM
+          - MSGID
+          - MUL
+          - NFG
+          - NFR_{#}
+          - NRID
+          - R
+          - RB
+          - RBM
+          - RC
+          - RE
+          - REC
+          - RID
+          - RS
+          - RSIDS
+          - RTP
+          - SID
+          - SUB
+          - TFG
+          - TW
+          - UGB
+          - VA
+          - VER
+          - WC
+          - WM
+          - WS
+          - buyInId
+        requiredResponseKeys:
+          - B
+          - AB
+          - TW
+          - MSGID
+        ordinaryGSDKeys: []
+        ownSDKFileSHA256: 00995533ce53fcbc060385d71c251fddc6a7545ca0f95824a35c0d2c793c2a8b
+        pendingClauses:
+          - kind: SDK-base-false
+            SDKSourceSHA256: c3f758c2bf1d3b14b15e44a7d535f6c1298be9a70d9ba03641993ff485fadebb
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: d2fc85afd4085748c203f7ca7e49f8405d3a75f9ed92b4df25d6182668203bec
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 4b63949c34feaad23122d118fbcad5c93e6a6abc03fd617f1159150eddd30219
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: b9805fb5e6ea48c43660adb0ee6392cfc6036a5136030eca80d98782a1ed3aca
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: ede8b2398e2b09eb6cfb4a94633058beaaa8b99d4c16844d2073170d8b19c97e
+        SDKFinalGetterSourceSHA256: ceb125fdd7f98d880387ddfab81e0d45fb203ae5adbaf4d0f856c70d62eaa2db
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32590'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: mightymonkeycoincombo96
+            BPR: '108'
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+        ownCoinComboNextEndOnly:
+          gameId: '32590'
+          runtimeSlug: mightymonkeycoincombo96
+          cfg: 1
+          freeRequestParams:
+            GN: mightymonkeycoincombo96
+            BPR: '108'
+            RB: '5'
+          freeCFGs:
+            - 0
+          pickTotal: own-FTV-first-row-index-one
+          ownSDKFileSHA256: 00995533ce53fcbc060385d71c251fddc6a7545ca0f95824a35c0d2c793c2a8b
+          dbName: sg_mightymonkeycoincombo96
+          runtimeGameId: 33064
+          sourcePointProofSHA256: 95874b356bfdd385832d7dbefe11bb089d84ddaa4a732e005cfc240189c6221e
+          physicalChoices:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+          originalAGAmountReplayMongoChecksRequired: true
+          noOldUnknownPOSTReplay: true
+          unmappedActualNextStops: true
+          providerFeatureACKsObservedInThisPackage: 0
+          inactiveCFGs: []
+  - provider: sg
+    gameId: '32729'
+    name: Perfect Peacock Coin Combo
+    dbName: sg_coincomboperfectpeacock96
+    backendId: coincomboperfectpeacock96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33129
+      runtimeSlug: coincomboperfectpeacock96
+      betRaw: 88
+      requestParams:
+        BPR: '88'
+        GN: coincomboperfectpeacock96
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-free-game-chain-v2
+        gameId: '32729'
+        dbName: sg_coincomboperfectpeacock96
+        runtimeGameId: 33129
+        runtimeSlug: coincomboperfectpeacock96
+        betRaw: 88
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - '0'
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+          - AB
+          - B
+          - BD
+          - BDD
+          - BPF
+          - BPL
+          - BPR
+          - BUYPASS_OPTION
+          - CAP
+          - CBPR
+          - CFG
+          - CFGG
+          - CFP_{#}
+          - CFR_{#}
+          - CW
+          - CWP
+          - EID
+          - ENC
+          - FGT
+          - FGTW
+          - FID
+          - FRABM
+          - FRBAL
+          - FRBPL
+          - FRC
+          - FREXP
+          - FRMSG
+          - FRR
+          - FRT
+          - FRTR
+          - FRTW
+          - FS_{#}
+          - GA
+          - GAM
+          - GCT
+          - GSD
+          - IFG
+          - IFR
+          - JPGRAND
+          - JPMAJOR
+          - JPMINI
+          - JPMINOR
+          - JPW
+          - LB
+          - LIM
+          - MSGID
+          - MUL
+          - NFG
+          - NFR_{#}
+          - NRID
+          - R
+          - RB
+          - RBM
+          - RC
+          - RE
+          - REC
+          - RID
+          - RS
+          - RSIDS
+          - RTP
+          - SID
+          - SUB
+          - TFG
+          - TW
+          - UGB
+          - VA
+          - VER
+          - WC
+          - WS
+          - buyInId
+        requiredResponseKeys:
+          - B
+          - AB
+          - TW
+          - MSGID
+        ordinaryGSDKeys: []
+        ownSDKFileSHA256: 06245d78fdff91ed48d7790545be5f7cbe051246a957093845f8f8b100d3b2b0
+        pendingClauses:
+          - kind: SDK-base-false
+            SDKSourceSHA256: c3f758c2bf1d3b14b15e44a7d535f6c1298be9a70d9ba03641993ff485fadebb
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: 28dbe4e34750d8b778122e2a0c3ff6b99322df9255026b41a5c5f1ed452ef764
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 97d8def454de9a69a541e147f071526790a5c648e33e3a8fd14a1013833c962b
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 2aea96d9b659b3321a6573e5ce386957ddc3a048fe9af607972358dbcf7bdac7
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: f70bbe18d1cdfa93a4dccb3172183229633dd6bcbe16e0180a6a071daf9e4c36
+        SDKFinalGetterSourceSHA256: d11ddc9794a9ddb080a7a3c7c860f8cf672096e551e64b320a68ea337d9daf97
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32729'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            BPR: '88'
+            GN: coincomboperfectpeacock96
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+        ownCoinComboNextEndOnly:
+          gameId: '32729'
+          runtimeSlug: coincomboperfectpeacock96
+          cfg: 2
+          freeRequestParams:
+            BPR: '88'
+            GN: coincomboperfectpeacock96
+            RB: '5'
+          freeCFGs:
+            - 0
+            - 1
+          pickTotal: own-GSD-JPS-length
+          ownSDKFileSHA256: 06245d78fdff91ed48d7790545be5f7cbe051246a957093845f8f8b100d3b2b0
+          dbName: sg_coincomboperfectpeacock96
+          runtimeGameId: 33129
+          sourcePointProofSHA256: 95874b356bfdd385832d7dbefe11bb089d84ddaa4a732e005cfc240189c6221e
+          physicalChoices:
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+            - 6
+            - 7
+            - 8
+            - 9
+            - 10
+            - 11
+            - 12
+            - 13
+            - 14
+          originalAGAmountReplayMongoChecksRequired: true
+          noOldUnknownPOSTReplay: true
+          unmappedActualNextStops: true
+          providerFeatureACKsObservedInThisPackage: 0
+          inactiveCFGs:
+            - -1
