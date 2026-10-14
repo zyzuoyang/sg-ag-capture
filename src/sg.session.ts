@@ -2170,7 +2170,7 @@ export class SGGdmSession{
  }
  private decode(step:GDMWireStep,event:string){
   assert(step.msgId===event&&step.methodName==='processGameMessage'&&(step.httpStatus===undefined||step.httpStatus===200),'AG integrity: GDM source exchange');
-  const raw=step.responseXml;assert(typeof raw==='string'&&raw.length<(event==='REELSTRIP'&&['32489','32705'].includes(this.game.gameId)&&ownLinkedPickerProfile(this.game)?524288:262144)&&!/<!DOCTYPE|<!ENTITY/i.test(raw),'AG integrity: GDM source XML');
+  const raw=step.responseXml;assert(typeof raw==='string'&&raw.length<(event==='REELSTRIP'&&['32489','32705','32706'].includes(this.game.gameId)&&ownLinkedPickerProfile(this.game)?524288:262144)&&!/<!DOCTYPE|<!ENTITY/i.test(raw),'AG integrity: GDM source XML');
   const r=gdmParser.parse(raw).GDMRESPONSE;assert(r&&Object.keys(r).sort().join('|')==='OGS_RC|PAYLOAD|SUCCESS'&&r.OGS_RC==='0'&&r.SUCCESS==='true'&&typeof r.PAYLOAD==='string','AG integrity: GDM successful envelope');
   assert(step.responsePayload===r.PAYLOAD,'AG integrity: GDM payload differs from original XML');const p=ownGDMFields(r.PAYLOAD);assert(p.MSGID===event,'AG integrity: GDM response event');return p;
  }
