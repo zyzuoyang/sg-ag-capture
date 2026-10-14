@@ -14240,3 +14240,215 @@ games:
           providerFeatureACKsObservedInThisPackage: 0
           inactiveCFGs:
             - -1
+
+  - provider: sg
+    gameId: '32706'
+    dbName: sg_dancingdrumslinkhighlimit96
+    name: Dancing Drums Link High Limit
+    backendId: dancingdrumslinkhighlimit96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33106
+      runtimeSlug: dancingdrumslinkhighlimit96
+      betRaw: 2200
+      requestParams:
+        GN: dancingdrumslinkhighlimit96
+        AP: 'false'
+        BPR: '2200'
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-free-prefix-trial-v4
+        gameId: '32706'
+        dbName: sg_dancingdrumslinkhighlimit96
+        runtimeGameId: 33106
+        runtimeSlug: dancingdrumslinkhighlimit96
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ownSDKFileSHA256: 67b38f1aa0eeac5c304443f8200e0cdc32ceaa27d613f3f8c24834696f295f85
+        betRaw: 2200
+        balanceScale: 1
+        winScale: 1
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        SDKFinalGetterSourceSHA256: 5a914f248777e0b51386a5bdcb6326502bdc94711502d2cd72fecf312068b5d4
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+          - kind: own-indexed-FS-false
+            wireKey: FS_1
+            sourceSHA256: 07b39684420ae3b50f95fcbf9f716004997b506a02977764db86a88a93ee4215
+        rootInactiveFlags:
+          - wireKey: GA
+          - wireKey: GCT
+          - wireKey: IFG
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+          - PD
+          - CW
+          - NFG
+          - GCT
+          - FID
+          - FS_1
+          - CFG
+          - TFG
+          - CFGG
+          - FGTW
+        requiredResponseKeys:
+          - B
+          - AB
+          - TW
+          - MSGID
+          - GA
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32706'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: dancingdrumslinkhighlimit96
+            BPR: '2200'
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: 67b38f1aa0eeac5c304443f8200e0cdc32ceaa27d613f3f8c24834696f295f85
+            SDKSelectorSHA256: 2add24d6ad787721b14c2f1963fbb8ea58762b597e462b51d73c7f1785a38fac
+            NFGSetterSHA256: 823a93917affd333b8cd3c4ea40c612cfff19bf7d3d83e959c23d396030edb4e
+            NFGDecoderSHA256: 058808b25719d14ba845edafcceeb1aef78545bfb95eb2eaacb18996e0de2ee9
+            GCTDecoderSHA256: a567b33ac5066f93ec1567b545c3ea8076817d13adea633301473c31ea59ed11
+            ownRequestConstructorSHA256: e3083f7c59c5f00a23ed273a69ef84245bfeaffaec042b900ed40caa3fce23f6
+            fieldBindings:
+              - wireKey: BPR
+                type:
+                  kind: integer
+                sourceSHA256: e3083f7c59c5f00a23ed273a69ef84245bfeaffaec042b900ed40caa3fce23f6
+              - wireKey: RB
+                type:
+                  kind: integer
+                sourceSHA256: e3083f7c59c5f00a23ed273a69ef84245bfeaffaec042b900ed40caa3fce23f6
+            actualPaidIntroCases: 6
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32706'
+          ownSDKFileSHA256: 67b38f1aa0eeac5c304443f8200e0cdc32ceaa27d613f3f8c24834696f295f85
+          SDKSelectorSHA256: 2add24d6ad787721b14c2f1963fbb8ea58762b597e462b51d73c7f1785a38fac
+          NFGSetterSHA256: 823a93917affd333b8cd3c4ea40c612cfff19bf7d3d83e959c23d396030edb4e
+          NFGDecoderSHA256: 058808b25719d14ba845edafcceeb1aef78545bfb95eb2eaacb18996e0de2ee9
+          GCTDecoderSHA256: a567b33ac5066f93ec1567b545c3ea8076817d13adea633301473c31ea59ed11
+          ownRequestConstructorSHA256: e3083f7c59c5f00a23ed273a69ef84245bfeaffaec042b900ed40caa3fce23f6
+          SDKFinalGetterSourceSHA256: 5a914f248777e0b51386a5bdcb6326502bdc94711502d2cd72fecf312068b5d4
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          ownLinkedPickerNext:
+            version: own-linked-one-pick-next-end-v1
+            gameId: '32706'
+            dbName: sg_dancingdrumslinkhighlimit96
+            runtimeGameId: 33106
+            runtimeSlug: dancingdrumslinkhighlimit96
+            ownSDKFileSHA256: 67b38f1aa0eeac5c304443f8200e0cdc32ceaa27d613f3f8c24834696f295f85
+            cfg: 1
+            ftvKey: __own_linked_picker_no_FTV_selector__
+            kind: linked-one-pick
+            sourceProofSHA256: 137968f5994ee4d6405b8d3e0af166b973a91c73a5d541ff8253b9535c6d7346
+            globalFeatureOrderProofSHA256: a348a5de521ef76264b9273bff53d197d9916ee22a670363b933d82cac9a789b
+            sourceHashes:
+              basePopulateModels: 920fc52d9bb63b948ca3ba6a04f307f0d6517fe1e2b09ae88065c627350bfa52
+              freeSelector: 2add24d6ad787721b14c2f1963fbb8ea58762b597e462b51d73c7f1785a38fac
+              NFGSetter: 823a93917affd333b8cd3c4ea40c612cfff19bf7d3d83e959c23d396030edb4e
+              ownPending: 07b39684420ae3b50f95fcbf9f716004997b506a02977764db86a88a93ee4215
+              parseFeatureData: bf5978a4155925074ecfc47e36510acca01b960c25486c1233c7951334bbe813
+              parsePickerData: 6cc620f1f90f88578745a91be8298b03a863aea4afc7b33c21f559954f2f67df
+              createCards: 2b8e8dc13d3a6d3831b2be40333cb48320d4f411b3b1b95abf9dd057339b1f13
+              createCard: 05fb7ab7c075de050e5432911a1b4384fabb38f94af6d739094b2429827246c7
+              cardSelection: fb8a3cde9b1c7190820f3a92ce06095d902d22aa129fd2553901d67267d97da8
+              finalGetter: 5a914f248777e0b51386a5bdcb6326502bdc94711502d2cd72fecf312068b5d4
+              NFGDecoder: 058808b25719d14ba845edafcceeb1aef78545bfb95eb2eaacb18996e0de2ee9
+              GCTDecoder: a567b33ac5066f93ec1567b545c3ea8076817d13adea633301473c31ea59ed11
+              IFGDecoder: b8548a4306f48128cfd035da6717da56208438bff9fbd6afe612138518f9c943
+              GADecoder: 772c149bb48a6e78c13cb15e734b749b1c8cdd6c78f2dc20f34e1e19de1e66f5
+              BDecoder: 6d36107caa339529c190b2c63f3864d76a390219e735695bbf4c8a3995665b3d
+              ABDecoder: 959e3f8b760401ca9c5e4595112e592e29052cf52bebad0e16786f66ab711647
+              TWDecoder: d0ca99eb6403e93a596537bf5edca2a71ab4122aa2c32a3404f0f6c3ce43a4c3
+              FIDDecoder: 662872158b61d2011ca6649742f0544e5b6f3a74e2ca20302dd896daf60a92d8
+              FSDecoder: 1a799fbff40fb84bc322151cb101059f1073fc5f5edb798943215ebdac44162c
+              VPCDecoder: 69f83162265cefa9847110f03cb932e00757995ee091bfa596e9f9b91da8b05b
+              BPRDecoder: d989cb20c31bfe55e67ccd16374336a8dd24667e34f12b9b6af98d4b7272ac42
+              RBDecoder: a344c0bcf835f8d95ff98553b7f3299881b30d3e0f77f4293023a038fde8af3c
+              ownRequestCtor: e3083f7c59c5f00a23ed273a69ef84245bfeaffaec042b900ed40caa3fce23f6
+              featureCtor: 89ea44d3f7bc58dd16897de9ccc3a7e70322830f159b8c04b98e52aaae763664
+              engineSettings: c9846204184b61519d5cde9fac3d48624d70d9b1875600d258ab8612fe2f122c
+              ownConstants: 39449ac8a2a979f52ec8539d0227ffcd2a3fd91df8ee6a41ea74564fa6f7e279
+              physicalCards: 626226611ee25c35841217b96adb681b8654f3c4d8ffe03640c4936906b61d7f
+              uiFreeEndPlay: b014612375ad4b97ffd5a65a74342b93b1ec8232465288cd712434d5478c5301
+              outerEndPlay: fd1210ab841d0e0163a5f14b2fef6765f77fb64a72a00d3a8845783125769c5b
+              ownPickerBeforeFreeEndPlay: 91eb1b092574a2f241ed1e6b5a9067c1aa6682740e66c51a82acb7e138ceb5c0
+              outerEndWinRenderingDispatch: d7381a0143d82108e121bc3a9cf19ed649516af1fdfda4a3e9e2e1ebe1a4d133
+              ownFeatureFactoryOrder: 9e5b95fcd9ed571323ea9f47e03e60ba2a20a87e4b5c32dfe08467b1ce5232a3
+              ownFeatureEndClearsTriggeredAfterACK: ad978bef8fced977eee1b0b775cdce236f014d793a5ef5689755f0f8c287488d
+            sourceChoiceIndices:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+            explicitChoiceIndex: 0
+            pickFP: 1|1|0
+            paidRequestParams:
+              GN: dancingdrumslinkhighlimit96
+              AP: 'false'
+              BPR: '2200'
+              RB: '5'
+            freeRequestParams:
+              GN: dancingdrumslinkhighlimit96
+              BPR: '2200'
+              RB: '5'
+            fixtureACKIsNotProviderACK: true
+            ownActivePickerBeforeFreeSelector: true
+            ownTruthfulFreeRequestSelectorIncludesNegativeRemaining: true
+            GCTMaxWinStopsBeforeFreeSelector: true
+            GCTWithActivePickerStillUnknown: true
+            ownUIUnlimitedFreeWholeClosureNotClaimed: true
