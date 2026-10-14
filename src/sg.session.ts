@@ -143,6 +143,11 @@ function ownBundlePick(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState):OwnNOVAFea
 }
 function ownDancingBase(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState,event:string,wire:Record<string,string>):OwnNOVAFeatureRequest|undefined {
  const fid=ownBundleFID(wire),values=gsd(wire.GSD);
+ // Own PMa selects actual positive NFG after End even when FID is absent.
+ if(p.endNextV3&&event==='FEATURE_END'&&fid.length===0&&wire.NFG!==undefined&&ownBundleInteger(wire.NFG,'actual ended free NFG',true)>0){
+  if(ownBundleBoolean(wire.GCT)===true){s.phase='base';return undefined;}
+  s.phase='free';return ownBundleFeatureRequest(p,'FREE_GAME');
+ }
  // Own coin End $Ia restores NFG into Na.lh and clears the network flag.
  // PMa then selects FREE_GAME from positive Na.lh, before retained FID/FTV.
  const ownEndedFree=p.endNextV3&&(fid[0]===2||p.endMode4V4&&fid[0]===4&&s.cfg===3)&&(
@@ -190,9 +195,38 @@ function ownSquidRedLightRequest(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState,w
  if(values.RLGL_STEP!==undefined){const step=ownBundleInteger(values.RLGL_STEP,'actual RedLight path step');assert(step<=24,'AG integrity: GDM own RedLight source step outside path');if(24<chosen+step)chosen=24-step;}
  s.phase='pick';return ownBundleFeatureRequest(p,'FEATURE_PICK',{CFG:'1',FP:String(chosen)});
 }
+// Own Picker2 caller l5/Mg: START if not started; FP is the enabled UI
+// index only; PICK_TYPE_WON presence chooses END. No prize/display math.
+function ownSquidPickerRequest(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState,wire:Record<string,string>,afterOwnStartOrPick=false):OwnNOVAFeatureRequest {
+ assert(p.gameId==='32736'&&p.ownSDKFileSHA256==='2d3886a4aa6e2933676db592889674fa948a5b020321dc0594d2b18dbc3f352f'&&s.cfg===2,'AG integrity: GDM foreign own Picker caller');
+ const values=gsd(wire.GSD);
+ if(values.PICK_TYPE_WON!==undefined){s.phase='end';return ownBundleFeatureRequest(p,'FEATURE_END',{CFG:'2'});}
+ if(!afterOwnStartOrPick&&ownBundleBoolean(wire.FS_2)!==true){s.phase='start';return ownBundleFeatureRequest(p,'FEATURE_START',{CFG:'2'});}
+ // Own af/xwa explicitly supplies physical indexes 0..11 only when the
+ // optional available vector is absent. A present empty vector stays empty.
+ const available=values.AV_PICK_STEPS===undefined?Array.from({length:12},(_,i)=>i):values.AV_PICK_STEPS.split('|').filter(x=>x!=='').map(x=>ownBundleInteger(x,'actual Picker available index'));
+ const chosen=Array.from({length:12},(_,i)=>i).find(i=>available.includes(i)&&!s.used.has(i));
+ assert(chosen!==undefined,'AG integrity: GDM own Picker no source-enabled unconsumed index');
+ s.phase='pick';return ownBundleFeatureRequest(p,'FEATURE_PICK',{CFG:'2',FP:String(chosen)});
+}
 function ownSquidBase(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState,event:string,wire:Record<string,string>):OwnNOVAFeatureRequest|undefined {
  const fid=ownBundleFID(wire);
  const ownMode=gsd(wire.GSD).FEATURE_ID;
+ // Actual FEATURE_ID is the client's tXa driver: RedLight END can hand
+ // off to Picker2 even while FID retains the ended RedLight1 marker.
+ if(ownMode==='2'){
+  if(ownBundleBoolean(wire.GCT)===true){s.phase='base';return undefined;}
+  if(event==='FEATURE_END'&&s.cfg===2){
+   // qO still treats a nonempty FID as pending. Never close or resend END
+   // when an actual own END response still exposes an unmapped next state.
+   assert(fid.length===0,'AG integrity: GDM own Picker still-pending next after actual END unmapped');
+   assert(wire.NFG!==undefined,'AG integrity: GDM own Picker actual end remaining absent');
+   if(ownBundleInteger(wire.NFG,'actual Picker end NFG')>0){s.phase='free';return ownBundleFeatureRequest(p,'FREE_GAME');}
+   s.phase='base';return undefined;
+  }
+  if(s.cfg!==2){s.ordinal=0;s.used.clear();}s.cfg=2;
+  return ownSquidPickerRequest(p,s,wire);
+ }
  if(p.additionalModes?.includes(1)&&(fid.includes(1)||event==='FEATURE_END'&&s.cfg===1)){
   assert(fid.length===0||fid[0]===1,'AG integrity: GDM own RedLight combined source mode unmapped');
   if(ownBundleBoolean(wire.GCT)===true)return undefined;
@@ -291,11 +325,13 @@ export function updateOwnBundleFeatureNext(p:OwnNOVAFeatureProfile,s:OwnNOVAFeat
  }
  assert(s.next?.event===event,'AG integrity: GDM own bundle actual source response stage');
  if(event==='FEATURE_START'){
+  if(p.kind==='squid-bridge'&&s.cfg===2){s.next=ownSquidPickerRequest(p,s,wire,true);return;}
   if(p.kind==='squid-bridge'&&s.cfg===1&&p.additionalModes?.includes(1)){s.next=ownSquidRedLightRequest(p,s,wire);return;}
   assert(s.cfg===p.cfg||p.kind==='drums-two-round-cards'&&p.additionalModes?.includes(s.cfg as number),'AG integrity: GDM own bundle actual FEATURE_START CFG');
   s.phase='pick';s.next=ownBundlePick(p,s);return;
  }
  if(event==='FEATURE_PICK'){
+  if(p.kind==='squid-bridge'&&s.cfg===2){const chosen=ownBundleInteger(s.next.parameters.FP,'own emitted Picker index');assert(chosen<12&&!s.used.has(chosen),'AG integrity: GDM own Picker emitted index not enabled');s.used.add(chosen);s.ordinal+=1;s.next=ownSquidPickerRequest(p,s,wire,true);return;}
   if(p.kind==='squid-bridge'&&s.cfg===1&&p.additionalModes?.includes(1)){s.ordinal+=1;s.next=ownSquidRedLightRequest(p,s,wire);return;}
   if(p.kind==='drums-two-round-cards'&&s.cfg!==undefined&&p.additionalModes?.includes(s.cfg)){s.ordinal+=1;s.phase='end';s.next=ownBundleFeatureRequest(p,'FEATURE_END',{CFG:String(s.cfg)});return;}
   if(p.kind==='drums-two-round-cards'){
