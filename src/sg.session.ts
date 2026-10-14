@@ -2218,6 +2218,7 @@ else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&
   if(first){this.roundStart=this.balance;this.totalWin=0;this.rootFlowSteps=[];this.quickHitSecondFeature=false;}this.lastRequest={event,parameters:{...parameters}};
   const step=await this.exchange(event,parameters);try{
    const p=this.decode(step,event);assert(p.B!==undefined&&p.TW!==undefined,'AG integrity: GDM required original AG money');
+   if(q.own32629NextEndOnly){assert(this.game.gameId==='32629'&&c.ownSDKFileSHA256==='6ccffa14540925e4b14b1e9f0f8158bfb1b5f72a5faabb1eab7b0dfa813aeb9a','AG integrity: own32629 next/end scope');ownGDMFreeEnvelope(this.game,p,event);gdmInteger(p.AB,'own32629 actual available balance');}
    const ownNOVA=this.ownNOVAAccountRequestBinding();assert((ownNOVA||p.GA==='0'||q.ownNOVAOptionalGambleAvailability&&p.GA==='1')&&(ownBundleFeature||p.GCT===undefined||p.GCT==='0'),'AG integrity: GDM unmapped active root flow');
    for(const k of r.promotionalKeysForbidden)if(!ownFeature||k!==ownFeature.ftvKey)assert(p[k]===undefined,'AG integrity: GDM unmapped promotional flow');
    assert(p.REC===undefined,'AG integrity: GDM recovered flow unmapped');

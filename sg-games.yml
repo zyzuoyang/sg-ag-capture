@@ -7779,6 +7779,7 @@ games:
             requiresCompleteNaturalRoundBeforeAnyNative: true
             unmappedOtherFeaturesRemainFatal: true
             wholeFreeChainCoverageNotClaimed: true
+        ownRootNFGFlowOnlyCapture: {"version":"own-SDK-root-NFG-flow-only-v1","gameId":"32629","ownSDKFileSHA256":"6ccffa14540925e4b14b1e9f0f8158bfb1b5f72a5faabb1eab7b0dfa813aeb9a","SDKFinalGetterSourceSHA256":"86c033eb1df8a68f87c98811092827fba1f680de511398ceede4344cbfa90b1c","SDKSelectorSHA256":"a913fa766fb990f7dae7e698ec1a7f650248204f56a363ddcff95083c1e4e1cc","NFGSetterSHA256":"01135066e0e95749a0a4067586308fec51d44a30d834c236aafb799d4bb0eec4","NFGDecoderSHA256":"4801100bbf1f159feb6e3a6ea2abe8825d1e4166ff80da846ce945e8ce0bef99","GCTDecoderSHA256":"5bf44db795a9206446a82f34b1252f7a769e0abdbd3af78f5df12b900b735332","ownRequestConstructorSHA256":"1967d1fddd1374339b6a5dbdd021476f1961b43ca3cc6c100806092b1de488ca","nextEvent":"FREE_GAME","remainingWireKey":"NFG","terminalRemaining":0,"usesOwnRequestAndTerminalOnly":true,"rawWirePreserved":true,"originalAGAmountReplayMongoChecksRequired":true,"noSyntheticTerminal":true,"noOldUnknownPOSTReplay":true,"unusedDisplayAndBudgetFieldsDoNotBlock":true,"noPreviouslySeenWholeVariationGate":true,"unmappedActiveFlagsStillStop":true,"own32629NextEndOnly":true}
   - provider: sg
     gameId: '32722'
     name: Jinse Dao Tiger
