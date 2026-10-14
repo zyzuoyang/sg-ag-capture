@@ -1515,7 +1515,7 @@ export function updateOwnOriginalUFLNext(p:OwnOriginalUFLProfile,s:OwnOriginalUF
   assert(event==='BET'||event==='FREE_GAME','AG integrity: own Country network event unmapped');
   const signed=(value:string|undefined,label:string)=>{if(value===undefined)return undefined;assert(/^-?\d+$/.test(value)&&Number.isSafeInteger(Number(value)),'AG integrity: own Country '+label);return Number(value);};
   const decoded:any={NFG:signed(w.NFG,'NFG'),TFG:signed(w.TFG,'TFG'),GCT:bool(w.GCT,'GCT'),FID:ownModeIds(p,w)};
-  if(w.GSD!==undefined){const field=w.GSD.split('#').find(v=>v.startsWith('flBonus~'));if(field!==undefined){const value=JSON.parse(field.slice('flBonus~'.length));assert(value&&Array.isArray(value.fireballs),'AG integrity: own Country Link fireballs');decoded.linkCellCount=value.fireballs.length;}}
+  if(w.GSD!==undefined){const field=w.GSD.split('#').find(v=>v.startsWith('flBonus~'));if(field!==undefined){const value=JSON.parse(field.slice('flBonus~'.length));assert(value&&value.fireballs!==null&&typeof value.fireballs==='object','AG integrity: own Country Link fireballs');decoded.linkCellCount=0;for(const key in value.fireballs){if(!Number.isNaN(Number.parseInt(key,10)))decoded.linkCellCount+=1;}}}
   const result=selectCountryNext(s.country,decoded);s.country=result.state;s.next=result.next?request(p,result.next):undefined;return;
  }
  const cap=bool(w.GCT,'GCT'),remaining=integer(w.NFG,'NFG',0),ids=ownModeIds(p,w);
