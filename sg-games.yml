@@ -13107,3 +13107,765 @@ games:
               - 5
             explicitChoice: 1
             sourceEvidenceSHA256: e9603707ffd057dd865c002dd9cdf40c420e462beefd9985f3a0991fbb3ddc5b
+  - provider: sg
+    gameId: '32489'
+    dbName: sg_dancingdrumslink96
+    name: Dancing Drums Link
+    backendId: dancingdrumslink96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33031
+      runtimeSlug: dancingdrumslink96
+      betRaw: 352
+      requestParams:
+        GN: dancingdrumslink96
+        AP: 'false'
+        BPR: '352'
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-free-prefix-trial-v4
+        gameId: '32489'
+        dbName: sg_dancingdrumslink96
+        runtimeGameId: 33031
+        runtimeSlug: dancingdrumslink96
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ownSDKFileSHA256: e14c46944e23a058702352c9568ecd32c1c9d59a6437f897e6846321431fc9e7
+        betRaw: 352
+        balanceScale: 1
+        winScale: 1
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        SDKFinalGetterSourceSHA256: 454e59f0831211763d1e061257575f8a065792d15c6828dd35b4cd02a6db6439
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+          - kind: own-indexed-FS-false
+            wireKey: FS_1
+            sourceSHA256: af52dd2242c7fca6ffe60e7167e3e46b28b375f6ac0f701682beabd7cea69981
+        rootInactiveFlags:
+          - wireKey: GA
+          - wireKey: GCT
+          - wireKey: IFG
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+          - PD
+          - CW
+          - NFG
+          - GCT
+          - FID
+          - FS_1
+          - CFG
+          - TFG
+          - CFGG
+          - FGTW
+        requiredResponseKeys:
+          - B
+          - AB
+          - TW
+          - MSGID
+          - GA
+        ownOptionalRootMetadata:
+          - schema: own-SDK-optional-PD-metadata-v1
+            gameId: '32489'
+            ownSDKFileSHA256: e14c46944e23a058702352c9568ecd32c1c9d59a6437f897e6846321431fc9e7
+            wireKey: PD
+            ownSDKProperty: BXa
+            ownSDKFieldDecoderSHA256s:
+              - ba9dca214f65eaa34636ac510a504c93fd0f78728d4580a95426e698008be42e
+            ownSDKFieldSourceSpans:
+              - sourceStart: 1189473
+                sourceEnd: 1189520
+                sourceSHA256: ba9dca214f65eaa34636ac510a504c93fd0f78728d4580a95426e698008be42e
+            explicitSDKRequired: false
+            missingSDKValue: 'null'
+            cashAndPendingDefaultsForbidden: true
+            requiredCaptureKeys:
+              - B
+              - AB
+              - TW
+              - MSGID
+              - GA
+            ownSDKMissingFieldFunctionSHA256: c41a8bfc78d2b7e2c8ee6d1b99e65564fc05bff04b56fb2eb2600c9eb63cf00e
+            sourceRequests: 0
+            DBReadsRepeated: 0
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32489'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: dancingdrumslink96
+            BPR: '352'
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: e14c46944e23a058702352c9568ecd32c1c9d59a6437f897e6846321431fc9e7
+            SDKSelectorSHA256: 04f9b01498bbccaf0fa61c53a59d95eee16d13852a525650829ee81e99d186f3
+            NFGSetterSHA256: e119b1a240fce07c395d13aab4097f81a29656dd9797f2e2ad05a2d02753b9be
+            NFGDecoderSHA256: 04c767c2f46e0beade1f7dd74a7b7a86dc0f28f902983bf2005589a2fa926681
+            GCTDecoderSHA256: 20cb29b1e77abd9bc84fd31d186ba064ce706224f2625a45e58817deb7f9dcc0
+            ownRequestConstructorSHA256: b54779e90d6300b8fb4034011dda2535206aaa5448ae7a4af223f5297322c29a
+            fieldBindings:
+              - wireKey: BPR
+                type:
+                  kind: integer
+                sourceSHA256: b54779e90d6300b8fb4034011dda2535206aaa5448ae7a4af223f5297322c29a
+              - wireKey: RB
+                type:
+                  kind: integer
+                sourceSHA256: b54779e90d6300b8fb4034011dda2535206aaa5448ae7a4af223f5297322c29a
+            actualPaidIntroCases: 6
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32489'
+          ownSDKFileSHA256: e14c46944e23a058702352c9568ecd32c1c9d59a6437f897e6846321431fc9e7
+          SDKSelectorSHA256: 04f9b01498bbccaf0fa61c53a59d95eee16d13852a525650829ee81e99d186f3
+          NFGSetterSHA256: e119b1a240fce07c395d13aab4097f81a29656dd9797f2e2ad05a2d02753b9be
+          NFGDecoderSHA256: 04c767c2f46e0beade1f7dd74a7b7a86dc0f28f902983bf2005589a2fa926681
+          GCTDecoderSHA256: 20cb29b1e77abd9bc84fd31d186ba064ce706224f2625a45e58817deb7f9dcc0
+          ownRequestConstructorSHA256: b54779e90d6300b8fb4034011dda2535206aaa5448ae7a4af223f5297322c29a
+          SDKFinalGetterSourceSHA256: 454e59f0831211763d1e061257575f8a065792d15c6828dd35b4cd02a6db6439
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          ownLinkedPickerNext:
+            version: own-linked-one-pick-next-end-v1
+            gameId: '32489'
+            dbName: sg_dancingdrumslink96
+            runtimeGameId: 33031
+            runtimeSlug: dancingdrumslink96
+            ownSDKFileSHA256: e14c46944e23a058702352c9568ecd32c1c9d59a6437f897e6846321431fc9e7
+            cfg: 1
+            ftvKey: __own_linked_picker_no_FTV_selector__
+            kind: linked-one-pick
+            sourceProofSHA256: 862b9d6232758a8ad953e016c602f5181ee7264c1c61311084e650b9e1d11b4e
+            sourceHashes:
+              ownPendingMethod: af52dd2242c7fca6ffe60e7167e3e46b28b375f6ac0f701682beabd7cea69981
+              baseFinalGetter: 454e59f0831211763d1e061257575f8a065792d15c6828dd35b4cd02a6db6439
+              ownResponseFeatureAndPickerState: d75dd2294cf9e7e8eb7adc41357167f3c00dd4aa43acb32281fee280d1e81106
+              ownResponsePickerControl: a9dae254cecb8b08e18b3b124e59086d3a7e404ddcfd6f92852bd96fa192a090
+              ownPaidAndFreeRequestConstructor: b54779e90d6300b8fb4034011dda2535206aaa5448ae7a4af223f5297322c29a
+              ownPickerRequestConstructorAndTypedFP: fe4708ca270dc74a6abc231b676cd5f8a58563faa4e6831704218e69dcd2c77a
+              ownActualGDMProfiles: a356fd7df6702d0c8e0bf73198b4db9ff7d4b0bde2ac4fcf85a3db50507f5cf1
+              ownFeatureTransportCallers: ea70688054787b061ba0620ea8efa45066441b24989cbcf70e002f14d331ca47
+              ownFeatureStartLocalACK: caa98e987e8857f1fc08bfca61e576d42e68db422dec25fd045d9ef0bda294e9
+              ownFeaturePickLocalACK: 8968d9dff7eecabb45316052c98369a4982612c54489115496c95e2bd0cfb266
+              ownFeatureEndLocalACK: e6ba2cdf34765c718ef11c5b3a5a89671fa99f88e3e0322d19e4d7c1c7016719
+              ownPickerNextState: fce791882f59b2c452c5bc5f6cba636203c0f68bc5eb1149a3b30aee3cf65344
+              ownFreeRequestSelector: 04f9b01498bbccaf0fa61c53a59d95eee16d13852a525650829ee81e99d186f3
+              ownNFGStateSetter: e119b1a240fce07c395d13aab4097f81a29656dd9797f2e2ad05a2d02753b9be
+              ownFeatureAndReelConstants: 26a5c3462aba9677d40fc589b5b0dc88c1b00ebeb6869e5b0945f6790b0b7066
+              ownFeatureKindEnum: cc8112be3ab12f002d960a3f3cd1985f539cda37bf6eaca1cd1b36a14d0d705c
+              ownFivePhysicalChoicesBothOrientations: 3e66007f90f1f1378c9673d22b3f5f07a5f899d7858ae74f054be07d3e2c3ff8
+              ownCardGridIndexes: b68ce65594753f37d334ae69e5b52b12b41e3a2fef93e9e83db72e3d763e9365
+              ownCardIndexSetter: eaee19559a7842b750e47bf7c56876704631127cfe2f2ef0666ca7b0957ceed7
+              ownBooleanDecoder: 0bd27455d4e70097fa2422abacf0ce67b79e7ec9ba39f4c71a2d99592586dc0a
+              ownBooleanCodecOptions: b8692dcb75c3a38341ecb72b84c81d12ea017e3b17695f1bf2ff49bc616348b3
+              ownGSDVPCDecoder: ccfff579f7d11c24af1f6f66d64328de31a6c47b46bf1e756bbdedf8f13c299e
+              ownIndexedFSBooleanDecoder: 9f25d21e9f74751cc76228273bab8de6c0feb11cb30815a78bf1d981e40307aa
+            sourceChoiceIndices:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+            explicitChoiceIndex: 0
+            pickFP: 1|1|0
+            paidRequestParams:
+              GN: dancingdrumslink96
+              AP: 'false'
+              BPR: '352'
+              RB: '5'
+            freeRequestParams:
+              GN: dancingdrumslink96
+              BPR: '352'
+              RB: '5'
+            fixtureACKIsNotProviderACK: true
+  - provider: sg
+    gameId: '32705'
+    dbName: sg_dancingdrumslinkfortune96
+    name: Dancing Drums Link Fortune
+    backendId: dancingdrumslinkfortune96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33105
+      runtimeSlug: dancingdrumslinkfortune96
+      betRaw: 352
+      requestParams:
+        GN: dancingdrumslinkfortune96
+        AP: 'false'
+        BPR: '352'
+        RB: '5'
+      ownGDMContract:
+        version: own-SDK-free-prefix-trial-v4
+        gameId: '32705'
+        dbName: sg_dancingdrumslinkfortune96
+        runtimeGameId: 33105
+        runtimeSlug: dancingdrumslinkfortune96
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ownSDKFileSHA256: 4e0bca40eb86541a64f42dd230471dd515cd5f06aaab1c5de56bc97a8d542922
+        betRaw: 352
+        balanceScale: 1
+        winScale: 1
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        SDKFinalGetterSourceSHA256: 5fb8f78b6e0b2148ae95924e966b65088bd78aab235183e22e98110c225f6309
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+          - kind: own-indexed-FS-false
+            wireKey: FS_1
+            sourceSHA256: 126299c9f17b52cc26ef121f5eb0cf9d6123b3c066841408c27fb818ca8bb5a3
+        rootInactiveFlags:
+          - wireKey: GA
+          - wireKey: GCT
+          - wireKey: IFG
+        responseKeys:
+          - AB
+          - B
+          - BPR
+          - FRBAL
+          - GA
+          - GSD
+          - IFG
+          - MSGID
+          - MUL
+          - NRID
+          - RB
+          - RID
+          - RS
+          - SID
+          - SUB
+          - TW
+          - VER
+          - WC
+          - WM
+          - WS
+          - PD
+          - CW
+          - NFG
+          - GCT
+          - FID
+          - FS_1
+          - CFG
+          - TFG
+          - CFGG
+          - FGTW
+        requiredResponseKeys:
+          - B
+          - AB
+          - TW
+          - MSGID
+          - GA
+        ownOptionalRootMetadata:
+          - schema: own-SDK-optional-PD-metadata-v1
+            gameId: '32705'
+            ownSDKFileSHA256: 4e0bca40eb86541a64f42dd230471dd515cd5f06aaab1c5de56bc97a8d542922
+            wireKey: PD
+            ownSDKProperty: UXa
+            ownSDKFieldDecoderSHA256s:
+              - 2ec5ca433cb4311f300f4e32c6cb868b71183a8a4fe099f3614b99f0c908c169
+            ownSDKFieldSourceSpans:
+              - sourceStart: 1192377
+                sourceEnd: 1192424
+                sourceSHA256: 2ec5ca433cb4311f300f4e32c6cb868b71183a8a4fe099f3614b99f0c908c169
+            explicitSDKRequired: false
+            missingSDKValue: 'null'
+            cashAndPendingDefaultsForbidden: true
+            requiredCaptureKeys:
+              - B
+              - AB
+              - TW
+              - MSGID
+              - GA
+            ownSDKMissingFieldFunctionSHA256: 73d2f3b2ed21637921cb50218febca147b665e20128b882f91ed49659948e48f
+            sourceRequests: 0
+            DBReadsRepeated: 0
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32705'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: dancingdrumslinkfortune96
+            BPR: '352'
+            RB: '5'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: 4e0bca40eb86541a64f42dd230471dd515cd5f06aaab1c5de56bc97a8d542922
+            SDKSelectorSHA256: bb909deecb57c96965b36bc76ac77a455d3938865c44c147a6baf4e31f53ac34
+            NFGSetterSHA256: de85aab5215ceccde7726bfc2cea6a12c78af2b3362b79035e9c18b2e22df104
+            NFGDecoderSHA256: ad6846b2e6e51bf85042fea86ae0dcf6b9d21dda27ceba2249f169458f033300
+            GCTDecoderSHA256: becb16d68e2210125a8e40fd680cf56aa9ae8f832c438e32a003b98419ee58e3
+            ownRequestConstructorSHA256: 46b1b3cde5a1ffa170e5e4db9257515a0a1e4973384d842efc9e302d1c25402c
+            fieldBindings:
+              - wireKey: BPR
+                type:
+                  kind: integer
+                sourceSHA256: 46b1b3cde5a1ffa170e5e4db9257515a0a1e4973384d842efc9e302d1c25402c
+              - wireKey: RB
+                type:
+                  kind: integer
+                sourceSHA256: 46b1b3cde5a1ffa170e5e4db9257515a0a1e4973384d842efc9e302d1c25402c
+            actualPaidIntroCases: 6
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32705'
+          ownSDKFileSHA256: 4e0bca40eb86541a64f42dd230471dd515cd5f06aaab1c5de56bc97a8d542922
+          SDKSelectorSHA256: bb909deecb57c96965b36bc76ac77a455d3938865c44c147a6baf4e31f53ac34
+          NFGSetterSHA256: de85aab5215ceccde7726bfc2cea6a12c78af2b3362b79035e9c18b2e22df104
+          NFGDecoderSHA256: ad6846b2e6e51bf85042fea86ae0dcf6b9d21dda27ceba2249f169458f033300
+          GCTDecoderSHA256: becb16d68e2210125a8e40fd680cf56aa9ae8f832c438e32a003b98419ee58e3
+          ownRequestConstructorSHA256: 46b1b3cde5a1ffa170e5e4db9257515a0a1e4973384d842efc9e302d1c25402c
+          SDKFinalGetterSourceSHA256: 5fb8f78b6e0b2148ae95924e966b65088bd78aab235183e22e98110c225f6309
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          ownLinkedPickerNext:
+            version: own-linked-one-pick-next-end-v1
+            gameId: '32705'
+            dbName: sg_dancingdrumslinkfortune96
+            runtimeGameId: 33105
+            runtimeSlug: dancingdrumslinkfortune96
+            ownSDKFileSHA256: 4e0bca40eb86541a64f42dd230471dd515cd5f06aaab1c5de56bc97a8d542922
+            cfg: 1
+            ftvKey: __own_linked_picker_no_FTV_selector__
+            kind: linked-one-pick
+            sourceProofSHA256: e495c08c935702d7195da360a18a1c91cade7b142b71e5a23f3802a7e5aa914e
+            sourceHashes:
+              rbConstant: 2b91f150427674a6e8417a929c7b8a1e15acae6643f5329b20cc1e3323292f8f
+              cfgConstant: 2bbb1e04649aa52727e0348ae36b0668f2f60e7b8379259c481a2c6bd9dee5c8
+              featureEnum: c1a5a162b87322c405c93c433844a6bdce06fde6be45bb362f435b0aca8139cc
+              messageTypes: 74e812d4d055681c76ff5f808b0b27067736b1aebe9bbbd1090139a275eb256e
+              freeMessageType: 8472bebb6264f0d5cf4276658a56b9610ace51c8070792ad0ee0fe65c0db565e
+              terminalGetter: 5fb8f78b6e0b2148ae95924e966b65088bd78aab235183e22e98110c225f6309
+              basePending: c1de0cb0ae328541553b4bd08466a544fc3b12cc6c87cb958124a17a96cea623
+              genericPending: b3445113e1267879514db3bd5518ade1e0525fdb6e8ee1b36ed78fece15cfe25
+              ownPending: 126299c9f17b52cc26ef121f5eb0cf9d6123b3c066841408c27fb818ca8bb5a3
+              responseFeatureRouting: a935c036999d389b5ad54dd562282a2c3efd21f8ed966c5498c2384106e9d49e
+              vpcMetadata: cfde07866c7f884773a8babe997ee64abe59add444fdd5554dbbd3625df09291
+              ownPaidFreeConstructor: 46b1b3cde5a1ffa170e5e4db9257515a0a1e4973384d842efc9e302d1c25402c
+              genericFreeSelector: bb909deecb57c96965b36bc76ac77a455d3938865c44c147a6baf4e31f53ac34
+              nfgStateSetter: de85aab5215ceccde7726bfc2cea6a12c78af2b3362b79035e9c18b2e22df104
+              genericPaidFreeCaller: 0a09ecc71e55e2a13d9a826dcf8712fb2785eb27735c6e60a8d93bf51e19e9f5
+              lockedStakeCaller: 82957766b7e5d9a59c17f7b0f7bf3acaa3a47335c919f8402f4338f50f1a46e0
+              ownFeatureSequenceStart: 54c68eff3e9a176be453a5dd29b37b27befbe3e63de9358fc8a51828bbe26560
+              ownFeatureSequencePick: 89e9900fd1984ea095a84ae04b3be5e906c95ab22db581007177454476eff4a3
+              ownFeatureSequenceEnd: 20c3f3b8d09da424f61a43768da4d1debf5ff2d106237eae53898fe05225c5e0
+              ownFeatureConstructorAndFP: 63116b3abbbfeb2275bdfc54519bed8bb2c11f12c7817eaed5f2296f7b201828
+              selectedRuntimeRequests: fed284438b728875f2570ef91ca1be1a2138251bfa46a72f637a23da0213807e
+              ownFeatureEngineCallers: 511caadf4a767e8e446c63da52a7080b9978d0a7efdf86996f5eb80f38c2c558
+              featureStartCaller: fb705624ef2766fba5ed4fb028f542130fe0ec706f8f2b43324b3fd817e439ad
+              featurePickCaller: 73837b296f583f685f0c26a878fc4f67f4a4a6197cfca4ccdbbed05d5c97afc6
+              featureEndCaller: 21e61f25f2c959ab4583aabde19ef38f71fc3bea7bf13c8aae53c6c1e899318f
+              ownPickerStateSelector: 0186f8e879c468c71fc49875b69d1611146f7f28c653e8cb9160bc8896ceab31
+              pickerCardIndexGetter: 4ab412391f6805ffbcb495d3916cddf2d94d1df66d317be5ffa0558b0e7eac59
+              pickerCardIndexSetter: 5d1d15f217d2cc4cc281b4c5a11c44e004c0eeacd3400da8c39361afa553b8f4
+              pickerIndexEventChain: a4cb8b85d0a1dfafad1675bbcb8eb9653b49a596d623306e6e864a63861dcf53
+              pickerConfiguration: 91dd324d195b4997e620daf9244e85c1ea193d16540a74c3434c84b43ebdfd73
+              actualPanelGetter: 24812d2c5945e2631a3e98f8576acc53e89a37b832a2e4f4a74dbf9e3801d5c1
+              actualPanelFactory: a238307e30e6877f72cdb0e45ee783a70e6654c70a970c0dda573af5ecfbb8e4
+              fsDecoder: 455809d21cd25c3959d64bb03288f7e8b9398b6ebc4826aabd51ac9f673abc18
+              nfgDecoder: e8496f2b3b771da92c88b19ef61886ef4045fef2aa23a7739bdd0248d45a52e5
+              gctDecoder: c000f96a4be9bcd233ef58fef8a9975bfae21239a826c82024ddc3e5ea494fa7
+              fidDecoder: 5c8654be115be7dbbd51217bf2ff3942cbc458f9a80c494112f8d59206e06372
+            sourceChoiceIndices:
+              - 0
+              - 1
+              - 2
+              - 3
+              - 4
+            explicitChoiceIndex: 0
+            pickFP: 1|1|0
+            paidRequestParams:
+              GN: dancingdrumslinkfortune96
+              AP: 'false'
+              BPR: '352'
+              RB: '5'
+            freeRequestParams:
+              GN: dancingdrumslinkfortune96
+              BPR: '352'
+              RB: '5'
+            fixtureACKIsNotProviderACK: true
+  - provider: sg
+    gameId: '32497'
+    name: Dragon Jin Long Jin Bao
+    dbName: sg_dragonjinlongjinbao96
+    backendId: dragonjinlongjinbao96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33032
+      runtimeSlug: dragonjinlongjinbao96
+      betRaw: 100
+      requestParams:
+        AP: 'false'
+        BPL: '5'
+        GN: dragonjinlongjinbao96
+        LB: '50'
+      ownGDMContract:
+        version: own-SDK-free-prefix-trial-v4
+        gameId: '32497'
+        dbName: sg_dragonjinlongjinbao96
+        runtimeGameId: 33032
+        runtimeSlug: dragonjinlongjinbao96
+        betRaw: 100
+        balanceScale: 1
+        winScale: 1
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ordinaryOnly: false
+        requiresNoPreviousFeature: true
+        responseKeys:
+          - '0'
+          - '1'
+          - '2'
+          - '3'
+          - '4'
+          - '5'
+          - '6'
+          - AB
+          - B
+          - BD
+          - BDD
+          - BGINFO
+          - BPL
+          - BPR
+          - BUYPASS
+          - BUYPASSRTP
+          - BUYPASS_OPTION
+          - CAP
+          - CASINFO
+          - CFG
+          - CFGG
+          - CFP_{#}
+          - CFR_{#}
+          - CMUL
+          - CUR
+          - CW
+          - EID
+          - ENC
+          - FGINFO
+          - FGT
+          - FGTW
+          - FID
+          - FP
+          - FPM_{#}
+          - FRABM
+          - FRBAL
+          - FRBPL
+          - FRC
+          - FREXP
+          - FRMSG
+          - FROP
+          - FRR
+          - FRSE
+          - FRT
+          - FRTR
+          - FRTW
+          - FS_{#}
+          - GA
+          - GAM
+          - GCT
+          - GH
+          - GPW
+          - GSD
+          - HMUL
+          - IFG
+          - IFR
+          - JPV
+          - LB
+          - LIM
+          - MSGID
+          - MUL
+          - NFG
+          - NFR_{#}
+          - NRID
+          - PD
+          - R
+          - RB
+          - RBM
+          - RC
+          - REC
+          - RID
+          - RS
+          - RSC_{#}
+          - RSIDS
+          - RST_{#}
+          - RTP
+          - SID
+          - SSS
+          - SUB
+          - TFG
+          - TW
+          - UGB
+          - VA
+          - VER
+          - WC
+          - WHAWD
+          - WS
+          - bet
+          - buyInId
+          - casCntOnReel
+          - cashSymbols
+          - currLives
+          - fstate
+          - newRingLoc
+          - pLives
+          - prevRingLoc
+          - r0CCC
+          - r1CCC
+          - r2CCC
+          - r3CCC
+          - r4CCC
+          - rActivePos
+          - rID
+          - stops
+          - twCredits
+          - va
+        requiredResponseKeys:
+          - B
+          - AB
+          - TW
+          - MSGID
+          - GA
+        ordinaryGSDKeys: []
+        ownSDKFileSHA256: bd76291e2f96849387cf0dfe7edba277907947eca3b79b2a47f22126eae0fd3b
+        pendingClauses:
+          - kind: SDK-base-false
+          - kind: fresh-ordinary-SDK-NFG
+            wireKey: NFG
+            explicitSDKDefault: '0'
+            ownStateScope: fresh Free session and no preceding feature
+            SDKSourceSHA256: 42aea03915dfe7236f61869fcf7aa6fbd6312302ecb5d7ab6302213c4d3f7352
+        rootInactiveFlags:
+          - wireKey: IFG
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: 6851020747233a292abe7d91207f10bb30804ac817546a25ebea970cc449333f
+          - wireKey: GA
+            explicitSDKDefault: null
+            SDKDecoderSHA256: 433866525fa13fd838a04b91227d0c9dccdf3b1e997680a96972be4c25b523e0
+          - wireKey: GCT
+            explicitSDKDefault: '0'
+            SDKDecoderSHA256: cdf1f615945587cadf263d1efd4344fd5a04b0cdc82cf0678168adc5627a4b9c
+        SDKFinalGetterSourceSHA256: 46069ca99859ba21810803e2691f8d05bccc452a3787ee385b1f5c0f1998cf22
+        ownOptionalRootMetadata:
+          - schema: own-SDK-optional-PD-metadata-v1
+            gameId: '32497'
+            ownSDKFileSHA256: bd76291e2f96849387cf0dfe7edba277907947eca3b79b2a47f22126eae0fd3b
+            wireKey: PD
+            ownSDKProperty: VP
+            ownSDKFieldDecoderSHA256s:
+              - 17b108e6091011678f30adf84500025dff33e7fea283cef287bd490ad82b6f8e
+              - 17b108e6091011678f30adf84500025dff33e7fea283cef287bd490ad82b6f8e
+            ownSDKFieldSourceSpans:
+              - sourceStart: 1317051
+                sourceEnd: 1317139
+                sourceSHA256: 17b108e6091011678f30adf84500025dff33e7fea283cef287bd490ad82b6f8e
+              - sourceStart: 1324723
+                sourceEnd: 1324811
+                sourceSHA256: 17b108e6091011678f30adf84500025dff33e7fea283cef287bd490ad82b6f8e
+            explicitSDKRequired: false
+            missingSDKValue: 'null'
+            cashAndPendingDefaultsForbidden: true
+            requiredCaptureKeys:
+              - B
+              - AB
+              - TW
+              - MSGID
+              - GA
+            ownSDKMissingFieldFunctionSHA256: 184540b15b0a2082ad6f930079e77dbccbd9dc32196a12e7a423d250e65865e9
+            missingFieldVM:
+              functionSource: |-
+                function e(B,D){var C=w.get(B,a.Dd.fo.Instance),E;for(E in C){var I=C[E];if(I)try{var O=I.key;if(I.Ex){var N=O.indexOf("{#}"),T=O.substr(0,N),Q=O.substr(N+
+                3),U=B[E]=[],J;for(J in D)if(J.substr(0,N)===T){var L=parseInt(J.substr(N));if(a.C.ha(L)&&J.substr(N+"".concat(L).length)===Q){var P=D[J];try{U[L]=I.type.Hn(P)}catch(V){throw new a.zy("Could not deserialise '".concat(P,"'"),V);}}}if(I.required&&0===U.length)throw Error("Property not found in message");}else if(O in D){P=D[O];try{B[E]=I.type.Hn(P)}catch(V){throw new a.zy("Could not deserialise '".concat(P,"'"),V);}}else if(null!=I.defaultValue)B[E]=I.defaultValue;else{if(I.required)throw Error("Property not found in message");
+                B[E]=null}}catch(V){var S=c(E,I,!0);if(I.required)throw new a.zy(S,V);I.silent||(n.vb.error(S,V),B[E]=null)}}}
+              functionName: e
+              metadataProvider: w
+              metadataToken: a.Dd.fo.Instance
+              fieldProperty: VP
+            sourceRequests: 0
+            DBReadsRepeated: 0
+        ownGSDDataSchema:
+          version: own-exact-SDK-GSD-types-v1
+          gameId: '32497'
+          ownSDKFileSHA256: bd76291e2f96849387cf0dfe7edba277907947eca3b79b2a47f22126eae0fd3b
+          ownGSDClass: k.GCa
+          compiledOwnClassSHA256: 0ec533b72a67bae7078d2109eb4a84e66e2db92d6eb318a82650a46c17b599ce
+          fields:
+            WHAWD:
+              type:
+                kind: array
+                delimiter: ;
+                item:
+                  kind: integer
+                  SDKTypeAlias: sb
+                  ownAliasValidatorSHA256: 2756d5395fae807fd8e43abcb168636049fd8a70af85843f6a3ea01f71f3bde3
+                SDKArrayDecoderAlias: cd
+                ownAliasValidatorSHA256: fd3941c59eb1a8a7bef1b5280b22d7ecd312006c68cb1817fb23c6503e4bc5a4
+              ownSDKFieldSHA256: 3d9c996fd657a77534e24af437975196eee85a739fbd11a6e2f407670306dab0
+              ownSDKProperty: lF
+          knownUnsupportedFields:
+            - BGINFO
+            - CASINFO
+            - FGINFO
+          unknownUncompiledFieldsStillFatal: true
+          noCashOrNextActionDerivedFromOptionalGSD: true
+          ownEffectiveMetadataObject:
+            schema: own-complete-SDK-metadata-object-v1
+            gameId: '32497'
+            ownSDKFileSHA256: bd76291e2f96849387cf0dfe7edba277907947eca3b79b2a47f22126eae0fd3b
+            ownGSDClass: k.GCa
+            effectiveFieldKeys:
+              - BGINFO
+              - CASINFO
+              - FGINFO
+              - WHAWD
+            ownClassSourceSHA256s:
+              - 0ec533b72a67bae7078d2109eb4a84e66e2db92d6eb318a82650a46c17b599ce
+            emptyParentSourceSHA256s:
+              - d43b8e383a02f3b4b19ddbadd14a15c7eab3f37ab8c8034a394036a18243f783
+            ownObjectFieldDecoderSHA256s:
+              - bd03d73200d6c8e3b65077c4a8eea3d47616c60b0e8b65efdcde6af0f20d9b57
+            ownObjectCodecSHA256: 405c58bcaeb637e264b5ac8376a948f655db67f5ecb626caed943f174629df7c
+            ownMetadataDeserializerSHA256: 184540b15b0a2082ad6f930079e77dbccbd9dc32196a12e7a423d250e65865e9
+            dictionaryNotPassedToConstructor: true
+            metadataOnlyObjectProjection: true
+            knownUnsupportedFieldsRemainFatal: true
+            rootUnknownsRemainFatal: true
+            rawDictionaryPreserved: true
+            noCashOrNextActionFromUnconsumedDictionaryFields: true
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32497'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: dragonjinlongjinbao96
+            BPL: '5'
+            LB: '50'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: bd76291e2f96849387cf0dfe7edba277907947eca3b79b2a47f22126eae0fd3b
+            SDKSelectorSHA256: 87bbad0a4197ae0ff52a1f890ad41e6af14d8a4e372df803ecbb69c64b35df36
+            NFGSetterSHA256: 2c860ac491f5f469498e5bfd7ff47021298ecedcc8a62f42fda2f1efda405265
+            NFGDecoderSHA256: 746128cb6716325e0626b2deaee5b8d4feb5d824bce7717ee85bb98b6888f8e6
+            GCTDecoderSHA256: 855f77ffac25ae01125c991dac3cfc42346a937d7cadb1a85341c9ac4bb0c785
+            ownRequestConstructorSHA256: bbe36520a582dc0d2d01d59b61528b0685a255c464cf2a420103161c0a09b981
+            fieldBindings:
+              - wireKey: BPL
+                type:
+                  kind: integer
+                sourceSHA256: bbe36520a582dc0d2d01d59b61528b0685a255c464cf2a420103161c0a09b981
+              - wireKey: LB
+                type:
+                  kind: integer
+                sourceSHA256: bbe36520a582dc0d2d01d59b61528b0685a255c464cf2a420103161c0a09b981
+            actualPaidIntroCases: 6
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32497'
+          ownSDKFileSHA256: bd76291e2f96849387cf0dfe7edba277907947eca3b79b2a47f22126eae0fd3b
+          SDKSelectorSHA256: 87bbad0a4197ae0ff52a1f890ad41e6af14d8a4e372df803ecbb69c64b35df36
+          NFGSetterSHA256: 2c860ac491f5f469498e5bfd7ff47021298ecedcc8a62f42fda2f1efda405265
+          NFGDecoderSHA256: 746128cb6716325e0626b2deaee5b8d4feb5d824bce7717ee85bb98b6888f8e6
+          GCTDecoderSHA256: 855f77ffac25ae01125c991dac3cfc42346a937d7cadb1a85341c9ac4bb0c785
+          ownRequestConstructorSHA256: bbe36520a582dc0d2d01d59b61528b0685a255c464cf2a420103161c0a09b981
+          SDKFinalGetterSourceSHA256: 46069ca99859ba21810803e2691f8d05bccc452a3787ee385b1f5c0f1998cf22
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          own32497NextEndOnly: true
