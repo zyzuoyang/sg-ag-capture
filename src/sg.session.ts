@@ -1922,7 +1922,13 @@ export function ownGDMSDKTypedGSD(game:AGGameConfig,gsd:Record<string,string>){
   const field=schema?.fields?.[key];
   if(field){assert(/^[a-f0-9]{64}$/.test(field.ownSDKFieldSHA256),'AG integrity: GDM unbound SDK field');check(value,field.type);}
   else if(projection){
-   assert(!projection.effectiveFieldKeys.includes(key),'AG integrity: GDM known unsupported own object field');
+   // Own GoldenFire ordinary terminal getter consumes NFG/IFG/GA/GCT;
+   // CSFBS is a display object. Keep its raw dictionary value without
+   // requiring its unrelated object codec to finish an ordinary round.
+   const ownGoldenFireDisplay=game.gameId==='32532'&&c.ownSDKFileSHA256==='b6382ca56e7b6699838cfa368f6d70078e5e2f20728d6bcc5c9e89ee3340899b'
+    &&c.version==='own-SDK-ordinary-typed-final-v2'&&c.ordinaryOnly===true&&c.requiresNoPreviousFeature===true
+    &&c.SDKFinalGetterSourceSHA256==='7062d38da16e3117e985ae41630cbe94e95cd89016055546c36b348c05225376'&&key==='CSFBS';
+   assert(!projection.effectiveFieldKeys.includes(key)||ownGoldenFireDisplay,'AG integrity: GDM known unsupported own object field');
    // This game's complete Object decoder constructs without the dictionary
    // and reads only its bound metadata. Preserve extra display metadata in
    // the raw response; never use it to derive cash or a follow-up request.
@@ -2139,6 +2145,12 @@ else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&
    const expected:Record<string,string>={"BaseWinStateSHA256":"bfeeee21e7ab6ffbed7ba83e37ec8878234d3258727a0eead2eb6112dd93b35c","GambleStartStateSHA256":"010e214d3d7b3d45c81680553a9f9d8979310cf06c06a09f724e70cc88048250","optionalGambleButtonOnlySHA256":"523c030d5452d79c3d0790974aede48084981bc736d26aec1a7b32134e99edfc","GADecoderSHA256":"25748d317559581250336512f70d0e8f9b8f89afc3e36834cdf54ef1676ed39d"};
    for(const[k,value]of Object.entries(expected))assert(b[k]===value,'AG integrity: GDM own NOVA optional gamble source');
   }
+  if(q.ownGoldenReturnedWagerMetadata){
+   const b=q.ownGoldenReturnedWagerMetadata;
+   assert(this.game.gameId==='32532'&&c.ownSDKFileSHA256==='b6382ca56e7b6699838cfa368f6d70078e5e2f20728d6bcc5c9e89ee3340899b'&&b.version==='own-Golden-source-request-wager-state-v1'&&b.gameId===this.game.gameId&&b.ownSDKFileSHA256===c.ownSDKFileSHA256,'AG integrity: Golden own wager metadata identity');
+   for(const k of ['SDKSelectorSHA256','NFGSetterSHA256','ownRequestConstructorSHA256'])assert(b[k]===q[k],'AG integrity: Golden own wager metadata source');
+   assert(b.requestFieldsFromOwnValidatedSourceState&&b.returnedWagerFieldsDoNotChangeNextEnd&&b.actualRequestWagerFieldsStillExact&&b.rawWirePreserved,'AG integrity: Golden own wager metadata scope');
+  }
   this.quickHitNextRequestBinding();
   this.huffActualNextRequestBinding();
   ownNOVAFeatureProfile(this.game);
@@ -2218,7 +2230,7 @@ else{const n=r.ownNaturalFreeRequestBinding;assert(n?.gameId===this.game.gameId&
      for(const k of activeKeys)assert(gsd[k]===undefined||k==='CSC'&&ownNOVA.ownIgnoreCSCWhenWinCapReached&&this.ownNOVAWinCapReached,'AG integrity: GDM own NOVA active interactive next unmapped');
     }
    }
-   if(!q.ownBundleFlow&&!ownNOVA&&!ownBundleFeature)for(const k of Object.keys(r.freeRequestParams).filter(k=>k!=='GN'))assert(p[k]===undefined||p[k]===(q.ownQuickHitFG2TNextRequest?parameters[k]:r.freeRequestParams[k]),'AG integrity: GDM actual wager changed');
+   if(!q.ownGoldenReturnedWagerMetadata&&!q.ownBundleFlow&&!ownNOVA&&!ownBundleFeature)for(const k of Object.keys(r.freeRequestParams).filter(k=>k!=='GN'))assert(p[k]===undefined||p[k]===(q.ownQuickHitFG2TNextRequest?parameters[k]:r.freeRequestParams[k]),'AG integrity: GDM actual wager changed');
    if(q.ownHuffSourceNextRequest)for(const k of ['BPL','LB'])if(parameters[k]!==undefined)assert(p[k]===undefined||p[k]===parameters[k],'AG integrity: GDM own Huff actual request wager changed');
    let remaining:number|undefined;if(ownBundleFeature||ownNOVA&&first||ownFeature&&event!=='FREE_GAME')remaining=undefined;else if(q.ownBundleFlow?.remainingDecoder==='signed-minus-one-is-pending'){if(p.NFG===undefined&&first)remaining=0;else{assert(typeof p.NFG==='string'&&/^-?\d+$/.test(p.NFG)&&Number.isSafeInteger(Number(p.NFG))&&Number(p.NFG)>=-1,'AG integrity: GDM own signed next/end NFG');remaining=Number(p.NFG)===-1?1:0;}}else remaining=p.NFG===undefined&&first?0:gdmInteger(p.NFG,'own actual NFG');const total=gdmInteger(p.TW,'own actual total cash'),end=gdmInteger(p.B,'own actual balance');
    assert(end===this.roundStart-c.betRaw+total,'AG integrity: GDM original whole cash conservation');

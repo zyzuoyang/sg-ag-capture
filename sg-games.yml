@@ -1592,7 +1592,7 @@ games:
         LB: '130'
         REC: '0'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32532'
         dbName: sg_goldenfirelinkdragonsong96
         runtimeGameId: 33043
@@ -1601,7 +1601,7 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
@@ -1813,6 +1813,82 @@ games:
             rootUnknownsRemainFatal: true
             rawDictionaryPreserved: true
             noCashOrNextActionFromUnconsumedDictionaryFields: true
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32532'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: goldenfirelinkdragonsong96
+            BPL: '5'
+            LB: '130'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: b6382ca56e7b6699838cfa368f6d70078e5e2f20728d6bcc5c9e89ee3340899b
+            SDKSelectorSHA256: d8cbd00e07aed7ba47c91641dc2eb076ef9f99c3f10f0f115f06179541ad5886
+            NFGSetterSHA256: ead7fd2dfd53b217fc24712823b31d9da155dddb6ca145b3b539a35ca495af37
+            ownRequestConstructorSHA256: eb69e7f539d09d0a601946f4e5b9315bcf929bc5b8f2b1112f0fb68628d9c685
+            NFGDecoderSHA256: e6b2e3feec949d96a390bdda19323f7d5be0519ddb2ef82ec3284d7c3e6ca2f0
+            GCTDecoderSHA256: c090e046964e3e40356e307e883f6e7827802a12e50faf7188692652597639e3
+            fieldBindings:
+              - wireKey: BPL
+                type:
+                  kind: integer
+                  SDKTypeAlias: wc
+                sourceSHA256: f3dc2da80677cd96272f92805c328cf39edfd70a98e6802c48b219dc4d0ce641
+              - wireKey: LB
+                type:
+                  kind: integer
+                  SDKTypeAlias: wc
+                sourceSHA256: d39dddd85292a8d4dbd6b8093553be8f9727208bf9754a1485e4732bd0886462
+            actualPaidIntroCases: 1
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32532'
+          ownSDKFileSHA256: b6382ca56e7b6699838cfa368f6d70078e5e2f20728d6bcc5c9e89ee3340899b
+          SDKFinalGetterSourceSHA256: 7062d38da16e3117e985ae41630cbe94e95cd89016055546c36b348c05225376
+          SDKSelectorSHA256: d8cbd00e07aed7ba47c91641dc2eb076ef9f99c3f10f0f115f06179541ad5886
+          NFGSetterSHA256: ead7fd2dfd53b217fc24712823b31d9da155dddb6ca145b3b539a35ca495af37
+          ownRequestConstructorSHA256: eb69e7f539d09d0a601946f4e5b9315bcf929bc5b8f2b1112f0fb68628d9c685
+          NFGDecoderSHA256: e6b2e3feec949d96a390bdda19323f7d5be0519ddb2ef82ec3284d7c3e6ca2f0
+          GCTDecoderSHA256: c090e046964e3e40356e307e883f6e7827802a12e50faf7188692652597639e3
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          ownGoldenReturnedWagerMetadata:
+            version: own-Golden-source-request-wager-state-v1
+            gameId: '32532'
+            ownSDKFileSHA256: b6382ca56e7b6699838cfa368f6d70078e5e2f20728d6bcc5c9e89ee3340899b
+            SDKSelectorSHA256: d8cbd00e07aed7ba47c91641dc2eb076ef9f99c3f10f0f115f06179541ad5886
+            NFGSetterSHA256: ead7fd2dfd53b217fc24712823b31d9da155dddb6ca145b3b539a35ca495af37
+            ownRequestConstructorSHA256: eb69e7f539d09d0a601946f4e5b9315bcf929bc5b8f2b1112f0fb68628d9c685
+            requestFieldsFromOwnValidatedSourceState: true
+            returnedWagerFieldsDoNotChangeNextEnd: true
+            actualRequestWagerFieldsStillExact: true
+            rawWirePreserved: true
     rtpBuckets:
       - 0
       - 30
