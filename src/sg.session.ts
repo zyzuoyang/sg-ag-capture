@@ -217,9 +217,10 @@ function ownSquidBase(p:OwnNOVAFeatureProfile,s:OwnNOVAFeatureState,event:string
  if(ownMode==='2'){
   if(ownBundleBoolean(wire.GCT)===true){s.phase='base';return undefined;}
   if(event==='FEATURE_END'&&s.cfg===2){
-   // qO still treats a nonempty FID as pending. Never close or resend END
-   // when an actual own END response still exposes an unmapped next state.
-   assert(fid.length===0,'AG integrity: GDM own Picker still-pending next after actual END unmapped');
+   // The own Picker xD returns Postplay after its acknowledged END.
+   // Its result-presence selector and tD local close do not clear raw FID.
+   // A remaining-free response still follows the existing FREE path below.
+   if(gsd(wire.GSD).PICK_TYPE_WON===undefined)assert(fid.length===0,'AG integrity: GDM own Picker still-pending next after actual END unmapped');
    assert(wire.NFG!==undefined,'AG integrity: GDM own Picker actual end remaining absent');
    if(ownBundleInteger(wire.NFG,'actual Picker end NFG')>0){s.phase='free';return ownBundleFeatureRequest(p,'FREE_GAME');}
    s.phase='base';return undefined;
@@ -319,6 +320,18 @@ export function updateOwnBundleFeatureNext(p:OwnNOVAFeatureProfile,s:OwnNOVAFeat
  assert(isOwnBundleFeatureProfile(p),'AG integrity: GDM own bundle source profile');
  if(p.kind==='quickhit-single-round-pick'){updateOwnQuickHitUltraNext(p,s,event,wire);return;}
  if(wire.GCT!==undefined)ownBundleBoolean(wire.GCT);
+ // END acknowledges the emitted request's CFG; its response can introduce
+ // another already-bound coin mode. Keep that association before adopting CFG.
+ if(p.kind==='drums-two-round-cards'&&event==='FEATURE_END'&&wire.CFG!==undefined){
+  const endedCFG=ownBundleInteger(s.next?.parameters.CFG,'emitted own FEATURE_END CFG');
+  const nextCFG=ownBundleInteger(wire.CFG,'actual CFG'),fid=ownBundleFID(wire);
+  if(nextCFG!==endedCFG&&p.additionalModes?.includes(nextCFG)&&fid[0]===nextCFG){
+   assert(s.next?.event===event&&(endedCFG===p.cfg||p.additionalModes.includes(endedCFG)),'AG integrity: GDM own Dancing END request mode association');
+   if(ownBundleBoolean(wire.GCT)===true){s.phase='base';s.next=undefined;return;}
+   assert(ownBundleBoolean(wire.IFG)===false&&ownBundleBoolean(wire[`FS_${nextCFG}`])===false,'AG integrity: GDM own Dancing handed-off mode already active or unstarted status unmapped');
+   s.cfg=nextCFG;s.ordinal=0;s.used.clear();s.phase='start';s.next=ownBundleFeatureRequest(p,'FEATURE_START',{CFG:String(nextCFG)});return;
+  }
+ }
  if(p.kind==='drums-two-round-cards'&&wire.CFG!==undefined&&!(event==='FEATURE_END'&&p.additionalModes?.includes(s.cfg as number)))s.cfg=ownBundleInteger(wire.CFG,'actual CFG');
  if(event==='BET'||event==='FREE_GAME'){
   s.next=p.kind==='drums-two-round-cards'?ownDancingBase(p,s,event,wire):ownSquidBase(p,s,event,wire);return;
