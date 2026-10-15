@@ -2310,8 +2310,103 @@ export function ownTrinity32681Profile(game:AGGameConfig){
  assert.deepStrictEqual(b,ownTrinity32681Binding,'AG integrity: own32681 fixed next binding');assert.deepStrictEqual(game.sg.requestParams,b.paidRequestParams,'AG integrity: own32681 own BET fields');return b;
 }
 
+// Exact 32709 SDK projection. Controlled objects are not provider ACKs.
+export type Own32709FeatureEvent='FEATURE_START'|'FEATURE_PICK'|'FEATURE_END';
+export type Own32709Event='BET'|'FREE_GAME'|Own32709FeatureEvent;
+export type Own32709Control={current:number,future:number,nfg:number|null,gct:boolean|null,nestedGCT:boolean|null,cap:number|null,totalWin:number,pe:{active:boolean,started:boolean|undefined,kind:number,total:number,choices:number[],backupTotal:number|undefined,JPT:boolean},fs:{active:boolean,started:boolean|undefined,endIndex:number|null},caller?:Own32709FeatureEvent,afterSelectEnd:boolean};
+export type Own32709Decoded={NFG:number|null,GCT:boolean|null,nestedGCT:boolean|null,CFG:number|null,FID:number[]|null,FS:Array<boolean|undefined>|null,FTV:number[][][]|null,FPM:number[][][]|null,JPT:boolean|null};
+export function createOwn32709Control():Own32709Control{return{current:-1,future:-1,nfg:0,gct:false,nestedGCT:false,cap:null,totalWin:0,pe:{active:false,started:false,kind:-1,total:-1,choices:[],backupTotal:undefined,JPT:false},fs:{active:false,started:false,endIndex:null},afterSelectEnd:false};}
+export function own32709Integer(raw:string){if(raw.trim()===''||!Number.isFinite(Number(raw))||!Number.isInteger(Number(raw)))throw Error('own32709 Integer');return Number(raw);}
+export function own32709Boolean(raw:string){const n=raw===''?null:Number(raw);if(n!==null&&!Number.isNaN(n))return n!==0;const s=raw.toLowerCase();if(['true','y','yes'].includes(s))return true;if(['false','n','no'].includes(s))return false;throw Error('own32709 Boolean');}
+function own32709Optional<T>(raw:string|undefined,decode:(s:string)=>T,fallback:T|null=null):T|null{if(raw===undefined)return fallback;try{return decode(raw);}catch{return null;}}
+function own32709Indexed<T>(w:Record<string,string>,prefix:string,decode:(s:string)=>T):T[]|null{const rows:T[]=[];try{for(const k of Object.keys(w)){if(!k.startsWith(prefix))continue;const n=parseInt(k.slice(prefix.length));if(Number.isNaN(n)||k.slice(prefix.length+String(n).length)!=='')continue;rows[n]=decode(w[k]);}return rows;}catch{return null;}}
+export function own32709DecodeControl(w:Record<string,string>,g:Record<string,string>):Own32709Decoded{
+ const number=(v:string)=>{if(v.trim()===''||Number.isNaN(Number(v)))throw Error('own32709 Number');return Number(v);};
+ const postfix=(v:string,separator:string)=>{const a=v.split(separator);a.pop();return a;};
+ const matrix=(v:string)=>postfix(v,'|').map(row=>postfix(row,';').map(number));
+ return{NFG:own32709Optional(w.NFG,own32709Integer,0),GCT:own32709Optional(w.GCT,own32709Boolean,false),nestedGCT:own32709Optional(g.GCT,own32709Boolean,false),CFG:own32709Optional(w.CFG,own32709Integer),FID:own32709Optional(w.FID,v=>postfix(v,'|').map(own32709Integer)),FS:own32709Indexed(w,'FS_',own32709Boolean),FTV:own32709Indexed(w,'FTV_',matrix),FPM:own32709Indexed(w,'FPM_',matrix),JPT:own32709Optional(g.JPT,own32709Boolean,false)};
+}
+export function own32709Pq(s:Own32709Control){return s.current===-1?(s.pe.active?s.pe.kind:s.fs.active?0:-1):s.current;}
+export function own32709CtorKind(s:Own32709Control):Own32709FeatureEvent|undefined{
+ const kind=own32709Pq(s);
+ if(kind===2||kind===3)return s.pe.active?(!s.pe.started?'FEATURE_START':s.pe.choices.length>=s.pe.total?'FEATURE_END':'FEATURE_PICK'):undefined;
+ if(kind===0)return !s.fs.started?'FEATURE_START':s.fs.endIndex!==null&&s.fs.endIndex>=0?'FEATURE_END':'FEATURE_PICK';
+ return undefined;
+}
+export function applyOwn32709SuccessfulDecoded(s:Own32709Control,event:Own32709Event,p:Own32709Decoded,requestKind?:number){
+ s.nfg=p.NFG;s.gct=p.GCT;s.nestedGCT=p.nestedGCT;s.current=p.CFG??p.FID?.[0]??-1;s.future=p.FID?.[1]??-1;s.afterSelectEnd=false;s.pe.JPT=p.JPT??false;
+ // PUa/V5a runs before either feature response initializer. Missing and empty
+ // indexed arrays differ: an empty row array is still truthy for V5a.
+ if(s.future!==-1&&p.FTV&&!p.FTV[s.current]&&p.FTV[s.future])s.current=s.future;
+ const selected=s.current;
+ if((selected===2||selected===3)&&p.FTV?.[selected]&&p.FTV[selected].length>0){
+  if(p.FPM===null||p.FS===null)throw Error('own32709 active response indexed control unavailable');
+  s.pe.active=true;s.pe.kind=selected;s.pe.total=p.FTV[selected].length;
+  s.pe.choices=(p.FPM[selected]??[]).filter(row=>row.length>0).map(row=>row[0]);s.pe.started=p.FS[selected];
+  if(selected===3){if(!p.FTV[2])throw Error('own32709 Gold backup FTV unavailable');s.pe.backupTotal=p.FTV[2].length;}
+ }
+ if(p.FID?.some(n=>n===0||n===1)){
+  s.fs.active=true;
+  if(own32709Pq(s)===0){if(p.FS===null||p.FPM===null)throw Error('own32709 free-select indexed control unavailable');s.fs.started=p.FS[0]??false;s.fs.endIndex=p.FPM[0]?.[0]?.[0]??null;}
+ }
+ s.caller=undefined;
+ // These bodies run only after native envelope/type validation and response Ti.
+ if(event==='FEATURE_START'){
+  if(requestKind===0){s.fs.started=true;s.caller='FEATURE_PICK';}
+  else if(requestKind===2||requestKind===3){s.pe.started=true;s.caller='FEATURE_PICK';}
+  else throw Error('own32709 successful START callback scope unmapped');
+ }else if(event==='FEATURE_PICK'){
+  if(requestKind===0){if(s.fs.endIndex===null||s.fs.endIndex<0)throw Error('own32709 successful select PICK next unavailable');s.caller='FEATURE_END';}
+  else if(requestKind===2||requestKind===3)s.caller=s.pe.choices.length>=s.pe.total?'FEATURE_END':'FEATURE_PICK';
+  else throw Error('own32709 successful PICK callback scope unmapped');
+ }else if(event==='FEATURE_END'){
+  if(requestKind===0){s.fs.active=false;s.fs.started=false;s.fs.endIndex=-1;s.afterSelectEnd=true;}
+  else if(requestKind===2){s.pe={active:false,started:false,kind:-1,total:-1,choices:[],backupTotal:undefined,JPT:false};if(s.future===0||s.future===1)s.current=s.future;}
+  else if(requestKind===3){if(s.pe.backupTotal===undefined)throw Error('own32709 Gold callback backup unavailable');s.pe.active=true;s.pe.started=false;s.pe.kind=2;s.pe.total=s.pe.backupTotal;s.pe.choices=[];s.current=2;}
+  else throw Error('own32709 successful END callback scope unmapped');
+ }
+}
+export function own32709ControlNext(s:Own32709Control){
+ const kind=own32709Pq(s);if(![-1,0,1,2,3].includes(kind))throw Error('own32709 actual feature selector unmapped');
+ // Own registry invokes jackpot vF before free/select vF. Its fresh caller
+ // uses equality; a successful PICK callback instead uses >= (both literal).
+ let event=s.caller;
+ if(event===undefined&&s.pe.active)event=!s.pe.started?'FEATURE_START':s.pe.choices.length===s.pe.total?'FEATURE_END':'FEATURE_PICK';
+ if(event===undefined&&!s.afterSelectEnd&&kind===0)event=!s.fs.started?'FEATURE_START':s.fs.endIndex!==null&&s.fs.endIndex>=0?'FEATURE_END':'FEATURE_PICK';
+ if(event!==undefined){if(own32709CtorKind(s)===undefined)throw Error('own32709 caller constructor selector unavailable');return{event,kind};}
+ if(s.nfg!==null&&s.nfg>0&&!s.gct){
+  if(s.nestedGCT)throw Error('own32709 nested GCT actual next unmapped');
+  if(s.cap&&s.totalWin>=s.cap)throw Error('own32709 CAP suppresses FREE actual next unmapped');
+  return{event:'FREE_GAME' as const,kind};
+ }
+ if(s.gct||!(s.nfg!==null&&s.nfg>0)){if(kind===1&&!s.pe.active)s.fs.active=false;return{event:null,kind};}
+ throw Error('own32709 actual pending next unmapped');
+}
+export function own32709FeatureFieldsAndConsume(s:Own32709Control,event:Own32709FeatureEvent){
+ const kind=own32709Pq(s),ctor=own32709CtorKind(s);if(ctor===undefined)throw Error('own32709 actual feature constructor unavailable');
+ const fields:Record<string,string>={CFG:String(kind)};
+ if(ctor==='FEATURE_PICK'){
+  const count=kind===0?6:(s.pe.JPT||s.pe.active&&s.pe.kind===2)?12:6;
+  if(kind!==0&&!s.pe.choices.every(n=>Number.isInteger(n)&&n>=0&&n<count))throw Error('own32709 actual restored physical choice unavailable');
+  const choice=kind===0?0:Array.from({length:count},(_,i)=>i).find(n=>!s.pe.choices.includes(n));
+  if(choice===undefined)throw Error('own32709 no mapped physical choice available');
+  fields.FP=`${kind===0?1:s.pe.choices.length+1}|1|${choice}`;
+  if(kind!==0&&s.pe.choices.length<s.pe.total)s.pe.choices.push(choice);
+ }
+ return{event,fields,ctorKind:ctor};
+}
+
+const ownDFDC32709Binding={"version":"own32709-next-end-only-v1","gameId":"32709","dbName":"sg_dfdcgdragons96","runtimeGameId":33109,"runtimeSlug":"dfdcgdragons96","ownSDKFileSHA256":"3a7501700677dfd5be2ba8f5274b62e7efed14a8a44a51230b9805c1f0c82d35","ownPointProofSHA256":"57040356602aed95b5f28d8222e9bc0ef88e1a47acdde776ad64881be10e87cf","paidRequestParams":{"GN":"dfdcgdragons96","AP":"false","BPR":"88","RB":"5"},"freeSerializedFields":["BPR","RB"],"featureFields":["CFG","FP"],"noFreeAPBorrowed":true,"fixtureProviderACKCredit":0,"ownIndexAndGAProofSHA256":"02fe7125f9a88fa44745e5f6a28d0017271f8ce32050d2a5a29835e480118f38","GAIsNotMandatoryNext":true};
+export function ownDFDC32709Profile(game:AGGameConfig){
+ const c=game.sg?.ownGDMContract,b=c?.ownDFDC32709NextOnly;if(b===undefined)return undefined;
+ assert(game.provider==='sg'&&game.gameId==='32709'&&game.dbName==='sg_dfdcgdragons96'&&game.backendId==='dfdcgdragons96'&&game.sg.protocol==='gdm'&&game.sg.endpoint==='https://ogs-gdm-usnj.nyxop.net/nextgen/'&&game.sg.runtimeGameId===33109&&game.sg.runtimeSlug==='dfdcgdragons96','AG integrity: own32709 exact game');
+ assert(c.version==='own32709-next-end-only-v1'&&c.gameId===game.gameId&&c.dbName===game.dbName&&c.runtimeGameId===33109&&c.runtimeSlug===game.sg.runtimeSlug&&c.ownSDKFileSHA256===ownDFDC32709Binding.ownSDKFileSHA256&&c.fixedGitCommit==='885f862bcc04841406820a932ef14c38c7759f1d'&&c.betRaw===88&&game.sg.betRaw===88&&c.balanceScale===1&&c.winScale===1,'AG integrity: own32709 exact contract');
+ assert.deepStrictEqual(b,ownDFDC32709Binding,'AG integrity: own32709 fixed next binding');assert.deepStrictEqual(game.sg.requestParams,b.paidRequestParams,'AG integrity: own32709 own BET fields');return b;
+}
+
 function gdmBinding(game:AGGameConfig){
  const c=game.sg?.ownGDMContract;
+ if(ownDFDC32709Profile(game))return c;
  if(ownTrinity32681Profile(game))return c;
  if(ownChain32476Profile(game))return c;
  assert(game.provider==='sg'&&game.sg.protocol==='gdm'&&game.sg.endpoint==='https://ogs-gdm-usnj.nyxop.net/nextgen/','AG integrity: GDM source gdmBinding');
@@ -2508,6 +2603,8 @@ export class SGGdmSession{
  private readonly ownChain32476State:OwnChain32476State={};
  private readonly ownTrinity32681State=createOwn32681Control();
  private ownTrinity32681SelectedTotal=108;
+ private readonly ownDFDC32709State=createOwn32709Control();
+ private ownDFDC32709SelectedTotal=88;
  private ownDragonWheelNext:OwnDragonWheelRequest|undefined;
  private readonly ownDragonWheelState:OwnDragonWheelState={selected:null,started:null,picked:null,ended:null};
  constructor(private readonly game:AGGameConfig,private readonly transport?:GDMTransport,initialBalance?:number){gdmBinding(game);ownCoinComboProfile(game);ownDragonWheelProfile(game);this.ownCIProfile=ownSamuraiCIProfile(game);if(initialBalance!==undefined){assert(Number.isSafeInteger(initialBalance)&&initialBalance>=0);this.balance=initialBalance;}}
@@ -2533,7 +2630,7 @@ export class SGGdmSession{
  private async exchange(event:string,parameters:Record<string,any>):Promise<GDMWireStep>{
   assert(!this.closed,'AG integrity: GDM session permanently closed');const payload=this.form(event,parameters),ordinal=++this.ordinal;
   const gameplay=event!=='INIT'&&event!=='REELSTRIP';if(gameplay)this.gameplaySent=true;
-  const ownFeatureFollowup=(ownTrinity32681Profile(this.game)||ownOriginalUFLSourceProfile(this.game)||this.ownCIProfile||ownNOVAFeatureProfile(this.game)||ownCoinComboProfile(this.game)||ownDragonWheelProfile(this.game))&&['FEATURE_START','FEATURE_PICK','FEATURE_END'].includes(event);
+  const ownFeatureFollowup=(ownDFDC32709Profile(this.game)||ownTrinity32681Profile(this.game)||ownOriginalUFLSourceProfile(this.game)||this.ownCIProfile||ownNOVAFeatureProfile(this.game)||ownCoinComboProfile(this.game)||ownDragonWheelProfile(this.game))&&['FEATURE_START','FEATURE_PICK','FEATURE_END'].includes(event);
   const context={event,ordinal,requestKind:event==='FREE_GAME'||ownFeatureFollowup||(event==='ACK'&&ownChain32476Profile(this.game))?'round-follow-up' as const:gameplay?'round-start' as const:'initialization' as const,gameplayRequestHasBeenSent:this.gameplaySent};
   if(this.transport){let step:GDMWireStep;try{step=await this.transport(event,payload);}catch{this.close();throw new SGSourceFault(gameplay?'execution-unknown':'recoverable-initialization',context);}assert(!this.closed,'AG integrity: GDM late response after permanent closure');if(step.httpStatus!==undefined&&step.httpStatus!==200){this.close();throw new SGSourceFault(gameplay?'execution-unknown':'protocol', {...context,httpStatus:step.httpStatus});}return step;}
   const operator=process.env.SG_GDM_OPERATOR_ID;assert(operator&&/^[A-Za-z0-9_-]+$/.test(operator),'AG integrity: GDM own operator configuration missing');
@@ -2550,11 +2647,11 @@ export class SGGdmSession{
   assert(!this.closed,'AG integrity: GDM session closed');if(this.transport){assert(Number.isSafeInteger(this.balance));return;}
   assert(process.env.SG_AG_ALLOW_SOURCE==='1','AG integrity: GDM live source not enabled');
   if(this.ownCIProfile){try{const p=this.decode(await this.exchange('INIT',{GN:this.game.sg.runtimeSlug}),'INIT');this.balance=ownCIWalletInteger(p.AB,'actual initial same-account AB');assert(p.R===undefined||p.R==='0','AG integrity: Samurai CI fresh recovery unmapped');assert(p.FID===undefined&&p.CFG===undefined&&p.REC===undefined&&(p.NFG===undefined||p.NFG==='0'),'AG integrity: Samurai CI prior round at fresh Init');assert(typeof p.BD==='string'&&p.BD.split('|').some(v=>v!==''&&Number(v)===5),'AG integrity: Samurai CI own BPL5 unavailable');this.decode(await this.exchange('REELSTRIP',{GN:this.game.sg.runtimeSlug}),'REELSTRIP');return;}catch(error){this.close();throw error;}}
-  try{const ownNOVA=this.ownNOVAAccountRequestBinding(),p=this.decode(await this.exchange('INIT',{GN:this.game.sg.runtimeSlug}),'INIT');assert(p.B!==undefined&&p.AB===p.B&&(ownNOVA||ownTrinity32681Profile(this.game)||p.GA==='0')&&(p.IFG===undefined||p.IFG==='0')&&(p.NFG===undefined||p.NFG==='0')&&p.FID===undefined&&p.REC===undefined,'AG integrity: GDM initialization cash or recovery');if(ownNOVA){assert(p.R===undefined||p.R==='0','AG integrity: GDM own NOVA fresh recovery flag');assert(typeof p.BD==='string'&&p.BD.split('|').filter(Boolean).every((v:string)=>/^[1-9]\d*$/.test(v))&&p.BD.split('|').includes(String(ownNOVA.selectedAllowedBet)),'AG integrity: GDM own NOVA selected wager unavailable');if(ownNOVA.ownSelectedReels!==null){assert(typeof p.RBM==='string','AG integrity: GDM own NOVA selected reel multiplier missing');const values=p.RBM.split('|').filter(Boolean).map((v:string)=>gdmInteger(v,'own allowed reel multiplier'));assert(values.length>=ownNOVA.ownSelectedReels&&values[ownNOVA.ownSelectedReels-1]===ownNOVA.ownSelectedRBMMultiplier,'AG integrity: GDM own NOVA explicit reel choice unavailable');}}if(this.game.sg.ownGDMContract.freeBudgetContract)for(const k of this.game.sg.ownGDMContract.freeBudgetContract.promotionalKeysForbidden)assert(p[k]===undefined,'AG integrity: GDM promotional initialization not mapped');this.balance=gdmInteger(p.B,'initial balance');this.decode(await this.exchange('REELSTRIP',{GN:this.game.sg.runtimeSlug}),'REELSTRIP');}catch(e){this.close();throw e;}
+  try{const ownNOVA=this.ownNOVAAccountRequestBinding(),p=this.decode(await this.exchange('INIT',{GN:this.game.sg.runtimeSlug}),'INIT');if(ownDFDC32709Profile(this.game)){this.ownDFDC32709State.cap=own32709Optional(p.CAP,own32709Integer);assert(!((own32709Optional(p.FRR,own32709Integer)??0)>0||own32709Optional(p.IFR,own32709Boolean,false)),'AG integrity: own32709 promotional Init unmapped');}assert(p.B!==undefined&&p.AB===p.B&&(ownNOVA||ownTrinity32681Profile(this.game)||ownDFDC32709Profile(this.game)||p.GA==='0')&&(p.IFG===undefined||p.IFG==='0')&&(p.NFG===undefined||p.NFG==='0')&&p.FID===undefined&&p.REC===undefined,'AG integrity: GDM initialization cash or recovery');if(ownNOVA){assert(p.R===undefined||p.R==='0','AG integrity: GDM own NOVA fresh recovery flag');assert(typeof p.BD==='string'&&p.BD.split('|').filter(Boolean).every((v:string)=>/^[1-9]\d*$/.test(v))&&p.BD.split('|').includes(String(ownNOVA.selectedAllowedBet)),'AG integrity: GDM own NOVA selected wager unavailable');if(ownNOVA.ownSelectedReels!==null){assert(typeof p.RBM==='string','AG integrity: GDM own NOVA selected reel multiplier missing');const values=p.RBM.split('|').filter(Boolean).map((v:string)=>gdmInteger(v,'own allowed reel multiplier'));assert(values.length>=ownNOVA.ownSelectedReels&&values[ownNOVA.ownSelectedReels-1]===ownNOVA.ownSelectedRBMMultiplier,'AG integrity: GDM own NOVA explicit reel choice unavailable');}}if(this.game.sg.ownGDMContract.freeBudgetContract)for(const k of this.game.sg.ownGDMContract.freeBudgetContract.promotionalKeysForbidden)assert(p[k]===undefined,'AG integrity: GDM promotional initialization not mapped');this.balance=gdmInteger(p.B,'initial balance');this.decode(await this.exchange('REELSTRIP',{GN:this.game.sg.runtimeSlug}),'REELSTRIP');}catch(e){this.close();throw e;}
  }
  getHandshakeData(){return null;}getBalance(){return this.balance/100;}getFallbackBet(){return this.game.sg.betRaw/100;}
  getSpinParams(){return {...this.game.sg.requestParams};}getInitialRoundRequest(){return{event:'BET',parameters:this.getSpinParams()};}
- getExactFollowUpRequest(action:string){if(ownTrinity32681Profile(this.game)){assert(action==='FREE_SPIN','AG integrity: own32681 next action');const exact=this.ownTrinity32681Request();assert(exact,'AG integrity: own32681 actual next absent');return exact;}if(ownChain32476Profile(this.game)){assert(action==='FREE_SPIN'&&this.ownChain32476State.pending,'AG integrity: own32476 ACK actual next absent');return structuredClone(this.ownChain32476State.pending);}if(ownDragonWheelProfile(this.game)&&this.ownDragonWheelNext){assert(action==='FREE_SPIN','AG integrity: own32497 wheel next action');return structuredClone(this.ownDragonWheelNext);}const coin=ownCoinComboProfile(this.game);if(coin){assert(action==='FREE_SPIN'&&this.ownCoinState.next,'AG integrity: Coin Combo mapped next absent');return structuredClone(this.ownCoinState.next);}const ownOriginal=ownOriginalUFLSourceProfile(this.game);if(ownOriginal){assert(action==='FREE_SPIN','AG integrity: own original UFL next action');const exact=getOwnOriginalUFLNext(this.ownOriginalUFLState);assert(exact,'AG integrity: own original UFL next absent');return exact;}const ufl=ownUFLSourceProfile(this.game);if(ufl){assert(action==='FREE_SPIN'&&this.ownUFLPending,'AG integrity: UFL actual next absent');return{event:'FREE_GAME',parameters:{...ufl.freeRequestParams}};}if(this.ownCIProfile){assert(action==='FREE_SPIN','AG integrity: Samurai CI own next action');const exact=getOwnSamuraiCINext(this.ownCIState,this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams);assert(exact,'AG integrity: Samurai CI own next absent');return exact;}if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){if(ownNOVAFeatureProfile(this.game)){assert(action==='FREE_SPIN','AG integrity: GDM own NOVA feature next action');const exact=getOwnNOVAFeatureNext(this.ownNOVAFeatureState,this.rootFlowFreeRequest());assert(exact,'AG integrity: GDM own NOVA feature next absent');return exact;}assert(action==='FREE_SPIN'&&(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry),'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:this.rootFlowFreeRequest()};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
+ getExactFollowUpRequest(action:string){if(ownDFDC32709Profile(this.game)){assert(action==='FREE_SPIN','AG integrity: own32709 next action');const exact=this.ownDFDC32709Request();assert(exact,'AG integrity: own32709 actual next absent');return exact;}if(ownTrinity32681Profile(this.game)){assert(action==='FREE_SPIN','AG integrity: own32681 next action');const exact=this.ownTrinity32681Request();assert(exact,'AG integrity: own32681 actual next absent');return exact;}if(ownChain32476Profile(this.game)){assert(action==='FREE_SPIN'&&this.ownChain32476State.pending,'AG integrity: own32476 ACK actual next absent');return structuredClone(this.ownChain32476State.pending);}if(ownDragonWheelProfile(this.game)&&this.ownDragonWheelNext){assert(action==='FREE_SPIN','AG integrity: own32497 wheel next action');return structuredClone(this.ownDragonWheelNext);}const coin=ownCoinComboProfile(this.game);if(coin){assert(action==='FREE_SPIN'&&this.ownCoinState.next,'AG integrity: Coin Combo mapped next absent');return structuredClone(this.ownCoinState.next);}const ownOriginal=ownOriginalUFLSourceProfile(this.game);if(ownOriginal){assert(action==='FREE_SPIN','AG integrity: own original UFL next action');const exact=getOwnOriginalUFLNext(this.ownOriginalUFLState);assert(exact,'AG integrity: own original UFL next absent');return exact;}const ufl=ownUFLSourceProfile(this.game);if(ufl){assert(action==='FREE_SPIN'&&this.ownUFLPending,'AG integrity: UFL actual next absent');return{event:'FREE_GAME',parameters:{...ufl.freeRequestParams}};}if(this.ownCIProfile){assert(action==='FREE_SPIN','AG integrity: Samurai CI own next action');const exact=getOwnSamuraiCINext(this.ownCIState,this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams);assert(exact,'AG integrity: Samurai CI own next absent');return exact;}if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){if(ownNOVAFeatureProfile(this.game)){assert(action==='FREE_SPIN','AG integrity: GDM own NOVA feature next action');const exact=getOwnNOVAFeatureNext(this.ownNOVAFeatureState,this.rootFlowFreeRequest());assert(exact,'AG integrity: GDM own NOVA feature next absent');return exact;}assert(action==='FREE_SPIN'&&(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry),'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:this.rootFlowFreeRequest()};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
  getLastGameRequest(){return this.lastRequest;}getPickParams(){throw new Error('AG integrity: GDM own selection not mapped');}
  isRoundTerminalAction(action:string){return action==='SPIN';}
  private ownExtraStageCounter(p:Record<string,string>,prior:any){
@@ -2806,6 +2903,39 @@ let pendingCrossLink=false;
  }
 
 
+ private ownDFDC32709Request(){
+  const p=ownDFDC32709Profile(this.game);assert(p,'AG integrity: own32709 request scope');
+  const next=own32709ControlNext(this.ownDFDC32709State);if(next.event===null)return undefined;
+  if(next.event==='FREE_GAME')return{event:'FREE_GAME',parameters:{GN:this.game.sg.runtimeSlug,BPR:String(this.ownDFDC32709SelectedTotal),RB:'5'}};
+  const r=own32709FeatureFieldsAndConsume(structuredClone(this.ownDFDC32709State),next.event);
+  return{event:r.event,parameters:{GN:this.game.sg.runtimeSlug,...r.fields}};
+ }
+ private async ownDFDC32709Call(event:string,parameters:Record<string,any>|null){
+  const p=ownDFDC32709Profile(this.game),c=gdmBinding(this.game),s=this.ownDFDC32709State;
+  assert(p&&!this.closed&&parameters,'AG integrity: own32709 closed scope');
+  let requestKind:number|undefined;
+  if(event==='BET'){
+   assert(!this.ownDFDC32709Request(),'AG integrity: own32709 prior actual round pending');assert.deepStrictEqual(parameters,this.game.sg.requestParams,'AG integrity: own32709 own BET fields');
+   this.roundStart=this.balance;this.totalWin=0;this.rootFlowSteps=[];this.ownDFDC32709SelectedTotal=Number(parameters.BPR);
+  }else{
+   const next=this.ownDFDC32709Request();assert(next&&next.event===event,'AG integrity: own32709 actual next request order');assert.deepStrictEqual(parameters,next.parameters,'AG integrity: own32709 actual next fields');
+   if(event!=='FREE_GAME'){requestKind=own32709Pq(s);own32709FeatureFieldsAndConsume(s,event as Own32709FeatureEvent);}
+  }
+  assert(this.rootFlowSteps.length<10000,'AG integrity: own32709 finite round step bound');
+  this.lastRequest={event,parameters:{...parameters}};const step=await this.exchange(event,parameters);
+  try{
+   const w=this.decode(step,event),end=gdmInteger(w.B,'own32709 actual B'),available=gdmInteger(w.AB,'own32709 actual AB'),total=gdmInteger(w.TW,'own32709 actual TW');
+   if(step.responseBalance!==undefined)assert(step.responseBalance===available,'AG integrity: own32709 captured account balance differs');
+   assert(!((own32709Optional(w.FRR,own32709Integer)??0)>0||own32709Optional(w.IFR,own32709Boolean,false)),'AG integrity: own32709 platform FreeRounds request unmapped');
+   assert(typeof w.GSD==='string','AG integrity: own32709 actual GSD absent');
+   if(w.BPR!==undefined){const selected=gdmInteger(w.BPR,'own32709 actual selected total');assert(selected>0,'AG integrity: own32709 actual selected total absent');this.ownDFDC32709SelectedTotal=selected;}
+   s.totalWin=total;applyOwn32709SuccessfulDecoded(s,event as Own32709Event,own32709DecodeControl(w,ownGDMFields(w.GSD,'#','~')),requestKind);
+   this.totalWin=total;const next=this.ownDFDC32709Request();if(!next)assert(end===this.roundStart-c.betRaw+total,'AG integrity: GDM original whole cash conservation');
+   this.balance=end;this.rootFlowSteps.push({...step,responseBalance:end});const steps=next?this.rootFlowSteps.slice(-1):this.rootFlowSteps;
+   return{NextActionInfo:{nextAction:next?'FREE_SPIN':'SPIN'},PlayerBalanceInfo:{preWagerBalance:this.roundStart/100,balance:end/100,wager:c.betRaw/100,resultAmount:total/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,startBalance:this.roundStart/100,endBalance:end/100,totalWin:total/100,stepCount:steps.length,msgIds:steps.map(x=>x.msgId),steps:structuredClone(steps),SGWireResponse:w,SGDecodedResponseXML:step.responseXml,SGOwnSDKDecision:{ownSDKFileSHA256:c.ownSDKFileSHA256,own32709ActualNextOnly:true,fixtureACKNotProviderACK:true,noSyntheticTerminal:true},money:{startBalanceRaw:this.roundStart,endBalanceRaw:end,betRaw:c.betRaw,totalWinRaw:total}};
+  }catch(error){this.close();throw error;}
+ }
+
  private ownTrinity32681Request(){
   const p=ownTrinity32681Profile(this.game);assert(p,'AG integrity: own32681 request scope');
   assert(!p.callerRequestUnresolved,'AG integrity: own32681 common connection binding unresolved');
@@ -2915,6 +3045,7 @@ let pendingCrossLink=false;
   }catch(e){this.close();throw e;}
  }
  async callGameData(event:string,parameters:Record<string,any>|null){
+  if(ownDFDC32709Profile(this.game))return this.ownDFDC32709Call(event,parameters);
   if(ownTrinity32681Profile(this.game))return this.ownTrinity32681Call(event,parameters);
   if(ownChain32476Profile(this.game))return this.ownChain32476Call(event,parameters);
   if(ownCoinComboProfile(this.game))return this.ownCoinComboCall(event,parameters);
