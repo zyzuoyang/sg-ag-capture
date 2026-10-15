@@ -3072,6 +3072,11 @@ export function ownDragonWheelEntry(w:Record<string,string>,s:OwnDragonWheelStat
 export class SGGdmSession{
  private readonly ownLockIt32724State=OwnLockIt32724Data.createModel();
  private ownLockIt32724InitBound=false;
+ private ownLockIt32724PendingFirstStart=false;
+ private ownLockIt32724PendingFirstLIL=false;
+ private ownLockIt32724PickerPhase:''|'start'|'pick'|'end'='';
+ private ownLockIt32724FreeMode:''|'fg'|'lil'='';
+ private ownLockIt32724PickerRoundStart=Number.NaN;
  private balance=Number.NaN;private closed=false;private freeState:{total:number;played:number;remaining:number;win:number;offset:number;stageFID?:string;outer?:{total:number;played:number;remaining:number;stageFID:string}}|undefined;private roundStart=0;private totalWin=0;private freeSteps:GDMWireStep[]=[];private lastRequest:{event:string;parameters:Record<string,any>}|undefined;
  private readonly freshFreeId='Free:'+crypto.randomBytes(16).toString('hex');
  private readonly pid='gdmgcm'+this.freshFreeId;private cookies=new Map<string,string>();private ordinal=0;
@@ -3098,6 +3103,8 @@ export class SGGdmSession{
   if(this.closed){fs.closeSync(this.journal);this.journal=null;}
  }
  private form(event:string,parameters:Record<string,any>){
+  const ownWrapperGN=ownLockIt32724Profile(this.game)?.ownLockIt32724CommonWrapperData;
+  if(ownWrapperGN){assert(parameters.GN===undefined||parameters.GN===this.game.sg.runtimeSlug,'AG integrity: own32724 wrapper game name changed');parameters={GN:this.game.sg.runtimeSlug,...parameters};}
   assert(!Object.prototype.hasOwnProperty.call(parameters,'PID')&&!Object.prototype.hasOwnProperty.call(parameters,'MSGID'),'AG integrity: GDM continuation identity belongs to own session');
   const entries={...parameters,PID:this.pid,MSGID:event};
   for(const[k,v]of Object.entries(entries))assert(/^[A-Za-z0-9_]+$/.test(k)&&typeof v==='string'&&!/[&=<\r\n]/.test(v),'AG integrity: GDM own request field');
@@ -3112,7 +3119,7 @@ export class SGGdmSession{
  private async exchange(event:string,parameters:Record<string,any>):Promise<GDMWireStep>{
   assert(!this.closed,'AG integrity: GDM session permanently closed');const payload=this.form(event,parameters),ordinal=++this.ordinal;
   const gameplay=event!=='INIT'&&event!=='REELSTRIP';if(gameplay)this.gameplaySent=true;
-  const ownFeatureFollowup=(ownSquid32735Profile(this.game)||ownGreenMachine32839Profile(this.game)||ownDFDC32709Profile(this.game)||ownTrinity32681Profile(this.game)||ownOriginalUFLSourceProfile(this.game)||this.ownCIProfile||ownNOVAFeatureProfile(this.game)||ownCoinComboProfile(this.game)||ownDragonWheelProfile(this.game))&&['FEATURE_START','FEATURE_PICK','FEATURE_END'].includes(event);
+  const ownFeatureFollowup=((ownLockIt32724Profile(this.game)?.ownLockIt32724FirstStartDiagnostic==='own32724-first-start-diagnostic-v1')||ownSquid32735Profile(this.game)||ownGreenMachine32839Profile(this.game)||ownDFDC32709Profile(this.game)||ownTrinity32681Profile(this.game)||ownOriginalUFLSourceProfile(this.game)||this.ownCIProfile||ownNOVAFeatureProfile(this.game)||ownCoinComboProfile(this.game)||ownDragonWheelProfile(this.game))&&['FEATURE_START','FEATURE_PICK','FEATURE_END'].includes(event);
   const context={event,ordinal,requestKind:event==='FREE_GAME'||ownFeatureFollowup||(event==='ACK'&&ownChain32476Profile(this.game))?'round-follow-up' as const:gameplay?'round-start' as const:'initialization' as const,gameplayRequestHasBeenSent:this.gameplaySent};
   if(this.transport){let step:GDMWireStep;try{step=await this.transport(event,payload);}catch{this.close();throw new SGSourceFault(gameplay?'execution-unknown':'recoverable-initialization',context);}assert(!this.closed,'AG integrity: GDM late response after permanent closure');if(step.httpStatus!==undefined&&step.httpStatus!==200){this.close();throw new SGSourceFault(gameplay?'execution-unknown':'protocol', {...context,httpStatus:step.httpStatus});}return step;}
   const operator=process.env.SG_GDM_OPERATOR_ID;assert(operator&&/^[A-Za-z0-9_-]+$/.test(operator),'AG integrity: GDM own operator configuration missing');
@@ -3135,7 +3142,7 @@ export class SGGdmSession{
  }
  getHandshakeData(){return null;}getBalance(){return this.balance/100;}getFallbackBet(){return this.game.sg.betRaw/100;}
  getSpinParams(){if(ownLockIt32724Profile(this.game)){assert(this.ownLockIt32724InitBound,'AG integrity: own32724 actual Init required');return{...this.game.sg.requestParams,...OwnLockIt32724Data.betFields(this.ownLockIt32724State)};}return {...this.game.sg.requestParams};}getInitialRoundRequest(){return{event:'BET',parameters:this.getSpinParams()};}
- getExactFollowUpRequest(action:string){if(ownSquid32735Profile(this.game)){assert(action==='FREE_SPIN','AG integrity: own32735 next action');const next=this.ownSquid32735Request();assert(next,'AG integrity: own32735 actual next absent');return next;}if(ownGreenMachine32839Profile(this.game)){assert(action==='FREE_SPIN','AG integrity: own32839 next action');const n=this.ownGreenMachine32839Request();assert(n,'AG integrity: own32839 actual next absent');return n;}if(ownDFDC32709Profile(this.game)){assert(action==='FREE_SPIN','AG integrity: own32709 next action');const exact=this.ownDFDC32709Request();assert(exact,'AG integrity: own32709 actual next absent');return exact;}if(ownTrinity32681Profile(this.game)){assert(action==='FREE_SPIN','AG integrity: own32681 next action');const exact=this.ownTrinity32681Request();assert(exact,'AG integrity: own32681 actual next absent');return exact;}if(ownChain32476Profile(this.game)){assert(action==='FREE_SPIN'&&this.ownChain32476State.pending,'AG integrity: own32476 ACK actual next absent');return structuredClone(this.ownChain32476State.pending);}if(ownDragonWheelProfile(this.game)&&this.ownDragonWheelNext){assert(action==='FREE_SPIN','AG integrity: own32497 wheel next action');return structuredClone(this.ownDragonWheelNext);}const coin=ownCoinComboProfile(this.game);if(coin){assert(action==='FREE_SPIN'&&this.ownCoinState.next,'AG integrity: Coin Combo mapped next absent');return structuredClone(this.ownCoinState.next);}const ownOriginal=ownOriginalUFLSourceProfile(this.game);if(ownOriginal){assert(action==='FREE_SPIN','AG integrity: own original UFL next action');const exact=getOwnOriginalUFLNext(this.ownOriginalUFLState);assert(exact,'AG integrity: own original UFL next absent');return exact;}const ufl=ownUFLSourceProfile(this.game);if(ufl){assert(action==='FREE_SPIN'&&this.ownUFLPending,'AG integrity: UFL actual next absent');return{event:'FREE_GAME',parameters:{...ufl.freeRequestParams}};}if(this.ownCIProfile){assert(action==='FREE_SPIN','AG integrity: Samurai CI own next action');const exact=getOwnSamuraiCINext(this.ownCIState,this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams);assert(exact,'AG integrity: Samurai CI own next absent');return exact;}if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){if(ownNOVAFeatureProfile(this.game)){assert(action==='FREE_SPIN','AG integrity: GDM own NOVA feature next action');const exact=getOwnNOVAFeatureNext(this.ownNOVAFeatureState,this.rootFlowFreeRequest());assert(exact,'AG integrity: GDM own NOVA feature next absent');return exact;}assert(action==='FREE_SPIN'&&(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry),'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:this.rootFlowFreeRequest()};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
+ getExactFollowUpRequest(action:string){if(ownLockIt32724Profile(this.game)?.ownLockIt32724FreeTerminalDiagnostic&&this.ownLockIt32724FreeMode){assert(action==='FREE_SPIN','AG integrity: own32724 selected free action');return{event:'FREE_GAME',parameters:OwnLockIt32724Data.betFields(this.ownLockIt32724State)};}if(ownLockIt32724Profile(this.game)?.ownLockIt32724PickerEndDiagnostic&&this.ownLockIt32724PickerPhase){assert(action==='FREE_SPIN','AG integrity: own32724 picker action');const phase=this.ownLockIt32724PickerPhase;return{event:phase==='start'?'FEATURE_START':phase==='pick'?'FEATURE_PICK':'FEATURE_END',parameters:phase==='pick'?{CFG:'0',FP:'1'}:{CFG:'0'}};}if(ownLockIt32724Profile(this.game)?.ownLockIt32724FirstLILDiagnostic&&this.ownLockIt32724PendingFirstLIL){assert(action==='FREE_SPIN','AG integrity: own32724 LIL next action');return{event:'FREE_GAME',parameters:OwnLockIt32724Data.betFields(this.ownLockIt32724State)};}if(ownLockIt32724Profile(this.game)?.ownLockIt32724FirstStartDiagnostic){assert(action==='FREE_SPIN'&&this.ownLockIt32724PendingFirstStart,'AG integrity: own32724 first START actual next absent');return{event:'FEATURE_START',parameters:{CFG:'0'}};}if(ownSquid32735Profile(this.game)){assert(action==='FREE_SPIN','AG integrity: own32735 next action');const next=this.ownSquid32735Request();assert(next,'AG integrity: own32735 actual next absent');return next;}if(ownGreenMachine32839Profile(this.game)){assert(action==='FREE_SPIN','AG integrity: own32839 next action');const n=this.ownGreenMachine32839Request();assert(n,'AG integrity: own32839 actual next absent');return n;}if(ownDFDC32709Profile(this.game)){assert(action==='FREE_SPIN','AG integrity: own32709 next action');const exact=this.ownDFDC32709Request();assert(exact,'AG integrity: own32709 actual next absent');return exact;}if(ownTrinity32681Profile(this.game)){assert(action==='FREE_SPIN','AG integrity: own32681 next action');const exact=this.ownTrinity32681Request();assert(exact,'AG integrity: own32681 actual next absent');return exact;}if(ownChain32476Profile(this.game)){assert(action==='FREE_SPIN'&&this.ownChain32476State.pending,'AG integrity: own32476 ACK actual next absent');return structuredClone(this.ownChain32476State.pending);}if(ownDragonWheelProfile(this.game)&&this.ownDragonWheelNext){assert(action==='FREE_SPIN','AG integrity: own32497 wheel next action');return structuredClone(this.ownDragonWheelNext);}const coin=ownCoinComboProfile(this.game);if(coin){assert(action==='FREE_SPIN'&&this.ownCoinState.next,'AG integrity: Coin Combo mapped next absent');return structuredClone(this.ownCoinState.next);}const ownOriginal=ownOriginalUFLSourceProfile(this.game);if(ownOriginal){assert(action==='FREE_SPIN','AG integrity: own original UFL next action');const exact=getOwnOriginalUFLNext(this.ownOriginalUFLState);assert(exact,'AG integrity: own original UFL next absent');return exact;}const ufl=ownUFLSourceProfile(this.game);if(ufl){assert(action==='FREE_SPIN'&&this.ownUFLPending,'AG integrity: UFL actual next absent');return{event:'FREE_GAME',parameters:{...ufl.freeRequestParams}};}if(this.ownCIProfile){assert(action==='FREE_SPIN','AG integrity: Samurai CI own next action');const exact=getOwnSamuraiCINext(this.ownCIState,this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams);assert(exact,'AG integrity: Samurai CI own next absent');return exact;}if(this.game.sg.ownGDMContract.ownRootNFGFlowOnlyCapture){if(ownNOVAFeatureProfile(this.game)){assert(action==='FREE_SPIN','AG integrity: GDM own NOVA feature next action');const exact=getOwnNOVAFeatureNext(this.ownNOVAFeatureState,this.rootFlowFreeRequest());assert(exact,'AG integrity: GDM own NOVA feature next absent');return exact;}assert(action==='FREE_SPIN'&&(this.rootFlowRemaining!==undefined&&this.rootFlowRemaining>0||this.rootFlowPendingCrossLink||this.rootFlowPendingNOVAEntry),'AG integrity: GDM own root next');return {event:'FREE_GAME',parameters:this.rootFlowFreeRequest()};}if(action==='FREE_SPIN'&&this.ownPendingFree()&&this.game.sg.ownGDMContract.freeBudgetContract)return{event:'FREE_GAME',parameters:{...this.game.sg.ownGDMContract.freeBudgetContract.freeRequestParams}};return undefined;}
  getLastGameRequest(){return this.lastRequest;}getPickParams(){throw new Error('AG integrity: GDM own selection not mapped');}
  isRoundTerminalAction(action:string){return action==='SPIN';}
  private ownExtraStageCounter(p:Record<string,string>,prior:any){
@@ -3470,15 +3477,78 @@ let pendingCrossLink=false;
   }catch(error){this.close();throw error;}
  }
  private async ownLockIt32724Call(event:string,parameters:Record<string,any>|null){
+  const diagnostic=ownLockIt32724Profile(this.game)?.ownLockIt32724FirstStartDiagnostic==='own32724-first-start-diagnostic-v1';
+  const pickerDiagnostic=ownLockIt32724Profile(this.game)?.ownLockIt32724PickerEndDiagnostic==='own32724-picker-START-PICK-END-diagnostic-v1';
+  const freeDiagnostic=ownLockIt32724Profile(this.game)?.ownLockIt32724FreeTerminalDiagnostic==='own32724-selected-free-lifecycle-end-diagnostic-v1';
+  if(freeDiagnostic&&this.ownLockIt32724FreeMode&&event!=='BET'){
+   assert(!this.closed&&this.ownLockIt32724InitBound&&Number.isSafeInteger(this.ownLockIt32724PickerRoundStart),'AG integrity: own32724 free original round absent');
+   assert(event==='FREE_GAME','AG integrity: own32724 actual selected free request');assert.deepStrictEqual(parameters,OwnLockIt32724Data.betFields(this.ownLockIt32724State),'AG integrity: own32724 free current selected DATA');
+   this.lastRequest={event,parameters:{...parameters}};const step=await this.exchange(event,parameters);try{
+    const p=this.decode(step,event),c=ownLockIt32724Profile(this.game),win=gdmInteger(p.TW,'own32724 actual free TW'),end=gdmInteger(p.AB,'own32724 actual free AB');
+    if(step.responseBalance!==undefined)assert(step.responseBalance===end,'AG integrity: own32724 actual free account differs');
+    const selected=OwnLockIt32724Data.applySelectedFree(this.ownLockIt32724State,p,this.ownLockIt32724FreeMode);
+    const terminal=Boolean(selected.ownLifecycleEnd),mode=this.ownLockIt32724FreeMode;
+    if(terminal){
+     assert(((c.ownLockIt32724WholeLILCapture==='own32724-real-LIL-selected-end-whole-round-v1'&&mode==='lil')||(c.ownLockIt32724WholeFGCapture==='own32724-real-FG-selected-end-whole-round-v1'&&mode==='fg')),'AG integrity: own32724 selected lifecycle remains diagnostic before whole-money/replay/Mongo admission');
+     assert(!this.ownLockIt32724State.H$&&!this.ownLockIt32724State.rJ,'AG integrity: own32724 actual LIL accounting pending selector');
+     assert(end===this.ownLockIt32724PickerRoundStart-c.betRaw+win,'AG integrity: own32724 original selected feature whole cash conservation');
+     // Only adapter continuation flags end here. Native retained model fields
+     // are left exactly as the successful response and local SDK close left them.
+     this.ownLockIt32724FreeMode='';this.ownLockIt32724PendingFirstLIL=false;this.ownLockIt32724PendingFirstStart=false;this.ownLockIt32724PickerPhase='';
+    }
+    this.balance=end;const start=this.ownLockIt32724PickerRoundStart;
+    return{NextActionInfo:{nextAction:terminal?'SPIN':'FREE_SPIN'},PlayerBalanceInfo:{preWagerBalance:start/100,balance:end/100,wager:c.betRaw/100,resultAmount:win/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,
+     startBalance:start/100,endBalance:end/100,totalWin:win/100,stepCount:1,msgIds:[event],steps:[{...step,responseBalance:end}],SGWireResponse:p,SGDecodedResponseXML:step.responseXml,
+     SGOwnSDKDecision:{ownSDKFileSHA256:c.ownSDKFileSHA256,ownSelectedFreeNext:selected,actualSelectedTerminal:terminal,wholeLILMoneyValidated:terminal,noSyntheticTerminal:true,wholeFeatureCoverageClaimed:false},money:{startBalanceRaw:start,endBalanceRaw:end,betRaw:c.betRaw,totalWinRaw:win}};
+   }catch(error){this.close();throw error;}
+  }
+  if(pickerDiagnostic&&this.ownLockIt32724PickerPhase&&event!=='BET'){
+   assert(!this.closed&&this.ownLockIt32724InitBound&&Number.isSafeInteger(this.ownLockIt32724PickerRoundStart),'AG integrity: own32724 picker original round not bound');
+   const exact=this.getExactFollowUpRequest('FREE_SPIN');assert(event===exact.event,'AG integrity: own32724 actual picker order');assert.deepStrictEqual(parameters,exact.parameters,'AG integrity: own32724 actual picker DATA');
+   this.lastRequest={event,parameters:{...parameters}};const step=await this.exchange(event,parameters);try{
+    const p=this.decode(step,event),c=ownLockIt32724Profile(this.game);
+    const win=gdmInteger(p.TW,'own32724 actual feature TW'),end=gdmInteger(p.AB,'own32724 actual feature AB');
+    if(step.responseBalance!==undefined)assert(step.responseBalance===end,'AG integrity: own32724 actual feature account differs');
+    OwnLockIt32724Data.applyPickerResponse(this.ownLockIt32724State,p,event);
+    if(event==='FEATURE_END'){if(!freeDiagnostic)throw new Error('AG integrity: own32724 successful FEATURE_END next Bonus/free/LIL unmapped; diagnostic stopped');this.ownLockIt32724FreeMode=OwnLockIt32724Data.selectFreeAfterEND(this.ownLockIt32724State);this.ownLockIt32724PickerPhase='';}
+    if(event!=='FEATURE_END')this.ownLockIt32724PickerPhase=event==='FEATURE_START'?'pick':'end';this.balance=end;
+    const start=this.ownLockIt32724PickerRoundStart;
+    return{NextActionInfo:{nextAction:'FREE_SPIN'},PlayerBalanceInfo:{preWagerBalance:start/100,balance:end/100,wager:c.betRaw/100,resultAmount:win/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,
+     startBalance:start/100,endBalance:end/100,totalWin:win/100,stepCount:1,msgIds:[event],steps:[{...step,responseBalance:end}],SGWireResponse:p,SGDecodedResponseXML:step.responseXml,
+     SGOwnSDKDecision:{ownSDKFileSHA256:c.ownSDKFileSHA256,ownActualPickerNext:this.getExactFollowUpRequest('FREE_SPIN'),noSyntheticTerminal:true,unmappedActualNextStops:true,wholeFeatureCoverageClaimed:false},money:{startBalanceRaw:start,endBalanceRaw:end,betRaw:c.betRaw,totalWinRaw:win}};
+   }catch(error){this.close();throw error;}
+  }
+  if(pickerDiagnostic&&event==='BET'&&!this.ownLockIt32724PickerPhase)this.ownLockIt32724PickerRoundStart=this.balance;
+
+  if(ownLockIt32724Profile(this.game)?.ownLockIt32724FirstLILDiagnostic&&event==='FREE_GAME'){
+   assert(!this.closed&&this.ownLockIt32724InitBound&&this.ownLockIt32724PendingFirstLIL,'AG integrity: own32724 first LIL not selected');
+   assert.deepStrictEqual(parameters,OwnLockIt32724Data.betFields(this.ownLockIt32724State),'AG integrity: own32724 actual first LIL current fields');
+   this.lastRequest={event,parameters:{...parameters}};
+   const step=await this.exchange(event,parameters);try{
+    this.decode(step,event);
+    throw new Error('AG integrity: own32724 successful first LIL FREE_GAME response next unmapped; diagnostic stopped');
+   }catch(error){this.close();throw error;}
+  }
+  if(diagnostic&&event==='FEATURE_START'){
+   assert(!this.closed&&this.ownLockIt32724InitBound&&this.ownLockIt32724PendingFirstStart,'AG integrity: own32724 first START not selected');
+   assert.deepStrictEqual(parameters,{CFG:'0'},'AG integrity: own32724 actual first START fields');
+   this.lastRequest={event,parameters:{...parameters}};
+   const step=await this.exchange(event,parameters);try{
+    this.decode(step,event); // Preserve real successful envelope and journal before stopping.
+    throw new Error('AG integrity: own32724 successful FEATURE_START response next unmapped; diagnostic stopped');
+   }catch(error){this.close();throw error;}
+  }
+  assert(!diagnostic||!this.ownLockIt32724PendingFirstStart&&!this.ownLockIt32724PendingFirstLIL,'AG integrity: own32724 pending first continuation cannot accept another paid request');
   assert(!this.closed&&this.ownLockIt32724InitBound&&event==='BET'&&parameters,'AG integrity: own32724 actual initialized ordinary request required');
   assert.deepStrictEqual(parameters,this.getSpinParams(),'AG integrity: own32724 current selected request');
   const start=this.balance,c=ownLockIt32724Profile(this.game);assert(Number.isSafeInteger(start));this.lastRequest={event,parameters:{...parameters}};
   const step=await this.exchange(event,parameters);try{
-   const p=this.decode(step,event),endProof=OwnLockIt32724Data.applyOrdinaryAndRequireActualEnd(this.ownLockIt32724State,p);
+   const p=this.decode(step,event),endProof=pickerDiagnostic?OwnLockIt32724Data.applyPickerBET(this.ownLockIt32724State,p,c.ownLockIt32724CurrentPaidPickerDATA==='own32724-current-paid-explicit-FS0-request-projection-v1'):c.ownLockIt32724FirstLILDiagnostic?OwnLockIt32724Data.applyFirstLILOrPrior(this.ownLockIt32724State,p):diagnostic?OwnLockIt32724Data.applyFirstStartOrOrdinary(this.ownLockIt32724State,p):OwnLockIt32724Data.applyOrdinaryAndRequireActualEnd(this.ownLockIt32724State,p);
    const win=gdmInteger(p.TW,'own32724 actual TW'),end=gdmInteger(p.AB,'own32724 actual AB');
-   assert(end===start-c.betRaw+win,'AG integrity: own32724 original whole cash conservation');
+   if(!endProof.firstStartPending&&!endProof.firstLILPending)assert(end===start-c.betRaw+win,'AG integrity: own32724 original whole cash conservation');
+   this.ownLockIt32724PendingFirstStart=endProof.firstStartPending===true;this.ownLockIt32724PendingFirstLIL=endProof.firstLILPending===true;if(pickerDiagnostic&&endProof.firstStartPending)this.ownLockIt32724PickerPhase='start';if(freeDiagnostic&&endProof.firstLILPending)this.ownLockIt32724FreeMode='lil';
    if(step.responseBalance!==undefined)assert(step.responseBalance===end,'AG integrity: own32724 captured actual account differs');this.balance=end;
-   return{NextActionInfo:{nextAction:'SPIN'},PlayerBalanceInfo:{preWagerBalance:start/100,balance:end/100,wager:c.betRaw/100,resultAmount:win/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,
+   return{NextActionInfo:{nextAction:this.ownLockIt32724PendingFirstStart||this.ownLockIt32724PendingFirstLIL?'FREE_SPIN':'SPIN'},PlayerBalanceInfo:{preWagerBalance:start/100,balance:end/100,wager:c.betRaw/100,resultAmount:win/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,
     startBalance:start/100,endBalance:end/100,totalWin:win/100,stepCount:1,msgIds:['BET'],steps:[{...step,responseBalance:end}],SGWireResponse:p,SGDecodedResponseXML:step.responseXml,
     SGOwnSDKDecision:{ownSDKFileSHA256:c.ownSDKFileSHA256,own32724OrdinaryLifecycleEnd:endProof,noSyntheticTerminal:true,unmappedActualNextStops:true,wholeFeatureCoverageClaimed:false},money:{startBalanceRaw:start,endBalanceRaw:end,betRaw:c.betRaw,totalWinRaw:win}};
   }catch(error){this.close();throw error;}
@@ -3742,14 +3812,124 @@ d.indexOf("#")&&(d=this.ml.split("#RespinHearts~")[1].split("#")[0]),c=JSON.pars
   // This is the actual ordinary EL->gva->own qa->playFinished->own fG
   // inherited local close->idle route. Idle or accounting isFinal alone is
   // insufficient: every real pending selector below must be inactive first.
-  assert(!m.state.Ik&&!m.ec.ho&&m.ec.Fe===0&&!m.wp.L9&&!m.wp.sY&&!m.wp.I9&&!m.rJ&&!m.pp&&!m.GE&&!(m.Pca>0)&&!(m.xh?.length),'AG integrity: own32724 actual next or terminal unmapped');
+  assert(!m.state.Ik&&!m.ec.ho&&m.ec.Fe===0&&!m.rJ&&!m.pp&&!m.GE&&!(m.Pca>0)&&!(m.xh?.length),'AG integrity: own32724 actual next or terminal unmapped');
   assert(Number.isFinite(m.H$)&&m.H$===0,'AG integrity: own32724 actual retained WC required');
   betFields(m); // A reported change of the fixed capture stake must stop here.
   return {ordinaryLifecycle:'EL/gva/qa/playFinished/fG/local-close/idle',requiresNoFurtherWireRequest:true};
  }
- return {createModel,initialize,betFields,applyOrdinaryAndRequireActualEnd};
+ const firstPickType=((D:any,a:any)=>(function(e){var k="";if(!0===e.wp.L9)return!1===e.wp.sY?k=D.GDM.Gb.ng.TF:0<e.$u.length?0===e.$u[a.un.GB.eG][0].length?k=D.GDM.Gb.ng.ot:0<e.$u[a.un.GB.eG][0][0]&&(k=D.GDM.Gb.ng.Uy):k=e.wp.I9?D.GDM.Gb.ng.Uy:
+D.GDM.Gb.ng.ot,k}))({GDM:{Gb:{ng:{TF:'FEATURE_START',ot:'FEATURE_PICK',Uy:'FEATURE_END'}}}},{un:{GB:{eG:0}}});
+ function applyFirstStartOrOrdinary(m:any,p:any):any{
+  const actualWC=p.WC===undefined?null:list(p.WC,'|');
+  if(!actualWC||parseInt(actualWC[1])===0)return applyOrdinaryAndRequireActualEnd(m,p);
+  const gs=p.GSD===undefined?undefined:ownGDMFields(p.GSD,'#','~');
+  const bn=gs===undefined?null:{qY:opt(gs,'EG',integer),TLa:opt(gs,'Bonus',integer),GE:opt(gs,'InRespin',integer),rJ:opt(gs,'LILTriggered',integer),pp:opt(gs,'InLIL',integer),Ik:opt(gs,'GCT',bool,false)};
+  const response:any={jja:false,O3:false,eYa,cYa,bn,ml:p.GSD,z_:p.WC===undefined?null:list(p.WC,'|'),
+   Ik:opt(p,'GCT',bool,false),X7:opt(p,'NFG',integer,0),TTa:opt(p,'IFG',bool,false),qQa:opt(p,'CFGG',integer,0),qpa:opt(p,'FGT',integer,0),
+   LP:opt(p,'LB',integer),Ij:opt(p,'BPL',integer),eO:opt(p,'BPR',integer),
+   xh:p.FID===undefined?null:list(p.FID,'|').map((s:string)=>integer(s,'FID')),Sna:opt(p,'CFGG',integer)};
+  // This diagnostic binds only the true first START branch. FS_0 is the
+  // actual started selector, not a display counter. Any started picker remains held.
+  if(p.FS_0!==undefined)assert(bool(p.FS_0,'FS_0')===false,'AG integrity: own32724 started picker next unmapped');
+  Fi.call(response,m);
+  assert(m.H$&&m.ec.Nx===0&&m.wp.L9===true&&m.wp.sY===false,'AG integrity: own32724 first START selector not bound');
+  assert(firstPickType(m)==='FEATURE_START','AG integrity: own32724 actual first START source selector');
+  betFields(m);
+  return {firstStartPending:true,actualOwnRequest:'FEATURE_START',requiresNoFurtherWireRequest:false,wholeFeatureCoverageClaimed:false};
+ }
+ function applyFirstLILOrPrior(m:any,p:any):any{
+  if(!(opt(p,'NFG',integer,0)>0&&opt(p,'FGT',integer,0)===3))return applyFirstStartOrOrdinary(m,p);
+  const gs=p.GSD===undefined?undefined:ownGDMFields(p.GSD,'#','~');
+  const bn=gs===undefined?null:{qY:opt(gs,'EG',integer),TLa:opt(gs,'Bonus',integer),GE:opt(gs,'InRespin',integer),rJ:opt(gs,'LILTriggered',integer),pp:opt(gs,'InLIL',integer),Ik:opt(gs,'GCT',bool,false)};
+  const response:any={jja:false,O3:false,eYa,cYa,bn,ml:p.GSD,z_:p.WC===undefined?null:list(p.WC,'|'),
+   Ik:opt(p,'GCT',bool,false),X7:opt(p,'NFG',integer,0),TTa:opt(p,'IFG',bool,false),qQa:opt(p,'CFGG',integer,0),qpa:opt(p,'FGT',integer,0),
+   LP:opt(p,'LB',integer),Ij:opt(p,'BPL',integer),eO:opt(p,'BPR',integer),
+   xh:p.FID===undefined?null:list(p.FID,'|').map((s:string)=>integer(s,'FID')),Sna:opt(p,'CFGG',integer)};
+  if(!(bn?.rJ))return applyFirstStartOrOrdinary(m,p);
+  assert(!Object.keys(p).some(k=>/^(?:FPM|FS|NFR|CFR|CFP)_/.test(k)),'AG integrity: own32724 LIL concurrent picker next unmapped');
+  Fi.call(response,m);
+  assert(m.H$===0&&m.rJ===true&&m.ec.Nx===3&&m.ec.Fe>0&&!m.state.Ik&&m.xh?.[0]===3,'AG integrity: own32724 actual first LilSpin/prePlay selector not bound');
+  betFields(m);
+  return {firstLILPending:true,actualOwnRequest:'FREE_GAME',requiresNoFurtherWireRequest:false,wholeFeatureCoverageClaimed:false};
+ }
+ const ownIndexedDecode=(()=>{
+ const a:any={O:{ya:function(a){return null!=a&&!isNaN(a)&&("number"===typeof a||a instanceof Number)}},vm:{},Qd:{so:{Ig:0}},cz:class extends Error{constructor(message:any,cause?:any){super(message);}}};
+ a.as=function(a,l,k=null){return l(a)?a:k};a.vm.ya=function(c,b){void 0===b&&(b=null);return""==c?b:a.as(Number(c),a.O.ya,b)};
+ const e:any={vc:{error:()=>{throw new Error('AG integrity: own32724 malformed actual indexed picker DATA');},warn:()=>{}}},B:any={Th:{Pk:0,U0:1,mga:2},U:{Cf:'|',Lj:1,kJ:'>',wP:false}},y=(a:any,...rest:any[])=>Object.assign(a,...rest);
+ function h(a:any,b:any){return Error('Failed to read '+a+' as '+b);}
+ function d(a:any,b:any){return Error('Invalid '+b);}
+ function n(b){b=b?y(y({},n.U),b):n.U;b.RN=b.RN.map(function(a){return a.toLowerCase()});b.W5=b.W5.map(function(a){return a.toLowerCase()});return{oo:function(a){if(!0===
+a)return b.S_a;if(!1===a)return b.Q_a;throw d(a,"boolean");},co:function(d){var c=a.vm.ya(d,null);if(null!=c)return 0!==c;c=d.toLowerCase();if(-1!==b.W5.indexOf(c))return!0;if(-1!==b.RN.indexOf(c))return!1;throw h(d,"boolean");}}}
+ n.U={S_a:'1',Q_a:'0',W5:['true','y','yes'],RN:['false','n','no']};
+ function l(b,h){var c=h?y(y({},B.U),h):B.U;return{oo:function(h){if(!a.O.array(h))throw d(h,"boolean");h=h.map(function(a){return b.oo(a)});return u(h,c)},co:function(a){return w(a,c).map(function(a){return b.co(a)})}}}
+ function u(a,b){return p(t(a,b),b)}function w(a,b){a:switch(a=
+a.split(b.Cf),b.Lj){case B.Th.Pk:break a;case B.Th.mga:a.shift();break a;case B.Th.U0:a.pop();break a;default:throw Error("Invalid strategy "+b.Lj);}if(b.wP){for(var d=[],h=0;h<a.length;h++){var c=a[h],f=c.indexOf(b.kJ);-1===f?(f=a.indexOf(c),e.vc.warn("Index missing from supposedly indexed string "+c+"; using existing index "+f),d[f]=c):d[c.substr(0,f)]=c.substr(f+b.kJ.length)}b=d}else b=a;return b}function p(a,b){switch(b.Lj){case B.Th.Pk:return a.join(b.Cf);case B.Th.mga:return a.map(function(a){return""+
+b.Cf+a}).join("");case B.Th.U0:return a.map(function(a){return""+a+b.Cf}).join("");default:throw Error("Invalid strategy "+b.Lj);}}function t(a,b){return b.wP?a.map(function(a,d){return""+d+b.kJ+a}):a}
+ const numberType={co:function(b){if(""===b.trim())throw h(b,"number");var d=a.vm.ya(b,null);if(!a.O.ya(d))throw h(b,"number");return d}},boolType=(n as any)();
+ const x:any={get:()=>({$u:{key:'FPM_{#}',Vu:true,type:l(l(numberType,{Cf:';'}),{Cf:'|'})},Woa:{key:'FS_{#}',Vu:true,type:boolType}})},b:any=()=> 'own32724 indexed property';
+ function c(d,h){var c=x.get(d,a.Qd.so.Ig),f;for(f in c){var n=c[f];if(n)try{var k=n.key;if(n.Vu){var l=k.indexOf("{#}"),r=k.substr(0,l),u=k.substr(l+3),w=d[f]=[],t;for(t in h)if(t.substr(0,l)===r){var p=parseInt(t.substr(l));
+if(a.O.ya(p)&&t.substr(l+(""+p).length)===u){var q=h[t];try{w[p]=n.type.co(q)}catch(Ga){throw new a.cz("Could not deserialise '"+q+"'",Ga);}}}if(n.required&&0===w.length)throw Error("Property not found in message");}else if(k in h){q=h[k];try{d[f]=n.type.co(q)}catch(Ga){throw new a.cz("Could not deserialise '"+q+"'",Ga);}}else if(null!=n.defaultValue)d[f]=n.defaultValue;else{if(n.required)throw Error("Property not found in message");d[f]=null}}catch(Ga){var v=b(f,n,!0);if(n.required)throw new a.cz(v,
+Ga);n.silent||(e.vc.error(v,Ga),d[f]=null)}}}
+ return function(p:any){const response:any={};c(response,p);return response;};
+ })();
+ function applyPickerFields(m:any,p:any){
+  const gs=p.GSD===undefined?undefined:ownGDMFields(p.GSD,'#','~');
+  const bn=gs===undefined?null:{qY:opt(gs,'EG',integer),TLa:opt(gs,'Bonus',integer),GE:opt(gs,'InRespin',integer),rJ:opt(gs,'LILTriggered',integer),pp:opt(gs,'InLIL',integer),Ik:opt(gs,'GCT',bool,false)};
+  const response:any={jja:false,O3:false,eYa,cYa,bn,ml:p.GSD,z_:p.WC===undefined?null:list(p.WC,'|'),
+   Ik:opt(p,'GCT',bool,false),X7:opt(p,'NFG',integer,0),TTa:opt(p,'IFG',bool,false),qQa:opt(p,'CFGG',integer,0),qpa:opt(p,'FGT',integer,0),
+   LP:opt(p,'LB',integer),Ij:opt(p,'BPL',integer),eO:opt(p,'BPR',integer),
+   xh:p.FID===undefined?null:list(p.FID,'|').map((s:string)=>integer(s,'FID')),Sna:opt(p,'CFGG',integer)};
+  Object.assign(response,ownIndexedDecode(p));Fi.call(response,m);betFields(m);
+ }
+ function applyPickerBET(m:any,p:any,currentPaidDATA=false):any{
+  const wc=p.WC===undefined?null:list(p.WC,'|');
+  if(!wc||parseInt(wc[1])===0)return applyFirstLILOrPrior(m,p);
+  applyPickerFields(m,p);
+  // The original decoder deliberately retains historical wp fields when FS
+  // decodes false. For this NEW paid request only, use the actual decoded
+  // current FS false in the native RF request projection. Never mutate wp,
+  // infer false from absence, or manufacture a successful START/PICK ACK.
+  const actual=ownIndexedDecode(p),requestModel=currentPaidDATA&&actual.Woa[0]===false?{...m,wp:{...m.wp,sY:actual.Woa[0]}}:m;
+  assert(m.H$&&m.ec.Nx===0&&m.wp.L9===true&&firstPickType(requestModel)==='FEATURE_START','AG integrity: own32724 actual picker BET next unmapped');
+  return {firstStartPending:true,actualOwnRequest:'FEATURE_START',currentPaidFS0:actual.Woa[0],historicalModelUnchanged:true,requiresNoFurtherWireRequest:false,wholeFeatureCoverageClaimed:false};
+ }
+ function applyPickerResponse(m:any,p:any,event:string){
+  applyPickerFields(m,p);
+  if(event==='FEATURE_START'){
+   // Own gCa.N_a successful expected-message callback.
+   m.wp.sY=true;m.wp.I9=false;
+   assert(firstPickType(m)==='FEATURE_PICK','AG integrity: own32724 successful START actual next unmapped');
+  }else if(event==='FEATURE_PICK'){
+   // Own eCa.vSa successful expected-message callback. Empty/unbound FPM
+   // must not be forced into END merely because presentation changed scene.
+   m.wp.I9=true;
+   assert(firstPickType(m)==='FEATURE_END','AG integrity: own32724 successful PICK actual next unmapped');
+  }else assert(event==='FEATURE_END','AG integrity: own32724 unknown picker response');
+ }
+ function selectFreeAfterEND(m:any):'fg'|'lil'{
+  assert(m.Pca===1||m.Pca===2,'AG integrity: own32724 actual END Bonus next unmapped');
+  assert(!m.state.Ik&&(m.Pca===1?m.ec.Fe>0:!!m.ec.Fe),'AG integrity: own32724 actual Bonus intro free selector absent');
+  betFields(m);return m.Pca===1?'fg':'lil';
+ }
+ function applySelectedFree(m:any,p:any,mode:'fg'|'lil'):any{
+  applyPickerFields(m,p);
+  assert(!m.GE,'AG integrity: own32724 free respin transition unmapped');
+  if(mode==='fg'){
+   // Own EL: no WC picker; IFG and NFG==0 then FID3 routes LIL,
+   // otherwise own FGTransitionOut -> bigWin/qa/playFinished/local close.
+   if(!m.H$&&m.ec.ho&&m.ec.Fe===0&&Array.isArray(m.xh)&&m.xh[0]!==3&&!m.rJ&&!m.pp)return{ownLifecycleEnd:'FGTransitionOut/qa/playFinished/local-close/idle'};
+   assert(m.ec.Fe>0&&!m.state.Ik&&!m.rJ&&!m.pp&&!(m.H$&&m.ec.Nx===0),'AG integrity: own32724 FG actual next or terminal unmapped');
+  }else{
+   // Own LilSpinFinished -> LilResult only on IFG && NFG==0 && FID3.
+   // Source post-close O6 can return to LilFormChain while InLIL && !EG.
+   if(m.ec.ho&&m.ec.Fe===0&&Array.isArray(m.xh)&&m.xh[0]===3&&!m.rJ&&(!m.pp||m.qY))return{ownLifecycleEnd:'LilResult/LilTransitionOut/qa/playFinished/local-close/idle'};
+   assert(!(m.ec.ho&&m.ec.Fe===0)&&!!m.ec.Fe&&!m.state.Ik&&!(m.H$&&m.ec.Nx===0),'AG integrity: own32724 LIL actual next or terminal unmapped');
+  }
+  return{actualOwnRequest:'FREE_GAME',ownMode:mode,requiresNoFurtherWireRequest:false};
+ }
+ return {createModel,initialize,betFields,applyOrdinaryAndRequireActualEnd,applyFirstStartOrOrdinary,applyFirstLILOrPrior,applyPickerBET,applyPickerResponse,selectFreeAfterEND,applySelectedFree};
 })();
 export function ownLockIt32724Profile(game:AGGameConfig){const c=game.sg?.ownGDMContract,b=c?.ownLockIt32724OrdinaryData;if(b===undefined)return undefined;
  assert(game.provider==='sg'&&game.gameId==='32724'&&game.dbName==='sg_lockitlinkdiamonds96'&&game.backendId==='lockitlinkdiamonds96'&&game.sg.protocol==='gdm'&&game.sg.endpoint==='https://ogs-gdm-usnj.nyxop.net/nextgen/'&&game.sg.runtimeGameId===33124&&game.sg.runtimeSlug==='lockitlinkdiamonds96','AG integrity: own32724 exact identity');
  assert(c.version==='own-LockIt32724-ordinary-input-real-end-v1'&&c.ownSDKFileSHA256===ownLockIt32724Binding.SDKFileSHA256&&c.betRaw===250&&game.sg.betRaw===250&&c.balanceScale===1&&c.winScale===1,'AG integrity: own32724 exact contract');
- assert.deepStrictEqual(b,ownLockIt32724Binding,'AG integrity: own32724 fixed source binding');assert.deepStrictEqual(game.sg.requestParams,{GN:'lockitlinkdiamonds96',AP:'false',BPL:'5',LB:'50'},'AG integrity: own32724 actual paid input');return c;}
+ if(c.ownLockIt32724CurrentPaidPickerDATA!==undefined)assert(c.ownLockIt32724CurrentPaidPickerDATA==='own32724-current-paid-explicit-FS0-request-projection-v1'&&c.ownLockIt32724WholeFGCapture,'AG integrity: own32724 exact current paid picker DATA');if(c.ownLockIt32724WholeFGCapture!==undefined)assert(c.ownLockIt32724WholeFGCapture==='own32724-real-FG-selected-end-whole-round-v1'&&c.ownLockIt32724WholeLILCapture,'AG integrity: own32724 exact whole FG binding');if(c.ownLockIt32724WholeLILCapture!==undefined)assert(c.ownLockIt32724WholeLILCapture==='own32724-real-LIL-selected-end-whole-round-v1'&&c.ownLockIt32724FreeTerminalDiagnostic,'AG integrity: own32724 exact whole LIL binding');if(c.ownLockIt32724FreeTerminalDiagnostic!==undefined)assert(c.ownLockIt32724FreeTerminalDiagnostic==='own32724-selected-free-lifecycle-end-diagnostic-v1'&&c.ownLockIt32724PickerEndDiagnostic,'AG integrity: own32724 exact selected free diagnostic binding');if(c.ownLockIt32724PickerEndDiagnostic!==undefined)assert(c.ownLockIt32724PickerEndDiagnostic==='own32724-picker-START-PICK-END-diagnostic-v1'&&c.ownLockIt32724FirstStartDiagnostic&&c.ownLockIt32724CommonWrapperData,'AG integrity: own32724 exact picker diagnostic binding');if(c.ownLockIt32724CommonWrapperData!==undefined)assert.deepStrictEqual(c.ownLockIt32724CommonWrapperData,{"version":"own32724-parent-wrapper-common-GN-v1","sourceFileSHA256":"38919c7ada28bdf8e665630347ffaf78bc5ae60d5e2e006d7ce97e56656d280c","gameNameFromOwnRuntimeSlug":true},'AG integrity: own32724 exact common wrapper binding');assert(c.ownLockIt32724FirstLILDiagnostic===undefined||c.ownLockIt32724FirstLILDiagnostic==='own32724-first-LIL-diagnostic-v1','AG integrity: own32724 LIL diagnostic binding');assert(c.ownLockIt32724FirstStartDiagnostic===undefined||c.ownLockIt32724FirstStartDiagnostic==='own32724-first-start-diagnostic-v1','AG integrity: own32724 diagnostic binding');assert.deepStrictEqual(b,ownLockIt32724Binding,'AG integrity: own32724 fixed source binding');assert.deepStrictEqual(game.sg.requestParams,{GN:'lockitlinkdiamonds96',AP:'false',BPL:'5',LB:'50'},'AG integrity: own32724 actual paid input');return c;}
