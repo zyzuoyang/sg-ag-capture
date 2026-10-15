@@ -14475,3 +14475,65 @@ games:
   - {"provider":"sg","gameId":"32681","name":"Trinity Pots Rising Wilds","dbName":"sg_trinitypotsrisingwilds96","backendId":"trinitypotsrisingwilds96","sg":{"protocol":"gdm","endpoint":"https://ogs-gdm-usnj.nyxop.net/nextgen/","runtimeGameId":33094,"runtimeSlug":"trinitypotsrisingwilds96","betRaw":108,"requestParams":{"GN":"trinitypotsrisingwilds96","AP":"false","BPR":"108","RB":"5"},"ownGDMContract":{"version":"own32681-next-end-only-v1","gameId":"32681","dbName":"sg_trinitypotsrisingwilds96","runtimeGameId":33094,"runtimeSlug":"trinitypotsrisingwilds96","fixedGitCommit":"885f862bcc04841406820a932ef14c38c7759f1d","ownSDKFileSHA256":"b6e937e7a6bcb41093a61c653c10e02212cb1a8640b44d410c98d41ad70e4036","betRaw":108,"balanceScale":1,"winScale":1,"ownTrinity32681NextOnly":{"version":"own32681-next-end-only-v1","gameId":"32681","dbName":"sg_trinitypotsrisingwilds96","runtimeGameId":33094,"runtimeSlug":"trinitypotsrisingwilds96","ownSDKFileSHA256":"b6e937e7a6bcb41093a61c653c10e02212cb1a8640b44d410c98d41ad70e4036","ownPointProofsSHA256":{"own32681-first-pending-caller-points.json":"7c407ff19c831bf5d7771a8e55daeb7dbd7e777fd184d0ed24be6c0a98f6abf4","own32681-dispatch-callback-points.json":"1de29f87ed9522528dc3e2e4b24ac713972255a058fc82698b9ce7ccf25e5b7c","own32681-response-request-points.json":"5351bdab2fb2501b76817117283c80db6c2a49d6008cc34705f2be047c234d0b","own32681-stake-choice-followup-points.json":"643d10ab65aca381c8f209a7a6ea92f8a4d854b7274d47c27786f64abbebf783","own32681-Gj-priority-point.json":"ddf184df2e68dee8c00a6025bd2af78360456cde42c0164f61ba3336321b3f3d"},"paidRequestParams":{"GN":"trinitypotsrisingwilds96","AP":"false","BPR":"108","RB":"5"},"freeSerializedCMFields":["BPR","RB"],"freeRequestGNConnectionIdentity":"trinitypotsrisingwilds96","featurePhysicalDomain":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14],"featureCFG":2,"callerRequestUnresolved":false,"noFREEAPBorrowed":true,"GNScopeDecisionSHA256":"2191394492df46a0bcf2b562e26a26c145abd97e0bd6b37bf1076eac34f574ba","actualProviderACKsInNewAffectedScope":0}}}}
   - {"provider":"sg","gameId":"32709","name":"DFD Cash Grab Dragons","dbName":"sg_dfdcgdragons96","backendId":"dfdcgdragons96","sg":{"protocol":"gdm","endpoint":"https://ogs-gdm-usnj.nyxop.net/nextgen/","runtimeGameId":33109,"runtimeSlug":"dfdcgdragons96","betRaw":88,"requestParams":{"GN":"dfdcgdragons96","AP":"false","BPR":"88","RB":"5"},"ownGDMContract":{"version":"own32709-next-end-only-v1","gameId":"32709","dbName":"sg_dfdcgdragons96","runtimeGameId":33109,"runtimeSlug":"dfdcgdragons96","fixedGitCommit":"885f862bcc04841406820a932ef14c38c7759f1d","ownSDKFileSHA256":"3a7501700677dfd5be2ba8f5274b62e7efed14a8a44a51230b9805c1f0c82d35","betRaw":88,"balanceScale":1,"winScale":1,"ownDFDC32709NextOnly":{"version":"own32709-next-end-only-v1","gameId":"32709","dbName":"sg_dfdcgdragons96","runtimeGameId":33109,"runtimeSlug":"dfdcgdragons96","ownSDKFileSHA256":"3a7501700677dfd5be2ba8f5274b62e7efed14a8a44a51230b9805c1f0c82d35","ownPointProofSHA256":"57040356602aed95b5f28d8222e9bc0ef88e1a47acdde776ad64881be10e87cf","paidRequestParams":{"GN":"dfdcgdragons96","AP":"false","BPR":"88","RB":"5"},"freeSerializedFields":["BPR","RB"],"featureFields":["CFG","FP"],"noFreeAPBorrowed":true,"fixtureProviderACKCredit":0,"ownIndexAndGAProofSHA256":"02fe7125f9a88fa44745e5f6a28d0017271f8ce32050d2a5a29835e480118f38","GAIsNotMandatoryNext":true}}}}
   - {"provider":"sg","gameId":"32839","name":"The Green Machine Bingo","dbName":"sg_greenmachinebingo96","backendId":"greenmachinebingo96","sg":{"protocol":"gdm","endpoint":"https://ogs-gdm-usnj.nyxop.net/nextgen/","runtimeGameId":33199,"runtimeSlug":"greenmachinebingo96","betRaw":100,"requestParams":{"GN":"greenmachinebingo96","BPL":"100","LB":"1"},"ownGDMContract":{"version":"own32839-next-end-only-v1","gameId":"32839","dbName":"sg_greenmachinebingo96","runtimeGameId":33199,"runtimeSlug":"greenmachinebingo96","fixedGitCommit":"885f862bcc04841406820a932ef14c38c7759f1d","ownSDKFileSHA256":"b34673b20564a469357b2f8349844c46bc7ce4c77c228e49e5163aa115c8d759","betRaw":100,"balanceScale":1,"winScale":1,"ownGreenMachine32839NextOnly":{"version":"own32839-next-end-only-v1","gameId":"32839","dbName":"sg_greenmachinebingo96","runtimeGameId":33199,"runtimeSlug":"greenmachinebingo96","ownSDKFileSHA256":"b34673b20564a469357b2f8349844c46bc7ce4c77c228e49e5163aa115c8d759","ownPointProofSHA256":"65959ebe6344f34d6a7fe8ebd91c483a243f84ad334658a2f023b837c3ea4899","paidRequestParams":{"GN":"greenmachinebingo96","BPL":"100","LB":"1"},"freeSerializedFields":["BPL","LB"],"featureFields":["CFG","FP"],"fixtureProviderACKCredit":0,"missingAmountsNeverDefaulted":true,"priorIFGNeverLatched":true}}}}
+  - provider: sg
+    gameId: '32735'
+    name: Squid Game Gganbu
+    dbName: sg_squidgamegganbu96
+    backendId: squidgamegganbu96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33135
+      runtimeSlug: squidgamegganbu96
+      betRaw: 108
+      requestParams:
+        BPR: '108'
+        GN: squidgamegganbu96
+        RB: '20'
+      ownGDMContract:
+        version: own32735-Ho-next-and-own-FREE-v1
+        gameId: '32735'
+        dbName: sg_squidgamegganbu96
+        runtimeGameId: 33135
+        runtimeSlug: squidgamegganbu96
+        betRaw: 108
+        balanceScale: 1
+        winScale: 1
+        ownSDKFileSHA256: 23c8a70ca4e89cf21da47427f579feb6d986a1cde33694e9817d3c93eb0044dc
+        fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
+        ownSquid32735NextOnly:
+          version: own32735-Ho-next-and-own-FREE-v1
+          gameId: '32735'
+          dbName: sg_squidgamegganbu96
+          runtimeGameId: 33135
+          runtimeSlug: squidgamegganbu96
+          ownSDKFileSHA256: 23c8a70ca4e89cf21da47427f579feb6d986a1cde33694e9817d3c93eb0044dc
+          paidRequestParams:
+            BPR: '108'
+            GN: squidgamegganbu96
+            RB: '20'
+          ownFreeRB: 5
+          ownSelectedInputType: actual-INIT-Total-menu
+          actualNewProviderACKs: 0
+          noSyntheticTerminal: true
+          noOldPOSTReplay: true
+          ownComponentSHA256:
+            own32735-Ho-control-private.mjs: 259f62a77f3dbdca8e5020cb557158f13daab3bee556266a5eef4d10888eb711
+            own32735-selected-total-private.mjs: 5bc4df82ce7f4f71afa050c725230095d10ea8c4c26db0035c60a97699bbde0c
+            own32735-feature-wire-input-private.mjs: 4b0d1ccf7123dff0a46182f63b61949cf1bc62e4ef821e1fa9ed0711251c6e25
+            own32735-raw-control-private.mjs: 1e1dbd3357edf365cc92234ea3752e092c42dbf5ebd275d7f3bd001845f637b6
+            own32735-init-selection-private.mjs: c2a53e2faf46c78b9601438d0ccbc30a5a204d80519289fb10d7b0146c652791
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
