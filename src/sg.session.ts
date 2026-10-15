@@ -605,12 +605,25 @@ export function validateOwnDCFlow(game: AGGameConfig, g: any, first: boolean, pr
    'AG integrity: SG DC base continuation needs mapping');
  if(g.BGInfo.isBigBet !== undefined)
   assert(g.BGInfo.isBigBet === '0', 'AG integrity: SG DC extra wager needs mapping');
+ // The own client decodes/consumes the main ReelResults, BGInfo and FSInfo.
+ // This passive reel container neither selects recovery nor supplies money.
+ const recovery = g.BaseGameRecoveryInfo;
+ if(recovery !== undefined) {
+  assert(envelope?.Header?.isRecovering === 'N'
+   && recovery && typeof recovery === 'object' && !Array.isArray(recovery)
+   && Object.keys(recovery).length === 1 && Object.prototype.hasOwnProperty.call(recovery, 'ReelResults')
+   && recovery.ReelResults && typeof recovery.ReelResults === 'object'
+   && !Array.isArray(recovery.ReelResults),
+   'AG integrity: SG DC recovery container needs mapping');
+ }
  const unmapped = new Set(['PickerInfo','DecisionInfo','Feature','BonusData','BonusWheel',
   'BFInfo','IRFInfo','NextActionInfo','BaseGameRecoveryInfo','JackpotInfo','GambleInfo']);
  const check = (value: any): void => {
   if(Array.isArray(value)) { value.forEach(check); return; }
   if(value && typeof value === 'object') for(const [key, child] of Object.entries(value)) {
-   assert(!unmapped.has(key), 'AG integrity: SG DC actual next control needs mapping');
+   const ownPaidReels = key === 'BaseGameRecoveryInfo' && value === g
+    && recovery !== undefined && child === recovery;
+   assert(ownPaidReels || !unmapped.has(key), 'AG integrity: SG DC actual next control needs mapping');
    if(child && typeof child === 'object') check(child);
   }
  };
