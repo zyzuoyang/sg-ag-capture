@@ -567,6 +567,83 @@ function ownPositionNumbers(value:any,count:number|undefined,label:string):numbe
  if(count!==undefined)assert(numbers.length===count,`AG integrity: SG ${label} position count`);
  return numbers;
 }
+// Private FIRST rule delivery. No transport, scheduler, capture or DB authority.
+// Insert after the existing imports/helpers in A's isolated sg.session.ts.
+export function ownDCFlowBinding(game: AGGameConfig) {
+ const c = game.sg.ownDCNextEndContract;
+ assert(game.provider === 'sg' && game.gameId === '32762' && game.dbName === 'sg_desertcats'
+  && game.sg.protocol === 'wms' && game.sg.runtimeGameId === 32984
+  && game.sg.header.gameID === '20315' && game.sg.header.gameCodeRGI === 'desertcats'
+  && game.sg.betRaw === 200, 'AG integrity: SG DC own identity');
+ assert(c?.version === 'own-desert-cats-real-next-end-v2'
+  && c.ownSDKFileSHA256 === '63f9a390532c8df0779ab95c89f689f817569c23fb7739dbbc6ff73d8c28193d'
+  && c.sourceMethodsSHA256 === '79e5ce4a3321b551f8b1d91eee07c925e4627d5253439ce6321cc368102e8ae8'
+  && c.cashPath === 'BGInfo/totalWagerWin' && c.rawRequestResponsePreserved
+  && c.originalAGMoneyReplayMongoRequired && c.noSyntheticTerminal && c.unmappedFlowStops
+  && c.noOldUnknownPOSTReplay, 'AG integrity: SG DC own source contract');
+ assert(c.logicRequestDataXML === '<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData><Stake total="200"/>'
+  && c.endRequestDataXML === ''
+  && JSON.stringify(game.sg.stake) === JSON.stringify({total:'200'})
+  && JSON.stringify(game.sg.freeStake) === JSON.stringify({total:'200'})
+  && game.sg.desertCatsContract === undefined && game.sg.logicPaylineCount === undefined,
+  'AG integrity: SG DC explicit own Logic DATA');
+ return c;
+}
+
+export function validateOwnDCFlow(game: AGGameConfig, g: any, first: boolean, previousFree: any, envelope: any) {
+ ownDCFlowBinding(game);
+ assert(g && typeof g === 'object' && !Array.isArray(g)
+  && g.BGInfo && typeof g.BGInfo === 'object' && !Array.isArray(g.BGInfo),
+  'AG integrity: SG DC actual result cash missing');
+ assert(integer(g.stake, 'DC actual wager') === game.sg.betRaw, 'AG integrity: SG DC changed wager');
+ const win = integer(g.BGInfo.totalWagerWin, 'DC actual cumulative wager cash');
+ // UI max state assignment is not established by the retained source bundle.
+ // Do not turn a new cap/recovery/interactive response into an assumed close.
+ assert(g.BGInfo.isMaxWin === '0', 'AG integrity: SG DC maximum-win state needs mapping');
+ if(g.BGInfo.baseGameSpinsRemaining !== undefined)
+  assert(integer(g.BGInfo.baseGameSpinsRemaining, 'DC actual base remaining') === 0,
+   'AG integrity: SG DC base continuation needs mapping');
+ if(g.BGInfo.isBigBet !== undefined)
+  assert(g.BGInfo.isBigBet === '0', 'AG integrity: SG DC extra wager needs mapping');
+ const unmapped = new Set(['PickerInfo','DecisionInfo','Feature','BonusData','BonusWheel',
+  'BFInfo','IRFInfo','NextActionInfo','BaseGameRecoveryInfo','JackpotInfo','GambleInfo']);
+ const check = (value: any): void => {
+  if(Array.isArray(value)) { value.forEach(check); return; }
+  if(value && typeof value === 'object') for(const [key, child] of Object.entries(value)) {
+   assert(!unmapped.has(key), 'AG integrity: SG DC actual next control needs mapping');
+   if(child && typeof child === 'object') check(child);
+  }
+ };
+ assert(envelope && envelope.GameResult === g, 'AG integrity: SG DC actual envelope/result binding');
+ check(envelope);
+ // DC.parseGameResult calls FreeSpins.clear before its conditional FS parser.
+ // That source clear writes remaining=null, not a synthetic zero counter.
+ // With no actual FS selector, initial ordinary play can request real EndGame.
+ if(g.FSInfo === undefined) {
+  assert(first && previousFree === undefined, 'AG integrity: SG DC active free selector disappeared');
+  const actualSpins = g.ReelResults?.ReelSpin;
+  const spins = Array.isArray(actualSpins) ? actualSpins : actualSpins ? [actualSpins] : [];
+  assert(spins.length > 0 && spins.every((s:any) => s && typeof s === 'object'
+   && s.freeSpin === 'N' && s.bonusAwarded === 'N'),
+   'AG integrity: SG DC ordinary result has an unmapped feature selector');
+  return {win, free:undefined, next:'PLAY'};
+ }
+ assert(g.FSInfo && typeof g.FSInfo === 'object' && !Array.isArray(g.FSInfo),
+  'AG integrity: SG DC invalid FS selector');
+ const f = g.FSInfo;
+ assert(f.isMaxWin === '0', 'AG integrity: SG DC free maximum-win state needs mapping');
+ const played = integer(f.freeSpinNumber, 'DC actual free played');
+ const total = integer(f.freeSpinsTotal, 'DC actual free total');
+ assert(played <= total, 'AG integrity: SG DC invalid free remaining');
+ if(first) assert(previousFree === undefined && played === 0, 'AG integrity: SG DC initial free recovery needs mapping');
+ else assert(previousFree && Number.isSafeInteger(previousFree.freeSpinsRemaining)
+  && previousFree.freeSpinsRemaining > 0, 'AG integrity: SG DC Logic without an active own selector');
+ const free = {freeSpinsTotal:total, freeSpinsPlayed:played, freeSpinsRemaining:total-played,
+  accumulativeWin:win/100};
+ // PLAY requests the original EndGame; only its actual ACK can yield SPIN.
+ return {win, free, next:free.freeSpinsRemaining > 0 ? 'FREE_SPIN' : 'PLAY'};
+}
+
 function ownHealthyPaidBinding(game:AGGameConfig):'desert'|'jinji' {
  if(game.sg.desertCatsContract) {
   assert(game.gameId==='32762'&&game.dbName==='sg_desertcats'&&game.sg.runtimeGameId===32984&&game.sg.header.gameID==='20315'&&game.sg.header.gameCodeRGI==='desertcats'&&game.sg.desertCatsContract==='desert-cats-own-paid-components-v1'&&game.sg.logicPaylineCount==='50'&&game.sg.betRaw===200,'AG integrity: SG Desert Cats own binding');return 'desert';
@@ -1366,6 +1443,7 @@ export class SGWmsSession {
         if(action==='PICK_FREE_SPINS'&&this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6')return {event:'Logic',parameters:{__sgGoldenCollect:'1'}};
         if(action==='FEATURE'&&this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6')return {event:'EndGame',parameters:{}};
         if(action === 'PLAY') return {event:'EndGame',parameters:{}};
+        if(action==='FREE_SPIN'&&this.game.sg.ownDCNextEndContract){ownDCFlowBinding(this.game);assert(this.free&&this.free.freeSpinsRemaining>0,'AG integrity: SG DC actual continuation selector missing');return {event:'Logic',parameters:{...this.game.sg.stake}};}
         if(action==='FREE_SPIN'&&this.game.sg.fudaFreeContract==='fuda-own-natural-free-v4')return {event:'Logic',parameters:{totalStake:'200'}};
         if(action === 'FREE_SPIN') { assert(this.game.sg.freeStake,'AG integrity: SG own free request not mapped');return {event:'Logic',parameters:{...this.game.sg.freeStake}}; }
         throw new Error('AG integrity: SG observed action not mapped');
@@ -1373,6 +1451,11 @@ export class SGWmsSession {
     private payload(event:string,parameters:Record<string,any>) {
         const h={...this.game.sg.header,sessionID:this.session};
         const header='<Header '+Object.entries(h).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')+'/>';
+        if(this.game.sg.ownDCNextEndContract&&(event==='Logic'||event==='EndGame')){
+            const c=ownDCFlowBinding(this.game);
+            if(event==='Logic'){assert((this.action==='SPIN'||this.action==='FREE_SPIN'&&this.free&&this.free.freeSpinsRemaining>0)&&JSON.stringify(parameters)===JSON.stringify(this.game.sg.stake),'AG integrity: SG DC exact paid/free Logic request');return `<GameRequest type="Logic">${header}${c.logicRequestDataXML}</GameRequest>`;}
+            assert(this.action==='PLAY'&&Object.keys(parameters).length===0,'AG integrity: SG DC actual EndGame request');return `<GameRequest type="EndGame">${header}${c.endRequestDataXML}</GameRequest>`;
+        }
         if(event==='Logic'&&this.game.sg.ownQuickHitPaidContract){const c=ownQuickHitPaidBinding(this.game);assert((this.action==='SPIN'||this.action==='FREE_SPIN'&&['own-quick-hit-client-features-v4','own-quick-hit-client-free-shape-v5','own-quick-hit-client-empty-shape-v7','own-quick-hit-client-free-cash-wheel-v6','own-quick-hit-client-paid-cash-wheel-v8'].includes(c.version))&&JSON.stringify(parameters)===JSON.stringify({total:'200'}),'AG integrity: SG Quick Hit own paid/free current stake request');return `<GameRequest type="Logic">${header}${c.paidRequestDataXML}</GameRequest>`;}
         if(event==='Logic'&&this.game.sg.healthyComponentsContract){const kind=ownHealthyComponentsBinding(this.game);if(this.action==='FREE_SPIN'){assert(kind!=='jinji'&&Object.keys(parameters).length===0,'AG integrity: SG healthy free request');return `<GameRequest type="Logic">${header}</GameRequest>`;}assert(this.action==='SPIN'&&JSON.stringify(parameters)===JSON.stringify(this.game.sg.stake),'AG integrity: SG healthy paid request');const ownStake='<Stake '+Object.entries(parameters).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')+'/>';if(kind==='megaways')return `<GameRequest type="Logic">${header}${ownStake}<PaylineCount count="1"/><AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData></GameRequest>`;return `<GameRequest type="Logic">${header}<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData>${ownStake}</GameRequest>`;}
         if(event==='Logic'&&this.game.sg.eightyFortunesContract&&Object.keys(parameters).length){assert(this.action==='SPIN'&&this.game.gameId==='32750'&&JSON.stringify(parameters)===JSON.stringify({creditBet:'88',betMultiplier:'2'}),'AG integrity: SG 88 Fortunes own paid request');return `<GameRequest type="Logic">${header}<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData><SpinInfo creditBet="88" betMultiplier="2"/></GameRequest>`;}
@@ -1467,7 +1550,8 @@ export class SGWmsSession {
             this.action='SPIN';
         } else {
             const g=r.GameResult;
-            if(this.game.sg.zeusThreeContract){const mapped=validateZeusThree(this.game,g,first,this.free,this.zeusThreeBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.zeusThreeBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
+            if(this.game.sg.ownDCNextEndContract){const mapped=validateOwnDCFlow(this.game,g,first,this.free,r);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}
+            else if(this.game.sg.zeusThreeContract){const mapped=validateZeusThree(this.game,g,first,this.free,this.zeusThreeBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.zeusThreeBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(this.game.sg.spiritRiverContract){const mapped=validateSpiritRiver(this.game,g,first,this.free,this.riverBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.riverBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(this.game.sg.ownQuickHitPaidContract){if(first)this.healthyComponentsBase=undefined;const m=validateOwnQuickHitFeatures(this.game,g,first,this.free,this.healthyComponentsBase,this.totalWin);this.totalWin=m.win;this.free=m.free;this.healthyComponentsBase=m.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';
              if(this.game.gameId==='32797'&&['own-quick-hit-client-free-cash-wheel-v6','own-quick-hit-client-paid-cash-wheel-v8'].includes(this.game.sg.ownQuickHitPaidContract.version))assert(this.balance===this.startBalance-this.game.sg.betRaw+this.totalWin,'AG integrity: SG Quick Hit own response balance mismatch');

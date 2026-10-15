@@ -788,12 +788,23 @@ games:
         versionID: 1_0
       stake:
         total: '200'
-      freeStake: {}
+      freeStake:
+        total: '200'
       betRaw: 200
       runtimeSlug: desertcats
       runtimeGameId: 32984
-      desertCatsContract: desert-cats-own-paid-components-v1
-      logicPaylineCount: '50'
+      ownDCNextEndContract:
+        version: own-desert-cats-real-next-end-v2
+        ownSDKFileSHA256: 63f9a390532c8df0779ab95c89f689f817569c23fb7739dbbc6ff73d8c28193d
+        sourceMethodsSHA256: 79e5ce4a3321b551f8b1d91eee07c925e4627d5253439ce6321cc368102e8ae8
+        cashPath: BGInfo/totalWagerWin
+        logicRequestDataXML: '<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData><Stake total="200"/>'
+        endRequestDataXML: ''
+        rawRequestResponsePreserved: true
+        originalAGMoneyReplayMongoRequired: true
+        noSyntheticTerminal: true
+        unmappedFlowStops: true
+        noOldUnknownPOSTReplay: true
   - provider: sg
     gameId: '32778'
     name: Jin Ji Bao Xi Endless Treasure
