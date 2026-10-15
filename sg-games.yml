@@ -7869,7 +7869,7 @@ games:
         GN: jinsedaotiger96
         RB: '5'
       ownGDMContract:
-        version: own-SDK-ordinary-typed-final-v2
+        version: own-SDK-free-prefix-trial-v4
         gameId: '32722'
         dbName: sg_jinsedaotiger96
         runtimeGameId: 33122
@@ -7878,7 +7878,7 @@ games:
         balanceScale: 1
         winScale: 1
         fixedGitCommit: 885f862bcc04841406820a932ef14c38c7759f1d
-        ordinaryOnly: true
+        ordinaryOnly: false
         requiresNoPreviousFeature: true
         responseKeys:
           - AB
@@ -7902,26 +7902,19 @@ games:
           - WC
           - WM
           - WS
+          - CW
+          - NFG
+          - FGT
+          - TFG
+          - CFGG
+          - FGTW
+          - FID
         requiredResponseKeys:
-          - AB
           - B
-          - BGRS
-          - BPR
-          - FRBAL
-          - GA
-          - GSD
-          - IFG
-          - MSGID
-          - MUL
-          - NRID
-          - RB
-          - RID
-          - RS
-          - SID
-          - SUB
+          - AB
           - TW
-          - VER
-          - WC
+          - MSGID
+          - GA
         ordinaryGSDKeys:
           - OML
           - VR
@@ -8053,6 +8046,68 @@ games:
             rootUnknownsRemainFatal: true
             rawDictionaryPreserved: true
             noCashOrNextActionFromUnconsumedDictionaryFields: true
+        freeBudgetContract:
+          version: own-SDK-NFG-without-promotional-FreeRounds-v1
+          gameId: '32722'
+          paidEvent: BET
+          freeEvent: FREE_GAME
+          freeRequestParams:
+            GN: jinsedaotiger96
+            BPR: '20'
+          promotionalKeysForbidden:
+            - FRT
+            - FRR
+            - FRTR
+            - FRTW
+            - FRABM
+            - FRBPL
+            - FREXP
+            - FRC
+            - FRMSG
+            - IFR
+          ownSDKFreeRequestBinding:
+            ownSDKFileSHA256: aaf96a361355bdd268bf534044222037ec8f119824a0a1e174605d36240831af
+            SDKSelectorSHA256: 614d8dea1bcd975cb39c209cbe6d88b4f23bbd323c8d69d92a9f69b8bf979df5
+            NFGSetterSHA256: 7b1ddab0da8970598717fe83caa1983aa53e822bd0178aae3b51e155b2b0eeec
+            NFGDecoderSHA256: cb256cc778020f6822319cd454075680b89f67668d0206aec1044a18c1b081bf
+            GCTDecoderSHA256: dad51cb37cc194d5ac335d1614ea3485aebbd9b73f4043f97422e43f6bca5adb
+            ownRequestConstructorSHA256: 1b7d052cceb4fc17470839823b74c4162f9550dda3f5b69fabc2f0cf365e935b
+            own32722SingleBPR: true
+            fieldBindings:
+              - wireKey: BPR
+                type:
+                  kind: integer
+                sourceSHA256: be62ee1f2d35287068a2dfec144ed87ee2b17ddc2484c343604f49541e3467f8
+            actualPaidIntroCases: 1
+            requestFieldsFromValidatedSourceBetState: true
+            ordinaryAPAndRECNotAssumedFreeFields: true
+            requiresCompleteNaturalRoundBeforeAnyNative: true
+            unmappedOtherFeaturesRemainFatal: true
+            wholeFreeChainCoverageNotClaimed: true
+        ownRootNFGFlowOnlyCapture:
+          version: own-SDK-root-NFG-flow-only-v1
+          gameId: '32722'
+          ownSDKFileSHA256: aaf96a361355bdd268bf534044222037ec8f119824a0a1e174605d36240831af
+          SDKSelectorSHA256: 614d8dea1bcd975cb39c209cbe6d88b4f23bbd323c8d69d92a9f69b8bf979df5
+          NFGSetterSHA256: 7b1ddab0da8970598717fe83caa1983aa53e822bd0178aae3b51e155b2b0eeec
+          NFGDecoderSHA256: cb256cc778020f6822319cd454075680b89f67668d0206aec1044a18c1b081bf
+          GCTDecoderSHA256: dad51cb37cc194d5ac335d1614ea3485aebbd9b73f4043f97422e43f6bca5adb
+          ownRequestConstructorSHA256: 1b7d052cceb4fc17470839823b74c4162f9550dda3f5b69fabc2f0cf365e935b
+          SDKFinalGetterSourceSHA256: c38bcff5c965dab191f13edc72537e27fafb59d0bfd43b4b7dc2d247fd6825be
+          nextEvent: FREE_GAME
+          remainingWireKey: NFG
+          terminalRemaining: 0
+          usesOwnRequestAndTerminalOnly: true
+          rawWirePreserved: true
+          originalAGAmountReplayMongoChecksRequired: true
+          noSyntheticTerminal: true
+          noOldUnknownPOSTReplay: true
+          unusedDisplayAndBudgetFieldsDoNotBlock: true
+          noPreviouslySeenWholeVariationGate: true
+          unmappedActiveFlagsStillStop: true
+          own32722NextEndOnly: true
+          ownNestedGCTControlSHA256: ed9bdd678b837873457ab2beb783cae80c8045d031eddce3d0a655e392b94d5a
+          ownNestedGCTDecoderSHA256: 2550009ca48913ac5bcfbae0c435b7b572d07b870515b50e0c89ec9cce1f1c5b
   - provider: sg
     gameId: '32689'
     name: Ultimate Fire Link Olvera Street
