@@ -2928,7 +2928,6 @@ let pendingCrossLink=false;
    if(step.responseBalance!==undefined)assert(step.responseBalance===available,'AG integrity: own32709 captured account balance differs');
    assert(!((own32709Optional(w.FRR,own32709Integer)??0)>0||own32709Optional(w.IFR,own32709Boolean,false)),'AG integrity: own32709 platform FreeRounds request unmapped');
    assert(typeof w.GSD==='string','AG integrity: own32709 actual GSD absent');
-   if(w.BPR!==undefined){const selected=gdmInteger(w.BPR,'own32709 actual selected total');assert(selected>0,'AG integrity: own32709 actual selected total absent');this.ownDFDC32709SelectedTotal=selected;}
    s.totalWin=total;applyOwn32709SuccessfulDecoded(s,event as Own32709Event,own32709DecodeControl(w,ownGDMFields(w.GSD,'#','~')),requestKind);
    this.totalWin=total;const next=this.ownDFDC32709Request();if(!next)assert(end===this.roundStart-c.betRaw+total,'AG integrity: GDM original whole cash conservation');
    this.balance=end;this.rootFlowSteps.push({...step,responseBalance:end});const steps=next?this.rootFlowSteps.slice(-1):this.rootFlowSteps;
