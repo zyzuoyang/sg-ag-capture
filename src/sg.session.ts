@@ -632,6 +632,332 @@ export function readOwn32769ConsumedInitData(session: object): unknown {
 }
 
 
+type Own32777NativeSlot = {
+    game: AGGameConfig;
+    open: boolean;
+    init?: any;
+    current?: any;
+    connection?: any;
+    inFlight?: any;
+    roundScope?: object;
+    lastOrdinal: number;
+};
+const own32777NativeSlots = new WeakMap<object, Own32777NativeSlot>();
+const own32777NativeStarted = new WeakSet<object>();
+const own32777NativeIssued = new WeakSet<object>();
+const own32777NativeUsedDispatches = new WeakSet<object>();
+const own32777NativeRawByStep = new WeakMap<object, any>();
+const own32777NativeCleanupFailure = new WeakMap<object, unknown>();
+
+type Own32777AGRoundIntentSlot = {cap: any; phase: 'offered' | 'consumed'; ordinal: number};
+type Own32777AGRoundBinding = Readonly<{admissionFrame: any; previousRoundScope: object | null}>;
+const own32777OriginalAGRoundIntents = new WeakMap<object, Own32777AGRoundIntentSlot>();
+const own32777OriginalAGRoundBindings = new WeakMap<object, Own32777AGRoundBinding>();
+const own32777RetiredAGRoundIntents = new WeakSet<object>();
+function own32777IssueOriginalAGPaidIntent(
+    session: object, originalAction: string, originalCurrentSessionID: string
+) {
+    const slot = own32777NativeSlot(session);
+    assert(originalAction === 'SPIN' && slot.init && slot.connection && !slot.inFlight,
+        'AG integrity: own32777 original AG paid admission requires no in-flight request');
+    const admission = slot.connection.readOriginalAGPaidAdmission();
+    const previous = own32777OriginalAGRoundIntents.get(session);
+    assert(admission && Number.isSafeInteger(admission.startCashRaw) &&
+        admission.startCashRaw >= slot.game.sg.betRaw &&
+        Number.isSafeInteger(admission.nextRoundOrdinal) &&
+        admission.nextRoundOrdinal > 0 && Number.isSafeInteger(admission.remainingPaidRounds) &&
+        admission.remainingPaidRounds > 0 && admission.InitAdoptions === 1 &&
+        admission.accountScope && typeof admission.accountScope === 'object' &&
+        typeof originalCurrentSessionID === 'string' && originalCurrentSessionID.length > 0 &&
+        admission.requestSessionID === originalCurrentSessionID,
+        'AG integrity: own32777 current native initialized account admission');
+    if (previous) {
+        const frame = slot.current;
+        assert(previous.phase === 'consumed' && admission.phase === 'round-closed' &&
+            admission.actualPriorEndACK === true && admission.nativeProtocolIdle === true &&
+            frame && frame.msgId === 'EndGame' && own32777NativeIssued.has(frame) &&
+            frame.sessionScope === session && frame.game === slot.game &&
+            frame.roundScope === slot.roundScope && slot.roundScope === previous.cap &&
+            frame === admission.admissionFrame && frame.cashRaw === admission.startCashRaw &&
+            frame.responseSessionID === originalCurrentSessionID &&
+            admission.previousRoundScope === previous.cap &&
+            admission.accountScope === previous.cap.accountScope &&
+            admission.nextRoundOrdinal === previous.ordinal + 1,
+            'AG integrity: own32777 next paid requires genuine current End ACK and protocol IDLE');
+    } else {
+        assert(!slot.current && !slot.roundScope && admission.phase === 'init' &&
+            admission.admissionFrame === slot.init &&
+            admission.previousRoundScope === null && admission.nextRoundOrdinal === 1 &&
+            admission.startCashRaw === slot.init.cashRaw &&
+            slot.init.responseSessionID === originalCurrentSessionID,
+            'AG integrity: own32777 first paid requires actual adopted original Init');
+    }
+    const cap = Object.freeze({
+        kind:'original-AG-owned-new-paid-round-DATA',
+        sessionScope:session,sourceInitFrame:slot.init,game:slot.game,
+        accountScope:admission.accountScope,startCashRaw:admission.startCashRaw,
+        requestSessionID:admission.requestSessionID,roundOrdinal:admission.nextRoundOrdinal
+    });
+    if (previous) own32777RetiredAGRoundIntents.add(previous.cap);
+    own32777OriginalAGRoundIntents.set(session,{cap,phase:'offered',ordinal:admission.nextRoundOrdinal});
+    own32777OriginalAGRoundBindings.set(cap,Object.freeze({
+        admissionFrame:admission.admissionFrame,
+        previousRoundScope:admission.previousRoundScope
+    }));
+    return cap;
+}
+function own32777HasOriginalAGPaidIntent(session: object, cap: any) {
+    const slot = own32777NativeSlots.get(session);
+    const row = own32777OriginalAGRoundIntents.get(session);
+    return !!slot?.open && !!slot.init && row?.cap === cap &&
+        !own32777RetiredAGRoundIntents.has(cap) &&
+        cap?.sessionScope === session && cap?.game === slot.game &&
+        cap?.sourceInitFrame === slot.init && cap?.roundOrdinal === row.ordinal;
+}
+function own32777ReadOriginalAGPaidIntent(session: object, cap: any) {
+    assert(own32777HasOriginalAGPaidIntent(session,cap),
+        'AG integrity: own32777 current original AG cap binding');
+    const binding = own32777OriginalAGRoundBindings.get(cap);
+    assert(binding,'AG integrity: own32777 paid admission binding already dispatched');
+    return binding;
+}
+function own32777ConsumeOriginalAGPaidIntent(session: object, cap: any) {
+    const binding = own32777ReadOriginalAGPaidIntent(session,cap);
+    const row = own32777OriginalAGRoundIntents.get(session)!;
+    assert(row.phase === 'offered' && binding,
+        'AG integrity: own32777 original AG round intent already consumed');
+    row.phase = 'consumed';
+}
+
+
+function own32777AssertGame(game: AGGameConfig) {
+    assert(game.provider === 'sg' && game.gameId === '32777' &&
+        game.dbName === 'sg_jjbxmegaways' &&
+        game.sg?.protocol === 'wms' && game.sg.betRaw === 88 &&
+        game.sg.runtimeGameId === 32999 && game.sg.runtimeSlug === 'jjbxmegaways' &&
+        game.sg.endpoint === 'https://gls.atc.casinarena.com/gls.rgsx' &&
+        game.sg.header.gameID === '20468' &&
+        game.sg.header.gameCodeRGI === 'jjbxmegaways' &&
+        game.sg.header.versionID === '1_0',
+        'AG integrity: own32777 exact native game binding');
+}
+function own32777NativeSlot(session: object) {
+    const slot = own32777NativeSlots.get(session);
+    assert(slot?.open, 'AG integrity: own32777 original scope closed');
+    own32777AssertGame(slot.game);
+    return slot;
+}
+function own32777StartNativeScope(session: object, game: AGGameConfig) {
+    own32777AssertGame(game);
+    assert(!own32777NativeStarted.has(session) &&
+        !own32777NativeSlots.has(session),
+        'AG integrity: own32777 one original Init lifecycle');
+    own32777NativeStarted.add(session);
+    own32777NativeSlots.set(session, {game,open:true,lastOrdinal:0});
+}
+function own32777AttachNativeConnection(session: object, connection: any) {
+    const slot = own32777NativeSlot(session);
+    assert(slot.init && !slot.connection && connection &&
+        typeof connection.hasDispatch === 'function',
+        'AG integrity: own32777 original Init before native connection');
+    slot.connection = connection;
+}
+function own32777NativeConnection(session: object) {
+    const slot = own32777NativeSlot(session);
+    assert(slot.connection, 'AG integrity: own32777 native connection absent');
+    return slot.connection;
+}
+function own32777ConsumeNativeDispatch(
+    session: object, event: string, dispatch: any, requestSessionID: string
+): string {
+    const slot = own32777NativeSlot(session);
+    const connection = own32777NativeConnection(session);
+    assert(slot.init && !slot.inFlight && dispatch &&
+        connection.hasDispatch(dispatch) &&
+        dispatch.sessionScope === session && dispatch.event === event &&
+        dispatch.requestSessionID === requestSessionID &&
+        dispatch.intent.sessionScope === session &&
+        dispatch.intent.sourceInitFrame === slot.init &&
+        dispatch.intent.requestPayload === dispatch.requestPayload &&
+        dispatch.intent.requestSessionID === requestSessionID &&
+        dispatch.roundScope && typeof dispatch.roundScope === 'object' &&
+        !own32777NativeUsedDispatches.has(dispatch),
+        'AG integrity: own32777 current one-use native dispatch required');
+    assert(own32777HasOriginalAGPaidIntent(session,dispatch.roundScope) &&
+        dispatch.intent.originalAGRoundIntent === dispatch.roundScope,
+        'AG integrity: own32777 active original AG round capability');
+    if (slot.roundScope !== dispatch.roundScope) {
+        const cap = dispatch.roundScope;
+        const binding = own32777ReadOriginalAGPaidIntent(session,cap);
+        const row = own32777OriginalAGRoundIntents.get(session)!;
+        const previousFrame = slot.roundScope ? slot.current : slot.init;
+        assert(row.phase === 'consumed' && dispatch.event === 'Logic' &&
+            dispatch.intent.msgId === 'Logic' &&
+            dispatch.intent.command.command === 'Z.Hg.Hg.jv' &&
+            dispatch.intent.command.event === 'original-AG-owned-paid-round' &&
+            binding.previousRoundScope === (slot.roundScope || null) &&
+            binding.admissionFrame === previousFrame &&
+            previousFrame && previousFrame.cashRaw === cap.startCashRaw &&
+            previousFrame.responseSessionID === requestSessionID &&
+            cap.requestSessionID === requestSessionID &&
+            (!slot.roundScope || previousFrame.msgId === 'EndGame'),
+            'AG integrity: own32777 paid dispatch matches genuine admission frame and updated account');
+        // The admission link is needed only until this original one-use dispatch.
+        // Delete it to avoid retaining a chain of previous rounds/raw responses.
+        own32777OriginalAGRoundBindings.delete(cap);
+    }
+    slot.roundScope = dispatch.roundScope;
+    own32777NativeUsedDispatches.add(dispatch);
+    slot.inFlight = dispatch;
+    return dispatch.requestPayload;
+}
+function own32777RememberOriginalRaw(
+    session: object, game: AGGameConfig, step: WireStep,
+    response: Response, ordinal: number, requestSessionID: string,
+    requestHeaders: Record<string,string>, journalPath: string | null,
+    dispatch?: any
+) {
+    const slot = own32777NativeSlot(session);
+    assert(slot.game === game && response.ok && response.status >= 200 &&
+        response.status < 300 && Number.isSafeInteger(ordinal) &&
+        ordinal > slot.lastOrdinal &&
+        !own32777NativeRawByStep.has(step),
+        'AG integrity: own32777 original successful raw scope required');
+    if (step.msgId === 'Init') {
+        assert(!slot.init && !dispatch && !slot.inFlight,
+            'AG integrity: own32777 one original Init response');
+    } else {
+        assert(dispatch && slot.inFlight === dispatch &&
+            own32777NativeUsedDispatches.has(dispatch) &&
+            dispatch.event === step.msgId &&
+            dispatch.requestPayload === step.requestPayload &&
+            dispatch.requestSessionID === requestSessionID,
+            'AG integrity: own32777 original native raw request association');
+    }
+    const responseHeaders = Object.freeze(
+        Array.from(response.headers.entries()).map(row => Object.freeze(row)));
+    own32777NativeRawByStep.set(step, Object.freeze({
+        sessionScope:session,game,step,msgId:step.msgId,
+        requestPayload:step.requestPayload,responsePayload:step.responsePayload,
+        endpoint:game.sg.endpoint,ordinal,requestSessionID,
+        requestHeaders:Object.freeze({...requestHeaders}),
+        httpStatus:response.status,responseHeaders,
+        responseSetCookie:Object.freeze(response.headers.getSetCookie?.() || []),
+        response,journalPath,
+        roundScope:dispatch?.roundScope,nativeIntent:dispatch?.intent
+    }));
+}
+function own32777CommitOriginalSuccess(
+    session: object, step: WireStep, originalEnvelope: any, originalCashRaw: number
+) {
+    const raw = own32777NativeRawByStep.get(step);
+    try {
+        const slot = own32777NativeSlot(session);
+        assert(raw && raw.sessionScope === session && raw.game === slot.game &&
+            raw.step === step && step.requestPayload === raw.requestPayload &&
+            step.responsePayload === raw.responsePayload &&
+            raw.ordinal > slot.lastOrdinal &&
+            originalEnvelope?.type === raw.msgId &&
+            String(originalEnvelope.Header?.gameID) === '20468' &&
+            String(originalEnvelope.Header?.versionID) === '1_0' &&
+            typeof originalEnvelope.Header?.sessionID === 'string' &&
+            originalEnvelope.Header.sessionID.length > 0 &&
+            !originalEnvelope.Error && !originalEnvelope.Errors &&
+            Number.isSafeInteger(originalCashRaw) && originalCashRaw >= 0,
+            'AG integrity: own32777 original envelope success association');
+        const balances = list(originalEnvelope.Balances?.Balance)
+            .filter((row: any) => row.name === 'CASH_BALANCE');
+        assert(balances.length === 1 &&
+            integer(balances[0].value,'own32777 original cash') === originalCashRaw,
+            'AG integrity: own32777 original cash authority required');
+        if (raw.msgId === 'Init') {
+            assert(!slot.init && !raw.nativeIntent && !slot.inFlight &&
+                originalEnvelope.Header.isRecovering === 'N',
+                'AG integrity: own32777 fresh normal Init only');
+        } else {
+            assert(slot.init && slot.inFlight &&
+                slot.inFlight.intent === raw.nativeIntent &&
+                slot.inFlight.roundScope === raw.roundScope &&
+                own32777NativeUsedDispatches.has(slot.inFlight),
+                'AG integrity: own32777 current native success intent required');
+        }
+        const frame = Object.freeze({...raw,
+            kind:raw.msgId === 'Init'
+                ? 'original-ag-live-own32777-Init-wire-DATA-only'
+                : 'original-ag-live-own32777-gameplay-wire-DATA-only',
+            cashRaw:originalCashRaw,responseSessionID:originalEnvelope.Header.sessionID
+        });
+        own32777NativeIssued.add(frame);
+        if (raw.msgId === 'Init') slot.init = frame;
+        else {
+            slot.current = frame;
+            slot.inFlight = undefined;
+        }
+        slot.lastOrdinal = raw.ordinal;
+        return frame;
+    } finally {
+        own32777NativeRawByStep.delete(step);
+    }
+}
+export const own32777OriginalSource = Object.freeze({
+    hasOriginalAGRoundIntent: own32777HasOriginalAGPaidIntent,
+    readOriginalAGRoundIntent: own32777ReadOriginalAGPaidIntent,
+    consumeOriginalAGRoundIntent: own32777ConsumeOriginalAGPaidIntent,
+    readInit(session: object) {
+        const slot = own32777NativeSlot(session);
+        assert(slot.init,'AG integrity: own32777 no original validated Init');
+        return slot.init;
+    },
+    readCurrent(session: object, roundScope: object) {
+        const slot = own32777NativeSlot(session);
+        assert(slot.current && slot.current.roundScope === roundScope &&
+            slot.roundScope === roundScope,
+            'AG integrity: own32777 no current own round frame');
+        return slot.current;
+    },
+    has(value: unknown) {
+        if (!value || typeof value !== 'object' ||
+            !own32777NativeIssued.has(value)) return false;
+        const frame = value as any;
+        const slot = own32777NativeSlots.get(frame.sessionScope);
+        return !!slot?.open && slot.game === frame.game &&
+            (slot.init === frame || slot.current === frame) &&
+            frame.step.requestPayload === frame.requestPayload &&
+            frame.step.responsePayload === frame.responsePayload;
+    }
+});
+function own32777RevokeNativeScope(session: object): unknown {
+    const slot = own32777NativeSlots.get(session);
+    if (!slot) return;
+    slot.open = false;
+    const paid = own32777OriginalAGRoundIntents.get(session);
+    if (paid) own32777OriginalAGRoundBindings.delete(paid.cap);
+    own32777OriginalAGRoundIntents.delete(session);
+    own32777NativeSlots.delete(session);
+    const connection = slot.connection;
+    slot.connection = undefined;
+    slot.init = undefined;
+    slot.current = undefined;
+    slot.inFlight = undefined;
+    slot.roundScope = undefined;
+    try { connection?.close(); }
+    catch (error) {
+        own32777NativeCleanupFailure.set(session,error);
+        return error;
+    }
+}
+function own32777ThrowPreservingOriginal(
+    session: object, error: unknown, close: () => void
+): never {
+    try { close(); }
+    catch (cleanupError) {
+        own32777NativeCleanupFailure.set(session,cleanupError);
+    }
+    throw error;
+}
+
+const Own32777NativeConnection = require("./own32777-native-data/own32777-original-AG-connection-v11.cjs");
+const Own32777NativeHost = require("./own32777-native-data/own32777-native-host-v11.cjs");
 const Own32769NativeConnection = require("./own32769-original-ag-native-bridge.cjs");
 const own32769NativeBridges = new WeakMap<object, any>();
 const own32769NativeInitStarted = new WeakSet<object>();
@@ -1544,7 +1870,50 @@ export class SGWmsSession {
         fs.writeSync(this.journal, JSON.stringify({...value,at:new Date().toISOString()})+'\n');fs.fsyncSync(this.journal);
         if(this.closed) {fs.closeSync(this.journal);this.journal=null;}
     }
+    private async connectOwn32777Native(): Promise<void> {
+        assert(!this.closed && !this.transport && !own32777NativeStarted.has(this),
+            'AG integrity: own32777 one original live Init lifecycle');
+        assert(process.env.SG_AG_ALLOW_SOURCE === '1', 'AG integrity: SG live source not enabled');
+        require('./own32777-native-data/register.cjs').ensureOwn32777Registered((this.game.sg as any).own32777NativeData?.paidLifecyclePolicy);
+        const nativeHostFactory=Own32777NativeHost.requireRegisteredOwn32777NativeHostFactory();
+        own32777StartNativeScope(this,this.game);
+        try {
+            const data=(this.game.sg as any).own32777NativeData;
+            assert(data?.contract==='own32777-original-AG-native-next-end-DATA-v11',
+                'AG integrity: own32777 explicit native DATA contract');
+            for(const key of ['maxPaidRounds','maxIntents','maxNativeTicks','maxMicrotasks','tickMilliseconds','maxTrace'])
+                assert(Number.isSafeInteger(data.limits?.[key]) && data.limits[key]>0,
+                    'AG integrity: own32777 explicit finite budget '+key);
+            assert(data.limits.maxPaidRounds<=300000 && data.limits.tickMilliseconds<=1000,
+                'AG integrity: own32777 original campaign and native clock bounds');
+            const step=await this.exchange('Init',{}),envelope=this.readEnvelope(step,'Init');
+            own32777CommitOriginalSuccess(this,step,envelope,this.balance);
+            const connection=Own32777NativeConnection.createOwn32777OriginalAGNativeConnection({
+                session:this,game:this.game,source:own32777OriginalSource,nativeHostFactory,
+                limits:{...data.limits}
+            });
+            own32777AttachNativeConnection(this,connection);
+            connection.bootstrap();
+        } catch(error) {own32777ThrowPreservingOriginal(this,error,()=>this.close());}
+    }
+    private async callOwn32777NativeData(event:string,parameters:Record<string,any>|null) {
+        let step:WireStep|undefined;
+        try {
+            assert(!this.closed,'AG integrity: own32777 session closed');
+            const connection=own32777NativeConnection(this);
+            const dispatch=await connection.take(event,parameters,this.session);
+            step=await this.exchange(event,{},undefined,dispatch);
+            const envelope=this.readEnvelope(step,event);
+            const frame=own32777CommitOriginalSuccess(this,step,envelope,this.balance);
+            const result=await connection.finish(frame,step,this.balance);
+            this.action=result.NextActionInfo.nextAction;
+            this.lastRequest={event,parameters:structuredClone(parameters)};
+            return result;
+        } catch(error) {own32777ThrowPreservingOriginal(this,error,()=>this.close());}
+        finally {if(step)own32777NativeRawByStep.delete(step);}
+    }
     async connect(): Promise<void> {
+        if(this.game.gameId==='32777')return this.connectOwn32777Native();
         if(this.game.gameId === '32769') {
             assert(!this.closed && !this.transport &&
                 !own32769NativeInitStarted.has(this),
@@ -1626,6 +1995,7 @@ export class SGWmsSession {
     getFallbackBet() { return this.game.sg.betRaw/100; }
     getSpinParams() { return {...this.game.sg.stake}; }
     getPickProtocol(action:string) {
+        if(this.game.gameId==='32777')return own32777NativeConnection(this).pickProtocol(action);
         if(this.game.gameId==='32769')return own32769NativeBridge(this).pickProtocol(action);
         if(action!=='PICK_FREE_SPINS'||this.game.sg.goldenChiefPaidContract!=='golden-chief-own-totem-v6')return undefined;
         assert(this.game.gameId==='32771'&&this.game.dbName==='sg_golden_chief'&&this.action===action&&this.free?.freeSpinsPlayed===0&&this.free.freeSpinsTotal>0,'AG integrity: SG Golden Chief collect protocol scope');
@@ -1641,10 +2011,11 @@ export class SGWmsSession {
         }
         throw new Error('AG integrity: SG pick protocol not mapped');
     }
-    getInitialRoundRequest() { if(this.game.gameId==='32769')return own32769NativeBridge(this).initial();return {event:'Logic',parameters:this.getSpinParams()}; }
+    getInitialRoundRequest() { if(this.game.gameId==='32777'){try{const cap=own32777IssueOriginalAGPaidIntent(this,this.action,this.session);return own32777NativeConnection(this).initial(cap);}catch(error){own32777ThrowPreservingOriginal(this,error,()=>this.close());}}if(this.game.gameId==='32769')return own32769NativeBridge(this).initial();return {event:'Logic',parameters:this.getSpinParams()}; }
     getLastGameRequest() { return this.lastRequest; }
     isRoundTerminalAction(action: string) { return action === 'SPIN'; }
     getExactFollowUpRequest(action: string) {
+        if(this.game.gameId==='32777')return own32777NativeConnection(this).exact(action);
         if(this.game.gameId==='32769')return own32769NativeBridge(this).exact(action);
         if(action==='PICK_FREE_SPINS'&&this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6')return {event:'Logic',parameters:{__sgGoldenCollect:'1'}};
         if(action==='FEATURE'&&this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6')return {event:'EndGame',parameters:{}};
@@ -1684,14 +2055,18 @@ export class SGWmsSession {
         if(freeAccount) assert(this.game.sg.freeLogicCurrencyMultiplier==='1','AG integrity: SG own free currency binding');
         return `<GameRequest type="${event}">${stake?'<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData>':''}${header}${freeAccount?'<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData>':''}${stake}</GameRequest>`;
     }
-    private async exchange(event:string,parameters:Record<string,any>,own32769Dispatch?:any):Promise<WireStep> {
+    private async exchange(event:string,parameters:Record<string,any>,own32769Dispatch?:any,own32777Dispatch?:any):Promise<WireStep> {
         assert(!this.closed,'AG integrity: SG session closed');
         const requestSessionID=this.session;
         if(this.game.gameId==='32769' && event!=='Init')
             assert(own32769Dispatch && own32769Dispatch.event===event,
                 'AG integrity: own32769 native request DATA required');
         else assert(!own32769Dispatch,'AG integrity: native request DATA scope');
-        const payload=own32769Dispatch
+        if(this.game.gameId==='32777' && event!=='Init')assert(own32777Dispatch,
+            'AG integrity: own32777 current native request DATA required');
+        else assert(!own32777Dispatch,'AG integrity: own32777 native dispatch game scope');
+        const payload=own32777Dispatch
+            ? own32777ConsumeNativeDispatch(this,event,own32777Dispatch,requestSessionID) : own32769Dispatch
             ? own32769Dispatch.requestPayload : this.payload(event,parameters);
         const ordinal=++this.ordinal;
         const requestKind = event==='Init' ? 'initialization' : this.action==='SPIN' ? 'round-start' : 'round-follow-up';
@@ -1707,13 +2082,13 @@ export class SGWmsSession {
         }
         const requestHeaders = {'Content-Type':'text/xml; charset=utf-8',
             ...(this.cookies.size?{Cookie:[...this.cookies].map(([k,v])=>k+'='+v).join('; ')}:{})};
-        const own32769Journal = this.game.gameId==='32769' ? {
+        const own32769Journal = this.game.gameId==='32777' ? {endpoint:this.game.sg.endpoint,method:'POST',nativeRoundOrdinal:own32777Dispatch?.intent?.originalAGRoundIntent?.roundOrdinal,nativeRequestDATA:!!own32777Dispatch} : this.game.gameId==='32769' ? {
             endpoint:this.game.sg.endpoint, method:'POST',
             nativeRoundId:own32769Dispatch?.roundId,
             nativeRequestDATA:!!own32769Dispatch
         } : {};
         this.evidence({phase:'intent',ordinal,event,payload,
-            ...(this.game.gameId==='32769'?{...own32769Journal,requestHeaders}: {})});
+            ...(['32769','32777'].includes(this.game.gameId)?{...own32769Journal,requestHeaders}: {})});
         const start=Date.now(),deadline=sgRequestTimeoutMs(this.game);let response:Response | undefined,text:string;
         try {
             response=await fetch(this.game.sg.endpoint,{method:'POST',redirect:'error',signal:AbortSignal.timeout(deadline),
@@ -1729,7 +2104,7 @@ export class SGWmsSession {
         assert(response,'AG integrity: SG missing transport response');
         const fault=response.ok ? null : httpSourceFault({...context,httpStatus:response.status,responseSHA256:crypto.createHash('sha256').update(text).digest('hex')});
         this.evidence({phase:'response',ordinal,event,httpStatus:response.status,text,
-            ...(this.game.gameId==='32769'?{...own32769Journal,
+            ...(['32769','32777'].includes(this.game.gameId)?{...own32769Journal,
                 responseHeaders:Array.from(response.headers.entries()),
                 responseSetCookie:response.headers.getSetCookie?.() || []}:{}),
             ...(fault ? sourceFaultMetadata(fault) : {})});
@@ -1739,6 +2114,7 @@ export class SGWmsSession {
             msgId:event,requestPayload:payload,responsePayload:text,
             elapsedMs:Date.now()-start
         };
+        if(this.game.gameId==='32777')own32777RememberOriginalRaw(this,this.game,step,response,ordinal,requestSessionID,requestHeaders,this.journalPath,own32777Dispatch);
         if(event === 'Init' && this.game.gameId === '32769') {
             const frame: Own32769OriginalInitFrame = Object.freeze({
                 kind: 'original-ag-live-Init-wire-DATA-only' as const,
@@ -1853,6 +2229,7 @@ export class SGWmsSession {
         }
     }
     async callGameData(event:string,parameters:Record<string,any>|null) {
+        if(this.game.gameId==='32777')return this.callOwn32777NativeData(event,parameters);
         if(this.game.gameId==='32769')return this.callOwn32769NativeData(event,parameters);
         const first=this.action==='SPIN';
         if(first) {assert(event==='Logic','AG integrity: SG round start');this.startBalance=this.balance;this.totalWin=0;this.free=undefined;this.steps=[];this.lastBase=undefined;this.eightyBase=undefined;this.fudaBase=undefined;this.coolJewelsBase=undefined;this.goldenPending=undefined;}
@@ -1939,6 +2316,31 @@ export class SGWmsSession {
             money:{startBalanceRaw:this.startBalance,endBalanceRaw:this.balance,betRaw:this.game.sg.betRaw,totalWinRaw:this.totalWin}};
     }
     close() {
+        if (this.game.gameId === '32777') {
+            const failures: unknown[] = [];
+            this.closed = true;
+            this.cookies.clear();
+            const nativeFailure = own32777RevokeNativeScope(this);
+            if (nativeFailure) failures.push(nativeFailure);
+            const descriptor = this.journal;
+            this.journal = null;
+            if (descriptor !== null) {
+                try { fs.fsyncSync(descriptor); }
+                catch (error) { failures.push(error); }
+                finally {
+                    try { fs.closeSync(descriptor); }
+                    catch (error) { failures.push(error); }
+                }
+            }
+            if (failures.length) {
+                const error = failures.length === 1 ? failures[0] :
+                    Object.assign(new Error('own32777 cleanup failures'), {errors:failures});
+                own32777NativeCleanupFailure.set(this,error);
+                throw error;
+            }
+            return;
+        }
+
         if(this.game.gameId !== '32769') {
             own32769PendingInit.delete(this);
             own32769ValidatedInit.delete(this);
