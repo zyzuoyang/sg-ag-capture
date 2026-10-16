@@ -17269,3 +17269,42 @@ games:
         language: en_us
         ownSDKFileSHA256: 672dee8e2e1a3d269ceaf62a5d5fc3ccdcd4bd91f7f98fdb69eb1c17b94126f3
         manifestSHA256: 67dec9fa3f7d25c99ee4e30ccfc5ef35c27e650b0223bf9aeaf9afb712ca9114
+  - provider: sg
+    gameId: '32727'
+    dbName: sg_medusamegaways96
+    backendId: medusamegaways96
+    sg:
+      protocol: gdm
+      endpoint: https://ogs-gdm-usnj.nyxop.net/nextgen/
+      runtimeGameId: 33127
+      runtimeSlug: medusamegaways96
+      betRaw: 75
+      requestParams:
+        GN: medusamegaways96
+        BPR: 3
+      ownClassicNativeInitDATA: own-classic-original-Init-only-v1
+      ownNativeBaseGameplayDATA: own32727-private-native-paid-real-reel-flow-v1
+      ownGDMContract:
+        gameId: '32727'
+        ownSDKFileSHA256: d085fe6412ea19784b71eeca244875af239a6d1c29bae0e6d0f37647ade480b6
+      ownNativeManifestConfig:
+        kind: own-release-manifest-protocol-DATA-v1
+        gameId: '32727'
+        language: en_us
+        ownSDKFileSHA256: d085fe6412ea19784b71eeca244875af239a6d1c29bae0e6d0f37647ade480b6
+        manifestSHA256: ca9b3df4ba0fa8549129378c5325a0d278b9cde9a1018b27b65798d70b4d5479
+    name: Medusa Megaways
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001

@@ -3241,7 +3241,7 @@ export function readOwnClassicGdmReelstripSource(session:object){
 const ownClassicGameplayRaw=new WeakMap<object,any>();
 const ownClassicGameplayPending=new WeakMap<object,any>();
 export function bindOwnClassicGdmGameplayDataFactory(gameId:string,factory:(session:SGGdmSession,data:any)=>any){
- assert(gameId==='32536'&&typeof factory==='function'&&!ownClassicGameplayFactories.has(gameId),'AG integrity: own native gameplay factory scope/owner');
+ assert(['32536','32727'].includes(gameId)&&typeof factory==='function'&&!ownClassicGameplayFactories.has(gameId),'AG integrity: own native gameplay factory scope/owner');
  ownClassicGameplayFactories.set(gameId,factory);return()=>{if(ownClassicGameplayFactories.get(gameId)===factory)ownClassicGameplayFactories.delete(gameId);};
 }
 
@@ -3539,7 +3539,7 @@ export class SGGdmSession{
    const reelStep=await this.exchange('REELSTRIP',{GN:this.game.sg.runtimeSlug}),reels=this.decode(reelStep,'REELSTRIP'),reelRaw=ownClassicGameplayRaw.get(reelStep);
    assert(!this.closed&&reelRaw&&reelRaw.sessionScope===this,'AG integrity: own classic original REELSTRIP association absent');
    ownClassicReelstripFrames.set(this,Object.freeze({...reelRaw,decoded:Object.freeze({...reels})}));
-   ownClassicInitPending.delete(this);ownClassicInitValidated.set(this,frame);ownClassicInitData.set(this,data);if(['own32536-private-native-base-flow-v1','own32536-private-native-free-flow-v2'].includes(this.game.sg.ownNativeBaseGameplayDATA)){const factory=ownClassicGameplayFactories.get(this.game.gameId);assert(factory,'AG integrity: own native gameplay driver not registered');const driver=factory(this,data);assert(driver?.kind===this.game.sg.ownNativeBaseGameplayDATA,'AG integrity: own native gameplay driver scope');ownClassicGameplayDrivers.set(this,driver);}
+   ownClassicInitPending.delete(this);ownClassicInitValidated.set(this,frame);ownClassicInitData.set(this,data);if(['own32536-private-native-base-flow-v1','own32536-private-native-free-flow-v2','own32727-private-native-paid-real-reel-flow-v1'].includes(this.game.sg.ownNativeBaseGameplayDATA)){const factory=ownClassicGameplayFactories.get(this.game.gameId);assert(factory,'AG integrity: own native gameplay driver not registered');const driver=factory(this,data);assert(driver?.kind===this.game.sg.ownNativeBaseGameplayDATA,'AG integrity: own native gameplay driver scope');ownClassicGameplayDrivers.set(this,driver);}
   }catch(error){this.close();throw error;}
  }
 
@@ -4398,3 +4398,6 @@ export function ownLockIt32724Profile(game:AGGameConfig){const c=game.sg?.ownGDM
 
 // Own protocol DATA registration only; original AG provider entry/scheduler/round/Mongo stay byte-identical.
 require("./own32536-native-register.cjs");
+
+// Own32727 manifest/connection/protocol DATA, using the same SG module and WeakMaps.
+require("./own32727-native-data/register.cjs").registerOwn32727NativeDATA(module.exports);
