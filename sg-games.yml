@@ -17404,3 +17404,11 @@ games:
       - 2001
       - 5001
       - 10001
+
+  - provider: "sg"
+    gameId: "32832"
+    name: "Key to Success"
+    dbName: "sg_keytosuccess96"
+    backendId: "keytosuccess96"
+    rtpBuckets: [0,30,100,300,500,1000,1001,2001,2500,5000,5001,10000,10001]
+    sg: {"protocol":"gdm","runtimeGameId":33192,"runtimeSlug":"keytosuccess96","endpoint":"https://ogs-gdm-usnj.nyxop.net/nextgen/","betRaw":20,"requestParams":{"GN":"keytosuccess96","BPR":"1","AP":"false","buyin":"false"},"ownGDMContract":{"betRaw":20,"balanceScale":1,"winScale":1,"ownSDKFileSHA256":"740f6dc1e6a62d9a29eaf0b48f14b8b3cd63de3c75da2f0dc408233e1ebc08d5"},"ownKey32832ProtocolDATA":{"version":"own32832-original-request-FSL-next-DATA-v1","cachedCoreSHA256":"740f6dc1e6a62d9a29eaf0b48f14b8b3cd63de3c75da2f0dc408233e1ebc08d5","maxCapAcknowledgement":"hold-unmapped","noUIOrAudio":true}}
