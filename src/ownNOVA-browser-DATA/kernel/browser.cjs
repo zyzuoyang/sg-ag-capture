@@ -24,8 +24,8 @@ function installOriginalAppBrowserIO(engine,options){
  }
  c.XMLHttpRequest=AssetXHR;
  function domReady(){doc.readyState='complete';for(const fn of [...(doc.documentElement.listeners.get('DOMContentLoaded')||[])])fn({type:'DOMContentLoaded'});}
- async function step(ms=1000/60){await clock.step(ms);}
+ let nativeSceneTransformUpdates=0,nativeRenderLockObservations=0;async function step(ms=1000/60){const before=c.game;if(before?.isBooted){assert.equal(typeof before.lockRender,'boolean','Own SDK original render-lock API required');before.lockRender=true;nativeRenderLockObservations++;}await clock.step(ms);const game=c.game;if(game?.isBooted&&game.stage){assert.equal(typeof game.stage.updateTransform,'function','Own SDK original scene transform required');game.lockRender=true;game.stage.updateTransform();nativeSceneTransformUpdates++;}}
  function close(){clock.close();engine.pending.length=0;}
- return {domReady,step,close,assets,exceptions,exportOwnedAssets:()=>[...ownedAssetBytes.values()],summary:()=>({...clock.summary(),assetReads:assets.length,callbackExceptions:exceptions.length,actualCanvas2D:true,ignoredInvalidCSSFonts,ignoredInvalidCSSCanvasAssignments,providerRequests:0})};
+ return {domReady,step,close,assets,exceptions,exportOwnedAssets:()=>[...ownedAssetBytes.values()],summary:()=>({...clock.summary(),nativeRenderPolicy:'original-Phaser-lockRender-with-native-transforms-v1',nativeSceneTransformUpdates,nativeRenderLockObservations,assetReads:assets.length,callbackExceptions:exceptions.length,actualCanvas2D:true,ignoredInvalidCSSFonts,ignoredInvalidCSSCanvasAssignments,providerRequests:0})};
 }
 module.exports={installOriginalAppBrowserIO};
