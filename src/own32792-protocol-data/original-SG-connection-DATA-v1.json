@@ -1,0 +1,159 @@
+{
+  "schema": "own32792-original-SG-protocol-DATA-v1",
+  "protocol": {
+    "schema": "own32792-selected-original-protocol-DATA-v1",
+    "gameId": "32792",
+    "dbName": "sg_montezuma_prt",
+    "runtimeGameId": 33152,
+    "nativeGameID": "20131",
+    "sourceFiles": [
+      {
+        "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\app\\js\\main.js",
+        "SHA256": "a2d988b0c98083ff755f79c60103cfaa45b47661490918e05cb75ded6b9b6b43",
+        "bytes": 837009
+      },
+      {
+        "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\lib\\game_libs.js",
+        "SHA256": "eb06aadb6fc484149cf3a1284965b49933eac746ca107cc72917b52d8929330b",
+        "bytes": 487727
+      }
+    ],
+    "sourceHashesReused": true,
+    "wholeSDKReadsOrHashesRepeated": 0,
+    "leaves": {
+      "init": {
+        "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\app\\js\\main.js",
+        "byteWindowStart": 223200,
+        "startWithinWindow": 59,
+        "source": "function () {\n            _super.prototype.execute.call(this);\n            var encoders = [];\n            if (this._historyModel.getIsHistoryReplay() && !this._server.getInitResponse()) {\n                encoders.push(new sgigame.HistoryReplayEncoder(this._historyModel.getNextState()));\n                this._historyModel.restart();\n            }\n            if (this._platformModel.promoInfo != undefined) {\n                this._server.getGLSInitResquester().setPromoInfo(this._platformModel.promoInfo);\n            }\n            var initData = new server.GLSRequest(encoders);\n            this._server.makeInitRequest(initData);\n        }",
+        "SHA256": "c35f412cd1bfff2858dbe50013a153414cce037fbc2d35572e6298d7094c8711",
+        "marker": "MakeInitRequestCmd.prototype.execute"
+      },
+      "logic": {
+        "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\app\\js\\main.js",
+        "byteWindowStart": 224620,
+        "startWithinWindow": 67,
+        "source": "function () {\n            _super.prototype.execute.call(this);\n            if (this._subGamesModel.isLogicRequestSent) {\n                return;\n            }\n            this._subGamesModel.isLogicRequestSent = true;\n            var encoders = [\n                this.getStakeEncode(),\n                new server.GLSCurrencyEncoder(this._server.getInitResponse().platformData.currencyMultiplier),\n            ];\n            if (this._statesModel.getCurrentState().stateName !== sgigame.PreGameStates.RECOVERY_INIT_STATE) {\n                var history = this._historyModel.getNextState();\n                if (history) {\n                    encoders.push(new sgigame.HistoryReplayEncoder(history));\n                }\n            }\n            if (this._forceModel.forceSet) {\n                var forceEncoder = new sgigame.ForceEncoder(this._forceModel.reelData ? this._forceModel.reelData.positions : [0, 0, 0, 0, 0], this._forceModel.reelData ? this._forceModel.reelData.index : 0);\n                encoders.push(forceEncoder);\n            }\n            this._forceModel.forceSet = false;\n            if (!sgigame.GameConfig.isFreeSpin) {\n                this._commonUIData.startPlay();\n            }\n            sgigame.GameConfig.isFreeSpin = false;\n            var data = new server.GLSRequest(encoders);\n            this._server.makeLogicRequest(data);\n        }",
+        "SHA256": "d690ab9b588056722ccfc4e02a8f929cd26bf1a6b631cd929dd70400e573e117",
+        "marker": "MakeLogicRequestCmd.prototype.execute"
+      },
+      "stakeGetter": {
+        "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\app\\js\\main.js",
+        "byteWindowStart": 226000,
+        "startWithinWindow": 110,
+        "source": "function () {\n            return new sgigame.StakeEncoder(this._commonUIData.getTotalBet());\n        }",
+        "SHA256": "97d83b99626d8285a6fc5762655d5a886ba7dd801b2c7e1145fa946c516a08dd",
+        "marker": "MakeLogicRequestCmd.prototype.getStakeEncode"
+      },
+      "end": {
+        "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\app\\js\\main.js",
+        "byteWindowStart": 222250,
+        "startWithinWindow": 72,
+        "source": "function () {\n            _super.prototype.execute.call(this);\n            if (!this._historyModel.getIsHistoryReplay()) {\n                this._server.makeEndRequest(new server.GLSRequest([]));\n                sgigame.GameConfig.isFreeSpin = false;\n            }\n        }",
+        "SHA256": "dd92c44dac8edbbed38d473abe7ff007b600c6232c0e20d57586ceb33b29213b",
+        "marker": "MakeEndRequestCmd.prototype.execute"
+      },
+      "stakeXML": {
+        "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\app\\js\\main.js",
+        "byteWindowStart": 473100,
+        "startWithinWindow": 61,
+        "source": "function () {\n            var xmlStr = \"<WagerInfo\";\n            xmlStr += \" totalStake=\\\"\" + this._stake.toString() + \"\\\"/>\";\n            return xmlStr;\n        }",
+        "SHA256": "a96cfcf6c8cc6300d120698e5d0c68c66810f6c9b41e7d3ef45febbf2c79da8a",
+        "marker": "StakeEncoder.prototype.parse"
+      },
+      "currencyXML": {
+        "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\lib\\game_libs.js",
+        "byteWindowStart": 341200,
+        "startWithinWindow": 93,
+        "source": "function () {\n            var xmlStr = \"<AccountData><CurrencyMultiplier>\";\n            xmlStr += this._currencyMultiplier.toString();\n            xmlStr += \"</CurrencyMultiplier></AccountData>\";\n            return xmlStr;\n        }",
+        "SHA256": "ed266a1e9596d5ae8b097511f3e701759c6059c0206f564db9481d8e19e5c332",
+        "marker": "GLSCurrencyEncoder.prototype.parse"
+      },
+      "money": {
+        "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\app\\js\\main.js",
+        "byteWindowStart": 247250,
+        "startWithinWindow": 94,
+        "source": "function (input, object) {\n            if (input.getElementsByTagName(\"GameWinInfo\") && input.getElementsByTagName(\"GameWinInfo\").length > 0) {\n                var node = input.getElementsByTagName(\"GameWinInfo\")[0];\n                var gameWinInfoData = new sgigame.GameWinInfoData;\n                gameWinInfoData.totalWagerWin = parseInt(this.getAttributeFromNode(node, \"totalWagerWin\", \"number\"));\n                gameWinInfoData.totalBaseGameWin = parseInt(this.getAttributeFromNode(node, \"totalBaseGameWin\", \"number\"));\n                gameWinInfoData.totalFreeSpinsWin = parseInt(this.getAttributeFromNode(node, \"totalFreeSpinsWin\", \"number\"));\n                gameWinInfoData.maxWinValue = parseInt(this.getAttributeFromNode(node, \"maxWinValue\", \"number\"));\n                gameWinInfoData.isMaxWin = this.getAttributeFromNode(node, \"isMaxWin\", \"string\") == \"Y\" ? true : false;\n                object.gameWinInfoData = gameWinInfoData;\n            }\n        }",
+        "SHA256": "8acf9eaccae1244abfb6e919f69a00b0c26e9e41f2f79a4f4cff343dfe2e14c8",
+        "marker": "GameWinInfoParser.prototype.parse"
+      },
+      "free": {
+        "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\app\\js\\main.js",
+        "byteWindowStart": 241500,
+        "startWithinWindow": 85,
+        "source": "function (input, object) {\n            if (input.getElementsByTagName(\"BGInfo\") && input.getElementsByTagName(\"BGInfo\").length > 0) {\n                var node = input.getElementsByTagName(\"BGInfo\")[0];\n                var freeSpinBGInfoData = new sgigame.BGInfoData;\n                freeSpinBGInfoData.freeSpinWheelIndex = parseInt(this.getAttributeFromNode(node, \"freeSpinWheelIndex\", \"number\"));\n                freeSpinBGInfoData.totalFreeSpinsTriggered = parseInt(this.getAttributeFromNode(node, \"totalFreeSpinsTriggered\", \"number\"));\n                freeSpinBGInfoData.freeSpinTriggerWin = parseInt(this.getAttributeFromNode(node, \"freeSpinTriggerWin\", \"number\"));\n                object.freeSpinBGInfoData = freeSpinBGInfoData;\n            }\n            if (input.getElementsByTagName(\"FSInfo\") && input.getElementsByTagName(\"FSInfo\").length > 0) {\n                var node = input.getElementsByTagName(\"FSInfo\")[0];\n                var freeSpinFSInfoData = new sgigame.FSInfoData;\n                freeSpinFSInfoData.totalFreeSpinsWin = parseInt(this.getAttributeFromNode(node, \"totalFreeSpinsWin\", \"number\"));\n                freeSpinFSInfoData.remainingFreeSpins = parseInt(this.getAttributeFromNode(node, \"remainingFreeSpins\", \"number\"));\n                freeSpinFSInfoData.retriggeredFsRemaining = parseInt(this.getAttributeFromNode(node, \"retriggeredFsRemaining\", \"number\"));\n                freeSpinFSInfoData.numTotalFreeSpins = parseInt(this.getAttributeFromNode(node, \"numTotalFreeSpins\", \"number\"));\n                freeSpinFSInfoData.freeSpinMultiplierIndex = parseInt(this.getAttributeFromNode(node, \"freeSpinMultiplierIndex\", \"number\"));\n                freeSpinFSInfoData.freeSpinTriggerWin = parseInt(this.getAttributeFromNode(node, \"freeSpinTriggerWin\", \"number\"));\n                freeSpinFSInfoData.lastFreeSpin = this.getAttributeFromNode(node, \"lastFreeSpin\", \"string\") == \"Y\" ? true : false;\n                freeSpinFSInfoData.isFsRetriggered = this.getAttributeFromNode(node, \"isFsRetriggered\", \"string\") == \"Y\" ? true : false;\n                freeSpinFSInfoData.isInRetrigger = this.getAttributeFromNode(node, \"isInRetrigger\", \"string\") == \"Y\" ? true : false;\n                if (freeSpinFSInfoData.isFsRetriggered) {\n                    freeSpinFSInfoData.freeSpinWheelIndex = parseInt(this.getAttributeFromNode(node, \"freeSpinWheelIndex\", \"number\"));\n                }\n                else {\n                    freeSpinFSInfoData.freeSpinWheelIndex = null;\n                }\n                freeSpinFSInfoData.isBonusGuarantee = this.getAttributeFromNode(node, \"isBonusGuarantee\", \"string\") == \"Y\" ? true : false;\n                freeSpinFSInfoData.bonusGuarantee = parseInt(this.getAttributeFromNode(node, \"bonusGuarantee\", \"number\"));\n                object.freeSpinFSInfoData = freeSpinFSInfoData;\n            }\n        }",
+        "SHA256": "879f0086cf739cdb375d698a32d9d5cc1147f14af9afcef5389d53f62b98938d",
+        "marker": "FreeGameInfoParser.prototype.parse"
+      },
+      "attr": {
+        "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\app\\js\\main.js",
+        "byteWindowStart": 244400,
+        "startWithinWindow": 103,
+        "source": "function (dataNode, attribute, returnType) {\n            if (returnType === void 0) { returnType = \"string\"; }\n            var attributeValue = \"\";\n            if (returnType == \"number\")\n                attributeValue = \"-1\";\n            if (dataNode.attributes.getNamedItem(attribute)) {\n                attributeValue = dataNode.attributes.getNamedItem(attribute).value;\n            }\n            return attributeValue;\n        }",
+        "SHA256": "0e6a7692413425e18af80ba9105d63898e2ebc669fffef77b73898ab28813b7e",
+        "marker": "FreeGameInfoParser.prototype.getAttributeFromNode"
+      },
+      "next": {
+        "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\app\\js\\main.js",
+        "byteWindowStart": 150600,
+        "startWithinWindow": 78,
+        "source": "function () {\n            var _this = this;\n            _super.prototype.execute.call(this);\n            if (!this._statesModel.isFreeSpin) {\n                return;\n            }\n            var logicResponse = this._server.getLogicResponse();\n            var remainingFS = logicResponse.freeSpinFSInfoData.remainingFreeSpins;\n            var totalFS = logicResponse.freeSpinFSInfoData.numTotalFreeSpins;\n            if (!this._forceModel.forceOpen && !logicResponse.reelSpinData[0].bonusAwarded && (this._subGamesModel.isFsWinCycleComp && this._subGamesModel.isFsBangUpComp && (this._subGamesModel.isBigWinAnimFinish == undefined || this._subGamesModel.isBigWinAnimFinish))) {\n                if (!logicResponse.gameWinInfoData.isMaxWin) {\n                    if (remainingFS > 0) {\n                        if (this._statesModel.getCurrentState().stateName == sgigame.BonusGameState.FREE_GAME_RESULT) {\n                            this._subGamesModel.isFsWinCycleComp = this._subGamesModel.isFsBangUpComp = false;\n                            this._subGamesModel.isFreeSpinsComplete = false;\n                            TweenLite.delayedCall(0.5, function () {\n                                _this._statesModel.changeStateByName(sgigame.BonusGameState.FREE_GAME_LOGIC_REQUEST);\n                            });\n                        }\n                    }\n                    else {\n                        this._subGamesModel.isFsWinCycleComp = this._subGamesModel.isFsBangUpComp = false;\n                        this._subGamesModel.isFreeSpinsComplete = true;\n                        TweenLite.delayedCall(0.5, function () {\n                            _this._statesModel.gotoNextState();\n                        });\n                    }\n                }\n            }\n        }",
+        "SHA256": "a6a4442126a5cdd400de91ad012d81b4e6d1107c595c00e79ffd908d2d5ce131",
+        "marker": "CheckIsNextSpinCmd.prototype.execute"
+      }
+    },
+    "scope": "pure native request encoder bodies and current normal raw money/counter source route only; no rendered lifecycle or original SG connection qualification",
+    "sourceReady": false
+  },
+  "wire": {
+    "headerConstructor": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\lib\\game_libs.js",
+      "byteWindowStart": 336980,
+      "startWithinWindow": 73,
+      "source": "function GLSHeader(metadata, sessionData, glsServerSessionId, gameId, gameVersion) {\n            this.GLSID_CASINARENA = \"4\";\n            this.GLSID_FREEPLAY = \"65535\";\n            this.affiliate = sessionData.getContextID();\n            this.freePlay = !metadata.isRealMoney();\n            this.gameCodeRGI = metadata.getGameCode();\n            this.gameId = gameId;\n            this.glsId = (this.freePlay ? this.GLSID_FREEPLAY : this.GLSID_CASINARENA);\n            this.langCode = metadata.getLocale();\n            this.sessionId = glsServerSessionId;\n            this.userId = sessionData.getPlayerID();\n            this.version = gameVersion;\n            this.promotions = false;\n            this.channel = \"I\";\n            this.userType = \"C\";\n            this.currencyCode = \"\";\n        }",
+      "SHA256": "148b9bbceefdb9376a57338f674f26f4b9b61e087f026dc0a23db3882a5be721",
+      "marker": "function GLSHeader("
+    },
+    "headerXML": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\lib\\game_libs.js",
+      "byteWindowStart": 337820,
+      "startWithinWindow": 65,
+      "source": "function () {\n            var xmlString = \"\";\n            xmlString += \"<Header\";\n            xmlString += \" affiliate=\\\"\" + this.affiliate + \"\\\"\";\n            xmlString += \" ccyCode=\\\"\" + this.currencyCode + \"\\\"\";\n            xmlString += \" channel=\\\"\" + this.channel + \"\\\"\";\n            xmlString += \" freePlay=\\\"\" + (this.freePlay ? \"Y\" : \"N\") + \"\\\"\";\n            xmlString += \" gameCodeRGI=\\\"\" + this.gameCodeRGI + \"\\\"\";\n            xmlString += \" gameID=\\\"\" + this.gameId + \"\\\"\";\n            xmlString += \" glsID=\\\"\" + this.glsId + \"\\\"\";\n            xmlString += \" lang=\\\"\" + this.langCode + \"\\\"\";\n            xmlString += \" promotions=\\\"\" + (this.promotions ? \"Y\" : \"N\") + \"\\\"\";\n            xmlString += \" sessionID=\\\"\" + this.sessionId + \"\\\"\";\n            xmlString += \" userID=\\\"\" + this.userId + \"\\\"\";\n            xmlString += \" userType=\\\"\" + this.userType + \"\\\"\";\n            xmlString += \" versionID=\\\"\" + this.version + \"\\\"\";\n            xmlString += \"/>\";\n            return xmlString;\n        }",
+      "SHA256": "1922bdcdcf781ad07ba3443016b74f51b6a7ca8118e909f5789d8a3c5e98303e",
+      "marker": "GLSHeader.prototype.parse"
+    },
+    "requestInit": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\lib\\game_libs.js",
+      "byteWindowStart": 365850,
+      "startWithinWindow": 94,
+      "source": "function (data) {\n            var sessionData = this._partnerAdapter.getSessionData();\n            var header = new server.GLSHeader(this._metaData, sessionData, this._sessionId, this._glmId, this._glmVersion);\n            var xmlString = \"<GameRequest type=\\\"Init\\\">\";\n            xmlString += header.parse();\n            for (var i = 0; i < data.getEncoders().length; i++) {\n                xmlString += data.getEncoders()[i].parse();\n            }\n            xmlString += \"</GameRequest>\";\n            return xmlString;\n        }",
+      "SHA256": "e059ae4fe763a7827929a9afb7b8697486260045faf9d92f73766aaf6a5a4be1",
+      "marker": "GLSInitRequester.prototype.parseRequestData"
+    },
+    "requestLogic": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\lib\\game_libs.js",
+      "byteWindowStart": 366850,
+      "startWithinWindow": 177,
+      "source": "function (data) {\n            var sessionData = this._partnerAdapter.getSessionData();\n            var header = new server.GLSHeader(this._metaData, sessionData, this._sessionId, this._glmId, this._glmVersion);\n            var xmlString = \"<GameRequest type=\\\"Logic\\\">\";\n            xmlString += header.parse();\n            for (var i = 0; i < data.getEncoders().length; i++) {\n                xmlString += data.getEncoders()[i].parse();\n            }\n            xmlString += \"</GameRequest>\";\n            return xmlString;\n        }",
+      "SHA256": "d1a1d82bed5eede03fa4fc11bfef4405fcc64446abca68bf9b0a08d51b37d9a3",
+      "marker": "GLSLogicRequester.prototype.parseRequestData"
+    },
+    "requestEnd": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\lib\\game_libs.js",
+      "byteWindowStart": 364780,
+      "startWithinWindow": 83,
+      "source": "function (data) {\n            var sessionData = this._partnerAdapter.getSessionData();\n            var header = new server.GLSHeader(this._metaData, sessionData, this._sessionId, this._glmId, this._glmVersion);\n            var xmlString = \"<GameRequest type=\\\"EndGame\\\">\";\n            xmlString += header.parse();\n            for (var i = 0; i < data.getEncoders().length; i++) {\n                xmlString += data.getEncoders()[i].parse();\n            }\n            xmlString += \"</GameRequest>\";\n            return xmlString;\n        }",
+      "SHA256": "46bdd8d515061709bc9621ebd774900384fd3717c2e764e484e0fea6c89a0052",
+      "marker": "GLSEndRequester.prototype.parseRequestData"
+    },
+    "platform": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\montezuma_prt\\lib\\game_libs.js",
+      "byteWindowStart": 352040,
+      "startWithinWindow": 86,
+      "source": "function (input, object) {\n            var node = input.getElementsByTagName(\"Header\")[0];\n            var data = new server.PlatformData();\n            if (node != null) {\n                var attr = node.attributes;\n                var attrLength = attr.length;\n                for (var i = 0; i < attrLength; ++i) {\n                    switch (attr[i].nodeName) {\n                        case 'sessionID':\n                            data.sessionId = attr[i].nodeValue;\n                            break;\n                        case 'gameID':\n                            data.gameId = attr[i].nodeValue;\n                            break;\n                        case 'lang':\n                            data.languageCode = attr[i].nodeValue;\n                            break;\n                        case 'versionID':\n                            data.version = attr[i].nodeValue;\n                            break;\n                        case 'isRecovering':\n                            data.isRecovering = attr[i].nodeValue === 'Y';\n                            break;\n                    }\n                }\n                var currencyMultiplierNode = input.getElementsByTagName(\"CurrencyMultiplier\")[0];\n                if (currencyMultiplierNode != null) {\n                    data.currencyMultiplier = parseInt(currencyMultiplierNode.textContent, 10);\n                }\n                else {\n                    data.currencyMultiplier = 1;\n                }\n            }\n            object.platformData = data;\n        }",
+      "SHA256": "a1fe3d931cd2a1f3ba58c5a3ec506cb903a2b22698b5a39f12816a9221b2917d",
+      "marker": "GLSPlatformParser.prototype.parse"
+    }
+  },
+  "scope": "original own pure normal protocol only; no Main/UI/audio transport or source actor"
+}
