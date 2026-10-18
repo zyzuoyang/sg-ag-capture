@@ -2077,6 +2077,7 @@ if(this.game.gameId==='32751'||(this.game.sg as any).own32751ProtocolDATA){asser
     getFallbackBet() { return this.game.sg.betRaw/100; }
     getSpinParams() { return {...this.game.sg.stake}; }
     getPickProtocol(action:string) {
+        if(this.game.gameId==='32789'){const s=own32789ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32789 current Pick protocol');return s.connection.pickProtocol(action)}
         if(this.game.gameId==='32777')return own32777NativeConnection(this).pickProtocol(action);
         if(this.game.gameId==='32769')return own32769NativeBridge(this).pickProtocol(action);
         if(action!=='PICK_FREE_SPINS'||this.game.sg.goldenChiefPaidContract!=='golden-chief-own-totem-v6')return undefined;
@@ -2084,6 +2085,7 @@ if(this.game.gameId==='32751'||(this.game.sg as any).own32751ProtocolDATA){asser
         return {kind:'choice' as const,event:'Logic',options:[{pickIndex:1,requestPickIndex:1,requestParams:{__sgGoldenCollect:'1'}}]};
     }
     getPickParams(_index: number|string) {
+        if(this.game.gameId==='32789'){const s=own32789ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32789 current Pick parameters');const protocol=s.connection.pickProtocol('PICK'),option=protocol.options.find((row:any)=>String(row.requestPickIndex)===String(_index));assert(option,'AG integrity: own32789 native Pick unavailable');return option.requestParams}
         if(this.game.gameId==='32769') {
             const protocol = own32769NativeBridge(this).pickProtocol('PICK');
             const option = protocol.options.find((row: any) =>
@@ -2108,7 +2110,7 @@ if(this.game.gameId==='32772'){const s=own32772ProtocolSlots.get(this);assert(s?
 if(this.game.gameId==='32767'){const s=own32767ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32767 private next');return s.connection.exact(action)}
 if(this.game.gameId==='32792'){const s=own32792ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32792 private next');return s.connection.exact(action)}
 if(this.game.gameId==='32757'){const s=own32757ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32757 private next');return s.connection.exact(action)}
-if(this.game.gameId==='32789'){const s=own32789ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32789 private next');return s.connection.exact(action)}
+if(this.game.gameId==='32789'){const s=own32789ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32789 private next');if(action==='PICK'){s.connection.pickProtocol(action);return undefined}return s.connection.exact(action)}
 if(this.game.gameId==='32751'){const s=own32751ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32751 private next');return s.connection.exact(action)}
 
         if(this.game.gameId==='32777')return own32777NativeConnection(this).exact(action);
@@ -2373,6 +2375,7 @@ return r;
         if(this.game.gameId==='32769')return this.callOwn32769NativeData(event,parameters);
         const first=this.action==='SPIN';
         if(first) {assert(event==='Logic','AG integrity: SG round start');this.startBalance=this.balance;this.totalWin=0;this.free=undefined;this.steps=[];this.lastBase=undefined;this.eightyBase=undefined;this.fudaBase=undefined;this.coolJewelsBase=undefined;this.goldenPending=undefined;}
+        else if(this.game.gameId==='32789'&&this.action==='PICK')assert(event==='Logic','AG integrity: own32789 native Pick event');
         else assert(event===this.getExactFollowUpRequest(this.action).event,'AG integrity: SG request order');
         assert(Number.isSafeInteger(this.startBalance),'AG integrity: SG missing initial balance');
         const step=await this.exchange(event,parameters || {}),r=this.readEnvelope(step,event);
