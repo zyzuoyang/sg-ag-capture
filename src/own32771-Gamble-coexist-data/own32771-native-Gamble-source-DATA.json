@@ -1,0 +1,325 @@
+{
+  "schema": "own32771-native-Gamble-private-DATA-v1",
+  "gameId": "32771",
+  "dbName": "sg_golden_chief",
+  "runtimeGameId": 32993,
+  "nativeID": "20125",
+  "logicalSourceOwner": "first20",
+  "ownApp": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\goldenchief\\app\\js\\main.js",
+  "certifiedOwnAppSHA256": "759b59ca9f657ac59507cf2076604ace9e65ec195ad18a7b9b160067508a7bf4",
+  "ownLibrary": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\goldenchief\\lib\\game_libs.js",
+  "cachedSourceMethods": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+  "oldSourceOnlyChecksReexecuted": 0,
+  "wholeSDKHashASTOrBoots": 0,
+  "leaves": {
+    "baseCtor": {
+      "source": "function ETBaseGameData() {\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "ETBaseGameData",
+      "originalCachedSourceSHA256": "f400a6ba8f45b43c64aec934d1693e3852d4cc68d51ebeeacf31f1012f8625bf",
+      "byteOffset": 196113,
+      "SHA256": "f400a6ba8f45b43c64aec934d1693e3852d4cc68d51ebeeacf31f1012f8625bf"
+    },
+    "freeCtor": {
+      "source": "function FsData() {\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "FsData",
+      "originalCachedSourceSHA256": "d90f13edfca28a005e9eb6948c78b7707be0c292295528191648bdfc8c6b93d1",
+      "byteOffset": 197275,
+      "SHA256": "d90f13edfca28a005e9eb6948c78b7707be0c292295528191648bdfc8c6b93d1"
+    },
+    "gambleCtor": {
+      "source": "function GambleData() {\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "GambleData",
+      "originalCachedSourceSHA256": "6e32af889a36512a49c592b95b3834a2e1b94e527128e590c7802da2e15c06fa",
+      "byteOffset": 197462,
+      "SHA256": "6e32af889a36512a49c592b95b3834a2e1b94e527128e590c7802da2e15c06fa"
+    },
+    "wheelCtor": {
+      "source": "function BonusWheelData() {\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "BonusWheelData",
+      "originalCachedSourceSHA256": "3ad522acdba41e2a9a0a2838b8ca96b60b57150bdb1e9653653b1bef28bc1f2f",
+      "byteOffset": 195348,
+      "SHA256": "3ad522acdba41e2a9a0a2838b8ca96b60b57150bdb1e9653653b1bef28bc1f2f"
+    },
+    "initWheelCtor": {
+      "source": "function InitBonusWheelData() {\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "InitBonusWheelData",
+      "originalCachedSourceSHA256": "d9b6b83d700257be8045976a23234c268ed21867e5003e3efd7de5a307a03f32",
+      "byteOffset": 197901,
+      "SHA256": "d9b6b83d700257be8045976a23234c268ed21867e5003e3efd7de5a307a03f32"
+    },
+    "initGambleCtor": {
+      "source": "function InitGambleData() {\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "InitGambleData",
+      "originalCachedSourceSHA256": "950144fdf6455767fff41e3a44f2b9e257f36fc9d2329d2912d1a27d94345a2c",
+      "byteOffset": 198388,
+      "SHA256": "950144fdf6455767fff41e3a44f2b9e257f36fc9d2329d2912d1a27d94345a2c"
+    },
+    "baseParser": {
+      "source": "function (input, object) {\n            var data = new game.ETBaseGameData();\n            var node = input.getElementsByTagName(\"BGInfo\")[0];\n            if (node != null) {\n                var attributes = node.attributes;\n                var nodeChildren = node.childNodes;\n                data.totalWagerWin = parseInt(attributes.getNamedItem(\"totalWagerWin\").value);\n                data.bgWinnings = parseInt(attributes.getNamedItem(\"bgWinnings\").value);\n                data.baseGameSpinsRemaining = parseInt(attributes.getNamedItem(\"baseGameSpinsRemaining\").value);\n                data.isBigBet = parseInt(attributes.getNamedItem(\"isBigBet\").value) == 1;\n                data.isMaxWin = parseInt(attributes.getNamedItem(\"isMaxWin\").value) == 1;\n                data.bonusChief = attributes.getNamedItem(\"chiefWin\") ? parseInt(attributes.getNamedItem(\"chiefWin\").value) == 1 : false;\n            }\n            object.baseGameData = data;\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "ETBaseGameParser.prototype.parse",
+      "originalCachedSourceSHA256": "92fc228f4c45f77b9b55a862259d9413841d7d8b2abdff348e04e8fe75c1e76a",
+      "byteOffset": 210058,
+      "SHA256": "fc3ea900053c165756ee8949517475fc595e76a7303327dc678854f8635387bf"
+    },
+    "freeParser": {
+      "source": "function (input, object) {\n            var data;\n            var node = input.getElementsByTagName(\"FSInfo\")[0];\n            if (node != null) {\n                data = new game.FsData();\n                var attributes = node.attributes;\n                var nodeChildren = node.childNodes;\n                data.fsWinnings = parseInt(attributes.getNamedItem(\"fsWinnings\").value);\n                data.freeSpinsTotal = parseInt(attributes.getNamedItem(\"freeSpinsTotal\").value);\n                data.freeSpinNumber = parseInt(attributes.getNamedItem(\"freeSpinNumber\").value);\n                data.freeSpinsAwarded = attributes.getNamedItem(\"freespinsAwarded\") ? parseInt(attributes.getNamedItem(\"freespinsAwarded\").value) : 0;\n                data.isMaxWin = parseInt(attributes.getNamedItem(\"isMaxWin\").value) == 1;\n            }\n            object.fsData = data;\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "ETFreeSpinParser.prototype.parse",
+      "originalCachedSourceSHA256": "83eb2f8220444e6b583b0cb5694ea719206edb810d3cf958101d5e0afc2cd8bb",
+      "byteOffset": 212330,
+      "SHA256": "bf7a275d31129b2035c95c496807c5ee3bf5ad42650b1c41ad96df3cbd85be52"
+    },
+    "gambleParser": {
+      "source": "function (input, object) {\n            var data = new game.GambleData();\n            var node = input.getElementsByTagName(\"GambleInfo\")[0];\n            if (node != null) {\n                var attributes = node.attributes;\n                var nodeChildren = node.childNodes;\n                data.previousFSCount = parseInt(attributes.getNamedItem(\"previousFSCount\").value);\n                data.currentFSCount = parseInt(attributes.getNamedItem(\"currentFSCount\").value);\n                data.gambleWon = data.currentFSCount > data.previousFSCount;\n                if (attributes.getNamedItem(\"gambleFinished\")) {\n                    data.gambleFinished = parseInt(attributes.getNamedItem(\"gambleFinished\").value) == 1;\n                }\n                object.gambleData = data;\n            }\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "GambleParser.prototype.parse",
+      "originalCachedSourceSHA256": "726c0a068995743f1c713a0fc4e8b8e354cd66e1fe448249c384ccfaaeea23cf",
+      "byteOffset": 215305,
+      "SHA256": "fd60e1be75d6c78a82247dc123dbcf47dd6b29d361e36e8bbcaffa930d0175d4"
+    },
+    "wheelParser": {
+      "source": "function (input, object) {\n            var data = new game.BonusWheelData();\n            var node = input.getElementsByTagName(\"BonusWheel\")[0];\n            if (node != null) {\n                var attributes = node.attributes;\n                var nodeChildren = node.childNodes;\n                data.stopPosition = parseInt(attributes.getNamedItem(\"stopPosition\").value);\n                object.bonusWheelData = data;\n            }\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "BonusWheelParser.prototype.parse",
+      "originalCachedSourceSHA256": "9c956a938a383548e53f2045a0e34dcf011c0c99a0bd87f8173e11e17e461089",
+      "byteOffset": 205890,
+      "SHA256": "e9d530078eb32c31212c8fbccfee423f9bfadcb7ccc9dbf6f89a1d9bd5c9f382"
+    },
+    "initWheelParser": {
+      "source": "function (input, object) {\n            var data = new game.InitBonusWheelData();\n            var node = input.getElementsByTagName(\"BonusWheel\")[0];\n            var attributes = node.attributes;\n            var nodeChildren = node.childNodes;\n            data.freeSpinID = parseInt(attributes.getNamedItem(\"freeSpinID\").value);\n            data.totemID = parseInt(attributes.getNamedItem(\"totemID\").value);\n            data.canyonTrailID = parseInt(attributes.getNamedItem(\"canyonTrailID\").value);\n            data.wheelStrip = this.parseAttributeList(attributes.getNamedItem(\"wheelStrip\").value);\n            object.bonusWheelData = data;\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "InitBonusWheelParser.prototype.parse",
+      "originalCachedSourceSHA256": "fbe790893b667e7cff24e4a949e690c055da4109daaa39a62dc2ffabe64ebd19",
+      "byteOffset": 218276,
+      "SHA256": "c756f038704b9c6718f1651025e8657ddec457927c12fe13d12ad3891360ae5c"
+    },
+    "initWheelList": {
+      "source": "function (attr) {\n            var list = [];\n            var strings = attr.split(\"|\");\n            for (var i = 0; i < strings.length; i++) {\n                if (strings[i] != \"\") {\n                    list.push(parseInt(strings[i]));\n                }\n            }\n            return list;\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "InitBonusWheelParser.prototype.parseAttributeList",
+      "originalCachedSourceSHA256": "60f14c284bd7718aebc98cd55fdd1c71910ab14b6427ed9ad32d544da9f40745",
+      "byteOffset": 218974,
+      "SHA256": "c36b95e6e94b8795bae5dcdf9aa3aa485e8dbe077070e75dac09c00e64cc7f35"
+    },
+    "initGambleParser": {
+      "source": "function (input, object) {\n            var data = new game.InitGambleData();\n            var node = input.getElementsByTagName(\"GambleInfo\")[0];\n            if (node != null) {\n                var attributes = node.attributes;\n                var nodeChildren = node.childNodes;\n                data.fsCounts = attributes.getNamedItem(\"values\").value.split(\"|\").map(Number);\n                object.gambleData = data;\n            }\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "InitGambleParser.prototype.parse",
+      "originalCachedSourceSHA256": "f5f245ee252542d48b57946282d57ee75e3d20f19869ae0fd72e69ee93bc0cb8",
+      "byteOffset": 221066,
+      "SHA256": "4e7781e7fb3cfc7f778fe183446eb2d6154227f532fa1ca047ee1dd52802455d"
+    },
+    "nextGamble": {
+      "source": "function () {\n            var logicResponse = this._server.getLogicResponse();\n            if (logicResponse) {\n                if (logicResponse.gambleData && !logicResponse.gambleData.gambleFinished) {\n                    return true;\n                }\n            }\n            return false;\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "SpinTypeModel.prototype.isNextGamble",
+      "originalCachedSourceSHA256": "78805dd1a970bd406b0c1acb12735147251b9a6f799cb5e07ac64fe302adea4d",
+      "byteOffset": 273111,
+      "SHA256": "0b3502174a054d353247521374e05c9da77f3fcf55bf87f7e6940dcc4b137761"
+    },
+    "continueFree": {
+      "source": "function () {\n            _super.prototype.execute.call(this);\n            if (this._server.getLogicResponse().fsData.freeSpinNumber == this._server.getLogicResponse().fsData.freeSpinsTotal) {\n                this._statesModel.gotoNextState();\n            }\n            else {\n                this._statesModel.changeStateByName(game.FreespinsGameStates.LOGIC_GLS_STATE);\n            }\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "ContineFreespinsCmd.prototype.execute",
+      "originalCachedSourceSHA256": "a20cc4c1c28e8acc6a7dfb436d7356debe5075e07876187d64e1d6bdc6fadb3c",
+      "byteOffset": 906311,
+      "SHA256": "d37f43b5a5133d9a05ed3a82968cf68d74199fb3be0782fdbe9fd66702dcc005"
+    },
+    "gambleReveal": {
+      "source": "function () {\n            _super.prototype.execute.call(this);\n            var gambleFinished = this._server.getLogicResponse().gambleData.gambleFinished;\n            //var gambleWon: boolean = this._server.getLogicResponse().gambleData.gambleWon;\n            if (gambleFinished) {\n                this._statesModel.gotoNextState();\n            }\n            else {\n                this._statesModel.changeStateByName(game.FSGambleGameStates.IDLE_STATE);\n            }\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "HandleFSGambleRevealCompleteCmd.prototype.execute",
+      "originalCachedSourceSHA256": "193fab3f510f66e761bbd8da8e1d69b43c6bb4fdc821f057d397aac81548adf4",
+      "byteOffset": 999554,
+      "SHA256": "9b9fbab39f73795145601fe86d231c70e4752665bddcedb8f155fcb3c36c7aba"
+    },
+    "gambleExit": {
+      "source": "function () {\n            _super.prototype.execute.call(this);\n            var currentFS = this._server.getLogicResponse().gambleData.currentFSCount;\n            if (this._bigBetStakes.getIsBigBet()) {\n                if (currentFS == 0) {\n                    this._statesModel.changeSubGame(game.SubGames.BIG_BET_GAME, game.BigBetGameStates.EXIT_FS_GAMBLE_STATE);\n                }\n                else {\n                    this._statesModel.changeSubGame(game.SubGames.BIG_BET_GAME, game.BigBetGameStates.FREESPIN_ENTER_STATE);\n                }\n            }\n            else {\n                if (currentFS == 0) {\n                    this._statesModel.gotoNextState();\n                }\n                else {\n                    this._statesModel.changeSubGame(game.SubGames.BASE_GAME, game.BaseGameStates.FREESPIN_ENTER_STATE);\n                }\n            }\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "HandleFSGambleExitCmd.prototype.execute",
+      "originalCachedSourceSHA256": "b345cb92ee6f76e613ecbd3c710c989154be6d085f2edbe9914a842d7618026c",
+      "byteOffset": 997767,
+      "SHA256": "262ade8674501af72c5cdbb4b94bb11834e0d9ac3a377dbbf8c74507d7e9c253"
+    },
+    "handleCollect": {
+      "source": "function () {\n            _super.prototype.execute.call(this);\n            this._fsGambleModel.collect = true;\n            this._statesModel.gotoNextState();\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "HandleCollectCmd.prototype.execute",
+      "originalCachedSourceSHA256": "eb017fceda9511c3a0f9d42977ae7fca4404aebc55be6ab780a8e3bf49e2dc88",
+      "byteOffset": 996858,
+      "SHA256": "18228ffcc2686bf62d4bf363fd3149c066de8089d92b0cde723e14a20d6ba7de"
+    },
+    "handleGamble": {
+      "source": "function () {\n            _super.prototype.execute.call(this);\n            this._fsGambleModel.collect = false;\n            this._statesModel.gotoNextState();\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "HandleGambleCmd.prototype.execute",
+      "originalCachedSourceSHA256": "de0bc6e059b2dba36203d29adf4491fec34c9a6bfa65f0bc59f657b1041cbaf8",
+      "byteOffset": 1000756,
+      "SHA256": "576490be0104899ad8343a795b4cc5f17f03495483c6f47862aee990b33d97f4"
+    },
+    "gambleRequest": {
+      "source": "function () {\n            _super.prototype.execute.call(this);\n            if (this._statesModel.getCurrentState().stateName == game.FSGambleGameStates.LOGIC_STATE) {\n                var encoders = [\n                    new game.GambleEncoder(this._fsGambleModel.collect),\n                    new server.GLSCurrencyEncoder(this._server.getInitResponse().platformData.currencyMultiplier),\n                ];\n                var history = this._history.getNextState();\n                if (history) {\n                    encoders.push(new game.HistoryReplaceEncoder(history));\n                }\n                if (this._forceModel.forceSet) {\n                    var forceEncoder = new game.GambleForceEncoder(this._forceModel.gambleWin);\n                    encoders.push(forceEncoder);\n                }\n                this._forceModel.forceSet = false;\n                var data = new server.GLSRequest(encoders);\n                this._server.makeLogicRequest(data);\n            }\n            else if (this._statesModel.getCurrentState().stateName == game.FSGambleGameStates.HISTORY_STATE) {\n                var history = this._history.getNextState(false);\n                var encoders = [\n                    new game.GambleEncoder(this._fsGambleModel.collect),\n                    new server.GLSCurrencyEncoder(this._server.getInitResponse().platformData.currencyMultiplier),\n                ];\n                if (history) {\n                    encoders.push(new game.HistoryReplaceEncoder(history));\n                }\n                var data = new server.GLSRequest(encoders);\n                this._server.makeLogicRequest(data);\n            }\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "MakeGambleRequestCmd.prototype.execute",
+      "originalCachedSourceSHA256": "8bf41ee6ac4af5cc5516c70c0e363dd07d5d141cdcfc7082854338afc0d94446",
+      "byteOffset": 1003996,
+      "SHA256": "9693bfed20b03b0f63d1169affd506cc554b25784815c3442e0820022b1118cc"
+    },
+    "gambleEncoderCtor": {
+      "source": "function GambleEncoder(collect) {\n            this._collect = collect;\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "GambleEncoder",
+      "originalCachedSourceSHA256": "e47e6c09c61289a9d4db772de93c1722840254c5d763b6dfc063e4e15c528c8e",
+      "byteOffset": 1030249,
+      "SHA256": "e47e6c09c61289a9d4db772de93c1722840254c5d763b6dfc063e4e15c528c8e"
+    },
+    "gambleXML": {
+      "source": "function () {\n            var xmlStr = \"<Gamble\";\n            xmlStr += \" collect=\\\"\" + (this._collect ? 1 : 0) + \"\\\"\";\n            xmlStr += \"/>\";\n            return xmlStr;\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "GambleEncoder.prototype.parse",
+      "originalCachedSourceSHA256": "0f4229884b6fa9fe3b405d00de14cf7e73fc5fbd692b439afc3e84e3ca19be87",
+      "byteOffset": 1030338,
+      "SHA256": "6c0b89c741b058a32864875771416ebc6b41508e65f504eb6e410030e9ccc56a"
+    },
+    "stakeCtor": {
+      "source": "function StakeEncoder(stakeTotal, isbigBet) {\n            this._stakeTotal = stakeTotal;\n            this._isbigBet = isbigBet;\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "StakeEncoder",
+      "originalCachedSourceSHA256": "6389ab4f9f5f7277896dc46c505635cd28b0ec6e0a8e4507c38fd82093143f4a",
+      "byteOffset": 203901,
+      "SHA256": "6389ab4f9f5f7277896dc46c505635cd28b0ec6e0a8e4507c38fd82093143f4a"
+    },
+    "stakeXML": {
+      "source": "function () {\n            var xmlStr = \"<Stake\";\n            xmlStr += \" total=\\\"\" + this._stakeTotal.toString() + \"\\\"\";\n            xmlStr += \" isBigBet=\\\"\" + (this._isbigBet ? \"1\" : \"0\").toString() + \"\\\"\";\n            xmlStr += \"/>\";\n            return xmlStr;\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "StakeEncoder.prototype.parse",
+      "originalCachedSourceSHA256": "e8f84c5eb92b2d9dafcec61544462102e6807377eca38747a177e84690c56fb4",
+      "byteOffset": 204047,
+      "SHA256": "8f591587399bd7d939f1b29c9b253c79e1d8ce57d887af34c062dfec15557140"
+    },
+    "normalRequest": {
+      "source": "function () {\n            _super.prototype.execute.call(this);\n            if ((this._statesModel.getCurrentState().stateName == game.BaseGameStates.LOGIC_GLS_STATE ||\n                this._statesModel.getCurrentState().stateName == game.FreespinsGameStates.LOGIC_GLS_STATE ||\n                this._statesModel.getCurrentState().stateName == game.BigBetGameStates.LOGIC_GLS_STATE) &&\n                !this._forceModel.forceOpen) {\n                this._data.startPlay();\n                var encoders = [\n                    this.getStakeEncode(),\n                    new server.GLSCurrencyEncoder(this._server.getInitResponse().platformData.currencyMultiplier),\n                ];\n                var history = this._history.getNextState();\n                if (history) {\n                    encoders.push(new game.HistoryReplaceEncoder(history));\n                }\n                if (this._forceModel.forceSet) {\n                    var forceEncoder = new game.ForceEncoder(this._forceModel.reelData ? this._forceModel.reelData.positions : [0, 0, 0, 0, 0], this._forceModel.reelData ? this._forceModel.reelData.index : 0, this._forceModel.bonusDrumPosition ? this._forceModel.bonusDrumPosition : -1, this._forceModel.lowestSymbolAfterUpgrade ? this._forceModel.lowestSymbolAfterUpgrade : 0, this._forceModel.wildReels ? this._forceModel.wildReels : null, this._forceModel.canyonStopIndex >= 0 ? this._forceModel.canyonStopIndex : -1, this._forceModel.totemIndex >= 0 ? this._forceModel.totemIndex : -1, this._forceModel.totemStopIndex >= 0 ? this._forceModel.totemStopIndex : -1);\n                    encoders.push(forceEncoder);\n                }\n                this._forceModel.forceSet = false;\n                var data = new server.GLSRequest(encoders);\n                this._server.makeLogicRequest(data);\n            }\n            else if (this._statesModel.getCurrentState().stateName == game.PreGameStates.RECOVERY_STATE) {\n                var encoders = [\n                    this.getStakeEncode(),\n                    new server.GLSCurrencyEncoder(this._server.getInitResponse().platformData.currencyMultiplier),\n                ];\n                var data = new server.GLSRequest(encoders);\n                this._server.makeLogicRequest(data);\n            }\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "MakePlayRequestCmd.prototype.execute",
+      "originalCachedSourceSHA256": "bb81e5cc038dd1956d087a75937658a354931f781addc1c13c085adaa832ef8d",
+      "byteOffset": 130456,
+      "SHA256": "9514caca74679330a8059e4a5f636b135bd8d08afbb7cc24a73e41b9925efca8"
+    },
+    "endRequest": {
+      "source": "function () {\n            _super.prototype.execute.call(this);\n            this._partnerAdapter.finishedPlay();\n            this._partnerAdapter.finishedPostGameAnimations();\n            if (!this._history.getIsHistoryReplay()) {\n                this._server.makeEndRequest(new server.GLSRequest([]));\n            }\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "MakeEndRequestCmd.prototype.execute",
+      "originalCachedSourceSHA256": "1af57c9a80bcbde7d07027a27e0dec1e8deca32dd2672cbc85600620463d2735",
+      "byteOffset": 126030,
+      "SHA256": "9ff891c2f1c9c07c8a546f6bbf828ae0f1a12893a2ca560a62235e783f5e6590"
+    },
+    "graph": {
+      "source": "function () {\n            _super.prototype.execute.call(this);\n            //State                                    //Next State                                //Next Sub Game\n            this.addPre(game.PreGameStates.HISTORY_LOAD_STATE, game.PreGameStates.LOADING_STATE, game.SubGames.PRE_GAME);\n            this.addPre(game.PreGameStates.LOADING_STATE, game.PreGameStates.INIT_GLS_STATE, game.SubGames.PRE_GAME);\n            this.addPre(game.PreGameStates.INIT_GLS_STATE, game.PreGameStates.HISTORY_RECOVERY_STATE, game.SubGames.PRE_GAME);\n            this.addPre(game.PreGameStates.HISTORY_RECOVERY_STATE, game.PreGameStates.CREATE_GAME_STATE1, game.SubGames.PRE_GAME);\n            this.addPre(game.PreGameStates.CREATE_GAME_STATE1, game.PreGameStates.CREATE_GAME_STATE2, game.SubGames.PRE_GAME);\n            this.addPre(game.PreGameStates.CREATE_GAME_STATE2, game.PreGameStates.CREATE_GAME_STATE3, game.SubGames.PRE_GAME);\n            this.addPre(game.PreGameStates.CREATE_GAME_STATE3, game.PreGameStates.CREATE_GAME_STATE4, game.SubGames.PRE_GAME);\n            this.addPre(game.PreGameStates.CREATE_GAME_STATE4, game.PreGameStates.CREATE_GAME_STATE5, game.SubGames.PRE_GAME);\n            this.addPre(game.PreGameStates.CREATE_GAME_STATE5, game.PreGameStates.CREATE_GAME_STATE6, game.SubGames.PRE_GAME);\n            this.addPre(game.PreGameStates.CREATE_GAME_STATE6, game.PreGameStates.CREATE_GAME_STATE7, game.SubGames.PRE_GAME);\n            this.addPre(game.PreGameStates.CREATE_GAME_STATE7, game.PreGameStates.RECOVERY_STATE, game.SubGames.PRE_GAME);\n            this.addPre(game.PreGameStates.RECOVERY_STATE, game.PreGameStates.RECOVERY_RESPONSE_STATE, game.SubGames.PRE_GAME);\n            this.addPre(game.PreGameStates.RECOVERY_RESPONSE_STATE, game.BaseGameStates.RECOVER_GAME_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.RECOVER_GAME_STATE, game.BaseGameStates.STOP_REELS_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.SPLASH_STATE, game.BaseGameStates.IDLE_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.IDLE_STATE, game.BaseGameStates.LOGIC_GLS_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.LOGIC_GLS_STATE, game.BaseGameStates.STOP_REELS_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.STOP_REELS_STATE, game.BaseGameStates.EXPAND_WILDS_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.EXPAND_WILDS_STATE, game.BaseGameStates.MYSTERY_UPGRADE_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.MYSTERY_UPGRADE_STATE, game.BaseGameStates.EXTRA_LINES_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.EXTRA_LINES_STATE, game.BaseGameStates.SHOW_PAYLINE_SPAGHETTI_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.SHOW_PAYLINE_SPAGHETTI_STATE, game.BaseGameStates.MAX_WIN_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.MAX_WIN_STATE, game.BaseGameStates.SHOW_PAYLINE_WINS_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.SHOW_PAYLINE_WINS_STATE, game.BaseGameStates.CONTRACT_WILDS_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.CONTRACT_WILDS_STATE, game.BaseGameStates.SHOW_SCATTER_WINS_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.SHOW_SCATTER_WINS_STATE, game.BaseGameStates.BONUS_WHEEL_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.BONUS_WHEEL_STATE, game.BaseGameStates.SCATTER_JACKPOT_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.SCATTER_JACKPOT_STATE, game.BaseGameStates.BIG_WIN_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.BIG_WIN_STATE, game.BaseGameStates.END_GLS_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.END_GLS_STATE, game.BaseGameStates.IDLE_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.LOADING_BONUS, game.BaseGameStates.BONUS_WHEEL_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.FREESPIN_ENTER_STATE, game.BaseGameStates.FREESPIN_EXIT_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.FREESPIN_EXIT_STATE, game.BaseGameStates.BIG_WIN_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.ENTER_CANYON_STATE, game.CanyonGameStates.ENTER_STATE, game.SubGames.CANYON_GAME);\n            this.addBase(game.BaseGameStates.EXIT_CANYON_STATE, game.BaseGameStates.BIG_WIN_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.ENTER_TOTEM_STATE, game.TotemGameStates.ENTER_STATE, game.SubGames.TOTEM_GAME);\n            this.addBase(game.BaseGameStates.EXIT_TOTEM_STATE, game.BaseGameStates.BIG_WIN_STATE, game.SubGames.BASE_GAME);\n            this.addBase(game.BaseGameStates.ENTER_FS_GAMBLE_STATE, game.FSGambleGameStates.ENTER_STATE, game.SubGames.FS_GAMBLE_GAME);\n            this.addBase(game.BaseGameStates.EXIT_FS_GAMBLE_STATE, game.BaseGameStates.BIG_WIN_STATE, game.SubGames.BASE_GAME);\n            this.addBigBetSelection(game.BigBetSelectionGameStates.ENTER_STATE, game.BigBetSelectionGameStates.SELECTION_STATE, game.SubGames.BIG_BET_SELECTION_GAME);\n            this.addBigBetSelection(game.BigBetSelectionGameStates.SELECTION_STATE, game.BigBetSelectionGameStates.SCROLLING_STATE, game.SubGames.BIG_BET_SELECTION_GAME);\n            this.addBigBetSelection(game.BigBetSelectionGameStates.SCROLLING_STATE, game.BigBetSelectionGameStates.SELECTION_STATE, game.SubGames.BIG_BET_SELECTION_GAME);\n            this.addBigBetSelection(game.BigBetSelectionGameStates.EXIT_STATE, game.BaseGameStates.IDLE_STATE, game.SubGames.BASE_GAME);\n            this.addBigBet(game.BigBetGameStates.ENTER_STATE, game.BigBetGameStates.LOGIC_GLS_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.LOGIC_GLS_STATE, game.BigBetGameStates.STOP_REELS_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.STOP_REELS_STATE, game.BigBetGameStates.EXPAND_WILDS_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.EXPAND_WILDS_STATE, game.BigBetGameStates.LOCK_WILDS_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.LOCK_WILDS_STATE, game.BigBetGameStates.MYSTERY_UPGRADE_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.MYSTERY_UPGRADE_STATE, game.BigBetGameStates.EXTRA_LINES_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.EXTRA_LINES_STATE, game.BigBetGameStates.SHOW_PAYLINE_SPAGHETTI_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.SHOW_PAYLINE_SPAGHETTI_STATE, game.BigBetGameStates.MAX_WIN_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.MAX_WIN_STATE, game.BigBetGameStates.SHOW_PAYLINE_WINS_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.SHOW_PAYLINE_WINS_STATE, game.BigBetGameStates.CONTRACT_WILDS_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.CONTRACT_WILDS_STATE, game.BigBetGameStates.SHOW_SCATTER_WINS_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.SHOW_SCATTER_WINS_STATE, game.BigBetGameStates.BONUS_WHEEL_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.BONUS_WHEEL_STATE, game.BigBetGameStates.SCATTER_JACKPOT_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.SCATTER_JACKPOT_STATE, game.BigBetGameStates.CONTINUE_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.CONTINUE_STATE, game.BigBetGameStates.BIG_WIN_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.BIG_WIN_STATE, game.BigBetGameStates.EXIT_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.EXIT_STATE, game.BigBetSelectionGameStates.ENTER_STATE, game.SubGames.BIG_BET_SELECTION_GAME);\n            this.addBigBet(game.BigBetGameStates.FREESPIN_ENTER_STATE, game.BigBetGameStates.FREESPIN_EXIT_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.FREESPIN_EXIT_STATE, game.BigBetGameStates.CONTINUE_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.ENTER_CANYON_STATE, game.CanyonGameStates.ENTER_STATE, game.SubGames.CANYON_GAME);\n            this.addBigBet(game.BigBetGameStates.EXIT_CANYON_STATE, game.BigBetGameStates.CONTINUE_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.ENTER_TOTEM_STATE, game.TotemGameStates.ENTER_STATE, game.SubGames.TOTEM_GAME);\n            this.addBigBet(game.BigBetGameStates.EXIT_TOTEM_STATE, game.BigBetGameStates.CONTINUE_STATE, game.SubGames.BIG_BET_GAME);\n            this.addBigBet(game.BigBetGameStates.ENTER_FS_GAMBLE_STATE, game.FSGambleGameStates.ENTER_STATE, game.SubGames.FS_GAMBLE_GAME);\n            this.addBigBet(game.BigBetGameStates.EXIT_FS_GAMBLE_STATE, game.BigBetGameStates.CONTINUE_STATE, game.SubGames.BIG_BET_GAME);\n            this.addCanyon(game.CanyonGameStates.ENTER_STATE, game.CanyonGameStates.IDLE_STATE, game.SubGames.CANYON_GAME);\n            this.addCanyon(game.CanyonGameStates.IDLE_STATE, game.CanyonGameStates.SPIN_STATE, game.SubGames.CANYON_GAME);\n            this.addCanyon(game.CanyonGameStates.SPIN_STATE, game.CanyonGameStates.BURN_STATE, game.SubGames.CANYON_GAME);\n            this.addCanyon(game.CanyonGameStates.BURN_STATE, game.CanyonGameStates.STEP_STATE, game.SubGames.CANYON_GAME);\n            this.addCanyon(game.CanyonGameStates.STEP_STATE, game.CanyonGameStates.AWARD_STATE, game.SubGames.CANYON_GAME);\n            this.addCanyon(game.CanyonGameStates.AWARD_STATE, game.CanyonGameStates.EXIT_STATE, game.SubGames.CANYON_GAME);\n            this.addCanyon(game.CanyonGameStates.EXIT_STATE, game.BaseGameStates.EXIT_CANYON_STATE, game.SubGames.BASE_GAME);\n            this.addTotem(game.TotemGameStates.ENTER_STATE, game.TotemGameStates.INTRO_STATE, game.SubGames.TOTEM_GAME);\n            this.addTotem(game.TotemGameStates.INTRO_STATE, game.TotemGameStates.IDLE_STATE, game.SubGames.TOTEM_GAME);\n            this.addTotem(game.TotemGameStates.IDLE_STATE, game.TotemGameStates.REVEAL_STATE, game.SubGames.TOTEM_GAME);\n            this.addTotem(game.TotemGameStates.REVEAL_STATE, game.TotemGameStates.SCROLL_STATE, game.SubGames.TOTEM_GAME);\n            this.addTotem(game.TotemGameStates.SCROLL_STATE, game.TotemGameStates.TAKE_LIFE_STATE, game.SubGames.TOTEM_GAME);\n            this.addTotem(game.TotemGameStates.TAKE_LIFE_STATE, game.TotemGameStates.AWARD_STATE, game.SubGames.TOTEM_GAME);\n            this.addTotem(game.TotemGameStates.AWARD_STATE, game.TotemGameStates.EXIT_STATE, game.SubGames.TOTEM_GAME);\n            this.addTotem(game.TotemGameStates.EXIT_STATE, game.BaseGameStates.EXIT_TOTEM_STATE, game.SubGames.BASE_GAME);\n            this.addFSGamble(game.FSGambleGameStates.ENTER_STATE, game.FSGambleGameStates.IDLE_STATE, game.SubGames.FS_GAMBLE_GAME);\n            this.addFSGamble(game.FSGambleGameStates.IDLE_STATE, game.FSGambleGameStates.LOGIC_STATE, game.SubGames.FS_GAMBLE_GAME);\n            this.addFSGamble(game.FSGambleGameStates.LOGIC_STATE, game.FSGambleGameStates.REVEAL_STATE, game.SubGames.FS_GAMBLE_GAME);\n            this.addFSGamble(game.FSGambleGameStates.REVEAL_STATE, game.FSGambleGameStates.EXIT_STATE, game.SubGames.FS_GAMBLE_GAME);\n            this.addFSGamble(game.FSGambleGameStates.EXIT_STATE, game.BaseGameStates.EXIT_FS_GAMBLE_STATE, game.SubGames.BASE_GAME);\n            this.addFSGamble(game.FSGambleGameStates.HISTORY_STATE, game.FSGambleGameStates.HISTORY_LOGIC_STATE, game.SubGames.FS_GAMBLE_GAME);\n            this.addFSGamble(game.FSGambleGameStates.HISTORY_LOGIC_STATE, game.FSGambleGameStates.LOGIC_STATE, game.SubGames.FS_GAMBLE_GAME);\n            this.addFreespin(game.FreespinsGameStates.ENTER_STATE, game.FreespinsGameStates.INTRO_STATE, game.SubGames.FS_GAME);\n            this.addFreespin(game.FreespinsGameStates.INTRO_STATE, game.FreespinsGameStates.LOGIC_GLS_STATE, game.SubGames.FS_GAME);\n            this.addFreespin(game.FreespinsGameStates.LOGIC_GLS_STATE, game.FreespinsGameStates.STOP_REELS_STATE, game.SubGames.FS_GAME);\n            this.addFreespin(game.FreespinsGameStates.STOP_REELS_STATE, game.FreespinsGameStates.SHOW_SCATTER_RETRIGGER, game.SubGames.FS_GAME);\n            this.addFreespin(game.FreespinsGameStates.SHOW_SCATTER_RETRIGGER, game.FreespinsGameStates.EXPAND_WILDS_STATE, game.SubGames.FS_GAME);\n            this.addFreespin(game.FreespinsGameStates.EXPAND_WILDS_STATE, game.FreespinsGameStates.EXTRA_LINES_STATE, game.SubGames.FS_GAME);\n            this.addFreespin(game.FreespinsGameStates.EXTRA_LINES_STATE, game.FreespinsGameStates.SHOW_PAYLINE_SPAGHETTI_STATE, game.SubGames.FS_GAME);\n            this.addFreespin(game.FreespinsGameStates.SHOW_PAYLINE_SPAGHETTI_STATE, game.FreespinsGameStates.MAX_WIN_STATE, game.SubGames.FS_GAME);\n            this.addFreespin(game.FreespinsGameStates.MAX_WIN_STATE, game.FreespinsGameStates.SHOW_PAYLINE_WINS_STATE, game.SubGames.FS_GAME);\n            this.addFreespin(game.FreespinsGameStates.SHOW_PAYLINE_WINS_STATE, game.FreespinsGameStates.SCATTER_JACKPOT_STATE, game.SubGames.FS_GAME);\n            this.addFreespin(game.FreespinsGameStates.SCATTER_JACKPOT_STATE, game.FreespinsGameStates.CONTRACT_WILDS_STATE, game.SubGames.FS_GAME);\n            this.addFreespin(game.FreespinsGameStates.CONTRACT_WILDS_STATE, game.FreespinsGameStates.CONTINUE_STATE, game.SubGames.FS_GAME);\n            this.addFreespin(game.FreespinsGameStates.CONTINUE_STATE, game.FreespinsGameStates.CONGRATULATIONS_STATE, game.SubGames.FS_GAME);\n            this.addFreespin(game.FreespinsGameStates.CONGRATULATIONS_STATE, game.FreespinsGameStates.EXIT_STATE, game.SubGames.FS_GAME);\n            this.addFreespin(game.FreespinsGameStates.EXIT_STATE, game.BaseGameStates.FREESPIN_EXIT_STATE, game.SubGames.BASE_GAME);\n            this.addHelp(game.HelpGameStates.ENTER_STATE, game.HelpGameStates.SELECTION_STATE, game.SubGames.HELP);\n            this.addHelp(game.HelpGameStates.SELECTION_STATE, game.HelpGameStates.EXIT_STATE, game.SubGames.HELP);\n            this.addHelp(game.HelpGameStates.EXIT_STATE, game.BaseGameStates.IDLE_STATE, game.SubGames.BASE_GAME);\n            this._statesModel.init(game.SubGames.PRE_GAME, game.PreGameStates.HISTORY_LOAD_STATE);\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "CreateStatesCmd.prototype.execute",
+      "originalCachedSourceSHA256": "dd0a3439416900752a83dd020bc06525ea5177ad896a3e4d43de9d963f91be2d",
+      "byteOffset": 63630,
+      "SHA256": "cef6eed925a5ac7ea58734cf72b6f4926d6027fda85fafd1911c10191a9afdb0"
+    },
+    "wheelLower": {
+      "source": "function () {\n            var stopIndex = this._server.getLogicResponse().bonusWheelData.stopPosition;\n            var featureID = this._server.getInitResponse().bonusWheelData.wheelStrip[stopIndex];\n            // goto feature index\n            switch (featureID) {\n                case this._server.getInitResponse().bonusWheelData.totemID:\n                    //this._statesModel.changeStateByName(BaseGameStates.ENTER_TOTEM_STATE);\n                    this.dispatchContextEvent(new game.GameEvent(game.GameEvent.GO_TO_TOTEM));\n                    break;\n                case this._server.getInitResponse().bonusWheelData.canyonTrailID:\n                    //this._statesModel.changeStateByName(BaseGameStates.ENTER_CANYON_STATE);\n                    this.dispatchContextEvent(new game.GameEvent(game.GameEvent.GO_TO_CANYON));\n                    break;\n                case this._server.getInitResponse().bonusWheelData.freeSpinID:\n                    //this._statesModel.changeStateByName(BaseGameStates.ENTER_FS_GAMBLE_STATE);\n                    this.dispatchContextEvent(new game.GameEvent(game.GameEvent.GO_TO_FREESPINS));\n                    break;\n            }\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "WheelMediator.prototype.onLowerComplete",
+      "originalCachedSourceSHA256": "687624782bd490ee37e38444b40d7f33f65584bd106a01a0880857fcecb0ca79",
+      "byteOffset": 646515,
+      "SHA256": "99cd0d5454437122f5a1d32fa6eb2fafc0d2344e7dd3505d093719bc48f8b73c"
+    },
+    "goFree": {
+      "source": "function () {\n            _super.prototype.execute.call(this);\n            if (this._statesModel.getSubGame() == game.SubGames.BASE_GAME) {\n                this._statesModel.changeStateByName(game.BaseGameStates.ENTER_FS_GAMBLE_STATE);\n            }\n        }",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/winB-first-src-v3/32771/source-methods.json",
+      "originalCachedMethod": "GoToFreeSpinsCmd.prototype.execute",
+      "originalCachedSourceSHA256": "0fb1f6663cbcc1c0b20dd06ef0ee15e09edf0bd17a68493a76dbe783ebbf740c",
+      "byteOffset": 316614,
+      "SHA256": "adf9246df98a8747c0e1ba2b008e733ea4c7822d54bc29deb3881d54c2c45c66"
+    },
+    "platform": {
+      "source": "function (input, object) {\n            var node = input.getElementsByTagName(\"Header\")[0];\n            var data = new server.PlatformData();\n            if (node != null) {\n                var attr = node.attributes;\n                var attrLength = attr.length;\n                for (var i = 0; i < attrLength; ++i) {\n                    switch (attr[i].nodeName) {\n                        case 'sessionID':\n                            data.sessionId = attr[i].nodeValue;\n                            break;\n                        case 'gameID':\n                            data.gameId = attr[i].nodeValue;\n                            break;\n                        case 'lang':\n                            data.languageCode = attr[i].nodeValue;\n                            break;\n                        case 'versionID':\n                            data.version = attr[i].nodeValue;\n                            break;\n                        case 'isRecovering':\n                            data.isRecovering = attr[i].nodeValue === 'Y';\n                            break;\n                    }\n                }\n                var currencyMultiplierNode = input.getElementsByTagName(\"CurrencyMultiplier\")[0];\n                if (currencyMultiplierNode != null) {\n                    data.currencyMultiplier = parseInt(currencyMultiplierNode.textContent, 10);\n                }\n                else {\n                    data.currencyMultiplier = 1;\n                }\n            }\n            object.platformData = data;\n        }",
+      "start": 369855,
+      "end": 371389,
+      "SHA256": "a1fe3d931cd2a1f3ba58c5a3ec506cb903a2b22698b5a39f12816a9221b2917d",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/FIRST32771-Canyon-small-delta-20261018/new-own-Init-currency-source-DATA-v1406.json"
+    },
+    "currencyXML": {
+      "source": "function () {\n            var xmlStr = \"<AccountData><CurrencyMultiplier>\";\n            xmlStr += this._currencyMultiplier.toString();\n            xmlStr += \"</CurrencyMultiplier></AccountData>\";\n            return xmlStr;\n        }",
+      "start": 359022,
+      "end": 359254,
+      "SHA256": "ed266a1e9596d5ae8b097511f3e701759c6059c0206f564db9481d8e19e5c332",
+      "sourceCache": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/FIRST32771-Canyon-small-delta-20261018/new-own-Init-currency-source-DATA-v1406.json"
+    },
+    "headerCtor": {
+      "source": "function GLSHeader(metadata, sessionData, glsServerSessionId, gameId, gameVersion) {\n            this.GLSID_CASINARENA = \"4\";\n            this.GLSID_FREEPLAY = \"65535\";\n            this.affiliate = sessionData.getContextID();\n            this.freePlay = !metadata.isRealMoney();\n            this.gameCodeRGI = metadata.getGameCode();\n            this.gameId = gameId;\n            this.glsId = (this.freePlay ? this.GLSID_FREEPLAY : this.GLSID_CASINARENA);\n            this.langCode = metadata.getLocale();\n            this.sessionId = glsServerSessionId;\n            this.userId = sessionData.getPlayerID();\n            this.version = gameVersion;\n            this.promotions = false;\n            this.channel = \"I\";\n            this.userType = \"C\";\n            this.currencyCode = \"\";\n        }",
+      "byteWindowStart": 354680,
+      "startWithinWindow": 34,
+      "SHA256": "148b9bbceefdb9376a57338f674f26f4b9b61e087f026dc0a23db3882a5be721",
+      "ownMethod": "function GLSHeader"
+    },
+    "headerXML": {
+      "source": "function () {\n            var xmlString = \"\";\n            xmlString += \"<Header\";\n            xmlString += \" affiliate=\\\"\" + this.affiliate + \"\\\"\";\n            xmlString += \" ccyCode=\\\"\" + this.currencyCode + \"\\\"\";\n            xmlString += \" channel=\\\"\" + this.channel + \"\\\"\";\n            xmlString += \" freePlay=\\\"\" + (this.freePlay ? \"Y\" : \"N\") + \"\\\"\";\n            xmlString += \" gameCodeRGI=\\\"\" + this.gameCodeRGI + \"\\\"\";\n            xmlString += \" gameID=\\\"\" + this.gameId + \"\\\"\";\n            xmlString += \" glsID=\\\"\" + this.glsId + \"\\\"\";\n            xmlString += \" lang=\\\"\" + this.langCode + \"\\\"\";\n            xmlString += \" promotions=\\\"\" + (this.promotions ? \"Y\" : \"N\") + \"\\\"\";\n            xmlString += \" sessionID=\\\"\" + this.sessionId + \"\\\"\";\n            xmlString += \" userID=\\\"\" + this.userId + \"\\\"\";\n            xmlString += \" userType=\\\"\" + this.userType + \"\\\"\";\n            xmlString += \" versionID=\\\"\" + this.version + \"\\\"\";\n            xmlString += \"/>\";\n            return xmlString;\n        }",
+      "byteWindowStart": 355500,
+      "startWithinWindow": 46,
+      "SHA256": "1922bdcdcf781ad07ba3443016b74f51b6a7ca8118e909f5789d8a3c5e98303e",
+      "ownMethod": "GLSHeader.prototype.parse"
+    },
+    "requestCtor": {
+      "source": "function GLSRequest(encoders) {\n            this._encoders = encoders;\n        }",
+      "byteWindowStart": 358430,
+      "startWithinWindow": 57,
+      "SHA256": "fd5fe94d2f8db84b9ccb8d23dbe77b9933a9f7c2d76b15ca9692962e0c541a89",
+      "ownMethod": "function GLSRequest"
+    },
+    "Init": {
+      "source": "function (data) {\n            var sessionData = this._partnerAdapter.getSessionData();\n            var header = new server.GLSHeader(this._metaData, sessionData, this._sessionId, this._glmId, this._glmVersion);\n            var xmlString = \"<GameRequest type=\\\"Init\\\">\";\n            xmlString += header.parse();\n            for (var i = 0; i < data.getEncoders().length; i++) {\n                xmlString += data.getEncoders()[i].parse();\n            }\n            xmlString += \"</GameRequest>\";\n            return xmlString;\n        }",
+      "byteWindowStart": 383880,
+      "startWithinWindow": 60,
+      "SHA256": "e059ae4fe763a7827929a9afb7b8697486260045faf9d92f73766aaf6a5a4be1",
+      "ownMethod": "GLSInitRequester.prototype.parseRequestData"
+    },
+    "Logic": {
+      "source": "function (data) {\n            var sessionData = this._partnerAdapter.getSessionData();\n            var header = new server.GLSHeader(this._metaData, sessionData, this._sessionId, this._glmId, this._glmVersion);\n            var xmlString = \"<GameRequest type=\\\"Logic\\\">\";\n            xmlString += header.parse();\n            for (var i = 0; i < data.getEncoders().length; i++) {\n                xmlString += data.getEncoders()[i].parse();\n            }\n            xmlString += \"</GameRequest>\";\n            return xmlString;\n        }",
+      "byteWindowStart": 385010,
+      "startWithinWindow": 60,
+      "SHA256": "d1a1d82bed5eede03fa4fc11bfef4405fcc64446abca68bf9b0a08d51b37d9a3",
+      "ownMethod": "GLSLogicRequester.prototype.parseRequestData"
+    },
+    "EndGame": {
+      "source": "function (data) {\n            var sessionData = this._partnerAdapter.getSessionData();\n            var header = new server.GLSHeader(this._metaData, sessionData, this._sessionId, this._glmId, this._glmVersion);\n            var xmlString = \"<GameRequest type=\\\"EndGame\\\">\";\n            xmlString += header.parse();\n            for (var i = 0; i < data.getEncoders().length; i++) {\n                xmlString += data.getEncoders()[i].parse();\n            }\n            xmlString += \"</GameRequest>\";\n            return xmlString;\n        }",
+      "byteWindowStart": 382750,
+      "startWithinWindow": 62,
+      "SHA256": "46bdd8d515061709bc9621ebd774900384fd3717c2e764e484e0fea6c89a0052",
+      "ownMethod": "GLSEndRequester.prototype.parseRequestData"
+    },
+    "wheelEntry": {
+      "source": "function (e) {\n            this.view.getScene().getEngine().resize();\n            if (this._server.getLogicResponse().bonusWheelData && !this._server.getLogicResponse().baseGameData.bonusChief) {\n                this._commonui.stopAutoPlay();\n                if (this._stageLoadeModel.getStageComplete(game.LoadingStages.BONUS_GAMES3)) {\n                    this._partnerAdapter.hideProgressBar();\n                    this.state = WheelMediator.STATE_RISING;\n                    this.view.canvas2D.levelVisible = true;\n                    this.raise();\n                }\n                else {\n                    this._statesModel.changeStateByName(game.BaseGameStates.LOADING_BONUS);\n                    this._partnerAdapter.showProgressBar();\n                }\n            }\n            else {\n                this._statesModel.gotoNextState();\n            }\n        }",
+      "byteWindowStart": 643260,
+      "startWithinWindow": 62,
+      "SHA256": "95ebfb87e39603f2bb5b8dc15e61d032c50ee0d182049924140fdcd7d291201b",
+      "ownMethod": "WheelMediator.prototype.onBonusWheel"
+    },
+    "max": {
+      "source": "function () {\n            var _this = this;\n            _super.prototype.execute.call(this);\n            if (this._serverModel.getLogicResponse().baseGameData.isMaxWin) {\n                this._bigBetStakesModel.setIsBigBet(false);\n                if (this._spinTypeModel.isCurrentSpinFS()) {\n                    this._subgamesModel.crossFadeViews([\n                        this._subgamesModel.basegameBgLayer,\n                        this._subgamesModel.reelsLayer,\n                        this._subgamesModel.basegameFrontLayer,\n                        this._subgamesModel.transitionLayer,\n                    ]);\n                    TweenMax.delayedCall(1, function () {\n                        _this.addCongrats();\n                        _this.eventDispatcher.dispatchEvent(new game.GameEvent(game.GameEvent.MAX_WIN_DISPLAYED));\n                    }, [], this);\n                    TweenMax.delayedCall(6, function () {\n                        _this._statesModel.changeSubGame(game.SubGames.BASE_GAME, game.BaseGameStates.END_GLS_STATE);\n                        _this.eventDispatcher.dispatchEvent(new game.GameEvent(game.GameEvent.MAX_WIN_COMPLETE));\n                    }, [], this);\n                }\n                else if (this._spinTypeModel.isCurrentSpinBigBet()) {\n                    this.addCongrats();\n                    this.eventDispatcher.dispatchEvent(new game.GameEvent(game.GameEvent.MAX_WIN_DISPLAYED));\n                    TweenMax.delayedCall(6, function () {\n                        _this._subgamesModel.crossFadeViews([\n                            _this._subgamesModel.basegameBgLayer,\n                            _this._subgamesModel.reelsLayer,\n                            _this._subgamesModel.basegameFrontLayer,\n                            _this._subgamesModel.transitionLayer,\n                        ]);\n                        _this._statesModel.changeSubGame(game.SubGames.BASE_GAME, game.BaseGameStates.END_GLS_STATE);\n                        _this.eventDispatcher.dispatchEvent(new game.GameEvent(game.GameEvent.MAX_WIN_COMPLETE));\n                    }, [], this);\n                }\n                else {\n                    this.addCongrats();\n                    this.eventDispatcher.dispatchEvent(new game.GameEvent(game.GameEvent.MAX_WIN_DISPLAYED));\n                    TweenMax.delayedCall(6, function () {\n                        _this._statesModel.changeStateByName(game.BaseGameStates.END_GLS_STATE);\n                        _this.eventDispatcher.dispatchEvent(new game.GameEvent(game.GameEvent.MAX_WIN_COMPLETE));\n                    }, [], this);\n                }\n            }\n            else {\n                this._statesModel.gotoNextState();\n            }\n        }",
+      "byteWindowStart": 322200,
+      "startWithinWindow": 96,
+      "SHA256": "818cfeb4900470b5cff0aa3ca43bcc66a2f20ed45daaafa599256102d292c693",
+      "ownMethod": "HandleMaxWinCmd.prototype.execute"
+    },
+    "requestGetEncoders": {
+      "source": "function () {\n            return this._encoders;\n        }",
+      "byteWindowStart": 358430,
+      "startWithinWindow": 181,
+      "SHA256": "05f0d249b4c08e8baff4e5e529d68236857dffdc0487a701c115e8212c7780aa",
+      "ownMethod": "GLSRequest.prototype.getEncoders"
+    }
+  }
+}
