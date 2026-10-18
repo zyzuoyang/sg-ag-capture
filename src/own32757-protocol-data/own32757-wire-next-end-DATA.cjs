@@ -1,12 +1,13 @@
 'use strict';
 // Own protocol DATA only. This module has no transport, timer actor, UI or DB.
-exports.createOwn32757WireNextEndDATA=function({DOM,vm,data}){
+exports.createOwn32757WireNextEndDATA=function({DOM,vm,data,guaranteeData}){
  const need=(ok,code)=>{if(!ok)throw Object.assign(new Error('OWN32757_WIRE_HOLD_'+code),{own32757WireHold:true,newRequestNotSent:true,retryAllowed:false})};
  need(data?.schema==='own32757-wheel-free-control-DATA-v1448'&&DOM?.DOMParser&&vm?.Script,'OWN_SOURCE_DATA');
  const noop=()=>{},later=[],game={...data.constants,BaseGameInfoData:function(){},FreeSpinInfoData:function(){}};
  for(const name of ['GameEvent','CyclersModelEvent','TransitionEvent'])game[name]=Object.assign(function(type){this.type=type},game[name]);
- const ctx=vm.createContext({game,_super:{prototype:{execute:noop}},TweenLite:{delayedCall:(t,f)=>later.push(f)}});
+ const ctx=vm.createContext({game,_super:{prototype:{execute:noop,onRemove:noop}},TweenLite:{delayedCall:(t,f)=>later.push(f)}});
  const own=n=>new vm.Script('('+data.leaves[n].source+')').runInContext(ctx,{timeout:100});
+ const guaranteeOwn=k=>{need(guaranteeData?.schema==='own32757-bonusGuarantee-protocol-completion-DATA-v1554','OWN_GUARANTEE_SOURCE');return new vm.Script('('+guaranteeData.leaves[k].source+')').runInContext(ctx,{timeout:100})};
  const freeNext=own('freeNext'),endRequest=own('endRequest'),baseInfo=own('baseInfo'),baseAttribute=own('baseAttribute'),freeInfo=own('freeInfo'),freeAttribute=own('freeAttribute'),baseComplete=own('baseBangupComplete');
  const children=(n,name)=>Array.from(n.childNodes||[]).filter(x=>x.nodeType===1&&x.nodeName===name);
  const one=(n,name)=>{const a=children(n,name);need(a.length===1,'ONE_'+name);return a[0]};
@@ -44,7 +45,16 @@ exports.createOwn32757WireNextEndDATA=function({DOM,vm,data}){
    let next=false,outro=false;freeNext.call({_statesModel:{isFreeSpin:true,changeStateByName:n=>{need(n===game.BonusGameState.FREE_SPIN_REEL_SPIN,'SOURCE_FREE_STATE');next=true},gotoNextState:()=>outro=true},_server:{getLogicResponse:()=>response},_forceModel:{forceOpen:false}});
    let budget=4;while(later.length){need(budget-->0,'FINITE_CALLBACKS');later.shift()()}
    need(next!==outro,'ONE_CURRENT_FREE_ROUTE');if(next)event='Logic';else{
-    need(!response.freeSpinInfoData.isBonusGuarantee,'UNMAPPED_BONUS_GUARANTEE_CALLBACK');event='EndGame';
+    if(response.freeSpinInfoData.isBonusGuarantee){
+     let advanced=0,started=0,added=0,removed=0;const checkGuarantee=guaranteeOwn('checkGuarantee'),onRemoved=guaranteeOwn('guaranteeRemoved'),onDelay=guaranteeOwn('delayComplete');
+     // The original source has no request in this branch: its display completion
+     // removes the view, whose mediator advances to the existing base win/End.
+     // These opaque ports execute only those source callbacks; no renderer/audio.
+     game.ExternalEvent={GAME_ORIENTATION_CHANGED:Symbol('own orientation unsubscribe port')};
+     const state={gotoNextState:()=>advanced++},view={init:()=>started++,parent:{removeChild:v=>{need(v===view,'OWN_GUARANTEE_VIEW');removed++;onRemoved.call({_statesModel:state,removeContextListener:noop,onOrientationChange:noop,_gameContextEventDispatcher:{dispatchEvent:e=>need(e.type===game.GameEvent.BONUS_GUARANTEE_COMPLETED,'OWN_GUARANTEE_COMPLETED')}})}},startDelay:()=>onDelay.call(view)};
+     checkGuarantee.call({_server:{getLogicResponse:()=>response},_statesModel:state,_bonusGuaranteeView:view,_subgamesModel:{transitionContainer:{addChild:v=>{need(v===view,'OWN_GUARANTEE_PORT');added++}}}});
+     need(advanced===1&&started===1&&added===1&&removed===1,'ONE_SOURCE_GUARANTEE_COMPLETION');
+    }event='EndGame';
    }
   }else event='EndGame';
   if(event==='EndGame'){

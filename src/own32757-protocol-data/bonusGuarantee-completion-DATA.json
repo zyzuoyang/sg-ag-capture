@@ -1,0 +1,35 @@
+{
+  "schema": "own32757-bonusGuarantee-protocol-completion-DATA-v1554",
+  "gameId": "32757",
+  "ownApp": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\cheshirecat\\app\\js\\main.js",
+  "leaves": {
+    "checkGuarantee": {
+      "source": "function () {\n            _super.prototype.execute.call(this);\n            var logicResponse = this._server.getLogicResponse();\n            if (logicResponse.freeSpinInfoData.isBonusGuarantee) {\n                this._bonusGuaranteeView.init();\n                this._subgamesModel.transitionContainer.addChild(this._bonusGuaranteeView);\n                this._bonusGuaranteeView.startDelay();\n            }\n            else {\n                this._statesModel.gotoNextState();\n            }\n        }",
+      "SHA256": "fe8663de12f0b777ab342f9ff3546de1643a0e4965ef194193a4fb41e4a77ba5",
+      "start": 42972,
+      "end": 43470,
+      "ownMethod": "CheckForBonusGuaranteeCmd.prototype.execute",
+      "startLine": 842
+    },
+    "guaranteeRemoved": {
+      "source": "function () {\n            this.removeContextListener(game.ExternalEvent.GAME_ORIENTATION_CHANGED, this.onOrientationChange);\n            this._gameContextEventDispatcher.dispatchEvent(new game.GameEvent(game.GameEvent.BONUS_GUARANTEE_COMPLETED));\n            this._statesModel.gotoNextState();\n            _super.prototype.onRemove.call(this);\n        }",
+      "SHA256": "6ba3596375911f315c9865ba1b64852b840f5b6eeffeb92fcaa2f5f22eda6269",
+      "start": 934263,
+      "end": 934616,
+      "ownMethod": "BonusGuaranteeMediator.prototype.onRemove",
+      "startLine": 18286
+    },
+    "delayComplete": {
+      "source": "function () {\n            this.parent.removeChild(this);\n        }",
+      "SHA256": "61637c27c49a1a74b339f37bc366bc00b0b662f50b1daf84605a4f13bdfeb675",
+      "start": 936490,
+      "end": 936556,
+      "ownMethod": "BonusGuaranteeView.prototype.onDelayComplete",
+      "startLine": 18327
+    }
+  },
+  "displayOnlyCallbacksHaveNoGLSRequest": true,
+  "previousExhaustedGuaranteeGateUnnecessary": true,
+  "realCompletedCallbackRequiredBeforeExistingEndSelector": true,
+  "newSourceRequests": 0
+}
