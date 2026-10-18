@@ -1823,6 +1823,8 @@ export function validateOwnQuickHitFeatures(game:AGGameConfig,g:any,first:boolea
  return {win,base,free:{freeSpinsTotal:total,freeSpinsPlayed:played,freeSpinsRemaining:remaining,accumulativeWin:win/100,ownQuickHitFreeKind:kind,...(hasWG?{ownQuickHitTotalWilds:integer(f.totalWildsAdded,'Quick Hit wild count')}:{})}};
 }
 
+const own32751ProtocolSlots=new WeakMap<object,any>();
+function own32751Hold(error:unknown):Error{return Object.assign(new Error('AG integrity: own32751 original protocol outcome retained'),{cause:error,own32751IntegrityHold:true,retryAllowed:false});}
 export class SGWmsSession {
     private balance = Number.NaN;
     private startBalance = Number.NaN;
@@ -1912,7 +1914,23 @@ export class SGWmsSession {
         } catch(error) {own32777ThrowPreservingOriginal(this,error,()=>this.close());}
         finally {if(step)own32777NativeRawByStep.delete(step);}
     }
-    async connect(): Promise<void> {
+    private async connectOwn32751Protocol():Promise<void>{
+ assert(!this.closed&&!own32751ProtocolSlots.has(this)&&!Number.isFinite(this.balance),'AG integrity: own32751 one original Init');
+ if(!this.transport)assert(process.env.SG_AG_ALLOW_SOURCE==='1','AG integrity: SG live source not enabled');
+ const slot:any={};own32751ProtocolSlots.set(this,slot);
+ try{slot.connection=require('./own32751-protocol-data/register.cjs').create({game:this.game,sessionScope:this,readOriginalState:()=>({game:this.game,sessionScope:this,closed:this.closed,action:this.action,sessionID:this.session,balanceRaw:this.balance})});
+ const first=await this.exchange('Init',{__own32751Page:'0'});this.readEnvelope(first,'Init');
+ const second=await this.exchange('Init',{__own32751Page:'1'});const accepted=slot.connection.acceptSecondInit(second);assert(typeof accepted.cursor==='string'&&accepted.cursor.length>0,'AG integrity: own32751 accepted page1 cursor');this.session=accepted.cursor;
+ }catch(error){slot.connection?.seal();this.close();throw own32751Hold(error)}
+}
+async callGameData(event:string,parameters:Record<string,any>|null){
+ if(this.game.gameId!=='32751')return this.callOriginalWmsGameData(event,parameters);
+ const slot=own32751ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32751 private connection');
+ try{const result=await this.callOriginalWmsGameData(event,parameters);return slot.connection.finishOriginalResult(event,result)}catch(error){slot.connection.seal();this.close();throw own32751Hold(error)}
+}
+async connect(): Promise<void> {
+if(this.game.gameId==='32751'||(this.game.sg as any).own32751ProtocolDATA){assert(this.game.gameId==='32751','AG integrity: own32751 foreign DATA');return this.connectOwn32751Protocol()}
+
         if(this.game.gameId==='32777')return this.connectOwn32777Native();
         if(this.game.gameId === '32769') {
             assert(!this.closed && !this.transport &&
@@ -2011,10 +2029,14 @@ export class SGWmsSession {
         }
         throw new Error('AG integrity: SG pick protocol not mapped');
     }
-    getInitialRoundRequest() { if(this.game.gameId==='32777'){try{const cap=own32777IssueOriginalAGPaidIntent(this,this.action,this.session);return own32777NativeConnection(this).initial(cap);}catch(error){own32777ThrowPreservingOriginal(this,error,()=>this.close());}}if(this.game.gameId==='32769')return own32769NativeBridge(this).initial();return {event:'Logic',parameters:this.getSpinParams()}; }
+    getInitialRoundRequest() {
+if(this.game.gameId==='32751'){const s=own32751ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32751 private initial');return s.connection.initial()}
+ if(this.game.gameId==='32777'){try{const cap=own32777IssueOriginalAGPaidIntent(this,this.action,this.session);return own32777NativeConnection(this).initial(cap);}catch(error){own32777ThrowPreservingOriginal(this,error,()=>this.close());}}if(this.game.gameId==='32769')return own32769NativeBridge(this).initial();return {event:'Logic',parameters:this.getSpinParams()}; }
     getLastGameRequest() { return this.lastRequest; }
     isRoundTerminalAction(action: string) { return action === 'SPIN'; }
     getExactFollowUpRequest(action: string) {
+if(this.game.gameId==='32751'){const s=own32751ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32751 private next');return s.connection.exact(action)}
+
         if(this.game.gameId==='32777')return own32777NativeConnection(this).exact(action);
         if(this.game.gameId==='32769')return own32769NativeBridge(this).exact(action);
         if(action==='PICK_FREE_SPINS'&&this.game.sg.goldenChiefPaidContract==='golden-chief-own-totem-v6')return {event:'Logic',parameters:{__sgGoldenCollect:'1'}};
@@ -2058,6 +2080,7 @@ export class SGWmsSession {
     private async exchange(event:string,parameters:Record<string,any>,own32769Dispatch?:any,own32777Dispatch?:any):Promise<WireStep> {
         assert(!this.closed,'AG integrity: SG session closed');
         const requestSessionID=this.session;
+ const own32751Slot=own32751ProtocolSlots.get(this),own32751Dispatch=own32751Slot?.connection.consume(event,parameters,requestSessionID);
         if(this.game.gameId==='32769' && event!=='Init')
             assert(own32769Dispatch && own32769Dispatch.event===event,
                 'AG integrity: own32769 native request DATA required');
@@ -2065,7 +2088,7 @@ export class SGWmsSession {
         if(this.game.gameId==='32777' && event!=='Init')assert(own32777Dispatch,
             'AG integrity: own32777 current native request DATA required');
         else assert(!own32777Dispatch,'AG integrity: own32777 native dispatch game scope');
-        const payload=own32777Dispatch
+        const payload=own32751Dispatch ? own32751Dispatch.requestPayload : own32777Dispatch
             ? own32777ConsumeNativeDispatch(this,event,own32777Dispatch,requestSessionID) : own32769Dispatch
             ? own32769Dispatch.requestPayload : this.payload(event,parameters);
         const ordinal=++this.ordinal;
@@ -2078,17 +2101,18 @@ export class SGWmsSession {
                 const fault=httpSourceFault({...context,httpStatus:step.httpStatus,responseSHA256:crypto.createHash('sha256').update(step.responsePayload).digest('hex')});
                 this.close();throw this.closedFaultForFutureSession(fault);
             }
-            return step;
+            if(own32751Dispatch)own32751Slot.connection.remember({dispatch:own32751Dispatch,step,requestSessionID,httpStatus:step.httpStatus});
+return step;
         }
-        const requestHeaders = {'Content-Type':'text/xml; charset=utf-8',
+        const requestHeaders = {'Content-Type':own32751Dispatch ? 'application/x-www-form-urlencoded' : 'text/xml; charset=utf-8',
             ...(this.cookies.size?{Cookie:[...this.cookies].map(([k,v])=>k+'='+v).join('; ')}:{})};
-        const own32769Journal = this.game.gameId==='32777' ? {endpoint:this.game.sg.endpoint,method:'POST',nativeRoundOrdinal:own32777Dispatch?.intent?.originalAGRoundIntent?.roundOrdinal,nativeRequestDATA:!!own32777Dispatch} : this.game.gameId==='32769' ? {
+        const own32769Journal = own32751Dispatch ? {endpoint:this.game.sg.endpoint,method:'POST',own32751ProtocolDATA:true,originalRoundOrdinal:own32751Dispatch.roundScope?.roundOrdinal} : this.game.gameId==='32777' ? {endpoint:this.game.sg.endpoint,method:'POST',nativeRoundOrdinal:own32777Dispatch?.intent?.originalAGRoundIntent?.roundOrdinal,nativeRequestDATA:!!own32777Dispatch} : this.game.gameId==='32769' ? {
             endpoint:this.game.sg.endpoint, method:'POST',
             nativeRoundId:own32769Dispatch?.roundId,
             nativeRequestDATA:!!own32769Dispatch
         } : {};
         this.evidence({phase:'intent',ordinal,event,payload,
-            ...(['32769','32777'].includes(this.game.gameId)?{...own32769Journal,requestHeaders}: {})});
+            ...(['32769','32777','32751'].includes(this.game.gameId)?{...own32769Journal,requestHeaders}: {})});
         const start=Date.now(),deadline=sgRequestTimeoutMs(this.game);let response:Response | undefined,text:string;
         try {
             response=await fetch(this.game.sg.endpoint,{method:'POST',redirect:'error',signal:AbortSignal.timeout(deadline),
@@ -2104,7 +2128,7 @@ export class SGWmsSession {
         assert(response,'AG integrity: SG missing transport response');
         const fault=response.ok ? null : httpSourceFault({...context,httpStatus:response.status,responseSHA256:crypto.createHash('sha256').update(text).digest('hex')});
         this.evidence({phase:'response',ordinal,event,httpStatus:response.status,text,
-            ...(['32769','32777'].includes(this.game.gameId)?{...own32769Journal,
+            ...(['32769','32777','32751'].includes(this.game.gameId)?{...own32769Journal,
                 responseHeaders:Array.from(response.headers.entries()),
                 responseSetCookie:response.headers.getSetCookie?.() || []}:{}),
             ...(fault ? sourceFaultMetadata(fault) : {})});
@@ -2155,9 +2179,12 @@ export class SGWmsSession {
             });
             own32769NativeRawByStep.set(step, frame);
         }
-        return step;
+        if(own32751Dispatch)own32751Slot.connection.remember({dispatch:own32751Dispatch,step,requestSessionID,httpStatus:response.status});
+return step;
     }
     private closedFaultForFutureSession(fault:SGSourceFault):Error {
+if(this.game.gameId==='32751')return own32751Hold(fault);
+
         if(this.game.gameId==='32769')return fault;
         if(fault.category!=='execution-unknown' || !this.game.sg.unknownFreeSessionRecovery)return fault;
         assert(this.game.sg.unknownFreeSessionRecovery==='original-ag-discard-free-v1',
@@ -2182,7 +2209,8 @@ export class SGWmsSession {
         assert(typeof r.Header.sessionID==='string'&&r.Header.sessionID.length>0,'AG integrity: SG response session');
         const balances=list(r.Balances?.Balance).filter(b=>b.name==='CASH_BALANCE');assert(balances.length===1,'AG integrity: SG cash balance');
         this.balance=integer(balances[0].value,'cash balance');this.session=r.Header.sessionID;
-        return r;
+        const own32751=own32751ProtocolSlots.get(this);if(own32751)own32751.connection.commitAfterOriginalReadEnvelope(step,r);
+return r;
     }
     private own32769ClosePreserving(error: unknown): never {
         try {
@@ -2228,7 +2256,7 @@ export class SGWmsSession {
             if (step) own32769NativeRawByStep.delete(step);
         }
     }
-    async callGameData(event:string,parameters:Record<string,any>|null) {
+    async callOriginalWmsGameData(event:string,parameters:Record<string,any>|null) {
         if(this.game.gameId==='32777')return this.callOwn32777NativeData(event,parameters);
         if(this.game.gameId==='32769')return this.callOwn32769NativeData(event,parameters);
         const first=this.action==='SPIN';
@@ -2244,7 +2272,7 @@ export class SGWmsSession {
             this.action='SPIN';
         } else {
             const g=r.GameResult;
-            if(this.game.sg.ownDCNextEndContract){const mapped=validateOwnDCFlow(this.game,g,first,this.free,r);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}
+            if(this.game.gameId==='32751'){const s=own32751ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32751 raw money mapping');const mapped=s.connection.currentOriginalMapping(g,first);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}else if(this.game.sg.ownDCNextEndContract){const mapped=validateOwnDCFlow(this.game,g,first,this.free,r);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}
             else if(this.game.sg.zeusThreeContract){const mapped=validateZeusThree(this.game,g,first,this.free,this.zeusThreeBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.zeusThreeBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(this.game.sg.spiritRiverContract){const mapped=validateSpiritRiver(this.game,g,first,this.free,this.riverBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.riverBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(this.game.sg.ownQuickHitPaidContract){if(first)this.healthyComponentsBase=undefined;const m=validateOwnQuickHitFeatures(this.game,g,first,this.free,this.healthyComponentsBase,this.totalWin);this.totalWin=m.win;this.free=m.free;this.healthyComponentsBase=m.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';
@@ -2316,6 +2344,8 @@ export class SGWmsSession {
             money:{startBalanceRaw:this.startBalance,endBalanceRaw:this.balance,betRaw:this.game.sg.betRaw,totalWinRaw:this.totalWin}};
     }
     close() {
+own32751ProtocolSlots.get(this)?.connection.seal();
+
         if (this.game.gameId === '32777') {
             const failures: unknown[] = [];
             this.closed = true;

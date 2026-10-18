@@ -1026,12 +1026,14 @@ games:
       stake:
         total: '16'
         gameMode: '0'
-      freeStake: {}
       betRaw: 16
       runtimeSlug: eightyeightfortunesmegaways
       runtimeGameId: 32973
-      healthyComponentsContract: eighty-eight-megaways-own-components-v4
-      logicPaylineCount: '1'
+      own32751ProtocolDATA:
+        contract: own32751-original-paged-wire-v1
+        initPages: 2
+        explicitCollectorModeIndex: 0
+        maxMetadata: hold-unmapped
   - provider: sg
     gameId: '32765'
     name: Drop and Lock Deep Sea Magic

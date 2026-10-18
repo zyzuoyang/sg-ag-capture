@@ -1,0 +1,375 @@
+{
+  "schema": "own32751-original-paged-Init-and-source-request-DATA-v1356",
+  "at": 1792285516.8421047,
+  "gameId": "32751",
+  "runtimeGameId": 32973,
+  "nativeGameID": "20371",
+  "dbName": "sg_eightyeightfortunesmegaways",
+  "sourceApp": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+  "previousAuthenticationSHA256": "b4841dc5cfad8e0ad8ca5d1f9eababb55b70493efc632ab500125b8e245f85d6",
+  "cachedBSourceDelivery": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v5\\first-WMS32751-source-handoff.json",
+  "leaves": {
+    "Hd": {
+      "source": "function(){return g(this,void 0,void 0,function(){var a,c,d,f,e,h,l,n,u;return p(this,function(b){switch(b.label){case 0:return b.df.push([0,2,,3]),[4,this.VNa()];case 1:return b.fa(),[3,3];case 2:return a=b.fa(),this.BMa(a),[2,{ug:!0,request:null}];case 3:if(!this.settings.FT)return[3,8];if(0>=this.settings.FT)return E.va.error(\"Number of init request pages invalid: \"+this.settings.FT+\" pages.\"),[2,null];d=[];\nf=0;b.label=4;case 4:return f<this.settings.FT?[4,this.ora(f)]:[3,7];case 5:e=b.fa();if(e.ug)return[2,e];d.push(e);b.label=6;case 6:return f++,[3,4];case 7:h=d.map(function(a){return a.response.k6.page.Ue});l=[];for(f=0;f<h.length;f++)l=l.concat(h[f]);c=n=y({},d[0].response.k6.page,{Ue:l,request:d[0].request,Yg:d[0].response.Yg,Ll:d[0].response.Ll,Xk:d[0].response.Xk,ug:d[0].response.ug});return[3,9];case 8:this.ora(),b.label=9;case 9:if(c.error)return this.parseError(c.error),[2,c];this.O.error.type=\nE.Ja.Error.ea.sb;this.zMa(c);return c.Yg.GOa?[4,this.I6()]:[3,11];case 10:u=b.fa();if(u.ug)return[2,{ug:!0,request:u.request}];b.label=11;case 11:return[2,c]}})})}",
+      "start": 979693,
+      "end": 980778,
+      "SHA256": "01fe713320efa0c4bfd215b92d239294b1f844738ed30427760e7e2934545fba"
+    },
+    "ora": {
+      "source": "function(a){return g(this,void 0,void 0,function(){var b,c,d,f;return p(this,\nfunction(e){switch(e.label){case 0:E.va.debug(\"Getting init page \"+a),c=new this.settings.XNa(this.To,this.Hj),e.label=1;case 1:return e.df.push([1,3,,4]),d=void 0,d=0<=a?{qh:0===a&&this.Wk.qh,cD:a}:{qh:this.Wk.qh},[4,c.send(d)];case 2:return b=e.fa(),this.zBa=c.Aoa,[3,4];case 3:return f=e.fa(),this.AG(f),[2,{ug:!0,response:b,request:c}];case 4:if(b.error)return this.parseError(b.error),[2,{ug:!0,response:b,request:c}];this.Hj.qk=b.Yg.qk;return[2,{ug:!1,response:b,request:c}]}})})}",
+      "start": 983594,
+      "end": 984158,
+      "SHA256": "95f6bc605d0a590b32c01bc3a48abedcc2266847ed1966b6c2ee58e63db92443"
+    },
+    "s3": {
+      "source": "function(a){var b=E.P.Ja.pc.uh(this.O.Na,a.Zy);b.value/=this.XA;return{Pd:this.Hj.Pd,Zy:b,Pn:a.Pn,dka:this.vq.shift(),qh:this.Wk.qh}}",
+      "start": 984175,
+      "end": 984308,
+      "SHA256": "f9fd22b67154be8ead69343051e9b2bd0d8eef6eeaf1a3cbc066639285483add"
+    },
+    "ONa": {
+      "source": "function(a){this.O.Zd.mw=a.Yg.uS||\"GBP\";this.O.Zd.Pd=1;var b=a.Xk;if(b&&b.aja){b=b.aja;var c=E.J.HP.qX,d;for(d in b)E.F.Mc(b[d])&&(b[d]=b[d].replace(/\\s/g,c));this.O.Zd.IL={name:b.currency,be:b.w2||\"\",g3:b.g3,sT:b.sT,$d:b.$d,aM:b.cLa,je:b.fJa,JS:b.JS,$ia:b.mHa,vi:b.vi,ar:b.qXa,Pd:b.Pd,US:null!=b.w2,yja:null==b.w2};this.Hj.Pd=b.Pd;this.Hj.mw=a.Yg.uS}else this.O.Zd.IL=\ny({},E.J.KS[this.O.Zd.mw]||E.J.KS.GBP,{US:!1}),this.Hj.Pd=1,this.Hj.mw=\"\";this.Wk.jj&&(this.O.Zd.IL.US=!1,this.O.Zd.IL.Pd=1)}",
+      "start": 986848,
+      "end": 987343,
+      "SHA256": "2fea5d895438da205e5580cea051c03634a208e41f08970797397862c30b815f"
+    },
+    "Wma": {
+      "source": "function(a){this.O.Na.Yd=a.hsa.map(function(a){return{type:E.P.Ja.pc.ea.Mi,value:a}});this.O.Na.pC=a.NS;this.O.Na.mf=a.NS;this.O.Na.Qj=[]}",
+      "start": 986253,
+      "end": 986391,
+      "SHA256": "d7ef458c379fe8869912b65ea8a5de8e30219f041e118261e58db898feb22f5a"
+    },
+    "aOa": {
+      "source": "function(a){var b=a.Zpa;if(0<b.length){a=0;for(b=b[0].p6;a<b.length;a++){var c=b[a];c.HUa&&this.O.Na.Qj.push(c.index+1)}0<this.O.Na.Qj.length?this.O.config.mra=!0:(this.O.Na.Qj.push(this.O.config.uk.length),this.O.config.mra=!1)}this.O.Na.MS=0;this.O.Na.wi=0}",
+      "start": 986408,
+      "end": 986667,
+      "SHA256": "cc4d53724c6c215fd085825e4d3079de58715ab591796f9e4f44deae0e31bbdc"
+    },
+    "Era": {
+      "source": "function(){return this.ZTa.jj||0<this.O.zb.Ke&&\n!this.O.state.cl?!1:!0}",
+      "start": 989204,
+      "end": 989275,
+      "SHA256": "0c08c29af1ad608c5ff76ddf932446efdfa82f535a4c6153072d849018468a6f"
+    },
+    "N1": {
+      "source": "function(a){return E.fc.get().gN!==E.Pu.sb&&a.ZF.cl}",
+      "start": 990371,
+      "end": 990423,
+      "SHA256": "59519239158abb69b6d975c8150c1235a3125ff4b2738fe004530b03b19f3ad0"
+    },
+    "kSa": {
+      "source": "function(a){this.O.zb.Di=(null!=a.hka?a.hka:a.wH)||0;this.O.zb.Ig=0<this.O.zb.Di;this.O.zb.Ke=(null!=a.xC?a.xC-this.O.zb.Di:a.zWa)||0;this.O.zb.winAmount=a.pLa;this.O.zb.Cm=a.Cm||0}",
+      "start": 990440,
+      "end": 990621,
+      "SHA256": "a968b773fa2ca8f7e8e3c460b475bb9121dcc0bf20c50a01f4270ccbe344eb09"
+    },
+    "oSa": {
+      "source": "function(a){var b=this;this.O.Na.he=null;for(var c=0,d=this.O.Na.Yd.length;c<d;++c){if(E.P.Ja.pc.uh(this.O.Na,this.O.Na.Yd[c]).value===a.Na){this.O.Na.mf=c;return}if(E.P.Ja.pc.tO(this.O.Na,this.O.Na.Yd[c]).value===a.gsa){this.O.Na.mf=c;return}}this.O.Na.he={Ed:a.Na,XF:a.gsa};c=Object.keys(this.O.Na.Yd);c=E.te.S1(c,function(c){return E.P.Ja.pc.uh(b.O.Na,\nb.O.Na.Yd[c]).value-a.Na});this.O.Na.mf=parseInt(c)}",
+      "start": 989947,
+      "end": 990355,
+      "SHA256": "7f4582f96d5fe647c3639b0a216d99e4fdb93c4daf163a28bf8c171b44238a36"
+    },
+    "ownWma": {
+      "source": "function(c){this.O.Na.Yd=c.hsa.map(function(a){return{type:E.P.Ja.pc.ea.Nr,\nvalue:a}});this.O.Na.Yi=a.Utils.Array.NSa(this.O.config.ot);this.O.Na.pC=c.NS;this.O.Na.mf=c.NS;this.O.Na.Qj=[]}",
+      "start": 1150346,
+      "end": 1150534,
+      "SHA256": "d5aafb3e8d6f5b18c98fbf9f3decfb529c95f1bdede5398ae0f1deec642c1997"
+    },
+    "ownS3": {
+      "source": "function(a){return y({},f.prototype.s3.call(this,a),{Ql:this.O.config.ot.indexOf(this.O.Na.Yi)})}",
+      "start": 1149429,
+      "end": 1149526,
+      "SHA256": "cd8cdb93f0af5c3632e54bdbfff1565787bdc2050849ccdb7ad80d49225e9699"
+    },
+    "ownRequestModel": {
+      "source": "function(a){return b.Request.MHa(c.prototype.mC.call(this,a),a.Ql)}",
+      "start": 1153265,
+      "end": 1153332,
+      "SHA256": "678b82db7879150c1b70636895e90139e2ae77b4b6f314d29a7d1f4fbd40eda1"
+    },
+    "realNormalOrFreeCaller": {
+      "source": "function(){g(this,void 0,void 0,function(){var b,c,d,f,h;return p(this,function(k){switch(k.label){case 0:return b=this._context.$.O,c=a.Zh.uj.get(),null!=c&&c.jk().event({Am:\"Slot Game\",action:\"Spin\",value:e.Ja.pc.zC(b.Na,e.Ja.pc.ea.Mi)}),[4,this._context.$.nf.uH({Zy:e.Ja.pc.hT(b.Na),Pn:b.Na.Qj[b.Na.wi]})];case 1:d=k.fa();if(!d.ug)return[3,3];this._context.$.moa.tS();e.fc.get().Pt();null!=c&&(f=!b.error.options.some(function(b){return b.type===\na.Ja.Error.ei.QD}),c.jk().error({message:a.J.Vn(this._context.$.locale,b.error.message),fatal:f}));this._context.pf.cx(b.config.hz.tk);this._context.pf.xV(a.kb.bb.Pe.Ge,!0);return[4,this._context.$.handleError()];case 2:return k.fa()&&this.CRa(),[2];case 3:return null!=b.Na.he?(this._context.$.hd.Cr(b.Na.he.Ed),this._context.$.hd.Xt(a.P.ga.mc.fe,b.Na.mf),this._context.$.hd.WN(a.P.ga.mc.fe,b.Na.he.Ed),this._context.$.Eb.Ed.value=b.Na.he.Ed):(h=b.Na.Yd[b.Na.mf],this._context.$.hd.Cr(a.P.Ja.pc.uh(b.Na,\nh).value),this._context.$.hd.Xt(a.P.ga.mc.fe,b.Na.mf),this._context.$.Eb.Ed.value=a.P.Ja.pc.uh(b.Na,h).value),this.yN(d),[2]}})})}",
+      "start": 1025515,
+      "end": 1026600,
+      "SHA256": "640e4613c2566bcba6fb22db354341226ca50d3a9a7553898d550936c2f4220b"
+    },
+    "serializeObject": {
+      "source": "function m(b,c){if(null==b)return null;if(null==c){var d=e.ea.get(b);if(null==d)throw Error(\"Failed to serialise object (has no XML type)\");d=document.implementation.createDocument(null,d,null);var f=d.documentElement}else f=c;var h=e.Ga.get(b,a.Ad.gq.zh),m;for(m in h)if(h[m]){var l=\nh[m],q=b[m];null==l.type.Ep||null==q&&l.yz||(q=l.type.Ep(null!=d?d:f.ownerDocument,q),null!=q&&k(f,l.Rpa,q))}if(null==c)return d}",
+      "start": 252588,
+      "end": 253002,
+      "SHA256": "c8c0a468b0cd1577e59790992e46af8a958fb32673adc147f095c2e57e6385ec"
+    },
+    "writeXMLPath": {
+      "source": "function k(b,d,f,h){void 0===h&&(h=0);if(h>=d.length&&a.F.Mc(f))b.textContent=f;else if(0===d.length)if(f instanceof Element)b.appendChild(f);else{if(a.F.array(f))for(h=0;h<f.length;h++)d=f[h],null!=d&&b.appendChild(d)}else{var e=h===d.length-1,m=d[h];if(null!=m.filter)throw Error(\"Serialisation of paths containing a filter currently not supported\");if(\"attr\"===m.type){if(!a.F.Mc(f))throw Error(\"XML.write: can't serialise an Element or Element[] into an attribute\");\nb.setAttribute(m.value,f)}else{if(e){if(f instanceof Element){b.appendChild(f);return}if(a.F.array(f)){b=c(b,d[d.length-1].value);for(h=0;h<f.length;h++)d=f[h],null!=d&&b.appendChild(d);return}}b=c(b,m.value);k(b,d,f,h+1)}}}",
+      "start": 251893,
+      "end": 252588,
+      "SHA256": "546b9d552133e3554e10d8d4bc90e544f92de8efc95388b63d729991d30b6e55"
+    },
+    "getOrCreateChild": {
+      "source": "function c(b,c){var k=d(b,c);if(0===k.length)return c=b.ownerDocument.createElement(c),b.appendChild(c),c;1<k.length&&a.va.warn(\"getOrCreateChild: More than 1 element found\");\nreturn k[0]}",
+      "start": 251075,
+      "end": 251263,
+      "SHA256": "fa40e46b6e81cef889fa3dbdfd277ee7e4537d4f7807838421dec1217791a9e9"
+    },
+    "directXMLChildren": {
+      "source": "function d(a,b){b=b.toLowerCase();var c=[];a=a.childNodes;for(var k=a.length,d=0;d<k;++d){var f=a.item(d);f instanceof Element&&f.tagName.toLowerCase()===b&&c.push(f)}return c}",
+      "start": 250899,
+      "end": 251075,
+      "SHA256": "259254dcfec301c5212624c90578db4718b8daa05b8199fcc9d1452b06fea437"
+    },
+    "creditToTotal": {
+      "source": "function f(a,b){switch(b.type){case k.Mi:return{type:k.Mi,value:b.value};case k.Bx:return{type:k.Mi,value:b.value*(a.Qj[a.wi]+(a.l3||0))};case k.Nr:if(null==a.Yi)throw Error(\"Stake type was CreditMultiplier but no baseCreditValue is present\");return{type:k.Mi,value:b.value*a.Yi};default:throw Error(\"Unknown stake type\");}}",
+      "start": 240134,
+      "end": 240458,
+      "SHA256": "8ee213797aa423f0d9108a1df593109158134822bce3af2626b964c52f79c6f5"
+    },
+    "selectedStake": {
+      "source": "function b(a){return a.he?{type:k.Mi,value:a.he.Ed}:a.Yd[a.mf]}",
+      "start": 241124,
+      "end": 241187,
+      "SHA256": "3330c9ca22fa314adf7a430badc752c2cf07d42e386be346143e03b28665d400"
+    },
+    "ownLastArrayEntry": {
+      "source": "function h(a,c){return a[a.length-(c+1)]}",
+      "start": 1071649,
+      "end": 1071690,
+      "SHA256": "43620dd4ce4397a4fec58953a2107bf77e34e443e7338f1957a884ba82b245f2"
+    },
+    "numberToXML": {
+      "source": "function(a,b){return null!=b?b.toString():\"undefined\"}",
+      "start": 254649,
+      "end": 254703,
+      "SHA256": "9c7b53ca8884f3564771c7de8d18321dddef2faa1c2314cd38357402d693f368"
+    },
+    "actualModeInputSetter": {
+      "source": "function(a){var b=this;a=this.O.config.ot[a];if(this.O.Na.Yi!==a){this.O.Na.Yi=a;a=this.Eb.cc.value;var c=E.P.Ja.pc.zC(this.O.Na,E.P.Ja.pc.ea.Mi);this.Cn.Cr(c);this.Cn.ZU(E.P.ga.mc.fe,this.O.Na.Yd.map(function(a){return E.P.Ja.pc.uh(b.O.Na,a).value}));this.yd.Ed.value=c;this.O.state.state===E.P.Ja.sa.ea.so&&\n(this.Eb.cc.value=a)}}",
+      "start": 1182326,
+      "end": 1182658,
+      "SHA256": "54d58b184d4a5b3e6719ea8dec3fec5da02938175264068807459a5bf12946f6"
+    }
+  },
+  "reusedSourceLeaves": {
+    "stake model s3": {
+      "name": "stake model s3",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 984159,
+      "byteEndExclusive": 984309,
+      "SHA256": "d07038f068ea34cf5981a39464a7d624e212fa78f538c31383790ab25624339a",
+      "source": "d.prototype.s3=\nfunction(a){var b=E.P.Ja.pc.uh(this.O.Na,a.Zy);b.value/=this.XA;return{Pd:this.Hj.Pd,Zy:b,Pn:a.Pn,dka:this.vq.shift(),qh:this.Wk.qh}};"
+    },
+    "Logic mC encoders": {
+      "name": "Logic mC encoders",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 1007843,
+      "byteEndExclusive": 1008066,
+      "SHA256": "9347fb5798868b32e68ec71cb9e2eaa145a24068539c6ca87f6152f3a3dbce2a",
+      "source": "d.prototype.mC=function(c){var b=new d.uA;b.Yg=this.m2();b.AD=c.Zy.value;b.Pn=c.Pn;c.dka&&(b.mt=this.Mia(),this.q3(b.mt,c.dka));c.qh&&(b.bx=this.r2(),this.r3(b.bx,c.qh));null!=\nc.Pd&&(b.Xk=new a.Qta,b.Xk.Pd=c.Pd);return b};"
+    },
+    "Logic uA wire fields": {
+      "name": "Logic uA wire fields",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 1008535,
+      "byteEndExclusive": 1009191,
+      "SHA256": "e5e171d6f37cb3574aa3b68de7abe57ab9c3b325b462d0dbb1b78e6dba9efa62",
+      "source": "function(){function a(){this.type=\"Logic\"}var b={};b.type={i:[e.Ga({path:\".type\",type:e.String})],target:a.prototype,j:void 0};b.Xk={i:[e.Ga({path:\"AccountData\",type:e.Object})],target:a.prototype,j:void 0};b.Yg={i:[e.Ga({path:\"Header\",type:e.Object})],target:a.prototype,j:void 0};b.AD={i:[e.Ga({path:\"Stake.total\",type:e.Number})],target:a.prototype,j:void 0};b.Pn={i:[e.Ga({path:\"PaylineCount.count\",type:e.Number,yz:!0})],target:a.prototype,j:void 0};b.bx={i:[e.Ga({path:\"REPLAY\",type:e.Object})],\ntarget:a.prototype,j:void 0};b.mt={i:[e.Ga({path:\"FORCE\",type:e.Object})],target:a.prototype,j:void 0};B(b);return a=z([e.ea(\"GameRequest\")],a)}();a.uA=d;"
+    },
+    "own gameMode model": {
+      "name": "own gameMode model",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 1149414,
+      "byteEndExclusive": 1149527,
+      "SHA256": "848ebb6a859ae6b5ed6198dae1a16fd351d41dc5afce84db1da6e32e69a76f96",
+      "source": "d.prototype.s3=function(a){return y({},f.prototype.s3.call(this,a),{Ql:this.O.config.ot.indexOf(this.O.Na.Yi)})};"
+    },
+    "own Logic mC": {
+      "name": "own Logic mC",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 1153250,
+      "byteEndExclusive": 1153333,
+      "SHA256": "b48b61d334e9a423ac2e2dfab22c06441b7fd4895e25f481ce95adef93380801",
+      "source": "b.prototype.mC=function(a){return b.Request.MHa(c.prototype.mC.call(this,a),a.Ql)};"
+    },
+    "own request MHa": {
+      "name": "own request MHa",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 1154728,
+      "byteEndExclusive": 1154857,
+      "SHA256": "186fd502b6fa4fef343c6fdff2fe1825a99f604e90fbf0ea915194844002d029",
+      "source": "b.MHa=function(a,c){var d=new b;d.Yg=a.Yg;d.AD=a.AD;d.Pn=a.Pn;d.mt=a.mt;d.bx=a.bx;d.Xk=a.Xk;null!=c&&(d.Ql=c);return d};var c={};"
+    },
+    "own Stake gameMode type": {
+      "name": "own Stake gameMode type",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 1154857,
+      "byteEndExclusive": 1155200,
+      "SHA256": "46c7cae2d2b65e92462f070cea4a33974457477898d0191787e3515d26f15219",
+      "source": "c.mt={i:[f.Ga({path:\"FORCE\",type:f.Bk(d)})],target:b.prototype,j:void 0};c.Ql={i:[f.Ga({path:\"Stake.gameMode\",type:f.Number})],target:b.prototype,j:void 0};\nB(c);return b}(SG.jd.fs.uA);a.Request=b})(d=e.fs||(e.fs={}))})(a.DI||(a.DI={}))})(a.jd||(a.jd={}))})(a.Mg||(a.Mg={}))})(W||(W={}));\n(function(a){(function(e){var l;(function(a){a[a.sb=0]"
+    },
+    "AccountData CurrencyMultiplier type": {
+      "name": "AccountData CurrencyMultiplier type",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 976522,
+      "byteEndExclusive": 976880,
+      "SHA256": "2b377d874bed65244b0feb7ce8d69c2293900a5110b728e65f22bf60ae82bb29",
+      "source": "h=function(){function a(){}var b={};b.aja={i:[e.Ga({path:\"CurrencyInformation\",type:e.Object,yz:!0})],target:a.prototype,j:void 0};b.Pd={i:[e.Ga({path:\"CurrencyMultiplier\",type:e.Number,yz:!0})],target:a.prototype,j:void 0};b.wU={i:[e.Ga({path:\"Payload\",type:e.Object,yz:!0})],target:a.prototype,j:void 0};B(b);return a=z([e.ea(\"AccountData\")],a)}();a.Qta=h;"
+    },
+    "actual Init currency parser": {
+      "name": "actual Init currency parser",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 986832,
+      "byteEndExclusive": 987344,
+      "SHA256": "c26511f6611de72a504d8c13207507ceab9f1a84c74bfa7a1ee600a9739968bb",
+      "source": "d.prototype.ONa=function(a){this.O.Zd.mw=a.Yg.uS||\"GBP\";this.O.Zd.Pd=1;var b=a.Xk;if(b&&b.aja){b=b.aja;var c=E.J.HP.qX,d;for(d in b)E.F.Mc(b[d])&&(b[d]=b[d].replace(/\\s/g,c));this.O.Zd.IL={name:b.currency,be:b.w2||\"\",g3:b.g3,sT:b.sT,$d:b.$d,aM:b.cLa,je:b.fJa,JS:b.JS,$ia:b.mHa,vi:b.vi,ar:b.qXa,Pd:b.Pd,US:null!=b.w2,yja:null==b.w2};this.Hj.Pd=b.Pd;this.Hj.mw=a.Yg.uS}else this.O.Zd.IL=\ny({},E.J.KS[this.O.Zd.mw]||E.J.KS.GBP,{US:!1}),this.Hj.Pd=1,this.Hj.mw=\"\";this.Wk.jj&&(this.O.Zd.IL.US=!1,this.O.Zd.IL.Pd=1)};"
+    },
+    "BG cumulative cash type": {
+      "name": "BG cumulative cash type",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 1005010,
+      "byteEndExclusive": 1005510,
+      "SHA256": "7304433c89fe3dd37a92d04ec40ade63a6fd338ad6067e86158a95a3b5f52ce3",
+      "source": "h=function(){function a(){}var d={};d.Gsa={i:[e.Ga({path:\".totalWagerWin\",type:e.Number})],target:a.prototype,j:void 0};d.w3a={i:[e.Ga({path:\".bgWinnings\",type:e.Number})],target:a.prototype,j:void 0};d.t3a={i:[e.Ga({path:\".baseGameSpinsRemaining\",type:e.Number})],\ntarget:a.prototype,j:void 0};d.b7a={i:[e.Ga({path:\".isBigBet\",type:e.Boolean})],target:a.prototype,j:void 0};d.cl={i:[e.Ga({path:\".isMaxWin\",type:e.Boolean})],target:a.prototype,j:void 0};B(d);return a=z([e.ea(\"BGInfo\")],a)}();a.o9=h;"
+    },
+    "FS counter and cash type": {
+      "name": "FS counter and cash type",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 1005510,
+      "byteEndExclusive": 1006173,
+      "SHA256": "308abb8e458eba90099c39abe5a8210658c02735991d8180f094e314faf9adea",
+      "source": "h=function(){function a(){}var d={};d.pLa={i:[e.Ga({path:\".fsWinnings\",type:e.Number})],target:a.prototype,j:void 0};d.cl={i:[e.Ga({path:\".isMaxWin\",type:e.Boolean})],target:a.prototype,j:void 0};d.xC={i:[e.Ga({path:\".freeSpinsTotal\",type:e.Number})],target:a.prototype,\nj:void 0};d.hka={i:[e.Ga({path:\".freeSpinNumber\",type:e.Number})],target:a.prototype,j:void 0};d.wH={i:[e.Ga({path:\".spinsUsed\",type:e.Number})],target:a.prototype,j:void 0};d.zWa={i:[e.Ga({path:\".spinsRemaining\",type:e.Number})],target:a.prototype,j:void 0};d.Cm={i:[e.Ga({path:\".extraSpinsAwarded\",type:e.Number})],target:a.prototype,j:void 0};B(d);return a=z([e.ea(\"FSInfo\")],a)}();a.m$=h;"
+    },
+    "FS parsed counter model": {
+      "name": "FS parsed counter model",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 990424,
+      "byteEndExclusive": 990622,
+      "SHA256": "1eb9122f57f9c54e31c3d83265998a942637c8c47e2c0665d573251716331d12",
+      "source": "d.prototype.kSa=function(a){this.O.zb.Di=(null!=a.hka?a.hka:a.wH)||0;this.O.zb.Ig=0<this.O.zb.Di;this.O.zb.Ke=(null!=a.xC?a.xC-this.O.zb.Di:a.zWa)||0;this.O.zb.winAmount=a.pLa;this.O.zb.Cm=a.Cm||0};"
+    },
+    "BG cumulative cash reconstruction": {
+      "name": "BG cumulative cash reconstruction",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 990717,
+      "byteEndExclusive": 990838,
+      "SHA256": "a1b63ab8bc85e1fb0eb76ec596fda88fb2d2acc7c1e1d899142eb00c17898220",
+      "source": "d.prototype.RDa=function(a){a=a.ZF.Gsa;for(var b=this.O.Qc.length-1;0<=b;b--){var c=this.O.Qc[b];\nc.cc.Zo=a;a-=c.cc.Ae}};"
+    },
+    "BG maximum win": {
+      "name": "BG maximum win",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 990356,
+      "byteEndExclusive": 990424,
+      "SHA256": "9d9c70da4db0869934a879b5453be4ffb1de84534ee610e2c461e66d26c2aad7",
+      "source": "d.prototype.N1=function(a){return E.fc.get().gN!==E.Pu.sb&&a.ZF.cl};"
+    },
+    "close decision from remaining and max": {
+      "name": "close decision from remaining and max",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 989188,
+      "byteEndExclusive": 989276,
+      "SHA256": "89266c318400bd8c5f5c9e34d65064b9bf6d3a4e18edafdb2c77d22c4a85def5",
+      "source": "d.prototype.Era=function(){return this.ZTa.jj||0<this.O.zb.Ke&&\n!this.O.state.cl?!1:!0};"
+    },
+    "returned Picker index type": {
+      "name": "returned Picker index type",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 1185574,
+      "byteEndExclusive": 1185746,
+      "SHA256": "17750c5fc7dedcf2204db11c9e58159b93496ef534fe4c3a3365a5d0e7be9432",
+      "source": "var l=function(){function a(){}var b={};b.Yw={i:[e.Ga({path:\".pickerIndex\",type:e.Number})],target:a.prototype,j:void 0};B(b);return a=z([e.ea(\"PickerInfo\")],a)}();a.g1a=l;"
+    },
+    "own returned Picker model": {
+      "name": "own returned Picker model",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 1149527,
+      "byteEndExclusive": 1149621,
+      "SHA256": "afa383918f1314aaca68387d4b13eb3de999545848716f97ec348bc617d8d418",
+      "source": "d.prototype.jSa=function(c){this.O.Zw=a.Ja.Ou.rI;c.u6&&void 0!==c.u6.Yw&&(this.O.Zw=c.u6.Yw)};"
+    },
+    "Picker display module choice": {
+      "name": "Picker display module choice",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 1186976,
+      "byteEndExclusive": 1187188,
+      "SHA256": "9db19b49d84f1e236d44f3617053ad5a0d927bad990fbe0af9c852efb4bc3222",
+      "source": "h.prototype.create=function(f){var d=[],c=f.$.O;d.push(new e.Fu(f));d.push(new e.kwa(f));d.push(new e.iza(f));c.Zw!==a.Ja.Ou.rI&&d.push(new e.Hb(f));(0<c.zb.Ke||c.zb.Ig)&&d.push(new e.wc(f));return d};return h}()"
+    },
+    "own Picker enum": {
+      "name": "own Picker enum",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 1196201,
+      "byteEndExclusive": 1196340,
+      "SHA256": "bce157bd840397dc1d43ade8a964fe0209494f1fcb5a9414b9160e6503a47a3c",
+      "source": "tion(a){var e;(function(a){a[a.Iba=0]=\"Short\";a[a.fq=1]=\"Medium\";a[a.kxa=2]=\"Long\";a[a.rI=3]=\"NotAwarded\"})(e=a.Ou||(a.Ou={}));a.clear=func"
+    },
+    "close sender": {
+      "name": "close sender",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 982474,
+      "byteEndExclusive": 983280,
+      "SHA256": "dfc4b35b701eb72958bc90ddd1820bfa60bed58d219a39a822b66747775b630c",
+      "source": "d.prototype.close=function(){return g(this,void 0,void 0,function(){var a,c,d;return p(this,function(b){switch(b.label){case 0:if(!this.Era())return this.O.state.state=this.pn=E.P.Ja.sa.ea.Nh,\n[2,{ug:!1,request:null}];if(!E.lW.connected.value)return this.O.error.type=E.Ja.Error.ea.Kr,this.O.error.title=e.za.dA.ad,this.O.error.message=e.za.dA.Ii,this.O.error.options=[{type:E.Ja.Error.ei.Tu,text:e.za.dA.tI}],[2,{ug:!0,request:null}];a=new this.settings.lHa(this.To,this.Hj);b.label=1;case 1:return b.df.push([1,3,,4]),[4,a.send({})];case 2:return c=b.fa(),[3,4];case 3:return d=b.fa(),this.AG(d),[2,{ug:!0,request:a}];case 4:if(c.error)return this.parseError(c.error),[2,c];this.O.error.type=\nE.Ja.Error.ea.sb;this.Hj.qk=c.Yg.qk;this.O.state.state=this.pn=E.P.Ja.sa.ea.Nh;this.O5.ma(c);return[2,c]}})})};"
+    },
+    "own request class configuration": {
+      "name": "own request class configuration",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 1161310,
+      "byteEndExclusive": 1161600,
+      "SHA256": "4af0e8fb74609b4a57fa085647fedb7d685b80e7ae54442dcfe18c5054315ba1",
+      "source": "fortunesmegaways\",eNa:\"https://pa01-ggms.wi-gameserver.com/gls-game-handler/game-history/partner/4/game-play/\",pz:20371,rT:4,contentType:\"application/x-www-form-urlencoded\",channel:\"I\",$K:703,I8:\"C\",L8:\"1_0\"},XNa:vd.Mg.jd.DI.fI,FT:2,tWa:vd.Mg.jd.DI.fs,lHa:SG.jd.jW,rh:7,u8a:(yd={},yd[0]=\n[0"
+    },
+    "End Header encoder": {
+      "name": "End Header encoder",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 997212,
+      "byteEndExclusive": 997278,
+      "SHA256": "0ed4f21db455e7e7e83adfa9bf936bd17a4f3a59482873a2e0a0dcaaec20873a",
+      "source": "d.prototype.mC=function(){var a=new d.uA;a.Yg=this.m2();return a};"
+    },
+    "EndGame wire type": {
+      "name": "EndGame wire type",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 997370,
+      "byteEndExclusive": 997626,
+      "SHA256": "aaa6a9be4cd65fd4f64987ef65fc2ce213b0cdd35a4d26688db91292bf235b58",
+      "source": "function(){function a(){this.type=\n\"EndGame\"}var b={};b.type={i:[e.Ga({path:\".type\",type:e.String})],target:a.prototype,j:void 0};b.Yg={i:[e.Ga({path:\"Header\",type:e.Object})],target:a.prototype,j:void 0};B(b);return a=z([e.ea(\"GameRequest\")],a)}();a.uA=d}"
+    },
+    "actual POST serializer invocation": {
+      "name": "actual POST serializer invocation",
+      "path": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\eightyeightfortunesmegaways\\js\\app.js",
+      "byteStart": 994945,
+      "byteEndExclusive": 995793,
+      "SHA256": "d30e33379aa67ef538717e1d1b67e639a7d53baddfa2768688c5972e6391ff0c",
+      "source": "h.prototype.l7=function(a,d,c){var b=this;void 0===c&&(c=!0);var f=E.rl.xj.WU(a);return new Promise(function(a,e){var k=new XMLHttpRequest;k.addEventListener(\"load\",function(f){E.rx.get().W3(\"GLMRequests\").add({time:E.TD.Z3(),t$a:Date.now(),text:k.responseText});E.P.fc.get().hU(k,c);if(200!==k.status)e(k.statusText);else{var h=null;if(null!=k.responseXML)h=k.responseXML;else if(null!=\nk.responseText)try{h=(new DOMParser).parseFromString(k.responseText,\"text/xml\")}catch(x){E.va.error(x);e(x);return}if(null==h)e(f);else{b.eCa=k.responseText;try{E.rl.xj.L2(d,h)}catch(x){E.va.error(x);e(x);return}a()}}});k.addEventListener(\"error\",function(a){E.P.fc.get().hU(k,c);e(a)});k.addEventListener(\"abort\",function(){E.P.fc.get().hU(k,c);e(\"aborted\")});k.open(\"POST\",b.sr.endpoint,!0);var h=b.WLa(),l;for(l in h)k.setRequestHeader(l,h[l]);k.send(f)})};"
+    }
+  },
+  "fixedOwnCreditModes": [
+    8,
+    18,
+    38,
+    68,
+    88
+  ],
+  "sourceOwnModesLiteral": "e.lwa=[8,18,38,68,88]",
+  "realInitPages": [
+    0,
+    1
+  ],
+  "originalInitPageRequest": "GameRequest type Init / Header / Page.number",
+  "pageRequestSource": "&f.apply(this,arguments)||this}A(d,f);d.prototype.send=function(a){return g(this,void 0,void 0,function(){var b,c;return p(this,function(d){switch(d.label){case 0:return b=this.mC(a),0<=a.cD?(E.va.debug(\"[InitRequest] Payload, page \"+a.cD),b.cD=a.cD,c=this.Qia()):c=this.iG(),[4,this.l7(b,c,!(a.cD||0<a.cD))];case 1:return d.fa(),[2,c]}})})};d.prototype.mC=function(a){var b=new d.uA;b.Yg=this.m2();a.qh&&(b.bx=this.r2(),\nthis.r3(b.bx,a.qh));return b};d.prototype.iG=function(){return new a.Pwa(this)};d.prototype.Qia=function(){return new a.uP(this)};d.prototype.r2=function(){return new a.rba};d.prototype.r3=function(a,b){a.state=b.KL};return d}(a.dW);a.fI=h;(function(a){var d=function(){function a(){this.type=\"Init\"}var b={};b.type={i:[e.Ga({path:\".type\",type:e.String})],target:a.prototype,j:void 0};b.Yg={i:[e.Ga({path:\"Header\",type:e.Object})],target:a.prototype,j:void 0};b.bx={i:[e.Ga({path:\"REPLAY\",type:e.Object})],\ntarget:a.prototype,j:void 0};b.cD={i:[e.Ga({path:\"Page.number\",type:e.Number})],target:a.prototype,j:void 0};B(b);return a=z([e.ea(\"GameRequest\")],a)}();a.uA=d})(h=a.fI||(a.fI={}))})(a.jd||(a.jd={}))})(SG||(SG={}));\n(function(a){(function(a){var e=E.rl.xj,h=function(){function a(){}var d={};d.index={i:[e.Ga({path:\".index\",type:e.Number})],target:a.prototype,j:void 0};d.HD={i:[e.Ga({path:\".winVal\",type:e.Number})],target:a.prototype,j:void 0};d.p1={i:[e.Ga({path:\".awardIndex\",type:e.Number})],target:a.prototype,j:void 0};d.tEa={i:[e.Ga({path:\".awardTableIndex\",type:e.Number})],target:a.prototype,j:void 0};d.positions={i:[e.Ga({path:\"\",type:e.Ak(e.Number,\"|\")})],target:a.pro",
+  "ownFTConfigurationSource": "own settings FT:2 at cached own request class configuration; Hd loops ora(0),ora(1), merges page0 metadata and all returned reel sets",
+  "sourceHeaderCurrency": "m2 uses FD.mw, not language. ONa sets Hj.mw to response Header currency when CurrencyInformation exists, otherwise own source empty string. Do not copy32814 locale-currency rule.",
+  "sourcePaylineDecision": "ownWma empties Na.Qj; aOa only populates it from actual Paylines. The retained page0 has no Paylines, so current normal/free caller Pn is undefined and optional serializer omits PaylineCount. Old cached count1/HeaderOnly fields are not current SDK send authority.",
+  "sourceModeDefault": "Exact Utils.Array.NSa calls h(array,0), where h returns array[array.length-(0+1)]; own initial mode is88. Credit2 default therefore total176. Retained collector bet16 requires explicit normal own cpa(0) input selecting mode8; never relabel it as the source default.",
+  "wholeSDKHashOrASTReexecutions": 0,
+  "UIOrAudioExecutions": 0,
+  "providerRequests": 0,
+  "DBAccess": 0,
+  "productionReady": false,
+  "newFinalCredit": 0,
+  "ownRequestClassConfiguration": {
+    "start": 1161258,
+    "source": "a01-gls.wi-gameserver.com/gls.rgsx\",sLa:\"eightyeightfortunesmegaways\",eNa:\"https://pa01-ggms.wi-gameserver.com/gls-game-handler/game-history/partner/4/game-play/\",pz:20371,rT:4,contentType:\"application/x-www-form-urlencoded\",channel:\"I\",$K:703,I8:\"C\",L8:\"1_0\"},XNa:vd.Mg.jd.DI.fI,FT:2,tWa:vd.Mg.jd.DI.fs,lHa:SG.jd.jW,rh:7,u8a:(yd={},yd[0]=\n[0,6,12,0,0],yd[1]=["
+  },
+  "parentSourceDATA_SHA256": "7024fe8b5d80905e52d2c739e040724332c15565cf038edb8e9fd7d8b01fb010",
+  "explicitCollectorModeIndex": 0
+}
