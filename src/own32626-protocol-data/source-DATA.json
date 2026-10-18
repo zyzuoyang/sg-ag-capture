@@ -1,0 +1,53 @@
+{
+  "schema": "own32626-original-protocol-parser-functions-v1",
+  "cachedCoreTableSHA256": "50127dd8b4163d9a950ecd04d69608b216807e98fdbd7d5d59ce688af3a3a9b3",
+  "leaves": [
+    {
+      "moduleId": "6838",
+      "name": "isMaxCap",
+      "start": 6101,
+      "end": 6207,
+      "SHA256": "7ccd0d84b08aceebbc97e76f3fd9e11948fd870cca32e41bd76c2f27e4de38fb",
+      "source": "function(){var e=!1;return this.lastSpinData&&this.maxCap<=this.lastSpinData.game.totalWinnings&&(e=!0),e}"
+    },
+    {
+      "moduleId": "6838",
+      "name": "readyForNextSpin",
+      "start": 35590,
+      "end": 36089,
+      "SHA256": "d8d1c8d588ca1224dcdadd6b8debaa9af82180aba980e0efe77d26aa8378bb5d",
+      "source": "function(){if(c(\"gameEnded\").broadcast(this.lastSpinData.game.freespins.remaining),this.inFreeSpins){var e=this.lastSpinData.game.freespins.total;H.setFreeGamesCounter(e)}if(this.lastSpinData&&this.lastSpinData.game.freespins.remaining>0)L.set(\"SPIN\");else{var n=config.msBetweenSpins;!0===this.gameEndedComplete&&t.time.now-this.timeOfLastSpin>=n?(this.freeRoundsActive||this.enableUI(),L.set(\"IDLE\")):t.time.events.add(config.defaultStartReelsTimer,this.readyForNextSpin,this),this.isFreeSpins()}}"
+    },
+    {
+      "moduleId": "6838",
+      "name": "freeSpinsEnded",
+      "start": 36286,
+      "end": 36534,
+      "SHA256": "eaa7410643dc76c8bd438049a3ba79cee2b25c111807d6fc5b3d8252d5f90426",
+      "source": "function(){this.lastSpinData.game.freespins.total==this.lastSpinData.game.freespins.current&&(!1,!1,X=3,this.preFreeRounds&&this.freeRoundsAvailable&&(this.stakeIndex=this.preFreeRounds.stakeIndex,U.updateTotalBet()),this.enableUI(),L.set(\"IDLE\"))}"
+    },
+    {
+      "moduleId": "3561",
+      "name": "decode",
+      "start": 14886,
+      "end": 15928,
+      "SHA256": "cffe188a5e6836c11ebe1fe515a868bdd026f06550db5b8af7f9ac2506274580",
+      "source": "function(e){var t={};this.finalGameReelsets=[],e=e.split(\"&\");for(var n=0;n<e.length;n++)if(e[n].indexOf(\"=\")>-1&&(e[n]=e[n].split(\"=\"),t[e[n][0]]=e[n][1],e[n][0].indexOf(\"RST_\")>-1)){var i=e[n],a=Number(i[0].split(\"_\")[1]);this.finalGameReelsets[a]=[];for(var s=i[1].split(\"|\"),o=0;o<s.length;o++){var r=s[o].split(\">\");null!=r[1]&&(this.finalGameReelsets[a][Number(r[0])]=r[1].split(\";\").map((function(e){return Number(e)})))}}for(var l in t)t.hasOwnProperty(l)&&\"GSD\"!==l&&([],t[l].indexOf(\"|\")>-1&&(t[l]=t[l].split(\"|\"),t[l][0].indexOf(\">\")>-1&&(t[l]=this.formatReelset(t[l]))));return void 0!==t.RST_1&&(t.RST_1[0]=t.RST_0[0],t.RST_1.push(t.RST_0[4]),this.finalGameReelsets[1][0]=t.RST_0[0],this.finalGameReelsets[1].push(t.RST_0[4])),void 0!==t.RST_3&&(t.RST_3[0]=t.RST_0[0],t.RST_3.push(t.RST_0[4]),this.finalGameReelsets[3][0]=t.RST_0[0],this.finalGameReelsets[3].push(t.RST_0[4])),void 0!==t.RST_5&&(t.RST_5[0]=t.RST_0[0],t.RST_5.push(t.RST_0[4]),this.finalGameReelsets[5][0]=t.RST_0[0],this.finalGameReelsets[5].push(t.RST_0[4])),t}"
+    },
+    {
+      "moduleId": "3561",
+      "name": "formatReelset",
+      "start": 15948,
+      "end": 16069,
+      "SHA256": "91926bce93940bf100725a4c3f5321beb8c16ffe090bf2580f4046a995de2ed2",
+      "source": "function(e){for(var t,n=[],i=0;i<e.length;i++)e[i].indexOf(\">\")>-1&&(n[(t=e[i].split(\">\"))[0]]=t[1].split(\";\"));return n}"
+    }
+  ],
+  "sourceSpinRequestBranch": {
+    "moduleId": "6838",
+    "start": 25232,
+    "end": 25521,
+    "SHA256": "0fb53f936b77e43c5db9aec40fd44c144d49bf483420566606bd5b73dd90433a",
+    "source": "(this.lastSpinData?this.lastSpinData.game.freespins.remaining:0)>0?(Y.prototype.broadcastGame.call(this,!0),this.totalWonThisSpin=0):(this.totalWonThisSpin=0,Y.prototype.updateTotalWin.call(this),c(\"winningsChanged\").broadcast(this.totalWonThisSpin),Y.prototype.broadcastGame.call(this))),"
+  }
+}

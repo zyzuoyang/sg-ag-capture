@@ -17412,3 +17412,11 @@ games:
     backendId: "keytosuccess96"
     rtpBuckets: [0,30,100,300,500,1000,1001,2001,2500,5000,5001,10000,10001]
     sg: {"protocol":"gdm","runtimeGameId":33192,"runtimeSlug":"keytosuccess96","endpoint":"https://ogs-gdm-usnj.nyxop.net/nextgen/","betRaw":20,"requestParams":{"GN":"keytosuccess96","BPR":"1","AP":"false","buyin":"false"},"ownGDMContract":{"betRaw":20,"balanceScale":1,"winScale":1,"ownSDKFileSHA256":"740f6dc1e6a62d9a29eaf0b48f14b8b3cd63de3c75da2f0dc408233e1ebc08d5"},"ownKey32832ProtocolDATA":{"version":"own32832-original-request-FSL-next-DATA-v1","cachedCoreSHA256":"740f6dc1e6a62d9a29eaf0b48f14b8b3cd63de3c75da2f0dc408233e1ebc08d5","maxCapAcknowledgement":"hold-unmapped","noUIOrAudio":true}}
+
+  - provider: "sg"
+    gameId: "32626"
+    name: "Reign of The Mountain King"
+    dbName: "sg_reignofthemountainking"
+    backendId: "reignofthemountainking"
+    rtpBuckets: [0,30,100,300,500,1000,1001,2001,2500,5000,5001,10000,10001]
+    sg: {"protocol":"gdm","runtimeGameId":33076,"runtimeSlug":"reignofthemountainking","endpoint":"https://ogs-gdm-usnj.nyxop.net/nextgen/","betRaw":50,"requestParams":{"GN":"reignofthemountainking","BPL":"5","AP":"false","LB":"10"},"ownGDMContract":{"betRaw":50,"balanceScale":1,"winScale":1,"ownSDKFileSHA256":"50127dd8b4163d9a950ecd04d69608b216807e98fdbd7d5d59ce688af3a3a9b3"},"ownMountain32626ProtocolDATA":{"version":"own32626-original-request-NFG-next-DATA-v1","cachedCoreTableSHA256":"50127dd8b4163d9a950ecd04d69608b216807e98fdbd7d5d59ce688af3a3a9b3","maxCapAcknowledgement":"hold-unmapped","noUIOrAudio":true}}
