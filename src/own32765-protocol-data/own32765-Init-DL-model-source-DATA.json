@@ -1,0 +1,245 @@
+{
+  "schema": "own32765-actual-Init-DL-model-source-DATA-v1",
+  "modelOrigins": {
+    "path": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\FIRST32765-own-protocol-next-preparation-20261018\\FS-response-Hc-Ch-parent-Free-O5-adapter-20261019\\source-model-initialization-and-update-origins.json",
+    "SHA256": "cfca4673081c11a3b37af6f26f730b57ea12f7b2954c1262ddfb726f7f00a213"
+  },
+  "newLeaves": {
+    "sharedACClear": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 255160,
+      "windowBytes": 430,
+      "marker": "a.clear=",
+      "owner": "F.$.Aa.Me.clear",
+      "namespaceAndInheritanceContext": "a.Me||(a.Me={})",
+      "source": "function(a){a.mp=!1;a.tk=null;a.gd=null;a.winAmount=null;a.mx=null}",
+      "SHA256": "cc1b990991bb0b1a566c1010bce0a36d35ed6d2104850f6cb944920b25877891"
+    },
+    "ownFiClear": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1260680,
+      "windowBytes": 550,
+      "marker": "a.clear=",
+      "owner": "Y.Aa.rQ.clear",
+      "namespaceAndInheritanceContext": "a.rQ||(a.rQ={})",
+      "source": "function(a){for(var e=[a.op,a.iY],c=0;c<e.length;++c)null==e[c]?e[c]=new F.Bc(0):e[c].value=0;a.op=e[0];a.iY=e[1];a.Hi=0;a.lp=!1;a.gd=0}",
+      "SHA256": "0dc0d8852cd06779c582e9e5881f8bec551d81cc667457dc425f1a54769c3679"
+    },
+    "ownDCClear": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1260460,
+      "windowBytes": 450,
+      "marker": "a.clear=",
+      "owner": "Y.Aa.Xa.clear",
+      "namespaceAndInheritanceContext": "a.Xa||(a.Xa={})",
+      "source": "function(a){a.hx=0;a.Mq=[];a.aX=[];a.aH=[];a.rg=!1;a.gd=0;a.hE?a.hE.value=0:a.hE=new F.Bc(0);a.CY=0;a.Dl=null;a.lp=!1}",
+      "SHA256": "f58d377b1ad6ee1fba19affdb91e48db21cf4bf793479c569f21448d4f847e24"
+    },
+    "acceptedSharedACUpdate": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1080810,
+      "windowBytes": 400,
+      "marker": "e.prototype.A9=",
+      "owner": "SG.Zb.wo.A9 called by own Y.Zb.wo.A9",
+      "namespaceAndInheritanceContext": "e.prototype.URa=",
+      "source": "function(a){this.XRa(a);F.$.Aa.Me.clear(this.I.ac);a.k6&&this.z9(a.k6);this.URa(a)}",
+      "SHA256": "fe7fdf0f28a11c0650417b87b91226f3d71bcc5213218d3ef676f0e555f0e153"
+    },
+    "ownMaxSelector": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1080500,
+      "windowBytes": 400,
+      "marker": "e.prototype.aU=",
+      "owner": "SG.Zb.wo.aU",
+      "namespaceAndInheritanceContext": "e.prototype.z9=",
+      "source": "function(a){return F.Ib.get().Yu!==F.An.qb&&a.EM.rg}",
+      "SHA256": "f3c017ba6f1f588a62b0e09626e7b7770e44b8f9ff8557f0f99f2b974f54ceca"
+    },
+    "acceptedLogicOpenState": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 282150,
+      "windowBytes": 500,
+      "marker": "c.prototype.SRa=",
+      "owner": "SG.Zb.pe.wo.SRa after actual aI success",
+      "namespaceAndInheritanceContext": "k.wo=e",
+      "source": "function(a){this.I.vd.Cq=a.fj.ZT||\"GBP\";this.kqa(a.ml);a.bj&&a.bj.pO&&this.lqa(a.bj.pO);this.$i.El=a.fj.El;this.I.state.state=this.Xi=F.Aa.ha.aa.Ll;this.gm.gh&&(this.I.state.koa=this.gm.gh.isComplete);a.ip.rs||\"REPLAY\"==a.ip.rs||(this.dha[a.ip.rs]={kNa:this.kq.jNa,rs:a.ip.rs})}",
+      "SHA256": "532bcfabd31ab152caf9e5341604574bf142c309c620a6a94531c648d962ce9a"
+    },
+    "ownPvEntryLatch": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1106810,
+      "windowBytes": 2750,
+      "marker": "c.prototype.Fd=",
+      "owner": "F.$.Hb.vza (own Pv inherited entry)",
+      "namespaceAndInheritanceContext": "k.vza=f",
+      "source": "function(){return h(this,void 0,void 0,function(){return m(this,function(a){switch(a.label){case 0:return this._context.O.tc.Rq.value===g.rf.Np&&(this._context.O.tc.ub.value=0),this._context.features=[],this._context.VW=!1,this._context.O.bx.boa&&this._context.O.bx.eIa(),this.Kr=this._context.O.Kc.oI(this.xl),[4,this.SI()];case 1:return a.P(),e.prototype.Fd.call(this),\n[2]}})})}",
+      "SHA256": "06730a007242fe990f8fd2304bb9fb38406c19cda4887b1607be26f08b915fa3"
+    },
+    "ownW8FeatureFactory": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1108560,
+      "windowBytes": 650,
+      "marker": "c.prototype.W8=",
+      "owner": "F.$.Hb.vza W8 fixed F.$.gQ factory",
+      "namespaceAndInheritanceContext": "c.prototype.ng=",
+      "source": "function(){this.bJ();var a=this._context.O.I,b=null;try{b=g.gQ.get()}catch(n){this._context.features=[]}null!=b&&(this._context.features=b.create(this._context));\na.ac.mp&&(this._context.O.tc.XU.value=a.ac.gd-a.ac.mx);this.rk(g.ha.Ov)}",
+      "SHA256": "1c4603a5b8b977e438bd6d9ee30d54287b813fcc2d19f2a657481b76de418f59"
+    },
+    "ownMaxStatusMetadata": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/dropandlockdeepseamagic/js/metadatabundle.js",
+      "byteWindowStart": 8100,
+      "windowBytes": 250,
+      "marker": "t.prototype.getMaxWinStatus=",
+      "owner": "own pinned metadata getMaxWinStatus constant ON",
+      "namespaceAndInheritanceContext": "t.prototype.getExtraBetConfig=",
+      "source": "function(){return\"on\"===\"ON\".toLowerCase()}",
+      "SHA256": "a926f39319bac0491a3e39a7cdbe71ddb45be47029fd4e363c1fe7c82ba02af8"
+    }
+  },
+  "oldLeaves": {
+    "ownQna": {
+      "start": 1078179,
+      "end": 1078316,
+      "source": "function(a){this.I.Fa.ic=a.$$.map(function(a){return{type:F.$.Aa.$b.aa.Ui,value:a}});this.I.Fa.fp=a.aN;this.I.Fa.Bd=a.aN;this.I.Fa.Xk=[]}",
+      "SHA256": "46851ee1921ae2fd3ffacd7729c702176dff92414aee43fa7f158ec542b8bc5b"
+    },
+    "ownORa": {
+      "start": 1176411,
+      "end": 1176682,
+      "source": "function(a,b){this.I.ac.gd=a.gd;this.I.dc.rg=1===a.rg;this.I.dc.gd=a.gd;this.I.dc.hE.value=a.lta||0;this.I.dc.CY=a.CY;this.I.dc.YO=b;this.I.dc.gX=a.LSa;this.I.dc.Dl=new F.$.Ak(15,1);this.I.dc.Dl.type=F.$.Ak.aa.Fr;for(a=0;15>a;++a)this.I.dc.Dl.dE(a,this.I.ob.xf[2].ii(0))}",
+      "SHA256": "963f49cce39a67bfd07edf01fa9e72816e20183d8e60658fa2b98ef07988c5e7"
+    },
+    "ownJLa": {
+      "start": 1175089,
+      "end": 1175165,
+      "source": "function(c){return c.tH&&0<c.tH.gd&&0<c.tH.lta?a.rr.Xa:c.k6?a.rr.Hc:a.rr.iJ}",
+      "SHA256": "c22afedc9aa6be9ff987ed1e47bdb7517df1b242c520cb7056e46573716e09ff"
+    },
+    "ownFreeCounters": {
+      "start": 1175254,
+      "end": 1175359,
+      "source": "function(a){f.prototype.z9.call(this,a);this.I.Fi.iY.value=a.YU;this.I.Fi.Hi=a.WU;this.I.Fi.gd=a.YU-a.WU}",
+      "SHA256": "e70940044e2ed3d6b5642ab62873e806f53a924c61fbbb9e42355d12c2b5b6ce"
+    },
+    "baseFreeCounters": {
+      "start": 1080640,
+      "end": 1080821,
+      "source": "function(a){this.I.ac.tk=(null!=a.WU?\na.WU:a.vVa)||0;this.I.ac.mp=0<this.I.ac.tk;this.I.ac.gd=(null!=a.YU?a.YU-this.I.ac.tk:a.uVa)||0;this.I.ac.winAmount=a.oLa;this.I.ac.mx=a.mx||0}",
+      "SHA256": "8ce307fe461f7ec7cc3dbb3587b762cb0ea8bdbf95d9b787a709c7524fa4251f"
+    },
+    "actualR6": {
+      "start": 784345,
+      "end": 784435,
+      "source": "function(){var b=this._context.O.I,d=b.Fa.ud;return null!=d?{value:d.Cc}:a.Aa.$b.Hq(b.Fa)}",
+      "SHA256": "cd2a8294638af4bcd977f7e73ea76ae1b0817e186c94fdfa9e94bb15ac91a33c"
+    },
+    "actualV6": {
+      "start": 784451,
+      "end": 784483,
+      "source": "function(){return{$m:this.r6()}}",
+      "SHA256": "9e321e8149db856f0a440981c3372e17f70b279eb7e74de7c50adc25678b3f04"
+    },
+    "ownNla": {
+      "start": 1076721,
+      "end": 1076853,
+      "source": "function(a){var b=F.$.Aa.$b.oi(this.I.Fa,a.$m);b.value/=this.Et;return{Ld:this.$i.Ld,$m:b,sp:a.sp,oN:this.si.shift(),gh:this.gm.gh}}",
+      "SHA256": "ac6edf434fd2d00aa3f18affc99f8ff7183c4372bc663d17b430cfea340177a3"
+    }
+  },
+  "stateEnum": {
+    "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+    "byteWindowStart": 250400,
+    "windowBytes": 330,
+    "owner": "F.Aa.ha.aa Closed=2, not UI popup Closed=0",
+    "source": "a[a.Ll=0]=\"Open\";a[a.V1a=1]=\"WaitingForUserInput\";a[a.vg=2]=\"Closed\"})(f=a.aa||(a.aa={}));a.clear=function(a){a.state=f.vg;a.cg=!1;a.koa=!1;a.rg=!1}",
+    "SHA256": "71754bcb588a6ec5f1ad17d5ae5d398710d517ea05965f93bb72bd4651500a30"
+  },
+  "nativeConstants": {
+    "nativeClosed": 2,
+    "modeFS": 1,
+    "modeDL": 2
+  },
+  "fixedFactoryOrder": [
+    "constantNullFeatureNext",
+    "freeNext",
+    "dropNext"
+  ],
+  "actualSourceEt": 1,
+  "sourceEtProof": "only-new-request-currency-source-v1378-result.json",
+  "currencyBranch": {
+    "schema": "own32765-only-new-source-request-currency-branch-v1377",
+    "at": 1792287417.351777,
+    "gameId": "32765",
+    "nativeGameId": 20412,
+    "runtimeGameId": 32987,
+    "dbName": "sg_dropandlockdeepseamagic",
+    "previouslyAuthenticatedAppSHA256": "6ec2b3ae16eec938aa1258b4f54876aea7c423a5c4ec95eb46b8410078d79e47",
+    "sourcePath": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+    "newWholeSDKHashOrAST": 0,
+    "sourceLeaf": {
+      "name": "ENa",
+      "start": 278227,
+      "end": 278723,
+      "source": "function(a){this.I.vd.Cq=a.fj.ZT||\"GBP\";this.I.vd.Ld=1;var b=a.bj;if(b&&b.l5){b=b.l5;var c=F.H.LQ.YZ,e;for(e in b)F.J.Jc(b[e])&&(b[e]=b[e].replace(/\\s/g,c));this.I.vd.eD={name:b.currency,Se:b.n5||\"\",T5:b.T5,pV:b.pV,Ae:b.Ae,rN:b.bLa,Je:b.tJa,qU:b.qU,fka:b.JHa,Aj:b.Aj,vs:b.hWa,Ld:b.Ld,EU:null!=\nb.n5,Fka:null==b.n5};this.$i.Ld=b.Ld;this.$i.Cq=a.fj.ZT}else this.I.vd.eD=x(x({},F.H.mH[this.I.vd.Cq]||F.H.mH.GBP),{EU:!1}),this.$i.Ld=1,this.$i.Cq=\"\";this.gm.cg&&(this.I.vd.eD.EU=!1,this.I.vd.eD.Ld=1)}",
+      "SHA256": "ce7cbfcd70ad3ced6cd816665673614d031b6c087a61a37e32c250dab5afec38"
+    },
+    "onlyENaDefinition": true,
+    "explicitSourceRule": "Absent AccountData.CurrencyInformation: own engine sets outgoing request $i.Ld=1 and $i.Cq empty; present: copies actual Ld and Header.ZT. This does not certify a provider-supplied multiplier in the absent case.",
+    "moneyBoundary": "No absent provider cash, stake, win, FS counters or bonus is supplied. Actual original AG money/replay/Mongo remains mandatory.",
+    "sourceRequests": 0,
+    "DBAccess": 0,
+    "productionReady": false,
+    "newFinalCredit": 0
+  },
+  "noNewSDKASTOrBootOrWholeHash": true,
+  "modeEnum": {
+    "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+    "byteWindowStart": 1260900,
+    "windowBytes": 320,
+    "owner": "Y.rr BaseGame0/Freespins1/DropAndLock2",
+    "source": "a[a.iJ=0]=\"BaseGame\";a[a.Hc=1]=\"Freespins\";a[a.Xa=2]=\"DropAndLock\"})(a.rr||(a.rr={}));",
+    "SHA256": "313ab2b74db646782a36a72190768a70194cf0b66fa4b6162f0244c00f15b27b"
+  },
+  "requestLeaves": {
+    "Hq": {
+      "start": 257318,
+      "end": 257415,
+      "source": "function d(a){return a.ud?a.ud.Cc?{type:l.Ui,value:a.ud.Cc}:{type:l.zr,value:a.ud.cx}:a.ic[a.Bd]}",
+      "SHA256": "5e09f33f7f63f8ddf2243a7b2ad799afd6b56b0e1ba954b63ced02e6815647cb"
+    },
+    "oi": {
+      "start": 256334,
+      "end": 256656,
+      "source": "function e(b,d){switch(d.type){case l.Ui:return{type:l.Ui,value:d.value};case l.zr:return{type:l.Ui,value:d.value*(b.Xk[b.ej]+(b.Z5||0))};case l.SA:if(null==b.qs)throw Error(\"Stake type was CreditMultiplier but no baseCreditValue is present\");return{type:l.Ui,value:d.value*b.qs};default:a.Ha.error(\"Unknown stake type\")}}",
+      "SHA256": "eb18e7f17eebe43255109c18f935f62d755363bdb0eb9db367ca1a1e06e669b1"
+    },
+    "childR6": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1107600,
+      "windowBytes": 500,
+      "marker": "c.prototype.r6=",
+      "source": "function(){var a=this._context.O.I,b=a.Fa.ud;return null!=b?{type:g.Aa.$b.aa.Ui,value:b.Cc}:g.Aa.$b.Hq(a.Fa)}",
+      "SHA256": "fedfbe6b8f2b6a3a188ff47ce945388ccd58d2aab3f51aaedc29b76490c1fea4"
+    },
+    "childV6": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1107500,
+      "windowBytes": 500,
+      "marker": "c.prototype.v6=",
+      "source": "function(){var a=this._context.O.I;return{$m:this.r6(),sp:a.Fa.Xk[a.Fa.ej]}}",
+      "SHA256": "14499d0accc058071457cd1d12521c9c14e47b6fb1da91003a6dc76ca7fc635f"
+    },
+    "Nla": {
+      "start": 1076721,
+      "end": 1076853,
+      "source": "function(a){var b=F.$.Aa.$b.oi(this.I.Fa,a.$m);b.value/=this.Et;return{Ld:this.$i.Ld,$m:b,sp:a.sp,oN:this.si.shift(),gh:this.gm.gh}}",
+      "SHA256": "ac6edf434fd2d00aa3f18affc99f8ff7183c4372bc663d17b430cfea340177a3"
+    }
+  },
+  "effectSourceOrigins": {
+    "VW": "05085f3482202bc3552bb576fd6633d745cd62b3a1400a2daf6d22e2dc4ef3e4",
+    "ac": "cc1b990991bb0b1a566c1010bce0a36d35ed6d2104850f6cb944920b25877891",
+    "Fi": "0dc0d8852cd06779c582e9e5881f8bec551d81cc667457dc425f1a54769c3679",
+    "dc": "f58d377b1ad6ee1fba19affdb91e48db21cf4bf793479c569f21448d4f847e24"
+  }
+}

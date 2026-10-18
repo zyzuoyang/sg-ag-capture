@@ -1,0 +1,216 @@
+{
+  "schema": "own32765-current-DL-request-only-binding-source-v1",
+  "identity": {
+    "gameId": "32765",
+    "dbName": "sg_dropandlockdeepseamagic",
+    "runtimeGameId": 32987,
+    "gameID": "20412"
+  },
+  "parentSourceDATA": {
+    "path": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/FIRST32765-own-protocol-next-preparation-20261018/own-request-DL-FS-next-End-source-DATA-v1383.json",
+    "bytes": 14544,
+    "SHA256": "5f2d6d8f13b7f4c427c975097a16fb4ca85bd53d7132b25d0c5d02230123f611"
+  },
+  "parentEightChecks": {
+    "path": "C:/Users/xxx/Documents/Codex/2026-10-07/zhe/work/ag-reuse-sg/FIRST32765-own-protocol-next-preparation-20261018/only-new-request-DL-FS-await-v1384-result.json",
+    "bytes": 1663,
+    "SHA256": "ee9c70c65ddfe9c408998232290d7b590ef2c1a39e9c4c829d227df8d21e6aea"
+  },
+  "newLeaves": {
+    "childLXRequestCaller": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1107200,
+      "windowBytes": 850,
+      "marker": "c.prototype.Qra=",
+      "source": "function(){h(this,void 0,void 0,function(){var a;return m(this,function(b){switch(b.label){case 0:return this.F5(),[4,this._context.O.Td.LX(this.v6())];case 1:a=b.P();if(a.qg)return this.sV(),[2];this.Paa();this.W8();return[2]}})})}",
+      "SHA256": "98c7ec7326f67655b02936f89b2628682604c14fa037fb5f44fa2f1558e92924"
+    },
+    "childV6": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1107500,
+      "windowBytes": 500,
+      "marker": "c.prototype.v6=",
+      "source": "function(){var a=this._context.O.I;return{$m:this.r6(),sp:a.Fa.Xk[a.Fa.ej]}}",
+      "SHA256": "14499d0accc058071457cd1d12521c9c14e47b6fb1da91003a6dc76ca7fc635f"
+    },
+    "childR6": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1107600,
+      "windowBytes": 500,
+      "marker": "c.prototype.r6=",
+      "source": "function(){var a=this._context.O.I,b=a.Fa.ud;return null!=b?{type:g.Aa.$b.aa.Ui,value:b.Cc}:g.Aa.$b.Hq(a.Fa)}",
+      "SHA256": "fedfbe6b8f2b6a3a188ff47ce945388ccd58d2aab3f51aaedc29b76490c1fea4"
+    },
+    "ownLXResponseModel": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1076000,
+      "windowBytes": 650,
+      "marker": "e.prototype.LX=",
+      "source": "function(a){return h(this,void 0,void 0,function(){var b;return m(this,function(d){switch(d.label){case 0:return this.cU(this.I),[4,this.aI(a)];case 1:return b=d.P(),b.qg||this.LW(b.ip),this.i9.ma(b),[2,b]}})})}",
+      "SHA256": "d08141e41da3451ee5098840581bcbbaa454fc4eecd8eb1195fe48093103f6e6"
+    },
+    "childCloseStateExit": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1193750,
+      "windowBytes": 600,
+      "marker": "c.prototype.Fd=",
+      "source": "function(){var b=this._context.O.I;b.state.rg||0>=b.Fi.gd||b.dc.gd?(this._context.O.tc.ub.value=b.state.rg?b.ob.jk:b.dd,this.bS.vH()):a.prototype.Fd.call(this)}",
+      "SHA256": "8a805e310cbce1359785207c7b34153ffb89af1285013a743710de4756df4fd8"
+    },
+    "nativeMachineExitIdentity": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 245900,
+      "windowBytes": 350,
+      "marker": "c.prototype.vH=",
+      "source": "function(){this.ufa||(this.ufa=!0,c.Cea--,this.WI(null),this.kka(\"Exited machine\"),this.uga.ma({sender:this}))}",
+      "SHA256": "bb4268aa8abfc7bc7d16cd7d3a7791f6d16c7cdb023f7337617311bb2a52a124"
+    },
+    "ownAcceptedModelUpdate": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1173800,
+      "windowBytes": 1000,
+      "marker": "e.prototype.A9=",
+      "source": "function(a){f.prototype.A9.call(this,a);this.I.Ila=a.dd;a.p4&&(a.tH&&(this.I.dc.Mq=a.p4),this.I.uA=a.p4);a.EM&&(this.I.dd=a.EM.xaa);a.i4&&(this.jMa(a.i4),this.NRa(a.i4));a.kpa&&this.TRa(a.kpa);a.Ska&&this.QRa(a.Ska);a.tH&&this.ORa(a.tH,a.dd);this.I.ox=this.JLa(a)}",
+      "SHA256": "3866ab0b6ed7957ef9b5bacbc4c766be0770877a38326eef969c93717c4760fb"
+    },
+    "nativeHpaSourceIdentity": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 245000,
+      "windowBytes": 500,
+      "source": "this.uga=a.createEvent();this.qA=this.xga.Ze;this.Hpa=this.uga.Ze;",
+      "SHA256": "58a79add801d244c6291eb11fc3c401b6283c0e45248a9fe4f820821facce3c5"
+    },
+    "ownChildPvInheritance": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1188750,
+      "windowBytes": 700,
+      "source": "e.prototype.Ex=function(){this._context.O.I.ac.mp||(this._context.O.tc.ub.value=0);a.prototype.Ex.call(this)};return e}(F.$.Hb.vza);a.Pv=g",
+      "SHA256": "6c752cbb15172a41f02d401abb63e00fd7c71f076b157f70b194a97159a44382"
+    },
+    "ownDLChildRegistration": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1198500,
+      "windowBytes": 650,
+      "source": "be.owa={SH:null,Qx:[F.$.Hb.MJ,F.$.Hb.C_,$d.Ic.Xa.Ve,$d.Ic.Pv,$d.Ic.Xa.Ch,F.$.Hb.RZ],z8:(ee={},ee[F.$.ha.Ve]=F.$.ha.Ch,ee[F.$.ha.zn]=F.$.ha.Ch,ee)};",
+      "SHA256": "78ce1df62817ad5e017934c1936fbdb74a4412fc3f97bfc8ef404b941b286688"
+    },
+    "typedDLFields": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1181700,
+      "windowBytes": 850,
+      "source": "c.CY={i:[g.Ba({path:\".dlWinnings\",type:g.Number})],target:a.prototype,j:void 0};c.gd={i:[g.Ba({path:\".dlRemaining\",type:g.Number})],target:a.prototype,j:void 0};c.LSa={i:[g.Ba({path:\".prevDLRemaining\",type:g.Number})],target:a.prototype,\nj:void 0};c.rg={i:[g.Ba({path:\".isMaxWin\",type:g.Number})],target:a.prototype,j:void 0};c.lta={i:[g.Ba({path:\".totalDropAndLocks\",type:g.Number})],target:a.prototype,j:void 0};B(c);return a=z([g.aa(\"DLInfo\")],a)}();a.DZa=f;",
+      "SHA256": "c99432b2d3084fc555ea9a202c8eea6443d56f62598dbcc270f1ae587575399a"
+    }
+  },
+  "reusedLeaves": {
+    "ownNla": {
+      "start": 1076721,
+      "end": 1076853,
+      "source": "function(a){var b=F.$.Aa.$b.oi(this.I.Fa,a.$m);b.value/=this.Et;return{Ld:this.$i.Ld,$m:b,sp:a.sp,oN:this.si.shift(),gh:this.gm.gh}}",
+      "SHA256": "ac6edf434fd2d00aa3f18affc99f8ff7183c4372bc663d17b430cfea340177a3"
+    },
+    "actualCurrentStake": {
+      "start": 257318,
+      "end": 257415,
+      "source": "function d(a){return a.ud?a.ud.Cc?{type:l.Ui,value:a.ud.Cc}:{type:l.zr,value:a.ud.cx}:a.ic[a.Bd]}",
+      "SHA256": "5e09f33f7f63f8ddf2243a7b2ad799afd6b56b0e1ba954b63ced02e6815647cb"
+    },
+    "actualTotalStakeConverter": {
+      "start": 256334,
+      "end": 256656,
+      "source": "function e(b,d){switch(d.type){case l.Ui:return{type:l.Ui,value:d.value};case l.zr:return{type:l.Ui,value:d.value*(b.Xk[b.ej]+(b.Z5||0))};case l.SA:if(null==b.qs)throw Error(\"Stake type was CreditMultiplier but no baseCreditValue is present\");return{type:l.Ui,value:d.value*b.qs};default:a.Ha.error(\"Unknown stake type\")}}",
+      "SHA256": "eb18e7f17eebe43255109c18f935f62d755363bdb0eb9db367ca1a1e06e669b1"
+    }
+  },
+  "sourceAppSHA256Reused": "6ec2b3ae16eec938aa1258b4f54876aea7c423a5c4ec95eb46b8410078d79e47",
+  "newWholeHashASTBoot": 0,
+  "currentFeatureCodec": {
+    "schema": "own32765-current-FS-DL-response-codec-v1",
+    "ownMaxStatusEnabled": true,
+    "rawBGMaxAttribute": "isMaxWin",
+    "rawFSFields": {
+      "YU": "freeSpinsTotal",
+      "WU": "freeSpinNumber"
+    },
+    "sourceOrigins": {
+      "typedFS": {
+        "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+        "byteWindowStart": 1090280,
+        "windowBytes": 900,
+        "owner": "SG.Zb.g_a registered FSInfo with Number YU/WU/oLa and Boolean rg",
+        "source": "b.oLa={i:[k.Ba({path:\".fsWinnings\",type:k.Number})],target:a.prototype,j:void 0};b.rg={i:[k.Ba({path:\".isMaxWin\",type:k.Boolean})],target:a.prototype,j:void 0};b.YU={i:[k.Ba({path:\".freeSpinsTotal\",type:k.Number})],target:a.prototype,\nj:void 0};b.WU={i:[k.Ba({path:\".freeSpinNumber\",type:k.Number})],target:a.prototype,j:void 0};b.vVa={i:[k.Ba({path:\".spinsUsed\",type:k.Number})],target:a.prototype,j:void 0};b.uVa={i:[k.Ba({path:\".spinsRemaining\",type:k.Number})],target:a.prototype,j:void 0};b.mx={i:[k.Ba({path:\".extraSpinsAwarded\",type:k.Number})],target:a.prototype,j:void 0};B(b);return a=z([k.aa(\"FSInfo\")],a)}();g.g_a=f",
+        "SHA256": "5765559da7f045ead64bc6df4b17f55b1ce02edf211bac759ba8f3d7eddadd70"
+      },
+      "booleanPrimitiveFactory": {
+        "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+        "byteWindowStart": 261000,
+        "windowBytes": 750,
+        "owner": "F.Si.Dh.kJ Boolean converter factory",
+        "source": "function r(b){var d=x(x({},r.V),b);return{Yq:function(a,b){return!0===b?d.AX:!1===b?d.zX:\"undefined\"},gp:function(b){if(null==b)return null;if(b instanceof Element){if(b=\nb.textContent&&b.textContent.toLowerCase(),null!=b)return-1!==d.Rha.indexOf(b)?!0:-1!==d.Qha.indexOf(b)?!1:d.default}else{if(a.J.array(b))throw Error(\"Failed to deserialise boolean (received array)\");b=b.toLowerCase();return-1!==d.Rha.indexOf(b)?!0:-1!==d.Qha.indexOf(b)?!1:d.default}}}}",
+        "SHA256": "122aed2a426f70888faa279ad7252389480932a388927dee6532d3c766c7d4e9"
+      },
+      "booleanPrimitiveOptions": {
+        "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+        "byteWindowStart": 262850,
+        "windowBytes": 400,
+        "owner": "F.Si.Dh.kJ.V and Boolean configuration",
+        "source": "V={AX:\"true\",zX:\"false\",Rha:[\"true\",\"1\",\"y\",\"yes\"],Qha:[\"false\",\"0\",\"n\",\"no\"],default:!1};g.Boolean=r(r.V);",
+        "SHA256": "09b4f0aba4f9b95bcf5029702892aee7fea0ef201bf4b4f65251a428a7d3bd45"
+      },
+      "ownMaxStatusMetadata": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/dropandlockdeepseamagic/js/metadatabundle.js",
+        "byteWindowStart": 8100,
+        "windowBytes": 250,
+        "marker": "t.prototype.getMaxWinStatus=",
+        "owner": "own pinned metadata getMaxWinStatus constant ON",
+        "namespaceAndInheritanceContext": "t.prototype.getExtraBetConfig=",
+        "source": "function(){return\"on\"===\"ON\".toLowerCase()}",
+        "SHA256": "a926f39319bac0491a3e39a7cdbe71ddb45be47029fd4e363c1fe7c82ba02af8"
+      },
+      "ownMaxSelector": {
+        "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+        "byteWindowStart": 1080500,
+        "windowBytes": 400,
+        "marker": "e.prototype.aU=",
+        "owner": "SG.Zb.wo.aU",
+        "namespaceAndInheritanceContext": "e.prototype.z9=",
+        "source": "function(a){return F.Ib.get().Yu!==F.An.qb&&a.EM.rg}",
+        "SHA256": "f3c017ba6f1f588a62b0e09626e7b7770e44b8f9ff8557f0f99f2b974f54ceca"
+      },
+      "acceptedSharedACUpdate": {
+        "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+        "byteWindowStart": 1080810,
+        "windowBytes": 400,
+        "marker": "e.prototype.A9=",
+        "owner": "SG.Zb.wo.A9 called by own Y.Zb.wo.A9",
+        "namespaceAndInheritanceContext": "e.prototype.URa=",
+        "source": "function(a){this.XRa(a);F.$.Aa.Me.clear(this.I.ac);a.k6&&this.z9(a.k6);this.URa(a)}",
+        "SHA256": "fe7fdf0f28a11c0650417b87b91226f3d71bcc5213218d3ef676f0e555f0e153"
+      },
+      "ownZ9": {
+        "start": 1175254,
+        "end": 1175359,
+        "source": "function(a){f.prototype.z9.call(this,a);this.I.Fi.iY.value=a.YU;this.I.Fi.Hi=a.WU;this.I.Fi.gd=a.YU-a.WU}",
+        "SHA256": "e70940044e2ed3d6b5642ab62873e806f53a924c61fbbb9e42355d12c2b5b6ce"
+      },
+      "baseZ9": {
+        "start": 1080640,
+        "end": 1080821,
+        "source": "function(a){this.I.ac.tk=(null!=a.WU?\na.WU:a.vVa)||0;this.I.ac.mp=0<this.I.ac.tk;this.I.ac.gd=(null!=a.YU?a.YU-this.I.ac.tk:a.uVa)||0;this.I.ac.winAmount=a.oLa;this.I.ac.mx=a.mx||0}",
+        "SHA256": "8ce307fe461f7ec7cc3dbb3587b762cb0ea8bdbf95d9b787a709c7524fa4251f"
+      },
+      "ownORa": {
+        "start": 1176411,
+        "end": 1176682,
+        "source": "function(a,b){this.I.ac.gd=a.gd;this.I.dc.rg=1===a.rg;this.I.dc.gd=a.gd;this.I.dc.hE.value=a.lta||0;this.I.dc.CY=a.CY;this.I.dc.YO=b;this.I.dc.gX=a.LSa;this.I.dc.Dl=new F.$.Ak(15,1);this.I.dc.Dl.type=F.$.Ak.aa.Fr;for(a=0;15>a;++a)this.I.dc.Dl.dE(a,this.I.ob.xf[2].ii(0))}",
+        "SHA256": "963f49cce39a67bfd07edf01fa9e72816e20183d8e60658fa2b98ef07988c5e7"
+      },
+      "ownJLa": {
+        "start": 1175089,
+        "end": 1175165,
+        "source": "function(c){return c.tH&&0<c.tH.gd&&0<c.tH.lta?a.rr.Xa:c.k6?a.rr.Hc:a.rr.iJ}",
+        "SHA256": "c22afedc9aa6be9ff987ed1e47bdb7517df1b242c520cb7056e46573716e09ff"
+      }
+    }
+  }
+}

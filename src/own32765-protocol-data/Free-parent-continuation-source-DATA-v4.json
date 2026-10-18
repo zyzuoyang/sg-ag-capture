@@ -1,0 +1,328 @@
+{
+  "schema": "own32765-parent-O5-continuation-HU-source-DATA-v1",
+  "gameId": "32765",
+  "nativeGameID": "20412",
+  "constants": {
+    "nativeClosed": 2,
+    "modeFS": 1,
+    "modeDL": 2
+  },
+  "newLeaves": {
+    "actualDLChildCh": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1197420,
+      "windowBytes": 660,
+      "marker": "c.prototype.Fd=",
+      "owner": "Y.Ic.Xa.Ch extends F.$.Hb.GJ",
+      "namespaceAndInheritanceContext": "a.Ch=f})(a.Xa",
+      "source": "function(){var b=this._context.O.I;b.state.rg||0>=b.ac.gd||!b.dc.gd?(b.state.rg&&(this._context.O.tc.ub.value=b.ob.jk),this.bS.vH()):a.prototype.Fd.call(this)}",
+      "SHA256": "e438689de9491a51098e72215d3427e7fdb21e1dc8c6f1926d37bd35d92fccec"
+    },
+    "baseGenericGJEntry": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 780500,
+      "windowBytes": 650,
+      "marker": "e.prototype.Fd=",
+      "owner": "F.Hb.GJ",
+      "namespaceAndInheritanceContext": "e.prototype.rja=",
+      "source": "function(){f.prototype.Fd.call(this);var a=this._context.O,d=a.Wb;a=a.I;this.Dk=d.rl.declare(!1);this.Sm=d.Ox.declare(\"skip\");a.ob.Hj&&(this.Yj=d.jo.declare(!0));this._context.UV=!1;this.rja()}",
+      "SHA256": "805734518ff2126259766cc8c8efdb384eb85081eb1ce69a43543268ece297bf"
+    },
+    "sharedGJEntry": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1104950,
+      "windowBytes": 680,
+      "marker": "c.prototype.Fd=",
+      "owner": "F.$.Hb.GJ",
+      "namespaceAndInheritanceContext": "c.prototype.rja=",
+      "source": "function(){e.prototype.Fd.call(this);var a=this._context.O.Wb;this.Kr=this._context.O.Kc.oI(this.xl);a.nv.value||(this.rR=a.HM.declare(!0),this.If=a.Ci.declare(!0),this.SK=this._context.O.Kc.Gx(this.Zz))}",
+      "SHA256": "4efd5b5fe263671bcdbe5377baaeb9c2cd1a0a61739e7f65afb6d930cd76a8df"
+    },
+    "sharedGJHU": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1105880,
+      "windowBytes": 1100,
+      "marker": "c.prototype.HU=",
+      "owner": "F.$.Hb.GJ extends F.Hb.GJ",
+      "namespaceAndInheritanceContext": "k.GJ=f",
+      "source": "function(a){return h(this,void 0,void 0,function(){return m(this,function(b){switch(b.label){case 0:return a?[3,2]:[4,this._context.O.Td.close()];case 1:a=b.P(),b.label=2;case 2:return a.qg&&(g.Ib.get().iv(),this.rR=null),this._context.O.bx.boa&&0>=this._context.O.tc.GT.value&&this._context.O.bx.stop(),[4,e.prototype.HU.call(this,a)];case 3:return[2,b.P()]}})})}",
+      "SHA256": "6233a2b173568b1f0e653b31fc1a3eb032fef03daf8acf6cbaa6b4a1decd5335"
+    },
+    "baseGJHU": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 781060,
+      "windowBytes": 1000,
+      "marker": "e.prototype.HU=",
+      "owner": "F.Hb.GJ",
+      "namespaceAndInheritanceContext": "e.prototype.z$=",
+      "source": "function(b){return h(this,void 0,void 0,function(){var d,c,e,f;return m(this,function(g){switch(g.label){case 0:return b?[3,2]:[4,this._context.O.Td.close()];case 1:b=g.P(),g.label=2;case 2:d=this._context.O.I;if(!b.qg)return[3,4];c=a.lj.wk.get();null!=c&&(e=!d.error.options.some(function(b){return b.type===a.Aa.Error.Vg.ey}),\nc.vl().error({message:a.H.qk(this._context.O.locale,d.error.message),fatal:e}));return[4,this._context.O.handleError()];case 3:return g.P()?[2,this.z$()]:[2,!1];case 4:return f=this.ng(d)[this._context.Hi],this._context.O.tc.di.value=f.dj.te,this._context.O.tc.ml.value=f.dj.li,[2,this.z$()]}})})}",
+      "SHA256": "8d9eddf89748aa4b289f8059886fb36f69c7f52f23113998615c3d31895e784f"
+    },
+    "nativeServiceClose": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 274620,
+      "windowBytes": 1300,
+      "marker": "c.prototype.close=",
+      "owner": "SG native service close",
+      "namespaceAndInheritanceContext": "c.prototype.G6=",
+      "source": "function(){return h(this,void 0,void 0,function(){var a,d,c;return m(this,function(b){switch(b.label){case 0:if(!this.FX())return this.I.state.state=this.Xi=F.Aa.ha.aa.vg,[2,{qg:!1,request:null}];if(!F.TY.connected.value)return this.I.error.type=\nF.Aa.Error.aa.Bv,this.I.error.title=g.va.QA.pd,this.I.error.message=g.va.QA.Pi,this.I.error.options=[{type:F.Aa.Error.Vg.Cr,text:g.va.QA.$Z}],[2,{qg:!0,request:null}];a=new this.settings.IHa(this.kq,this.$i);b.label=1;case 1:return b.pf.push([1,3,,4]),[4,a.send({})];case 2:return d=b.P(),[3,4];case 3:return c=b.P(),this.LH(c),[2,{qg:!0,request:a}];case 4:if(d.error)return this.parseError(d.error),[2,d];this.I.error.type=F.Aa.Error.aa.qb;this.$i.El=d.fj.El;this.I.state.state=this.Xi=F.Aa.ha.aa.vg;\nthis.xW.ma(d);return[2,d]}})})}",
+      "SHA256": "c2d9016dae509c3422f75718ed55b994381cc4d8f23b067b33d74700446142ee"
+    },
+    "afterFeatureRenderThenCh": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1095900,
+      "windowBytes": 1500,
+      "marker": "c.prototype.aKa=",
+      "owner": "F.$.Hb.Aba -> own Y.Ic.wE",
+      "namespaceAndInheritanceContext": "k.Aba=f",
+      "source": "function(){h(this,void 0,void 0,function(){var a,b,c,e,f;return m(this,function(d){switch(d.label){case 0:a=this._context.O.uu;if(!a)return[3,2];b=this._context.O.I;c=g.Aa.$b.oi(b.Fa,g.Aa.$b.Hq(b.Fa)).value;e=this.S5();if(!this.KUa(c,e))return[3,2];f=this._context.O.Wb.rm.declare(!1);return[4,a.Fq(c,e)];case 1:d.P(),f.dispose(),d.label=2;case 2:return this.rk(g.ha.Ch),[2]}})})}",
+      "SHA256": "6a8658316355cbd288a52f2b09b8966669dd6bb556a0e82c812bf206f2e60380"
+    },
+    "sourceClosedEnum": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 250400,
+      "windowBytes": 330,
+      "owner": "F.Aa.ha.aa Closed=2, not UI popup Closed=0",
+      "source": "a[a.Ll=0]=\"Open\";a[a.V1a=1]=\"WaitingForUserInput\";a[a.vg=2]=\"Closed\"})(f=a.aa||(a.aa={}));a.clear=function(a){a.state=f.vg;a.cg=!1;a.koa=!1;a.rg=!1}",
+      "SHA256": "71754bcb588a6ec5f1ad17d5ae5d398710d517ea05965f93bb72bd4651500a30"
+    },
+    "sourceModeEnum": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1260900,
+      "windowBytes": 320,
+      "owner": "Y.rr BaseGame0/Freespins1/DropAndLock2",
+      "source": "a[a.iJ=0]=\"BaseGame\";a[a.Hc=1]=\"Freespins\";a[a.Xa=2]=\"DropAndLock\"})(a.rr||(a.rr={}));",
+      "SHA256": "313ab2b74db646782a36a72190768a70194cf0b66fa4b6162f0244c00f15b27b"
+    },
+    "childSIRequestPrelude": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1108840,
+      "windowBytes": 700,
+      "marker": "c.prototype.SI=",
+      "owner": "F.$.Hb.vza",
+      "namespaceAndInheritanceContext": "k.vza=f",
+      "source": "function(){return h(this,void 0,void 0,function(){var b;return m(this,function(){b=this._context.Xb.state.value;b===a.Jb.ab.ha.Df&&this._context.Xb.SI(a.Jb.ab.Cm.Mj);return[2]})})}",
+      "SHA256": "577eec0cc49e111d1afcb2ee72ee22b6e0dbe773ca22e345def98a8e41df727d"
+    },
+    "constantNullFeatureNext": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1258250,
+      "windowBytes": 700,
+      "marker": "f.prototype.N8=",
+      "owner": "own cached common feature N8 constant null",
+      "namespaceAndInheritanceContext": "f.prototype.HHa=",
+      "source": "function(){return null}",
+      "SHA256": "69e5d4178d2885d4dd22d9efa3be727906416a72e58d3e85993e855604dcddb3"
+    },
+    "fixedOwnFeatureFactory": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1252980,
+      "windowBytes": 600,
+      "marker": "f.prototype.create=",
+      "owner": "Y.VA.Nd registered F.$.gQ",
+      "namespaceAndInheritanceContext": "F.$.gQ.register(g)",
+      "source": "function(e){var c=[];this.nL=new a.lB(e);c.push(this.nL);c.push(new a.Me(e));c.push(new a.Xa(e));return c}",
+      "SHA256": "a272db7349a0ab5412629da5254d1659ecfd56af1c1759de784264363bbe5274"
+    }
+  },
+  "reused": {
+    "parentI5": {
+      "start": 1194363,
+      "end": 1195068,
+      "source": "function(){h(this,void 0,void 0,function(){var b,c,e;return m(this,function(d){switch(d.label){case 0:return b=this._context.O.Cb.top,c={Os:this._context.O.orientation,Caa:this._context.O.Wb.rm,stage:this._context.O.Cb.stage},b!==this._context.O.Cb.get(a.Ua.Me)?\n[3,2]:[4,this._context.O.Cb.GA(a.Ua.Xa,new a.Ua.mh.DB(a.Va.mh.Kwa,c))];case 1:return d.P(),[3,4];case 2:return b!==this._context.O.Cb.get(a.Ua.he)?[3,4]:[4,this._context.O.Cb.GA(a.Ua.Xa,new a.Ua.mh.DB(a.Va.mh.DB,c))];case 3:d.P(),d.label=4;case 4:return e=x(x({},a.Va.Ic.owa),{SH:this._context.O.I.dc.lp?F.$.ha.Sf:F.$.ha.Pv}),this.$y=new F.ha.OZ(e,this._context),[4,this.$y.Hpa];case 5:return d.P(),[4,this.O5()];case 6:return d.P(),[2]}})})}",
+      "SHA256": "d20d46c9cfa4b369e87c4412b966c132482e711788ffc585078b900737c5dc1c"
+    },
+    "parentO5": {
+      "start": 1195084,
+      "end": 1195742,
+      "source": "function(){return h(this,void 0,void 0,function(){var b,\nc;return m(this,function(d){switch(d.label){case 0:return b={Os:this._context.O.orientation,Caa:this._context.O.Wb.rm,stage:this._context.O.Cb.stage},c=new a.Ua.mh.DB(a.Va.mh.Wwa,b),this._context.O.I.state.rg?[4,this._context.O.Cb.GA(a.Ua.he,c)]:[3,2];case 1:return d.P(),this.rk(F.$.ha.Ch),[2];case 2:if(!this._context.O.I.Fi.Hi)return[3,3];this.vm(a.Ic.ha.Me);return[3,6];case 3:return this._context.O.tc.ub.value=this._context.O.I.dd,[4,this._context.O.Cb.get(a.Ua.Xa).$C()];case 4:return d.P(),[4,\nthis._context.O.Cb.GA(a.Ua.he,c)];case 5:d.P(),this.vm(a.Ic.ha.wE),d.label=6;case 6:return[2]}})})}",
+      "SHA256": "c08643d60f27c5e699a69ebc5ec38faff2dcfb62c7c8d1629017857fe5773365"
+    },
+    "freeI5": {
+      "start": 1190100,
+      "end": 1190702,
+      "source": "function(){h(this,void 0,void 0,function(){var b,c;return m(this,function(d){switch(d.label){case 0:return b=this._context.O.I.Fi,this._context.O.Cb.get(a.Ua.Me)?[3,2]:[4,this._context.O.Cb.GA(a.Ua.Me,\nnew a.Ua.mh.I_(a.Va.mh.I_,{Os:this._context.O.orientation}))];case 1:d.P(),d.label=2;case 2:return[4,F.ga.wait(1500)];case 3:d.P();if(b.gd||b.lp)c=x(x({},a.Va.Ic.Uwa),{SH:b.lp?F.$.ha.Sf:F.$.ha.Pv}),this.$y=new F.ha.OZ(c,this._context);b.lp&&this._context.O.Cb.get(a.Ua.Me).hpa(-1);return b.gd||b.lp?[4,this.$y.Hpa]:[3,5];case 4:d.P(),d.label=5;case 5:return[4,this.O5()];case 6:return d.P(),[2]}})})}",
+      "SHA256": "bc13722735d7f60529f8f5d7fcede66cfb9ee912863ef1a984963a22a28e4fa3"
+    },
+    "freeO5": {
+      "start": 1190718,
+      "end": 1191341,
+      "source": "function(){return h(this,void 0,void 0,function(){var b,c,e;return m(this,function(d){switch(d.label){case 0:if(!(0<\nthis._context.O.I.dc.gd))return[3,2];b=this._context.O.Cb.get(a.Ua.Me);return[4,b.QUa()];case 1:return d.P(),this.vm(a.Ic.ha.Xa),[3,7];case 2:return c={Os:this._context.O.orientation},e=new a.Ua.mh.oZ(a.Va.mh.oZ,c),this._context.O.I.state.rg?[4,this._context.O.Cb.GA(a.Ua.he,e)]:[3,4];case 3:return d.P(),this.rk(F.$.ha.Ch),[3,7];case 4:return[4,this._context.O.Cb.get(a.Ua.Me).$C()];case 5:return d.P(),[4,this._context.O.Cb.GA(a.Ua.he,e)];case 6:d.P(),this.vm(a.Ic.ha.wE),d.label=7;case 7:return[2]}})})}",
+      "SHA256": "c9a0bb94d0e81dac251f97b9bf4acbf50eeb031b24ed95172aa9ce1a5557c27f"
+    },
+    "featureConsumer": {
+      "start": 1105394,
+      "end": 1105931,
+      "source": "function(){h(this,void 0,void 0,function(){var a,b,c,e;return m(this,function(d){switch(d.label){case 0:if(this._context.O.I.state.state===g.Aa.ha.aa.vg)return[3,6];if(this._context.VW)return[3,4];this._context.VW=!0;a=0;b=this._context.features;d.label=1;case 1:if(!(a<b.length))return[3,4];c=b[a];return[4,c.N8()];case 2:e=d.P();if(null!=e)return this.vm(e),[2];d.label=3;case 3:return a++,[3,1];case 4:return[4,this.HU()];case 5:if(!d.P())return[2];d.label=6;case 6:return[4,this.uja()];case 7:return d.P(),\nthis.rk(g.ha.ri),[2]}})})}",
+      "SHA256": "05085f3482202bc3552bb576fd6633d745cd62b3a1400a2daf6d22e2dc4ef3e4"
+    },
+    "dropNext": {
+      "start": 1252149,
+      "end": 1252759,
+      "source": "function(){return h(this,void 0,void 0,function(){var e,c,b,d,f,g;return m(this,function(k){switch(k.label){case 0:e=this.context.O.I;c=e.dc;b=e.ac;d=e.Fi;if(null===b.gd||this.context.O.I.ox===a.rr.Hc)return[2,null];if(this.context.O.I.state.rg)return F.$.Aa.Me.clear(b),a.Aa.rQ.clear(d),a.Aa.Xa.clear(c),\n[2,null];if(c.hE.value||d.Hi)return[3,2];f=this.context.O.Cb.get(a.Ua.he);g=a.va.ia.qe.Xa.get(this.context.O.locale,{value:this.context.O.I.dc.gd,RU:\"Drop & Lock\\u2122\"});return[4,f.$C(g)];case 1:return k.P(),[2,a.Ic.ha.Xa];case 2:if(0<c.gd||d.gd)return[2,F.$.ha.Pv];a.Aa.Xa.clear(c);return[2,null]}})})}",
+      "SHA256": "bb135ededee8508c80f27b1ca193b93602faf58e519183f779eeba8d53aa7616"
+    },
+    "freeNext": {
+      "start": 1255484,
+      "end": 1255952,
+      "source": "function(){return h(this,void 0,void 0,function(){var c,b,d,e,f,g,k,t;return m(this,function(l){switch(l.label){case 0:c=this.context.O.I;b=c.ac;d=c.Fi;e=c.dc;f=c.state;g=c.ox;k=f.rg;this.context.O.I.uA=[];if(null===b.tk||g===a.rr.Xa||k)return[2,null];if(0!==b.tk)return[3,2];t=this.context.O.Cb.get(a.Ua.he);return[4,t.SUa()];case 1:return l.P(),[2,a.Ic.ha.Me];case 2:if(0<d.gd)return[2,F.$.ha.Pv];F.$.Aa.Me.clear(b);\na.Aa.rQ.clear(d);a.Aa.Xa.clear(e);return[2]}})})}",
+      "SHA256": "0bd67c3b39c989ad93a1e1a0d475016b73d02b7659f4afe24273c77037957655"
+    },
+    "canClose": {
+      "start": 1079874,
+      "end": 1079944,
+      "source": "function(){return this.rra.cg||0<this.I.ac.gd&&!this.I.state.rg?!1:!0}",
+      "SHA256": "07b4fcf5e979480b80412afaad7b294f870dc014940e5cd9caaa36f9b783333c"
+    },
+    "ownFreeCounters": {
+      "start": 1175254,
+      "end": 1175359,
+      "source": "function(a){f.prototype.z9.call(this,a);this.I.Fi.iY.value=a.YU;this.I.Fi.Hi=a.WU;this.I.Fi.gd=a.YU-a.WU}",
+      "SHA256": "e70940044e2ed3d6b5642ab62873e806f53a924c61fbbb9e42355d12c2b5b6ce"
+    },
+    "actualDLRegistration": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1198500,
+      "windowBytes": 650,
+      "source": "be.owa={SH:null,Qx:[F.$.Hb.MJ,F.$.Hb.C_,$d.Ic.Xa.Ve,$d.Ic.Pv,$d.Ic.Xa.Ch,F.$.Hb.RZ],z8:(ee={},ee[F.$.ha.Ve]=F.$.ha.Ch,ee[F.$.ha.zn]=F.$.ha.Ch,ee)};",
+      "SHA256": "78ce1df62817ad5e017934c1936fbdb74a4412fc3f97bfc8ef404b941b286688"
+    },
+    "childRequestQra": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1107200,
+      "windowBytes": 850,
+      "marker": "c.prototype.Qra=",
+      "source": "function(){h(this,void 0,void 0,function(){var a;return m(this,function(b){switch(b.label){case 0:return this.F5(),[4,this._context.O.Td.LX(this.v6())];case 1:a=b.P();if(a.qg)return this.sV(),[2];this.Paa();this.W8();return[2]}})})}",
+      "SHA256": "98c7ec7326f67655b02936f89b2628682604c14fa037fb5f44fa2f1558e92924"
+    },
+    "childR6": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1107600,
+      "windowBytes": 500,
+      "marker": "c.prototype.r6=",
+      "source": "function(){var a=this._context.O.I,b=a.Fa.ud;return null!=b?{type:g.Aa.$b.aa.Ui,value:b.Cc}:g.Aa.$b.Hq(a.Fa)}",
+      "SHA256": "fedfbe6b8f2b6a3a188ff47ce945388ccd58d2aab3f51aaedc29b76490c1fea4"
+    },
+    "childV6": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1107500,
+      "windowBytes": 500,
+      "marker": "c.prototype.v6=",
+      "source": "function(){var a=this._context.O.I;return{$m:this.r6(),sp:a.Fa.Xk[a.Fa.ej]}}",
+      "SHA256": "14499d0accc058071457cd1d12521c9c14e47b6fb1da91003a6dc76ca7fc635f"
+    },
+    "Nla": {
+      "start": 1076721,
+      "end": 1076853,
+      "source": "function(a){var b=F.$.Aa.$b.oi(this.I.Fa,a.$m);b.value/=this.Et;return{Ld:this.$i.Ld,$m:b,sp:a.sp,oN:this.si.shift(),gh:this.gm.gh}}",
+      "SHA256": "ac6edf434fd2d00aa3f18affc99f8ff7183c4372bc663d17b430cfea340177a3"
+    },
+    "Hq": {
+      "start": 257318,
+      "end": 257415,
+      "source": "function d(a){return a.ud?a.ud.Cc?{type:l.Ui,value:a.ud.Cc}:{type:l.zr,value:a.ud.cx}:a.ic[a.Bd]}",
+      "SHA256": "5e09f33f7f63f8ddf2243a7b2ad799afd6b56b0e1ba954b63ced02e6815647cb"
+    },
+    "oi": {
+      "start": 256334,
+      "end": 256656,
+      "source": "function e(b,d){switch(d.type){case l.Ui:return{type:l.Ui,value:d.value};case l.zr:return{type:l.Ui,value:d.value*(b.Xk[b.ej]+(b.Z5||0))};case l.SA:if(null==b.qs)throw Error(\"Stake type was CreditMultiplier but no baseCreditValue is present\");return{type:l.Ui,value:d.value*b.qs};default:a.Ha.error(\"Unknown stake type\")}}",
+      "SHA256": "eb18e7f17eebe43255109c18f935f62d755363bdb0eb9db367ca1a1e06e669b1"
+    }
+  },
+  "sourceIdentity": "6ec2b3ae16eec938aa1258b4f54876aea7c423a5c4ec95eb46b8410078d79e47",
+  "wholeSDKBootASTHash": 0,
+  "correction": {
+    "wrongPriorOwner": "Hc.Ch",
+    "correctDL": "Xa.Ch",
+    "wrongPriorPositiveDLTest": "3852c1 invalid as DL qualification; immutable diagnostic retained",
+    "rootCvaAndChildOwaBothUseOwnPv": true,
+    "baseNormalLTDoesNotByItselfProveOwnRootDispatch": "Own Pv inherits vza.Qra->LX; no normal-root LT claim from adjacent base leaf"
+  },
+  "fixedFactoryOrder": [
+    "constantNullFeatureNext",
+    "freeNext",
+    "dropNext"
+  ],
+  "factoryBinding": "Y.VA.Nd.create, registered F.$.gQ; pure protocol projection of fixed source order, no UI feature instances required",
+  "freeResponseExtension": {
+    "schema": "own32765-Free-Hc-Ch-O5-VW-local-DATA-v1",
+    "freeCh": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1193750,
+      "windowBytes": 600,
+      "marker": "c.prototype.Fd=",
+      "source": "function(){var b=this._context.O.I;b.state.rg||0>=b.Fi.gd||b.dc.gd?(this._context.O.tc.ub.value=b.state.rg?b.ob.jk:b.dd,this.bS.vH()):a.prototype.Fd.call(this)}",
+      "SHA256": "8a805e310cbce1359785207c7b34153ffb89af1285013a743710de4756df4fd8"
+    },
+    "namespaceContext": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "FreeCh": {
+        "recordReused": {
+          "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+          "byteWindowStart": 1193750,
+          "windowBytes": 600,
+          "marker": "c.prototype.Fd=",
+          "source": "function(){var b=this._context.O.I;b.state.rg||0>=b.Fi.gd||b.dc.gd?(this._context.O.tc.ub.value=b.state.rg?b.ob.jk:b.dd,this.bS.vH()):a.prototype.Fd.call(this)}",
+          "SHA256": "8a805e310cbce1359785207c7b34153ffb89af1285013a743710de4756df4fd8"
+        },
+        "owner": "Y.Ic.Hc.Ch",
+        "context": "function(a){var f=function(a){function c(){return null!==a&&a.apply(this,arguments)||this}A(c,a);c.prototype.Fd=function(){var b=this._context.O.I;b.state.rg||0>=b.Fi.gd||b.dc.gd?(this._context.O.tc.ub.value=b.state.rg?b.ob.jk:b.dd,this.bS.vH()):a.prototype.Fd.call(this)};return c=z([F.ha.ig(F.$.ha.Ch)],c)}(F.$.Hb.GJ);a.Ch=f})(a.Hc||(a.Hc={}))})(a.Ic||(a.Ic={}))})(Y||(Y={}));\n(function(a){(function(g){var k=function(f){function e(){var a=null!==f",
+        "correctUwa": "F.$.ha.Ch,ce[$d.Ic.ha.wE]=F.$.ha.Ch,ce)};be.Uwa={SH:null,Qx:[F.$.Hb.MJ,$d.Ic.Pv,$d.Ic.Hc.Sf,$d.Ic.Hc.Ve,$d.Ic.Hc.Ch,F.$.Hb.RZ],z8:(de={},de[F.$.ha.Ve]=F.$.ha.Ch,de[F.$.ha.zn]=F.$.ha.Ch,de)};\nbe.owa={SH:null,Qx:[F.$.Hb.MJ,F.$.Hb.C_,$d.Ic.Xa."
+      },
+      "DLMachine": "owa -> Y.Ic.Xa.Ch; previous parent receipt5061 retained",
+      "sameSourceMaxMetadata": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/dropandlockdeepseamagic/js/metadatabundle.js",
+        "retainedLoaderSHA256": "858e59e833ac9474274587723e35d7b34e9271a564bdf5364f0183e84302277d",
+        "newWholeHash": false
+      },
+      "scopeCorrection": {
+        "old3852c1": "Wrong-mode diagnostic only, no DL qualification",
+        "oldV1384Group2": "Executes adjacent base currentNormalCaller LT; not own root LT qualification. Old8 bytes retained; 7 other scopes preserved, no reruns."
+      }
+    },
+    "clear": {
+      "ac": {
+        "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+        "byteWindowStart": 255160,
+        "windowBytes": 430,
+        "marker": "a.clear=",
+        "owner": "F.$.Aa.Me.clear",
+        "namespaceAndInheritanceContext": "a.Me||(a.Me={})",
+        "source": "function(a){a.mp=!1;a.tk=null;a.gd=null;a.winAmount=null;a.mx=null}",
+        "SHA256": "cc1b990991bb0b1a566c1010bce0a36d35ed6d2104850f6cb944920b25877891"
+      },
+      "Fi": {
+        "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+        "byteWindowStart": 1260680,
+        "windowBytes": 550,
+        "marker": "a.clear=",
+        "owner": "Y.Aa.rQ.clear",
+        "namespaceAndInheritanceContext": "a.rQ||(a.rQ={})",
+        "source": "function(a){for(var e=[a.op,a.iY],c=0;c<e.length;++c)null==e[c]?e[c]=new F.Bc(0):e[c].value=0;a.op=e[0];a.iY=e[1];a.Hi=0;a.lp=!1;a.gd=0}",
+        "SHA256": "0dc0d8852cd06779c582e9e5881f8bec551d81cc667457dc425f1a54769c3679"
+      },
+      "dc": {
+        "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+        "byteWindowStart": 1260460,
+        "windowBytes": 450,
+        "marker": "a.clear=",
+        "owner": "Y.Aa.Xa.clear",
+        "namespaceAndInheritanceContext": "a.Xa||(a.Xa={})",
+        "source": "function(a){a.hx=0;a.Mq=[];a.aX=[];a.aH=[];a.rg=!1;a.gd=0;a.hE?a.hE.value=0:a.hE=new F.Bc(0);a.CY=0;a.Dl=null;a.lp=!1}",
+        "SHA256": "f58d377b1ad6ee1fba19affdb91e48db21cf4bf793479c569f21448d4f847e24"
+      }
+    },
+    "ownPvEntryLatch": {
+      "file": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\winB-first-src-v6\\own-32765-pinned-app.js",
+      "byteWindowStart": 1106810,
+      "windowBytes": 2750,
+      "marker": "c.prototype.Fd=",
+      "owner": "F.$.Hb.vza (own Pv inherited entry)",
+      "namespaceAndInheritanceContext": "k.vza=f",
+      "source": "function(){return h(this,void 0,void 0,function(){return m(this,function(a){switch(a.label){case 0:return this._context.O.tc.Rq.value===g.rf.Np&&(this._context.O.tc.ub.value=0),this._context.features=[],this._context.VW=!1,this._context.O.bx.boa&&this._context.O.bx.eIa(),this.Kr=this._context.O.Kc.oI(this.xl),[4,this.SI()];case 1:return a.P(),e.prototype.Fd.call(this),\n[2]}})})}",
+      "SHA256": "06730a007242fe990f8fd2304bb9fb38406c19cda4887b1607be26f08b915fa3"
+    },
+    "sourceEffectContract": "sourceEffects describe source local writes only. Original native context/model is not mutated. Original owner applies lifecycle effects at its original phase seam; next actual Pv entry uses source reset VW=false. No event/callback/actor completion is produced."
+  }
+}

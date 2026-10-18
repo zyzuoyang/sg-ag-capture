@@ -1078,7 +1078,8 @@ games:
       betRaw: 200
       runtimeSlug: dropandlockdeepseamagic
       runtimeGameId: 32987
-      healthyComponentsContract: deep-sea-own-line-free-components-v1
+      own32765ProtocolDATA:
+        contract: own32765-original-DL-parent-private-v1
   - provider: sg
     gameId: '32777'
     name: Jin Ji Bao Xi Megaways
