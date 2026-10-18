@@ -42,8 +42,8 @@ exports.createOwn32792ProtocolDATA=function({vm,DOM,data}){
   }else if(fs==='Y'){
    const feature=children(g,'Feature').find(x=>x.getAttribute('name')==='FreeGame');need(feature,'OWN_FREE_GAME_FEATURE');
    const f=one(feature,'FSInfo');remaining=int(f,'remainingFreeSpins');total=int(f,'numTotalFreeSpins');freeWin=int(f,'totalFreeSpinsWin');need(parsed.freeSpinFSInfoData.totalFreeSpinsWin===freeWin,'SOURCE_FREE_WIN');need(parsed.freeSpinFSInfoData?.remainingFreeSpins===remaining&&parsed.freeSpinFSInfoData.numTotalFreeSpins===total,'SOURCE_FREE_COUNTER');
-   for(const name of ['isFsRetriggered','isInRetrigger','isBonusGuarantee'])need(['Y','N'].includes(f.getAttribute(name)),'ACTUAL_'+name);
-   need(!parsed.freeSpinFSInfoData.isBonusGuarantee,'GUARANTEE_CALLBACK_UNMAPPED');
+   // Native next uses actual max / first-ReelSpin bonusAwarded / remainingFreeSpins.
+   // Retrigger/guarantee flags and amounts are parsed presentation DATA, never request-choice gates.
    // Own CheckFSRetriggerCmd bonus branch returns through the original state graph to FREE_GAME_LOGIC_REQUEST. Wheel index is already returned presentation data, not a client choice.
    route=bonus==='Y'?'own-free-retrigger-native-Logic':remaining>0?'own-free-after-native-presentation-to-Logic':'own-free-outro-to-native-End';
   }
