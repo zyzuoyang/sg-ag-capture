@@ -20,7 +20,7 @@ exports.createOwn32767OriginalFlow=function({DOM,vm,data,game,createProtocol,nee
    if(mapped.sourceRoute==='own-ordinary-post-win-End'||mapped.sourceRoute==='own-free-outro-to-native-End')event='EndGame';
    else if(mapped.sourceRoute==='own-free-intro-to-native-Logic'||mapped.sourceRoute==='own-free-after-native-presentation-to-Logic')event='Logic';
    else need(false,'unmapped actual own source route');
-   if(mapped.sourceRemaining!==undefined){need(Number.isSafeInteger(freeTotal)&&freeTotal>=mapped.sourceRemaining,'own explicit intro total retained');const played=freeTotal-mapped.sourceRemaining;need(!current||played>current.freeSpinsPlayed,'advancing original free counters');free=Object.freeze({freeSpinsTotal:freeTotal,freeSpinsPlayed:played,freeSpinsRemaining:mapped.sourceRemaining,accumulativeWin:mapped.sourceFreeWin/100});current=free}
+   if(mapped.sourceRemaining!==undefined){free=Object.freeze({freeSpinsRemaining:mapped.sourceRemaining,accumulativeWin:mapped.sourceFreeWin/100});current=free}
    return Object.freeze({event,action:event==='Logic'?'FREE_SPIN':'PLAY',sourceCumulativeWin:mapped.sourceCumulativeWin,...(free?{free}:{}),sourceRoute:mapped.sourceRoute});
   },
   acceptedEnd(){current=null;stage='base';freeTotal=null}
