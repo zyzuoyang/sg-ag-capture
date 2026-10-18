@@ -18,9 +18,9 @@ exports.createOwn32792OriginalFlow=function({DOM,vm,data,game,createProtocol,nee
    const mapped=protocol.inspect({sessionScope:scope,source,frame});let event,free;
    if(mapped.sourceRoute==='own-free-intro-to-native-Logic'){need(stage==='base','one own source free intro');stage='free'}else if(mapped.sourceRoute.includes('own-free-'))need(stage==='free','own current free parent');
    if(mapped.sourceRoute==='own-ordinary-post-win-End'||mapped.sourceRoute==='own-free-outro-to-native-End')event='EndGame';
-   else if(mapped.sourceRoute==='own-free-intro-to-native-Logic'||mapped.sourceRoute==='own-free-after-native-presentation-to-Logic')event='Logic';
+   else if(mapped.sourceRoute==='own-free-intro-to-native-Logic'||mapped.sourceRoute==='own-free-after-native-presentation-to-Logic'||mapped.sourceRoute==='own-free-retrigger-native-Logic')event='Logic';
    else need(false,'unmapped actual own source route');
-   if(mapped.sourceRemaining!==undefined){const played=mapped.sourceTotal-mapped.sourceRemaining;need(!current||played>current.freeSpinsPlayed&&mapped.sourceTotal>=current.freeSpinsTotal,'advancing original free counters');free=Object.freeze({freeSpinsTotal:mapped.sourceTotal,freeSpinsPlayed:played,freeSpinsRemaining:mapped.sourceRemaining,accumulativeWin:mapped.sourceFreeWin/100});current=free}
+   if(mapped.sourceRemaining!==undefined){const played=mapped.sourceTotal-mapped.sourceRemaining;free=Object.freeze({freeSpinsTotal:mapped.sourceTotal,freeSpinsPlayed:played,freeSpinsRemaining:mapped.sourceRemaining,accumulativeWin:mapped.sourceFreeWin/100});current=free}
    return Object.freeze({event,action:event==='Logic'?'FREE_SPIN':'PLAY',sourceCumulativeWin:mapped.sourceCumulativeWin,...(free?{free}:{}),sourceRoute:mapped.sourceRoute});
   },
   acceptedEnd(){current=null;stage='base'}

@@ -41,9 +41,11 @@ exports.createOwn32792ProtocolDATA=function({vm,DOM,data}){
    route='own-free-intro-to-native-Logic';
   }else if(fs==='Y'){
    const feature=children(g,'Feature').find(x=>x.getAttribute('name')==='FreeGame');need(feature,'OWN_FREE_GAME_FEATURE');
-   const f=one(feature,'FSInfo');remaining=int(f,'remainingFreeSpins');total=int(f,'numTotalFreeSpins');freeWin=int(f,'totalFreeSpinsWin');need(parsed.freeSpinFSInfoData.totalFreeSpinsWin===freeWin,'SOURCE_FREE_WIN');need(total>=remaining&&parsed.freeSpinFSInfoData?.remainingFreeSpins===remaining&&parsed.freeSpinFSInfoData.numTotalFreeSpins===total,'SOURCE_FREE_COUNTER');
-   need(bonus==='N'&&!parsed.freeSpinFSInfoData.isFsRetriggered&&!parsed.freeSpinFSInfoData.isInRetrigger&&!parsed.freeSpinFSInfoData.isBonusGuarantee,'RETRIGGER_OR_GUARANTEE_CALLBACK_UNMAPPED');
-   route=remaining>0?'own-free-after-native-presentation-to-Logic':'own-free-outro-to-native-End';
+   const f=one(feature,'FSInfo');remaining=int(f,'remainingFreeSpins');total=int(f,'numTotalFreeSpins');freeWin=int(f,'totalFreeSpinsWin');need(parsed.freeSpinFSInfoData.totalFreeSpinsWin===freeWin,'SOURCE_FREE_WIN');need(parsed.freeSpinFSInfoData?.remainingFreeSpins===remaining&&parsed.freeSpinFSInfoData.numTotalFreeSpins===total,'SOURCE_FREE_COUNTER');
+   for(const name of ['isFsRetriggered','isInRetrigger','isBonusGuarantee'])need(['Y','N'].includes(f.getAttribute(name)),'ACTUAL_'+name);
+   need(!parsed.freeSpinFSInfoData.isBonusGuarantee,'GUARANTEE_CALLBACK_UNMAPPED');
+   // Own CheckFSRetriggerCmd bonus branch returns through the original state graph to FREE_GAME_LOGIC_REQUEST. Wheel index is already returned presentation data, not a client choice.
+   route=bonus==='Y'?'own-free-retrigger-native-Logic':remaining>0?'own-free-after-native-presentation-to-Logic':'own-free-outro-to-native-End';
   }
   return Object.freeze({sourceCumulativeWin:win,sourceWager:wager,sourceRoute:route,sourceRemaining:remaining,sourceTotal:total,sourceFreeWin:freeWin,sourceSessionID:h.getAttribute('sessionID'),nativePresentationBarriersNotExecuted:true,noSyntheticUIEvents:true,protocolRequestNotIssued:true,newProviderACK:false});
  }});
