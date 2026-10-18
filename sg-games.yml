@@ -17422,3 +17422,45 @@ games:
     backendId: "reignofthemountainking"
     rtpBuckets: [0,30,100,300,500,1000,1001,2001,2500,5000,5001,10000,10001]
     sg: {"protocol":"gdm","runtimeGameId":33076,"runtimeSlug":"reignofthemountainking","endpoint":"https://ogs-gdm-usnj.nyxop.net/nextgen/","betRaw":50,"requestParams":{"GN":"reignofthemountainking","BPL":"5","AP":"false","LB":"10"},"ownGDMContract":{"betRaw":50,"balanceScale":1,"winScale":1,"ownSDKFileSHA256":"50127dd8b4163d9a950ecd04d69608b216807e98fdbd7d5d59ce688af3a3a9b3"},"ownMountain32626ProtocolDATA":{"version":"own32626-original-request-NFG-next-DATA-v1","cachedCoreTableSHA256":"50127dd8b4163d9a950ecd04d69608b216807e98fdbd7d5d59ce688af3a3a9b3","maxCapAcknowledgement":"hold-unmapped","noUIOrAudio":true}}
+  - provider: sg
+    gameId: '32789'
+    name: Lucky Tree
+    dbName: sg_lucky_tree
+    backendId: luckytree
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: wms
+      runtimeGameId: 33149
+      runtimeSlug: luckytree
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: luckytree
+        gameID: '20106'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      betRaw: 300
+      stake:
+        total: '300'
+      own32789ProtocolDATA:
+        contract: own32789-original-SG-protocol-private-v1
