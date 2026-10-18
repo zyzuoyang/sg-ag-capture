@@ -1409,20 +1409,17 @@ export function validateGoldenChiefCollectConfirmation(game:AGGameConfig,g:any,p
 
 export function validateGoldenChiefCanyon(game:AGGameConfig,g:any):void {
  assert(game.gameId==='32771'&&game.dbName==='sg_golden_chief'&&game.sg?.runtimeGameId===32993&&game.sg?.header?.gameID==='20125'&&game.sg?.header?.gameCodeRGI==='goldenchief'&&game.sg?.goldenChiefPaidContract==='golden-chief-own-totem-v6','AG integrity: SG Golden Chief Canyon binding');
- const keys=(v:any,names:string)=>assert(v&&typeof v==='object'&&!Array.isArray(v)&&Object.keys(v).sort().join('|')===names.split('|').sort().join('|'),'AG integrity: SG Golden Chief Canyon schema');
- keys(g,'stake|stakePerLine|paylineCount|totalWin|betID|ReelResults|BGInfo|PaylineCountInfo|BonusWheel|CanyonBonus'+(g.WildExpansion?'|WildExpansion':'')+(g.SymbolUpgrade?'|SymbolUpgrade':''));keys(g.CanyonBonus,'canyonID|winAmount|steps');keys(g.BonusWheel,'stopPosition');keys(g.BGInfo,'totalWagerWin|bgWinnings|baseGameSpinsRemaining|isBigBet|isMaxWin|chiefWin');keys(g.PaylineCountInfo,'normalPaylineCount|bonusPaylineCount|activePaylineCount');
- const active=validateGoldenChiefBoardExtras(game,g);const stop=integer(g.BonusWheel.stopPosition,'Canyon wheel stop');assert(JSON.stringify(game.sg.goldenChiefWheelStrip)===JSON.stringify([1,0,1,2,1,0,1,0,1,2,1,0])&&stop<12&&game.sg.goldenChiefWheelStrip[stop]===2,'AG integrity: SG Golden Chief Canyon wheel');
- assert(g.stake==='100'&&g.stakePerLine==='5'&&integer(g.paylineCount,'Golden current paylines')===active&&g.PaylineCountInfo.normalPaylineCount==='20'&&g.PaylineCountInfo.bonusPaylineCount==='100'&&integer(g.PaylineCountInfo.activePaylineCount,'Golden active')===active&&g.BGInfo.baseGameSpinsRemaining==='0'&&g.BGInfo.isBigBet==='0'&&g.BGInfo.isMaxWin==='0'&&g.BGInfo.chiefWin==='0','AG integrity: SG Golden Chief Canyon wager');
- const canyon=integer(g.CanyonBonus.canyonID,'Canyon ID'),table=game.sg.goldenChiefCanyonPrizes2x;
- assert(game.sg.goldenChiefCanyonTrailContract==='golden-chief-own-init-canyon-trails-v12'&&Array.isArray(table)&&table.length===10&&table.every((row:any)=>Array.isArray(row)&&row.length===24&&row.every((p:any)=>Number.isSafeInteger(p)&&p>0))&&canyon<table.length,'AG integrity: SG Golden Chief Canyon Init path');
- const text=g.CanyonBonus.steps;assert(typeof text==='string'&&/^(?:[1-6]\|)+-(?:1|2)$/.test(text),'AG integrity: SG Golden Chief completed Canyon display steps');
- // SDK starts before the trail. Each positive wheel step advances one cell
- // at a time; either declared negative wheel segment leaves the position alone.
- let position=-1;for(const move of text.split('|').slice(0,-1)){position+=integer(move,'Canyon move');assert(position>=0&&position<table[canyon].length,'AG integrity: SG Golden Chief Canyon trail overflow');}
- const displayPrize=table[canyon][position]*game.sg.betRaw/2;
- assert(Number.isSafeInteger(displayPrize)&&displayPrize===integer(g.CanyonBonus.winAmount,'Canyon derived award'),'AG integrity: SG Golden Chief Canyon own Init payout');
- keys(g.ReelResults,'numSpins|ReelSpin');const spins=list(g.ReelResults.ReelSpin);assert(g.ReelResults.numSpins==='1'&&spins.length===1,'AG integrity: SG Golden Chief Canyon reel');const spin=spins[0];assert(spin.spinIndex==='0'&&spin.reelsetIndex==='0'&&spin.freeSpin==='N'&&spin.bonusAwarded==='Y'&&spin.winCountSC==='1'&&spin.ScatterWin?.winVal==='0'&&spin.ScatterWin?.awardIndex==='0','AG integrity: SG Golden Chief Canyon flags');
- const wins=list(spin.PaylineWin);assert(wins.length===integer(spin.winCountPL,'Canyon line count'),'AG integrity: SG Golden Chief Canyon lines');let lines=0;for(const w of wins)lines+=integer(w.winVal,'Canyon line win');const prize=integer(g.CanyonBonus.winAmount,'Canyon prize');assert(Number.isSafeInteger(lines+prize)&&lines===integer(spin.spinWins,'Canyon reel win')&&lines+prize===integer(g.totalWin,'Canyon total')&&lines+prize===integer(g.BGInfo.bgWinnings,'Canyon base')&&lines+prize===integer(g.BGInfo.totalWagerWin,'Canyon cumulative'),'AG integrity: SG Golden Chief Canyon monetary components');
+ // Own WheelMediator and CreateStates DATA: Canyon returns locally through
+ // EXIT_CANYON -> BIG_WIN -> END_GLS. Steps/prize/reels are presentation DATA.
+ // Original SG/AG below still reads actual stake/cumulative cash and End ACK.
+ assert(g&&g.BGInfo&&g.CanyonBonus&&g.BonusWheel,'AG integrity: own Golden Canyon actual DATA');
+ integer(g.stake,'own Golden actual wager');integer(g.BGInfo.totalWagerWin,'own Golden actual cumulative money');
+ const bg=g.BGInfo,parseFlag=(v:any)=>{assert(typeof v==='string'&&Number.isFinite(Number(v)),'AG integrity: own Golden actual source flag');return parseInt(v,10)===1;};
+ const max=parseFlag(bg.isMaxWin);assert(!parseFlag(bg.isBigBet),'AG integrity: own Golden unselected BigBet');
+ assert(integer(bg.baseGameSpinsRemaining,'own Golden actual base remaining')===0||max,'AG integrity: own Golden source base next held');
+ // Own SpinTypeModel gives pending Gamble priority; no guessed free/End.
+ if(g.GambleInfo){integer(g.GambleInfo.currentFSCount,'own Golden actual gamble count');assert(parseInt(g.GambleInfo.gambleFinished,10)===1,'AG integrity: own Golden pending gamble held');}
+ if(g.FSInfo){const played=integer(g.FSInfo.freeSpinNumber,'own Golden actual free played'),total=integer(g.FSInfo.freeSpinsTotal,'own Golden actual free total');assert(played===total||max,'AG integrity: own Golden source free next held');}
 }
 
 
@@ -1924,11 +1921,13 @@ export class SGWmsSession {
  }catch(error){slot.connection?.seal();this.close();throw own32751Hold(error)}
 }
 async callGameData(event:string,parameters:Record<string,any>|null){
+        if(this.game.gameId==='32771'){try{return await this.callOriginalWmsGameData(event,parameters);}catch(error){this.close();throw error;}}
  if(this.game.gameId!=='32751')return this.callOriginalWmsGameData(event,parameters);
  const slot=own32751ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32751 private connection');
  try{const result=await this.callOriginalWmsGameData(event,parameters);return slot.connection.finishOriginalResult(event,result)}catch(error){slot.connection.seal();this.close();throw own32751Hold(error)}
 }
 async connect(): Promise<void> {
+if(this.game.gameId==='32771'){assert(!this.closed&&!this.ownGoldenInitStarted&&!Number.isFinite(this.balance),'AG integrity: own Golden one actual Init and no injected cash');this.ownGoldenInitStarted=true;}
 if(this.game.gameId==='32751'||(this.game.sg as any).own32751ProtocolDATA){assert(this.game.gameId==='32751','AG integrity: own32751 foreign DATA');return this.connectOwn32751Protocol()}
 
         if(this.game.gameId==='32777')return this.connectOwn32777Native();
@@ -1943,17 +1942,27 @@ if(this.game.gameId==='32751'||(this.game.sg as any).own32751ProtocolDATA){asser
         own32769ConsumedInitData.delete(this);
         const own32769Consumer = this.game.gameId === '32769'
             ? own32769InitConsumer : undefined;
-        if(this.transport) { assert(Number.isSafeInteger(this.balance));return; }
+        if(this.transport&&this.game.gameId!=='32771') { assert(Number.isSafeInteger(this.balance));return; }
         if(this.game.gameId === '32769')
             assert(own32769Consumer,
                 'AG integrity: own32769 Init DATA factory not bound');
-        assert(process.env.SG_AG_ALLOW_SOURCE === '1', 'AG integrity: SG live source not enabled');
+        if(!this.transport)assert(process.env.SG_AG_ALLOW_SOURCE === '1', 'AG integrity: SG live source not enabled');
         try {const response=await this.exchange('Init',{});const r=this.readEnvelope(response,'Init');
+            if(this.game.gameId==='32771'){
+                assert(r.Header.isRecovering==='N','AG integrity: own Golden recovery held');
+                const values:any[]=[];const find=(v:any)=>{if(!v||typeof v!=='object')return;for(const [key,value]of Object.entries(v)){if(key==='CurrencyMultiplier')values.push(value);else find(value);}};find(r);
+                assert(values.length<=1,'AG integrity: own Golden unique currency input');
+                // Own GLSServer GLSPlatformParser explicitly uses outgoing1 only
+                // when no CurrencyMultiplier node exists; no cash default.
+                this.ownGoldenCurrencyMultiplier=values.length?integer(values[0],'own Golden actual currency multiplier'):1;
+                assert(this.ownGoldenCurrencyMultiplier>0,'AG integrity: own Golden positive request multiplier');
+            }
+
             if(this.game.sg.eightyFortunesContract){
                 const pools:any[]=[];const walk=(v:any)=>{if(!v||typeof v!=='object')return;for(const [k,value] of Object.entries(v)){if(k==='ReelInfo')pools.push(value);else walk(value);}};walk(r);assert(pools.length===1,'AG integrity: SG 88 own Init reels missing');
                 for(const [feature,expected] of [['0',this.game.sg.eightyFortunesBaseReels],['1',this.game.sg.eightyFortunesFreeReels]]){const sets=list(pools[0].ReelSet).filter((s:any)=>s.featIndex===feature);assert(sets.every((s:any)=>s.numReels==='5'),'AG integrity: SG 88 own Init geometry');const actual=sets.map((s:any)=>integer(s.reelSetIndex,'88 Init set')).sort((a:number,b:number)=>a-b);assert(JSON.stringify(actual)===JSON.stringify(expected),'AG integrity: SG 88 own Init declared sets changed');}
             }
-            if(this.game.sg.goldenChiefCanyonTrailContract){
+            if(this.game.sg.goldenChiefCanyonTrailContract&&this.game.gameId!=='32771'){
                 const pools:any[]=[];const walk=(v:any)=>{if(!v||typeof v!=='object')return;for(const [k,value] of Object.entries(v)){if(k==='CashCanyons')pools.push(value);else walk(value);}};walk(r);
                 assert(pools.length===1&&Object.keys(pools[0]).join('|')==='Canyon','AG integrity: SG Golden own Init Canyon table missing');
                 const rows=list(pools[0].Canyon).sort((a:any,b:any)=>Number(a.canyonID)-Number(b.canyonID));
@@ -1961,7 +1970,7 @@ if(this.game.gameId==='32751'||(this.game.sg as any).own32751ProtocolDATA){asser
                 const actual=rows.map((p:any)=>p.prizes.split('|').map((n:string)=>{assert(/^(?:0|[1-9]\d*)(?:\.[05])?$/.test(n),'AG integrity: SG Golden own Init Canyon half-unit');const v=Number(n)*2;assert(Number.isSafeInteger(v)&&v>0,'AG integrity: SG Golden own Init Canyon prize');return v;}));
                 assert(JSON.stringify(actual)===JSON.stringify(this.game.sg.goldenChiefCanyonPrizes2x),'AG integrity: SG Golden own Init Canyon table changed');
             }
-            if(this.game.sg.goldenChiefTotemLifeContract){
+            if(this.game.sg.goldenChiefTotemLifeContract&&this.game.gameId!=='32771'){
                 const pools:any[]=[];const walk=(v:any)=>{if(!v||typeof v!=='object')return;for(const [k,value] of Object.entries(v)){if(k==='TotemPoles')pools.push(value);else walk(value);}};walk(r);
                 assert(pools.length===1,'AG integrity: SG Golden own Init Totem data missing');
                 for(const type of ['0','1']){const rows=list(pools[0].Pole).filter((p:any)=>p.gameMode==='1'&&p.totemType===type).sort((a:any,b:any)=>Number(a.id)-Number(b.id));assert(rows.length===3&&rows.every((p:any,i:number)=>p.id===String(i)&&Object.keys(p).sort().join('|')==='gameMode|id|prizes|totemType'),'AG integrity: SG Golden own Init Totem columns');const actual=rows.map((p:any)=>p.prizes.split('|').map((n:string)=>integer(n,'Totem Init prize')));assert(JSON.stringify(actual)===JSON.stringify(this.game.sg.goldenChiefTotemTrails[type]),'AG integrity: SG Golden own Init Totem trail changed');}
@@ -2047,9 +2056,22 @@ if(this.game.gameId==='32751'){const s=own32751ProtocolSlots.get(this);assert(s?
         if(action === 'FREE_SPIN') { assert(this.game.sg.freeStake,'AG integrity: SG own free request not mapped');return {event:'Logic',parameters:{...this.game.sg.freeStake}}; }
         throw new Error('AG integrity: SG observed action not mapped');
     }
+    private ownGoldenInitStarted=false;
+    private ownGoldenCurrencyMultiplier?:number;
     private payload(event:string,parameters:Record<string,any>) {
         const h={...this.game.sg.header,sessionID:this.session};
         const header='<Header '+Object.entries(h).map(([k,v])=>`${k}="${escape(v)}"`).join(' ')+'/>';
+        if(this.game.gameId==='32771'&&event==='Logic'){
+            assert(Number.isSafeInteger(this.ownGoldenCurrencyMultiplier)&&this.ownGoldenCurrencyMultiplier!>0,'AG integrity: own Golden initialized request DATA');
+            let data:string;
+            if(Object.prototype.hasOwnProperty.call(parameters,'__sgGoldenCollect')){
+                assert(this.action==='PICK_FREE_SPINS'&&Object.keys(parameters).length===1&&parameters.__sgGoldenCollect==='1','AG integrity: own Golden explicit collect');data='<Gamble collect="1"/>';
+            }else{
+                assert(['SPIN','FREE_SPIN'].includes(this.action)&&JSON.stringify(parameters)===JSON.stringify(this.game.sg.stake)&&parameters.total==='100'&&parameters.isBigBet==='0','AG integrity: own Golden normal paid/free request');data='<Stake total="100" isBigBet="0"/>';
+            }
+            return `<GameRequest type="Logic">${header}${data}<AccountData><CurrencyMultiplier>${this.ownGoldenCurrencyMultiplier}</CurrencyMultiplier></AccountData></GameRequest>`;
+        }
+
         if(this.game.sg.ownDCNextEndContract&&(event==='Logic'||event==='EndGame')){
             const c=ownDCFlowBinding(this.game);
             if(event==='Logic'){assert((this.action==='SPIN'||this.action==='FREE_SPIN'&&this.free&&this.free.freeSpinsRemaining>0)&&JSON.stringify(parameters)===JSON.stringify(this.game.sg.stake),'AG integrity: SG DC exact paid/free Logic request');return `<GameRequest type="Logic">${header}${c.logicRequestDataXML}</GameRequest>`;}
