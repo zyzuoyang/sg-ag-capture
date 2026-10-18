@@ -1,0 +1,167 @@
+{
+  "schema": "own32767-original-SG-protocol-DATA-v1",
+  "protocol": {
+    "schema": "own32767-selected-original-protocol-DATA-v1",
+    "gameId": "32767",
+    "dbName": "sg_fire_queen",
+    "runtimeGameId": 32989,
+    "nativeGameID": "20192",
+    "leaves": {
+      "init": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/app/js/main.js",
+        "byteWindowStart": 269650,
+        "startWithinWindow": 59,
+        "source": "function () {\n            _super.prototype.execute.call(this);\n            var encoders = [];\n            if (this._history.getIsHistoryReplay() && !this._server.getInitResponse()) {\n                encoders.push(new sgigame.HistoryReplayEncoder(this._history.getNextState()));\n                this._history.restart();\n            }\n            var initData = new server.GLSRequest([]);\n            this._server.makeInitRequest(initData);\n        }",
+        "SHA256": "5c29d0635782ec64b649fb644cc0f9217c0272bfb452e412c51ba4fd84d573a0",
+        "marker": "MakeInitRequestCmd.prototype.execute"
+      },
+      "logic": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/app/js/main.js",
+        "byteWindowStart": 270760,
+        "startWithinWindow": 55,
+        "source": "function () {\n            _super.prototype.execute.call(this);\n            var stateName = this._statesModel.getCurrentState().stateName;\n            if ((stateName == sgigame.BaseGameStates.LOGIC_GLS_STATE) && !this._forceModel.forceOpen) {\n                var history = this._history.getNextState();\n                var encoders = [\n                    this.getStakeEncode(),\n                    new server.GLSCurrencyEncoder(this._server.getInitResponse().platformData.currencyMultiplier),\n                ];\n                if (history) {\n                    encoders.push(new sgigame.HistoryReplayEncoder(history));\n                }\n                if (this._forceModel.forceSet) {\n                    var forceEncoder = new sgigame.ForceEncoder(this._forceModel.reelData ? this._forceModel.reelData.positions : [0, 0, 0, 0, 0], this._forceModel.reelData ? this._forceModel.reelData.index : 0);\n                    encoders.push(forceEncoder);\n                }\n                this._forceModel.forceSet = false;\n                var data = new server.GLSRequest(encoders);\n                this._server.makeLogicRequest(data);\n            }\n            else if (this._statesModel.getCurrentState().stateName == sgigame.PreGameStates.RECOVERY_STATE) {\n                var encoders = [\n                    this.getStakeEncode(),\n                    new server.GLSCurrencyEncoder(this._server.getInitResponse().platformData.currencyMultiplier),\n                ];\n                var data = new server.GLSRequest(encoders);\n                this._server.makeLogicRequest(data);\n            }\n        }",
+        "SHA256": "d36a9ee0335b46cc410d0d3f0841ac7aaa4b73470a3fe10ef38b07fa00827984",
+        "marker": "MakeLogicRequestCmd.prototype.execute"
+      },
+      "end": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/app/js/main.js",
+        "byteWindowStart": 266410,
+        "startWithinWindow": 61,
+        "source": "function () {\n            _super.prototype.execute.call(this);\n            this._recoveryModel.isRecovering = false;\n            this._partnerAdapter.finishedPlay();\n            this._partnerAdapter.finishedPostGameAnimations();\n            if (!this._history.getIsHistoryReplay()) {\n                this._server.makeEndRequest(new server.GLSRequest([]));\n            }\n        }",
+        "SHA256": "0ed88f9a3b98ce6dc51aece07cf8db32e63a70fc8d5f0308b37c6394779025f4",
+        "marker": "MakeEndRequestCmd.prototype.execute"
+      },
+      "stakeXML": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/app/js/main.js",
+        "byteWindowStart": 290180,
+        "startWithinWindow": 63,
+        "source": "function () {\n            var xmlStr = \"<WagerInfo\";\n            xmlStr += \" totalStake=\\\"\" + this._totalStake.toString() + \"\\\"/>\";\n            return xmlStr;\n        }",
+        "SHA256": "c420b8d603e4639d594c58f776fc0f518ad551d39af24af711237d51261c096d",
+        "marker": "StakeEncoder.prototype.parse"
+      },
+      "money": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/app/js/main.js",
+        "byteWindowStart": 225650,
+        "startWithinWindow": 175,
+        "source": "function (input, object) {\n            var data = new sgigame.GameWinData();\n            var node = input.getElementsByTagName(\"GameWinInfo\")[0];\n            if (node != null) {\n                var attributes = node.attributes;\n                var nodeChildren = node.childNodes;\n                data.totalWagerWin = parseInt(attributes.getNamedItem(\"totalWagerWin\").value);\n                data.totalBGWin = parseInt(attributes.getNamedItem(\"totalBGWin\").value);\n                data.totalFSWin = parseInt(attributes.getNamedItem(\"totalFSWin\").value);\n                data.maxWin = parseInt(attributes.getNamedItem(\"maxWinValue\").value);\n                data.isMaxWin = attributes.getNamedItem(\"isMaxWin\").value === \"Y\";\n            }\n            object.gameWinData = data;\n        }",
+        "SHA256": "ae28fd60420a0e30dd16f98bc64a032126731ed7737fbf8a1e0bed9ada1a4bba",
+        "marker": "GameWinParser.prototype.parse"
+      },
+      "free": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/app/js/main.js",
+        "byteWindowStart": 308050,
+        "startWithinWindow": 59,
+        "source": "function (input, object) {\n            var data;\n            var node = input.getElementsByTagName(\"Feature\")[0];\n            //  var node1: Node = input.getElementsByTagName(\"GameResult\")[0];\n            if (node != null) {\n                var attributes = node.attributes;\n                if (attributes.getNamedItem(\"name\")) {\n                    data = new sgigame.FsData();\n                    var dataNode = node.childNodes[0];\n                    var dataAttr = dataNode.attributes;\n                    if (dataAttr.getNamedItem(\"fsReTriggered\")) {\n                        data.firstSpin = false;\n                        data.expandedWildReel = [];\n                        data.totalFreeSpinsWin = parseInt(dataAttr.getNamedItem(\"totalFSTriggered\").value);\n                        data.remainingFreeSpins = parseInt(dataAttr.getNamedItem(\"remainingFS\").value);\n                        data.freeSpinType = attributes.getNamedItem(\"name\").value;\n                        if (data.freeSpinType != sgigame.GameConfig.fgType[0]) {\n                            data.matchFourSymbols = [];\n                            var matchFourSymbols = dataAttr.getNamedItem(\"matchFourSymbols\").value.split(\",\");\n                            for (var i = 0; i < matchFourSymbols.length; i++) {\n                                var mat = matchFourSymbols[i].split('|').map(Number);\n                                var matSymbol = { reelId: mat[0], symbolId: mat[1] };\n                                data.matchFourSymbols.push(matSymbol);\n                            }\n                        }\n                        data.freeSpinsReTriggered = parseInt(dataAttr.getNamedItem(\"fsReTriggered\").value);\n                        data.lastSpin = (dataAttr.getNamedItem(\"lastFreeSpin\").value === \"Y\");\n                        var baseRecovery = input.getElementsByTagName(\"BaseGameRecoveryInfo\")[0];\n                        data.bgReelStops = baseRecovery.getElementsByTagName(\"ReelStops\")[0].textContent.split(\"|\").map(Number);\n                    }\n                    else {\n                        data.firstSpin = true;\n                        data.freeSpinType = attributes.getNamedItem(\"name\").value;\n                        data.remainingFreeSpins = parseInt(dataAttr.getNamedItem(\"totalFSTriggered\").value);\n                        data.totalFreeSpinsAwarded = parseInt(dataAttr.getNamedItem(\"totalFSTriggered\").value);\n                        data.freeSpinsReTriggered = 0;\n                        data.lastSpin = false;\n                        if (data.freeSpinType != sgigame.GameConfig.fgType[0]) {\n                            data.matchFourSymbols = [];\n                            var matchFourSymbols = dataAttr.getNamedItem(\"matchFourSymbols\").value.split(\",\");\n                            for (var i = 0; i < matchFourSymbols.length; i++) {\n                                var mat = matchFourSymbols[i].split('|').map(Number);\n                                var matSymbol = { reelId: mat[0], symbolId: mat[1] };\n                                data.matchFourSymbols.push(matSymbol);\n                            }\n                        }\n                    }\n                }\n            }\n            object.fsData = data;\n            this.parseRecoveryFsData(input, object);\n        }",
+        "SHA256": "080eacb9ea02d5c6af34fea8127e74f781bab90962f6553a088232c020d314b8",
+        "marker": "FreespinParser.prototype.parse"
+      },
+      "freeRecovery": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/app/js/main.js",
+        "byteWindowStart": 311380,
+        "startWithinWindow": 73,
+        "source": "function (input, object) {\n            var data;\n            var node = input.getElementsByTagName(\"BaseGameRecoveryInfo\")[0];\n            if (node != null) {\n                var attributes = node.attributes;\n                var nodeChildren = node.childNodes;\n                var featureNode;\n                for (var i = 0; i < nodeChildren.length; ++i) {\n                    if (nodeChildren[i].nodeName == \"Feature\") {\n                        featureNode = nodeChildren[i];\n                        break;\n                    }\n                }\n                if (featureNode) {\n                    attributes = featureNode.attributes;\n                    if (attributes.getNamedItem(\"name\") || attributes.getNamedItem(\"name\").value.toLowerCase() === \"freegame\") {\n                        data = new sgigame.FsData();\n                        var dataNode = featureNode.childNodes[0];\n                        var dataAttr = dataNode.attributes;\n                        data.firstSpin = true;\n                        data.freeSpinType = attributes.getNamedItem(\"name\").value;\n                        data.remainingFreeSpins = parseInt(dataAttr.getNamedItem(\"totalFSTriggered\").value);\n                        data.totalFreeSpinsAwarded = parseInt(dataAttr.getNamedItem(\"totalFSTriggered\").value);\n                        data.freeSpinsReTriggered = 0;\n                        data.lastSpin = false;\n                    }\n                }\n            }\n            object.recoveryFsData = data;\n        }",
+        "SHA256": "28b2584b128c4cb0892ce7ac04b9a650714a9e0ab649238140f0f034eaadd332",
+        "marker": "FreespinParser.prototype.parseRecoveryFsData"
+      },
+      "next": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/app/js/main.js",
+        "byteWindowStart": 136410,
+        "startWithinWindow": 50,
+        "source": "function () {\n            var _this = this;\n            _super.prototype.execute.call(this);\n            var logicResponse = this._server.getLogicResponse();\n            if (this.isFreeGame()) {\n                if (!this.isLastFreeGame())\n                    this._statesModel.gotoNextState();\n                else if (logicResponse.gameWinData.totalFSWin == 0) {\n                    this._statesModel.changeStateByName(sgigame.BaseGameStates.CONTINUE_PAYLINE_WINS_STATE);\n                    this.eventDispatcher.dispatchEvent(new sgigame.GameEvent(sgigame.GameEvent.EXIT_FREESPINS));\n                    this._audio.StopBonusLoopSound();\n                }\n                else {\n                    TweenMax.delayedCall(1.5, function () {\n                        _this._statesModel.changeStateByName(sgigame.BaseGameStates.FREESPIN_OUTRO_STATE);\n                    }, [], this);\n                }\n            }\n            else {\n                this._statesModel.changeStateByName(sgigame.BaseGameStates.END_GLS_STATE);\n            }\n        }",
+        "SHA256": "a1277646580dfa9063e0c1ab0e0e9c5ad9dedf8efde2f0978b8d8d88aad30f46",
+        "marker": "CheckEndCmd.prototype.execute"
+      },
+      "stakeGetter": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/app/js/main.js",
+        "byteWindowStart": 272200,
+        "startWithinWindow": 274,
+        "source": "function () {\n            return new sgigame.StakeEncoder(this._stakesModel.getTotalBet());\n        }",
+        "SHA256": "61b7c48dd9c94be7e3e0c51d8e18efe5f452e66747e853aa93ca0c3667d4d417",
+        "marker": "MakeLogicRequestCmd.prototype.getStakeEncode"
+      },
+      "last": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/app/js/main.js",
+        "byteWindowStart": 137350,
+        "startWithinWindow": 206,
+        "source": "function () {\n            var logicResponse = this._server.getLogicResponse();\n            if (logicResponse.fsData !== undefined) {\n                if (logicResponse.fsData.lastSpin) {\n                    return true;\n                }\n            }\n            return false;\n        }",
+        "SHA256": "6c6ea3f387e30cfa51d37f6944b63fe8cd7f58641a8e6dc67c12c679a95670b3",
+        "marker": "CheckEndCmd.prototype.isLastFreeGame"
+      },
+      "isFree": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/app/js/main.js",
+        "byteWindowStart": 137350,
+        "startWithinWindow": 537,
+        "source": "function () {\n            var logicResponse = this._server.getLogicResponse();\n            if (logicResponse.fsData !== undefined) {\n                return true;\n            }\n            return false;\n        }",
+        "SHA256": "0840c16645d39a797cfcd48f1ba972b3da75a251fcd1e8b60f34f2356fcb5084",
+        "marker": "CheckEndCmd.prototype.isFreeGame"
+      }
+    },
+    "currencyXML": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/lib/game_libs.js",
+      "byteWindowStart": 483650,
+      "startWithinWindow": 66,
+      "source": "function () {\n            var xmlStr = \"<AccountData><CurrencyMultiplier>\";\n            xmlStr += this._currencyMultiplier.toString();\n            xmlStr += \"</CurrencyMultiplier></AccountData>\";\n            return xmlStr;\n        }",
+      "SHA256": "ed266a1e9596d5ae8b097511f3e701759c6059c0206f564db9481d8e19e5c332",
+      "marker": "GLSCurrencyEncoder.prototype.parse"
+    },
+    "wholeSDKReadsOrHashes": 0
+  },
+  "wire": {
+    "headerConstructor": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/lib/game_libs.js",
+      "byteWindowStart": 477800,
+      "startWithinWindow": 30,
+      "source": "function GLSHeader(metadata, sessionData, glsServerSessionId, gameId, gameVersion) {\n            /**\n             * ID of casinarena's GLS\n             */\n            this.GLSID_CASINARENA = \"4\";\n            /**\n             * ID of freeplay's GLS\n             */\n            this.GLSID_FREEPLAY = \"65535\";\n            this.affiliate = sessionData.getContextID();\n            this.freePlay = !metadata.isRealMoney();\n            this.gameCodeRGI = metadata.getGameCode();\n            this.gameId = gameId;\n            this.glsId = (this.freePlay ? this.GLSID_FREEPLAY : this.GLSID_CASINARENA);\n            this.langCode = metadata.getLocale();\n            this.sessionId = glsServerSessionId;\n            this.userId = sessionData.getPlayerID();\n            this.version = gameVersion;\n            this.promotions = false;\n            this.channel = \"I\";\n            this.userType = \"C\";\n            this.currencyCode = \"\";\n        }",
+      "SHA256": "92578f3f56d59f5834b19935e6d269a3fa1b46c675d7c348a2cbabb615835e55",
+      "marker": "function GLSHeader("
+    },
+    "headerXML": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/lib/game_libs.js",
+      "byteWindowStart": 478840,
+      "startWithinWindow": 52,
+      "source": "function () {\n            var xmlString = \"\"; //\"<GameRequest type=\\\"Init\\\">\"\n            xmlString += \"<Header\";\n            xmlString += \" affiliate=\\\"\" + this.affiliate + \"\\\"\";\n            xmlString += \" ccyCode=\\\"\" + this.currencyCode + \"\\\"\";\n            xmlString += \" channel=\\\"\" + this.channel + \"\\\"\";\n            xmlString += \" freePlay=\\\"\" + (this.freePlay ? \"Y\" : \"N\") + \"\\\"\";\n            xmlString += \" gameCodeRGI=\\\"\" + this.gameCodeRGI + \"\\\"\";\n            xmlString += \" gameID=\\\"\" + this.gameId + \"\\\"\";\n            xmlString += \" glsID=\\\"\" + this.glsId + \"\\\"\";\n            xmlString += \" lang=\\\"\" + this.langCode + \"\\\"\";\n            xmlString += \" promotions=\\\"\" + (this.promotions ? \"Y\" : \"N\") + \"\\\"\";\n            xmlString += \" sessionID=\\\"\" + this.sessionId + \"\\\"\";\n            xmlString += \" userID=\\\"\" + this.userId + \"\\\"\";\n            xmlString += \" userType=\\\"\" + this.userType + \"\\\"\";\n            xmlString += \" versionID=\\\"\" + this.version + \"\\\"\";\n            xmlString += \"/>\";\n            //xmlString += \"</GameRequest>\"\n            return xmlString;\n        }",
+      "SHA256": "596fb84ed62caa9445caee65771cb36818b9e6a1d3967886a44b9bf969904aa7",
+      "marker": "GLSHeader.prototype.parse"
+    },
+    "currencyXML": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/lib/game_libs.js",
+      "byteWindowStart": 483650,
+      "startWithinWindow": 66,
+      "source": "function () {\n            var xmlStr = \"<AccountData><CurrencyMultiplier>\";\n            xmlStr += this._currencyMultiplier.toString();\n            xmlStr += \"</CurrencyMultiplier></AccountData>\";\n            return xmlStr;\n        }",
+      "SHA256": "ed266a1e9596d5ae8b097511f3e701759c6059c0206f564db9481d8e19e5c332",
+      "marker": "GLSCurrencyEncoder.prototype.parse"
+    },
+    "platform": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/lib/game_libs.js",
+      "byteWindowStart": 497520,
+      "startWithinWindow": 57,
+      "source": "function (input, object) {\n            var node = input.getElementsByTagName(\"Header\")[0];\n            var data = new server.PlatformData();\n            if (node != null) {\n                var attr = node.attributes;\n                var attrLength = attr.length;\n                for (var i = 0; i < attrLength; ++i) {\n                    switch (attr[i].nodeName) {\n                        case 'sessionID':\n                            data.sessionId = attr[i].nodeValue;\n                            break;\n                        case 'gameID':\n                            data.gameId = attr[i].nodeValue;\n                            break;\n                        case 'lang':\n                            data.languageCode = attr[i].nodeValue;\n                            break;\n                        case 'versionID':\n                            data.version = attr[i].nodeValue;\n                            break;\n                    }\n                }\n                var currencyMultiplierNode = input.getElementsByTagName(\"CurrencyMultiplier\")[0];\n                if (currencyMultiplierNode != null) {\n                    data.currencyMultiplier = parseInt(currencyMultiplierNode.textContent, 10);\n                }\n                else {\n                    data.currencyMultiplier = 1;\n                }\n            }\n            object.platformData = data;\n        }",
+      "SHA256": "c567c70e5453ace22c24540e921369ba8624fa92f5f24bbe7e5b4e3756ae6f88",
+      "marker": "GLSPlatformParser.prototype.parse"
+    },
+    "requestInit": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/lib/game_libs.js",
+      "byteWindowStart": 515440,
+      "startWithinWindow": 69,
+      "source": "function (data) {\n            var sessionData = this._partnerAdapter.getSessionData();\n            var header = new server.GLSHeader(this._metaData, sessionData, this._sessionId, this._glmId, this._glmVersion);\n            var xmlString = \"<GameRequest type=\\\"Init\\\">\";\n            xmlString += header.parse();\n            for (var i = 0; i < data.getEncoders().length; i++) {\n                xmlString += data.getEncoders()[i].parse();\n            }\n            xmlString += \"</GameRequest>\";\n            return xmlString;\n        }",
+      "SHA256": "e059ae4fe763a7827929a9afb7b8697486260045faf9d92f73766aaf6a5a4be1",
+      "marker": "GLSInitRequester.prototype.parseRequestData"
+    },
+    "requestLogic": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/lib/game_libs.js",
+      "byteWindowStart": 517400,
+      "startWithinWindow": 68,
+      "source": "function (data) {\n            var sessionData = this._partnerAdapter.getSessionData();\n            var header = new server.GLSHeader(this._metaData, sessionData, this._sessionId, this._glmId, this._glmVersion);\n            var xmlString = \"<GameRequest type=\\\"Logic\\\">\";\n            xmlString += header.parse();\n            for (var i = 0; i < data.getEncoders().length; i++) {\n                xmlString += data.getEncoders()[i].parse();\n            }\n            xmlString += \"</GameRequest>\";\n            return xmlString;\n        }",
+      "SHA256": "d1a1d82bed5eede03fa4fc11bfef4405fcc64446abca68bf9b0a08d51b37d9a3",
+      "marker": "GLSLogicRequester.prototype.parseRequestData"
+    },
+    "requestEnd": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/firequeen_prt/lib/game_libs.js",
+      "byteWindowStart": 513480,
+      "startWithinWindow": 74,
+      "source": "function (data) {\n            var sessionData = this._partnerAdapter.getSessionData();\n            var header = new server.GLSHeader(this._metaData, sessionData, this._sessionId, this._glmId, this._glmVersion);\n            var xmlString = \"<GameRequest type=\\\"EndGame\\\">\";\n            xmlString += header.parse();\n            for (var i = 0; i < data.getEncoders().length; i++) {\n                xmlString += data.getEncoders()[i].parse();\n            }\n            xmlString += \"</GameRequest>\";\n            return xmlString;\n        }",
+      "SHA256": "46bdd8d515061709bc9621ebd774900384fd3717c2e764e484e0fea6c89a0052",
+      "marker": "GLSEndRequester.prototype.parseRequestData"
+    }
+  }
+}

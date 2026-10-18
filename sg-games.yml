@@ -692,7 +692,8 @@ games:
       runtimeGameId: 32989
       runtimeSlug: firequeen_prt
       logicRequestNode: WagerInfo
-      fireQueenPaidContract: fire-queen-own-paid-v1
+      own32767ProtocolDATA:
+        contract: own32767-original-SG-protocol-private-v1
   - provider: sg
     gameId: '32750'
     name: 88 Fortunes
