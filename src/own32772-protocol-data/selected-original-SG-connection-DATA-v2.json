@@ -1,0 +1,198 @@
+{
+  "schema": "own32772-original-SG-protocol-DATA-v1",
+  "selector": {
+    "schema": "own32772-selected-native-next-DATA-v1",
+    "gameId": "32772",
+    "dbName": "sg_heidis_bier_haus",
+    "runtimeGameId": 32994,
+    "nativeGameID": "20157",
+    "leaves": {
+      "free": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+        "byteWindowStart": 141080,
+        "startWithinWindow": 67,
+        "source": "function (input, customGameData) {\n            var node = input.getElementsByTagName(\"FSInfo\")[0];\n            if (node) {\n                customGameData.freeSpinsRemaining = this.getValueOfAttribute(node, 'fSSpinsRemaining');\n                customGameData.totalFreeSpinsWin = this.getValueOfAttribute(node, 'fsWinnings');\n                customGameData.reTriggeredSpin = this.getValueOfAttribute(node, 'reTriggeredSpin');\n                customGameData.fsRetriggered = this.getValueOfAttribute(node, 'fsRetriggered');\n                customGameData.isHansOnFS = (this.getStringValueOfAttribute(node, 'isHansOnFs') == 'Y');\n                customGameData.hansSpinsRemaining = this.getValueOfAttribute(node, 'hansSpinRemaining');\n                customGameData.bonusGuarantee = this.getValueOfAttribute(node, 'bonusGuarantee');\n                customGameData.isMaxWin = customGameData.isMaxWin || (this.getStringValueOfAttribute(node, \"isMaxWin\") === \"Y\");\n                if (customGameData.isHansOnFS) {\n                    customGameData.hansWildPositions = this.getStringValueOfAttribute(node, 'hansWilds').split('|').map(function (item) {\n                        return parseInt(item, 10);\n                    });\n                }\n                var currrentStickyWildsString = this.getStringValueOfAttribute(node, 'currentStickyWilds');\n                if (currrentStickyWildsString != '')\n                    customGameData.currentStickyWilds = this.getStringValueOfAttribute(node, 'currentStickyWilds').split('|').map(function (item) {\n                        return parseInt(item, 10);\n                    });\n                var totalStickyWildsString = this.getStringValueOfAttribute(node, 'totalStickyWilds');\n                if (totalStickyWildsString != '')\n                    customGameData.totalStickyWilds = this.getStringValueOfAttribute(node, 'totalStickyWilds').split('|').map(function (item) {\n                        return parseInt(item, 10);\n                    });\n            }\n        }",
+        "SHA256": "1010778bd163fe33970ed55cb826d75f1ca4d67377ae628532da3dee22435b39",
+        "marker": "CustomDataParser.prototype.parseFreeSpinInfo"
+      },
+      "isFree": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+        "byteWindowStart": 136700,
+        "startWithinWindow": 79,
+        "source": "function (input, customGameData) {\n            var node = input.getElementsByTagName(\"BaseGameRecoveryInfo\")[0];\n            if (node || customGameData.reTriggeredSpin > 0)\n                customGameData.isFreeSpinResponse = true;\n        }",
+        "SHA256": "4e0d16941fe02a9ffe822cda76dfdf93116edb55583e2b011e3cb439600ee2e2",
+        "marker": "CustomDataParser.prototype.checkIfFreeSpinResponse"
+      },
+      "baseWin": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+        "byteWindowStart": 145100,
+        "startWithinWindow": 391,
+        "source": "function (input, customGameData) {\n            var node = input.getElementsByTagName(\"BaseGameInfo\")[0];\n            if (node) {\n                customGameData.totalWagerWin = this.getValueOfAttribute(node, 'totalWagerWin');\n                customGameData.bgWinning = this.getValueOfAttribute(node, 'bgWinnings');\n                customGameData.isMaxWin = customGameData.isMaxWin || (this.getStringValueOfAttribute(node, \"isMaxWin\") === \"Y\");\n            }\n        }",
+        "SHA256": "e22ead9ef014d34a5c9b32340264bd5c3245373c9a9d9175210b6e7b633ce84f",
+        "marker": "CustomDataParser.prototype.parseBGInfo"
+      },
+      "attr": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+        "byteWindowStart": 145500,
+        "startWithinWindow": 856,
+        "source": "function (dataNode, attribute) {\n            var attributeValue = '-1';\n            if (dataNode.attributes.getNamedItem(attribute)) {\n                attributeValue = dataNode.attributes.getNamedItem(attribute).value;\n            }\n            return parseInt(attributeValue);\n        }",
+        "SHA256": "c5cb55549e6a84de0734a12a97db4d2a811cdb10487689abaa84719650ca3539",
+        "marker": "CustomDataParser.prototype.getValueOfAttribute"
+      },
+      "str": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+        "byteWindowStart": 145500,
+        "startWithinWindow": 522,
+        "source": "function (dataNode, attribute) {\n            var attributeValue = \"\";\n            if (dataNode.attributes.getNamedItem(attribute)) {\n                attributeValue = dataNode.attributes.getNamedItem(attribute).value;\n            }\n            return attributeValue;\n        }",
+        "SHA256": "78fb733cfb62f2d46ab11fa0b6baebc73b0dcaa373cffa33acce424e683c2989",
+        "marker": "CustomDataParser.prototype.getStringValueOfAttribute"
+      },
+      "wild": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+        "byteWindowStart": 139000,
+        "startWithinWindow": 693,
+        "source": "function (input, customGameData, parseForRecovery) {\n            if (parseForRecovery === void 0) { parseForRecovery = false; }\n            var nodeList = input.getElementsByTagName(\"WildInfo\");\n            var node;\n            var parentNodeName = parseForRecovery ? \"BaseGameRecoveryInfo\" : 'GameResult';\n            for (var index = 0; index < nodeList.length; index++) {\n                if (nodeList[index].parentNode.nodeName == parentNodeName)\n                    node = nodeList[index];\n            }\n            if (!node)\n                return;\n            var indicesString = this.getStringValueOfAttribute(node, 'Indices');\n            if (indicesString.length != 0)\n                customGameData.wildReelIndices = indicesString.split('|').map(function (item) {\n                    return parseInt(item, 10);\n                });\n        }",
+        "SHA256": "007afd124b10fc5dc770755a34f3332a7aa0c94bb99d3e437a4e41d3bab2e812",
+        "marker": "CustomDataParser.prototype.parseTapperWildInfo"
+      },
+      "states": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+        "byteWindowStart": 42000,
+        "startWithinWindow": 296,
+        "source": "function () {\n            _super.prototype.execute.call(this);\n            this.addState(game.SubGames.PRE_GAME, game.PreGameStates.HISTORY, game.PreGameStates.INIT, game.SubGames.PRE_GAME);\n            this.addState(game.SubGames.PRE_GAME, game.PreGameStates.INIT, game.PreGameStates.LOADING_STATE, game.SubGames.PRE_GAME);\n            this.addState(game.SubGames.PRE_GAME, game.PreGameStates.LOADING_STATE, game.PreGameStates.CREATE_BASE_GAME_STATE, game.SubGames.PRE_GAME);\n            this.addState(game.SubGames.PRE_GAME, game.PreGameStates.CREATE_BASE_GAME_STATE, game.PreGameStates.SETUP_STATE_COMPLETE, game.SubGames.PRE_GAME);\n            this.addState(game.SubGames.PRE_GAME, game.PreGameStates.SETUP_STATE_COMPLETE, game.GameStates.IDLE_STATE, game.SubGames.BASE_GAME);\n            this.addState(game.SubGames.BASE_GAME, game.GameStates.IDLE_STATE, game.GameStates.LOGIC_GLS_STATE, game.SubGames.BASE_GAME);\n            this.addState(game.SubGames.BASE_GAME, game.GameStates.LOGIC_GLS_STATE, game.GameStates.WIN_DISPLAY_STATE, game.SubGames.BASE_GAME);\n            this.addState(game.SubGames.BASE_GAME, game.GameStates.WIN_DISPLAY_STATE, game.GameStates.END_GLS_STATE, game.SubGames.BASE_GAME);\n            this.addState(game.SubGames.BASE_GAME, game.GameStates.END_GLS_STATE, game.GameStates.IDLE_STATE, game.SubGames.BASE_GAME);\n            this._statesModel.init(game.SubGames.PRE_GAME, game.PreGameStates.HISTORY);\n        }",
+        "SHA256": "8e0386a5e0f7e226bf05f3c5f61be7b4371f98d2a6139156de82f75c1ce9e8de",
+        "marker": "CreateStatesCmd.prototype.execute"
+      },
+      "next": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+        "byteWindowStart": 46650,
+        "startWithinWindow": 357,
+        "source": "function () {\n            var _this = this;\n            _super.prototype.execute.call(this);\n            var response = this._serverModel.getLogicResponse();\n            if (this._statesModel.getCurrentState().stateName == game.GameStates.WIN_DISPLAY_STATE ||\n                (this._statesModel.getCurrentState().stateName == game.GameStates.LOGIC_GLS_STATE && response.customGameData.hasWheelBonusStarted)) {\n                if (response.customGameData.freeSpinsRemaining <= 0 || response.customGameData.isMaxWin) {\n                    if (!response.customGameData.isFreeSpinResponse || response.customGameData.isMaxWin)\n                        this._statesModel.gotoNextState();\n                    else\n                        TweenMax.delayedCall(2, function () { _this.eventDispatcher.dispatchEvent(new game.GameEvent(game.GameEvent.FREESPIN_COMPLETE)); }, null, this);\n                }\n                else {\n                    this._statesModel.changeStateByName(game.GameStates.LOGIC_GLS_STATE);\n                    if (this._componentListModel._forceButton && this._componentListModel._forceButton.showToolsBeforeFSStart) {\n                        this._componentListModel._forceButton.showHideTools(1);\n                        this._componentListModel._forceButton.addEventListener(components.ForceButtonEvent.FORCE_CLOSED, this.onForceClose, this);\n                    }\n                    else if (response.customGameData.isFreeSpinResponse) {\n                        TweenMax.delayedCall(1, function () { _this.eventDispatcher.dispatchEvent(new game.GameEvent(game.GameEvent.FREESPIN_START_SPIN)); }, null, this);\n                    }\n                    else {\n                        this.eventDispatcher.dispatchEvent(new game.GameEvent(game.GameEvent.FREESPIN_START_SPIN));\n                    }\n                }\n            }\n        }",
+        "SHA256": "7eb9992da150774e73398e075d134120cb693023b1ecbd56096f66822a28035f",
+        "marker": "GoToNextStateOnConditionCmd.prototype.execute"
+      },
+      "wheel": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+        "byteWindowStart": 142900,
+        "startWithinWindow": 317,
+        "source": "function (input, customGameData) {\n            var wheelNode = input.getElementsByTagName(\"WheelInfo\")[0];\n            if (wheelNode) {\n                customGameData.wheelSpinRemaining = this.getValueOfAttribute(wheelNode, 'WheelSpinsRemaining');\n                customGameData.wheelWinnings = this.getValueOfAttribute(wheelNode, 'WheelWinnings');\n                customGameData.currentWheelSpinWin = this.getValueOfAttribute(wheelNode, 'CurrentWheelWin');\n                var wheelBonusData = input.getElementsByTagName(\"WheelBonusData\")[0];\n                if (wheelBonusData) {\n                    customGameData.hasWheelBonusStarted = true;\n                    customGameData.wheelSliceIndex = this.getValueOfAttribute(wheelBonusData, \"wheelSliceIndex\");\n                }\n                var xtraspinsNode = input.getElementsByTagName(\"XtraSpins\")[0];\n                if (xtraspinsNode) {\n                    customGameData.xtraSpins = this.getValueOfAttribute(xtraspinsNode, 'value');\n                }\n                var progressiveNode = input.getElementsByTagName(\"Progressive\")[0];\n                if (progressiveNode) {\n                    customGameData.progressiveIndex = this.getValueOfAttribute(progressiveNode, 'value');\n                }\n                var hansNode = input.getElementsByTagName(\"HansSpin\")[0];\n                if (hansNode) {\n                    customGameData.hansSpins = this.getValueOfAttribute(hansNode, 'value');\n                }\n                var WheelProgAwarded = input.getElementsByTagName(\"WheelProgAwarded\")[0];\n                if (WheelProgAwarded) {\n                    customGameData.progressivesAwarded = this.getStringValueOfAttribute(WheelProgAwarded, 'value').split('|').map(function (item) {\n                        return parseInt(item, 10);\n                    });\n                }\n            }\n        }",
+        "SHA256": "ecab1fddca24aa844abb8eb9c183da7c7dc0b926d4f21e0ec2382686863a4965",
+        "marker": "CustomDataParser.prototype.parseWheelInfo"
+      },
+      "constructor": {
+        "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+        "byteWindowStart": 129880,
+        "startWithinWindow": 29,
+        "source": "function CustomGameData() {\n            this.mystInfoIndex = -1;\n            this.wildReelIndices = [];\n            this.clumpReplacementData = [[-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],\n                [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],\n                [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],\n                [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],\n                [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],\n                [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]];\n            this.jackpotInfo = [];\n            this.scatterWinInfo = [];\n            this.freeSpinsRemaining = -1;\n            this.totalFreeSpinsWin = 0;\n            this.reTriggeredSpin = -1;\n            this.fsRetriggered = -1;\n            this.isFreeSpinResponse = false;\n            this.currentStickyWilds = [];\n            this.totalStickyWilds = [];\n            this.wheelSpinRemaining = -1;\n            this.wheelWinnings = 0;\n            this.currentWheelSpinWin = 0;\n            this.xtraSpins = -1;\n            this.progressiveIndex = -1;\n            this.progressivesAwarded = [];\n            this.hansSpins = -1;\n            this.hasWheelBonusStarted = false;\n            this.bgWinning = 0;\n            this.totalWagerWin = 0;\n            this.isHansOnFS = false;\n            this.hansSpinsRemaining = -1;\n            this.hansWildPositions = [];\n            this.bonusGuarantee = 0;\n            this.isMaxWin = false;\n            this.wheelSliceIndex = 0;\n        }",
+        "SHA256": "b9bd489fe810689d86f1d0ce501952265fdad9b73ff95344aa918484f1d1698f",
+        "marker": "function CustomGameData("
+      }
+    },
+    "sourceHashReused": "cbb8b384c5389dcca1ce848b2bc3f06a9de21892a81d5ca99ba6015d05c91f01",
+    "wholeSDKReadHashAST": 0
+  },
+  "wire": {
+    "headerConstructor": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/lib/game_libs.js",
+      "byteWindowStart": 473820,
+      "startWithinWindow": 24,
+      "source": "function GLSHeader(metadata, sessionData, glsServerSessionId, gameId, gameVersion) {\n            /**\n             * ID of casinarena's GLS\n             */\n            this.GLSID_CASINARENA = \"4\";\n            /**\n             * ID of freeplay's GLS\n             */\n            this.GLSID_FREEPLAY = \"65535\";\n            this.affiliate = sessionData.getContextID();\n            this.freePlay = !metadata.isRealMoney();\n            this.gameCodeRGI = metadata.getGameCode();\n            this.gameId = gameId;\n            this.glsId = (this.freePlay ? this.GLSID_FREEPLAY : this.GLSID_CASINARENA);\n            this.langCode = metadata.getLocale();\n            this.sessionId = glsServerSessionId;\n            this.userId = sessionData.getPlayerID();\n            this.version = gameVersion;\n            this.promotions = false;\n            this.channel = \"I\";\n            this.userType = \"C\";\n            this.currencyCode = \"\";\n        }",
+      "SHA256": "92578f3f56d59f5834b19935e6d269a3fa1b46c675d7c348a2cbabb615835e55",
+      "marker": "function GLSHeader("
+    },
+    "headerXML": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/lib/game_libs.js",
+      "byteWindowStart": 474850,
+      "startWithinWindow": 56,
+      "source": "function () {\n            var xmlString = \"\"; //\"<GameRequest type=\\\"Init\\\">\"\n            xmlString += \"<Header\";\n            xmlString += \" affiliate=\\\"\" + this.affiliate + \"\\\"\";\n            xmlString += \" ccyCode=\\\"\" + this.currencyCode + \"\\\"\";\n            xmlString += \" channel=\\\"\" + this.channel + \"\\\"\";\n            xmlString += \" freePlay=\\\"\" + (this.freePlay ? \"Y\" : \"N\") + \"\\\"\";\n            xmlString += \" gameCodeRGI=\\\"\" + this.gameCodeRGI + \"\\\"\";\n            xmlString += \" gameID=\\\"\" + this.gameId + \"\\\"\";\n            xmlString += \" glsID=\\\"\" + this.glsId + \"\\\"\";\n            xmlString += \" lang=\\\"\" + this.langCode + \"\\\"\";\n            xmlString += \" promotions=\\\"\" + (this.promotions ? \"Y\" : \"N\") + \"\\\"\";\n            xmlString += \" sessionID=\\\"\" + this.sessionId + \"\\\"\";\n            xmlString += \" userID=\\\"\" + this.userId + \"\\\"\";\n            xmlString += \" userType=\\\"\" + this.userType + \"\\\"\";\n            xmlString += \" versionID=\\\"\" + this.version + \"\\\"\";\n            xmlString += \"/>\";\n            //xmlString += \"</GameRequest>\"\n            return xmlString;\n        }",
+      "SHA256": "596fb84ed62caa9445caee65771cb36818b9e6a1d3967886a44b9bf969904aa7",
+      "marker": "GLSHeader.prototype.parse"
+    },
+    "currencyXML": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/lib/game_libs.js",
+      "byteWindowStart": 479660,
+      "startWithinWindow": 70,
+      "source": "function () {\n            var xmlStr = \"<AccountData><CurrencyMultiplier>\";\n            xmlStr += this._currencyMultiplier.toString();\n            xmlStr += \"</CurrencyMultiplier></AccountData>\";\n            return xmlStr;\n        }",
+      "SHA256": "ed266a1e9596d5ae8b097511f3e701759c6059c0206f564db9481d8e19e5c332",
+      "marker": "GLSCurrencyEncoder.prototype.parse"
+    },
+    "platform": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/lib/game_libs.js",
+      "byteWindowStart": 493520,
+      "startWithinWindow": 71,
+      "source": "function (input, object) {\n            var node = input.getElementsByTagName(\"Header\")[0];\n            var data = new server.PlatformData();\n            if (node != null) {\n                var attr = node.attributes;\n                var attrLength = attr.length;\n                for (var i = 0; i < attrLength; ++i) {\n                    switch (attr[i].nodeName) {\n                        case 'sessionID':\n                            data.sessionId = attr[i].nodeValue;\n                            break;\n                        case 'gameID':\n                            data.gameId = attr[i].nodeValue;\n                            break;\n                        case 'lang':\n                            data.languageCode = attr[i].nodeValue;\n                            break;\n                        case 'versionID':\n                            data.version = attr[i].nodeValue;\n                            break;\n                    }\n                }\n                var currencyMultiplierNode = input.getElementsByTagName(\"CurrencyMultiplier\")[0];\n                if (currencyMultiplierNode != null) {\n                    data.currencyMultiplier = parseInt(currencyMultiplierNode.textContent, 10);\n                }\n                else {\n                    data.currencyMultiplier = 1;\n                }\n            }\n            object.platformData = data;\n        }",
+      "SHA256": "c567c70e5453ace22c24540e921369ba8624fa92f5f24bbe7e5b4e3756ae6f88",
+      "marker": "GLSPlatformParser.prototype.parse"
+    },
+    "requestEnd": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/lib/game_libs.js",
+      "byteWindowStart": 510340,
+      "startWithinWindow": 70,
+      "source": "function (data) {\n            var sessionData = this._partnerAdapter.getSessionData();\n            var header = new server.GLSHeader(this._metaData, sessionData, this._sessionId, this._glmId, this._glmVersion);\n            var xmlString = \"<GameRequest type=\\\"EndGame\\\">\";\n            xmlString += header.parse();\n            for (var i = 0; i < data.getEncoders().length; i++) {\n                xmlString += data.getEncoders()[i].parse();\n            }\n            xmlString += \"</GameRequest>\";\n            return xmlString;\n        }",
+      "SHA256": "46bdd8d515061709bc9621ebd774900384fd3717c2e764e484e0fea6c89a0052",
+      "marker": "GLSEndRequester.prototype.parseRequestData"
+    },
+    "requestInit": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/lib/game_libs.js",
+      "byteWindowStart": 512290,
+      "startWithinWindow": 75,
+      "source": "function (data) {\n            var sessionData = this._partnerAdapter.getSessionData();\n            var header = new server.GLSHeader(this._metaData, sessionData, this._sessionId, this._glmId, this._glmVersion);\n            var xmlString = \"<GameRequest type=\\\"Init\\\">\";\n            xmlString += header.parse();\n            for (var i = 0; i < data.getEncoders().length; i++) {\n                xmlString += data.getEncoders()[i].parse();\n            }\n            xmlString += \"</GameRequest>\";\n            return xmlString;\n        }",
+      "SHA256": "e059ae4fe763a7827929a9afb7b8697486260045faf9d92f73766aaf6a5a4be1",
+      "marker": "GLSInitRequester.prototype.parseRequestData"
+    },
+    "requestLogic": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/lib/game_libs.js",
+      "byteWindowStart": 514250,
+      "startWithinWindow": 74,
+      "source": "function (data) {\n            var sessionData = this._partnerAdapter.getSessionData();\n            var header = new server.GLSHeader(this._metaData, sessionData, this._sessionId, this._glmId, this._glmVersion);\n            var xmlString = \"<GameRequest type=\\\"Logic\\\">\";\n            xmlString += header.parse();\n            for (var i = 0; i < data.getEncoders().length; i++) {\n                xmlString += data.getEncoders()[i].parse();\n            }\n            xmlString += \"</GameRequest>\";\n            return xmlString;\n        }",
+      "SHA256": "d1a1d82bed5eede03fa4fc11bfef4405fcc64446abca68bf9b0a08d51b37d9a3",
+      "marker": "GLSLogicRequester.prototype.parseRequestData"
+    }
+  },
+  "request": {
+    "init": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+      "byteWindowStart": 38680,
+      "startWithinWindow": 66,
+      "source": "function () {\n            _super.prototype.execute.call(this);\n            var encoders = [];\n            if (this._historyModel.getIsHistoryReplay() && !this._server.getInitResponse()) {\n                encoders.push(new game.HistoryReplaceEncoder(this._historyModel.getNextState()));\n                this._historyModel.restart();\n            }\n            var initData = new server.GLSRequest(encoders);\n            this._server.makeInitRequest(initData);\n        }",
+      "SHA256": "9e5ed3851808a6559492dad8d985af46071b020e2e58a7a484c8b068a26631c3",
+      "marker": "MakeInitRequestCmd.prototype.execute"
+    },
+    "logic": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+      "byteWindowStart": 39800,
+      "startWithinWindow": 61,
+      "source": "function () {\n            _super.prototype.execute.call(this);\n            if (!this._server.getInitResponse().isRecovering) {\n                this._partnerAdapter.startedPlay();\n            }\n            var encoders = [\n                new game.StakeEncoder(this._stakesModel.getTotalBet()),\n                new server.GLSCurrencyEncoder(this._server.getInitResponse().platformData.currencyMultiplier)\n            ];\n            var history = this._historyModel.getNextState();\n            if (history) {\n                encoders.push(new game.HistoryReplaceEncoder(history));\n            }\n            if (this._forceModel.forceSet || game.DemoData.isDemoSet) {\n                encoders.push(new game.ForceEncoder(this._forceModel.reelData.positions, this._forceModel.reelData.index, this._server));\n                this._forceModel.reset();\n                this._forceModel.forceSet = false;\n            }\n            var logicData = new server.GLSRequest(encoders);\n            var initResponse = this._server.getInitResponse();\n            if (!initResponse.isRecovering || ((this._statesModel.getSubGame() == game.SubGames.PRE_GAME) && (this._statesModel.getCurrentState().stateName == game.PreGameStates.INIT))) {\n                this._server.makeLogicRequest(logicData);\n            }\n        }",
+      "SHA256": "0e0e51e636af098e686da38378a4591b25939a8ed433f185db0ec6c8e5c49b07",
+      "marker": "MakeLogicRequestCmd.prototype.execute"
+    },
+    "end": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+      "byteWindowStart": 37120,
+      "startWithinWindow": 66,
+      "source": "function () {\n            _super.prototype.execute.call(this);\n            if (!this._historyModel.getIsHistoryReplay()) {\n                this._partnerAdapter.finishedPlay();\n                this._partnerAdapter.finishedPostGameAnimations();\n                this._server.makeEndRequest(new server.GLSRequest([]));\n            }\n            if (this._autoplayModel.isInProgress()) {\n                this._autoplayModel.updateWinAndStake(this._server.getLogicResponse().gameResultData.totalWin, this._stakesModel.getTotalBet());\n            }\n        }",
+      "SHA256": "f338d1dab36f6fb4fedbc018da8a4c5570299dd648d54ce03d1c772f1036d7c3",
+      "marker": "MakeEndRequestCmd.prototype.execute"
+    },
+    "stake": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+      "byteWindowStart": 135300,
+      "startWithinWindow": 65,
+      "source": "function () {\n            var xmlStr = \"<Stake\";\n            xmlStr += \" total=\\\"\" + this._stakeTotal.toString() + \"\\\"\";\n            xmlStr += \"/>\";\n            return xmlStr;\n        }",
+      "SHA256": "d5ca66cfe0b144150ccdaf7c93f95169b18c5255627ef1bf493c3a4e54394aa6",
+      "marker": "StakeEncoder.prototype.parse"
+    }
+  },
+  "scope": "Heidi own V23/V25/V26/V48 cached original Init/native wire/money, selected protocol next only; no native host/renderer/audio/Tapper dependency",
+  "sourceFilesReused": [
+    {
+      "path": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/app/js/main.js",
+      "SHA256": "cbb8b384c5389dcca1ce848b2bc3f06a9de21892a81d5ca99ba6015d05c91f01"
+    },
+    {
+      "path": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/resource.atc.casinarena.com/resource-service/content/heidisbierhaus/lib/game_libs.js",
+      "SHA256": "f782daea620d35e33e0800721357c3ae1c787713295566f441b92506bcf1e014"
+    }
+  ],
+  "SDKHashASTRepeated": false
+}

@@ -940,7 +940,8 @@ games:
       betRaw: 75
       runtimeSlug: heidisbierhaus
       runtimeGameId: 32994
-      heidiPaidContract: heidi-own-paid-display-v1
+      own32772ProtocolDATA:
+        contract: own32772-original-SG-protocol-private-v1
   - provider: sg
     gameId: '32758'
     name: Cool Jewels
