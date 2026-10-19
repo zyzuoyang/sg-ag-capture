@@ -17538,3 +17538,32 @@ games:
         total: '30'
       own32792ProtocolDATA:
         contract: own32792-original-SG-protocol-private-v1
+  - provider: sg
+    gameId: '32766'
+    name: Eureka
+    dbName: sg_eurekareelsblastsuperlock
+    backendId: eurekareelsblastsuperlock
+    rtpBuckets: [0, 30, 100, 300, 500, 1000, 2500, 5000, 10000, 1001, 2001, 5001, 10001]
+    sg:
+      protocol: wms
+      runtimeGameId: 32988
+      runtimeSlug: eurekareelsblastsuperlock
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: "0"
+        ccyCode: ""
+        channel: "I"
+        freePlay: "Y"
+        gameCodeRGI: "eurekareelsblastsuperlock"
+        gameID: "20400"
+        glsID: "65535"
+        lang: "en_US"
+        promotions: "N"
+        userID: "null"
+        userType: "C"
+        versionID: "1_0"
+      betRaw: 50
+      stake:
+        total: 50
+      own32766ProtocolDATA:
+        contract: own32766-original-SG-protocol-private-v1
