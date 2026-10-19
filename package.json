@@ -2,7 +2,7 @@
   "name": "ag-capture-public-runner",
   "version": "1.0.0",
   "private": true,
-  "description": "AG 游戏公开分布式采集运行器",
+  "description": "AG \u6e38\u620f\u516c\u5f00\u5206\u5e03\u5f0f\u91c7\u96c6\u8fd0\u884c\u5668",
   "main": "ag.ts",
   "scripts": {
     "ag": "ts-node ag.ts",
@@ -19,7 +19,8 @@
     "js-yaml": "^4.3.1",
     "libsodium-wrappers": "^0.8.4",
     "mongodb": "^7.0.0",
-    "ws": "^8.21.0"
+    "ws": "^8.21.0",
+    "@wasm-audio-decoders/ogg-vorbis": "0.1.20"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",

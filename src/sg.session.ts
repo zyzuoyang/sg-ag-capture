@@ -1853,6 +1853,14 @@ function own32778Normal0Connection(session:object,game:AGGameConfig){
  return c;
 }
 function own32778Normal0Hold(error:unknown){return Object.assign(new Error('AG integrity: own32778 normal0 source held'),{cause:error,retryAllowed:false})}
+// Own32816 original wire authority. This remains module-private and source-disabled.
+const own32816WireSlots=new WeakMap<object,any>();
+function own32816WireSlot(session:object){const slot=own32816WireSlots.get(session);assert(slot,'AG integrity: own32816 original private slot missing');return slot;}
+function own32816WireStop(session:any,error:unknown):never{
+ const slot=own32816WireSlots.get(session),failure=Object.assign(new Error('AG integrity: own32816 original native wire held'),{cause:error,own32816DeterministicIntegrityStop:true,retryAllowed:false});
+ if(slot){slot.error=failure;try{slot.binding?.originalOwnerHooks.seal(error);}catch{}try{slot.wire.ownerHooks.seal(error);}catch{}}
+ session.close();throw failure;
+}
 export class SGWmsSession {
     private balance = Number.NaN;
     private startBalance = Number.NaN;
@@ -1883,6 +1891,83 @@ export class SGWmsSession {
         assert(String(game.sg.header?.gameCodeRGI).length > 0 && /^\d+$/.test(String(game.sg.header?.gameID)), 'AG integrity: SG game binding');
         assert(Number.isSafeInteger(game.sg.betRaw) && game.sg.betRaw > 0, 'AG integrity: SG wager binding');
         if(initialBalance !== undefined) { assert(Number.isSafeInteger(initialBalance)); this.balance=initialBalance; }
+    }
+    private bindOwn32816OriginalWire(createNativeBinding:any) {
+        assert((((this.game.sg as any).own32816OriginalWire?.contract==='own32816-original-wire-preparation-v694'&&process.env.SG_OWN32816_PRIVATE_NATIVE_PREPARATION==='1'&&process.env.SG_AG_ALLOW_SOURCE!=='1')||((this.game.sg as any).own32816OriginalWire?.contract==='own32816-original-wire-native-v1'&&process.env.SG_AG_ALLOW_SOURCE==='1'))&&!this.closed&&!this.transport&&!own32816WireSlots.has(this)&&typeof createNativeBinding==='function','AG integrity: own32816 private source binding');
+        const slot:any={game:this.game,consumed:new WeakSet(),acceptedEnvelopes:new WeakMap(),currentDispatch:null,originalReturnedResults:new WeakMap()};own32816WireSlots.set(this,slot);
+        try {
+            slot.wire=require('./own32816-native-data/original-accepted-wire-owner.cjs').createOwn32816OriginalAcceptedWireOwner({sessionScope:this,game:this.game,
+                assertOriginalSessionOpen:(c:any)=>assert(!this.closed&&!slot.error&&own32816WireSlots.get(this)===slot&&c.sessionScope===this&&c.game===this.game,'AG integrity: own32816 original source closed'),
+                assertCurrentConsumedNativeDispatch:(d:any)=>assert(slot.currentDispatch===d&&slot.consumed.has(d),'AG integrity: own32816 unconsumed/foreign native dispatch'),
+                assertOriginalAcceptedStep:(s:any,e:any)=>assert(slot.acceptedEnvelopes.get(s)===e,'AG integrity: own32816 original parsed step capability'),readOriginalSessionID:()=>this.session});
+            slot.binding=createNativeBinding({sessionScope:this,game:this.game,readOriginalSessionID:()=>this.session,
+                assertOriginalSessionOpen:(c:any)=>assert(!this.closed&&!slot.error&&own32816WireSlots.get(this)===slot&&c.sessionScope===this&&c.game===this.game,'AG integrity: own32816 original source closed'),
+                ...slot.wire.privateReaders});
+            assert(typeof slot.binding?.providerData?.consumeCurrentNative==='function'&&typeof slot.binding?.originalOwnerHooks?.recordAndDeliverOriginalParsedResponse==='function','AG integrity: own32816 actual private native binding required');
+        }catch(error){own32816WireStop(this,error);}
+    }
+    private async exchangeOwn32816OriginalNative(event:string,parameters:any) {
+        try {
+            const slot=own32816WireSlot(this);assert(!this.closed&&!slot.error,'AG integrity: own32816 source closed');
+            const dispatch=slot.binding.providerData.consumeCurrentNative(event,parameters,this.session);slot.currentDispatch=dispatch;slot.consumed.add(dispatch);
+            const step=await this.exchange(event,{},undefined,undefined,dispatch),envelope=this.readEnvelope(step,event);
+            const delivery=await slot.binding.originalOwnerHooks.recordAndDeliverOriginalParsedResponse(dispatch,step);
+            const result=Object.freeze({step,envelope,delivery,businessSuccessOrCompletionAssessed:false});
+            const originalRaw=slot.wire.privateReaders.readAcceptedOriginalExchange(dispatch,step);
+            slot.originalReturnedResults.set(result,originalRaw);
+            return result;
+        }catch(error){own32816WireStop(this,error);}
+    }
+    private async connectOwn32816NativeLive(): Promise<void> {
+        try{
+            assert(!this.closed&&!this.transport&&!own32816WireSlots.has(this)&&process.env.SG_AG_ALLOW_SOURCE==='1','AG integrity: own32816 one original live Init lifecycle');
+            const registration=require('./own32816-native-data/register.cjs');registration.validateOwn32816Runtime(this.game);
+            const currentHeaderValue=(key:string)=>{const value=this.game.sg.header[key];assert(typeof value==='string'&&value.length>0,'AG integrity: own32816 actual current '+key);return value;};
+            const sessionData=Object.freeze({getSessionID:()=>this.session,getContextID:()=>currentHeaderValue('affiliate'),getPlayerID:()=>currentHeaderValue('userID')});
+            const bundle=registration.createOwn32816SessionBundle({sessionScope:this,game:this.game,sessionData,localIOTimeoutMs:sgRequestTimeoutMs(this.game),
+                readRawEnvelope:(step:any,event:string)=>this.readEnvelope(step,event),assertOriginalSessionOpen:(c:any)=>assert(!this.closed&&!this.transport&&c.sessionScope===this&&c.game===this.game,'AG integrity: own32816 original factory/session scope')});
+            assert(bundle?.sourceIsOfflineTest===false,'AG integrity: own32816 production factory only');
+            return this.installOwn32816OriginalNativeLifecycle(bundle);
+        }catch(error){own32816WireStop(this,error);}
+    }
+    private async connectOwn32816NativePreparation(bundle:any): Promise<void> {
+        assert(process.env.SG_OWN32816_PRIVATE_NATIVE_PREPARATION==='1'&&process.env.SG_AG_ALLOW_SOURCE!=='1'&&bundle?.sourceIsOfflineTest===true,
+            'AG integrity: own32816 lifecycle remains offline-only; production admission required');
+        return this.installOwn32816OriginalNativeLifecycle(bundle);
+    }
+    private async installOwn32816OriginalNativeLifecycle(bundle:any): Promise<void> {
+        assert(!this.closed&&!this.transport&&!own32816WireSlots.has(this)&&typeof bundle.createBinding==='function'&&typeof bundle.createHost==='function',
+            'AG integrity: own32816 one original private lifecycle');
+        this.bindOwn32816OriginalWire((privateInputs:any)=>bundle.createBinding(privateInputs));
+        const slot=own32816WireSlot(this),host=bundle.createHost();slot.host=host;
+        assert(host&&typeof host.boot==='function'&&typeof bundle.yieldNative==='function','AG integrity: own32816 original host callbacks');
+        const lifecycle=require('./own32816-native-data/own32816-original-SG-lifecycle-DATA-v855.cjs');
+        const selectors=require('./own32816-native-data/own32816-original-Main-next-request-selector-free-intro-v1.cjs');
+        const money=require('./own32816-native-data/own32816-original-SG-money-projection-v853.cjs');
+        const units=require('./own32816-native-data/own32816-original-SG-unit-v853.cjs');
+        slot.lifecycle=lifecycle.createOwn32816OriginalSGLifecycle({sessionScope:this,game:this.game,binding:slot.binding,
+            assertOriginalOpen:()=>assert(!this.closed&&!slot.error&&own32816WireSlots.get(this)===slot,'AG integrity: own32816 original session open'),
+            readOriginalSessionID:()=>this.session,readOriginalCashRaw:()=>this.balance,readOriginalAction:()=>this.action,
+            exchangeOriginalNative:(event:string,parameters:any)=>this.exchangeOwn32816OriginalNative(event,parameters),
+            authenticateOriginalResult:(result:any,event:string)=>{
+                const originalRaw=slot.originalReturnedResults.get(result);
+                assert(originalRaw&&result.step===originalRaw.parsedStep&&result.step.msgId===event&&originalRaw.nativeDispatch===slot.currentDispatch,
+                    'AG integrity: own32816 same private original result capability');
+                assert(slot.wire.privateReaders.readAcceptedOriginalExchange(slot.currentDispatch,result.step)===originalRaw,
+                    'AG integrity: own32816 original result no longer current');
+                return originalRaw;
+            },
+            createSelector:selectors.createOwn32816OriginalMainSelector,
+            createProjection:(source:any)=>money.createOwn32816OriginalSGMoneyProjection({source,readOwnOriginalUnit:units.createOwn32816OriginalSGUnitReader(source)}),
+            readHost:()=>host,wallNow:()=>Date.now(),yieldNative:()=>bundle.yieldNative(host),
+            timeoutMs:bundle.timeoutMs,maxTicks:bundle.maxTicks});
+        try{host.boot();await slot.lifecycle.bootstrap();}catch(error){own32816WireStop(this,error);}
+    }
+    private async callOwn32816NativePreparation(event:string,parameters:any) {
+        try{
+            const slot=own32816WireSlot(this);assert(slot.lifecycle,'AG integrity: own32816 lifecycle not connected');
+            const result=await slot.lifecycle.call(event,parameters);this.action=result.NextActionInfo.nextAction;return result;
+        }catch(error){own32816WireStop(this,error);}
     }
     private evidence(value: Record<string,unknown>) {
         if(this.transport) return; // offline transport keeps its own supplied evidence
@@ -2056,6 +2141,7 @@ export class SGWmsSession {
  }catch(error){slot.connection?.seal();this.close();throw own32751Hold(error)}
 }
 async callGameData(event:string,parameters:Record<string,any>|null){
+if((this.game.sg as any).own32816OriginalWire)return this.callOwn32816NativePreparation(event,parameters);
  if(this.game.gameId==='32778'&&this.game.sg.jinjiEndlessContract){try{return await this.callOriginalWmsGameData(event,parameters)}catch(error){own32778Normal0Slots.get(this)?.seal();this.close();throw own32778Normal0Hold(error)}}
         if(this.game.gameId==='32763'){const slot=own32763ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32763 private connection absent');try{const result=await this.callOriginalWmsGameData(event,parameters);return slot.connection.finishOriginalResult(event,result);}catch(error){slot.connection.seal(error);this.close();throw own32763Hold(error);}}
         if(this.game.gameId==='32787'){const slot=own32787ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32787 private connection absent');try{const result=await this.callOriginalWmsGameData(event,parameters);return slot.connection.finishOriginalResult(event,result);}catch(error){slot.connection.seal(error);this.close();throw own32787Hold(error);}}
@@ -2074,6 +2160,7 @@ async callGameData(event:string,parameters:Record<string,any>|null){
  try{const result=await this.callOriginalWmsGameData(event,parameters);return slot.connection.finishOriginalResult(event,result)}catch(error){slot.connection.seal();this.close();throw own32751Hold(error)}
 }
 async connect(): Promise<void> {
+if(this.game.gameId==='32816'||(this.game.sg as any).own32816OriginalWire||(this.game.sg as any).own32816NativeData){assert(this.game.gameId==='32816','AG integrity: own32816 foreign native DATA');return this.connectOwn32816NativeLive();}
 if(this.game.gameId==='32771'){assert(!this.closed&&!this.ownGoldenInitStarted&&!Number.isFinite(this.balance),'AG integrity: own Golden one actual Init and no injected cash');this.ownGoldenInitStarted=true;const slot:any={};own32771CoexistSlots.set(this,slot);slot.connection=require('./own32771-Gamble-coexist-data/register.cjs').createOwn32771OriginalSGCoexist({game:this.game,sessionScope:this,readOriginalState:()=>({game:this.game,sessionScope:this,closed:this.closed,action:this.action,sessionID:this.session,balanceRaw:this.balance})});}
 if(this.game.gameId==='32772'||(this.game.sg as any).own32772ProtocolDATA){assert(this.game.gameId==='32772','AG integrity: own32772 foreign DATA');return this.connectOwn32772Protocol()}
 if(this.game.gameId==='32767'||(this.game.sg as any).own32767ProtocolDATA){assert(this.game.gameId==='32767','AG integrity: own32767 foreign DATA');return this.connectOwn32767Protocol()}
@@ -2208,6 +2295,7 @@ if(this.game.gameId==='32751'||(this.game.sg as any).own32751ProtocolDATA){asser
         throw new Error('AG integrity: SG pick protocol not mapped');
     }
     getInitialRoundRequest() {
+if((this.game.sg as any).own32816OriginalWire){const slot=own32816WireSlot(this);assert(slot.lifecycle,'AG integrity: own32816 native lifecycle not connected');return slot.lifecycle.initial();}
 if(this.game.gameId==='32763'){const slot=own32763ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32763 private connection required');return slot.connection.initial();}
 if(this.game.gameId==='32787'){const slot=own32787ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32787 private connection required');return slot.connection.initial();}
 if(this.game.gameId==='32780'){const slot=own32780ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32780 private connection required');return slot.connection.initial();}
@@ -2221,9 +2309,10 @@ if(this.game.gameId==='32789'){const s=own32789ProtocolSlots.get(this);assert(s?
 if(this.game.gameId==='32765'){const s=own32765ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32765 private initial');return s.connection.initial()}
 if(this.game.gameId==='32751'){const s=own32751ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32751 private initial');return s.connection.initial()}
  if(this.game.gameId==='32777'){try{const cap=own32777IssueOriginalAGPaidIntent(this,this.action,this.session);return own32777NativeConnection(this).initial(cap);}catch(error){own32777ThrowPreservingOriginal(this,error,()=>this.close());}}if(this.game.gameId==='32769')return own32769NativeBridge(this).initial();return {event:'Logic',parameters:this.getSpinParams()}; }
-    getLastGameRequest() { return this.lastRequest; }
+    getLastGameRequest() { if((this.game.sg as any).own32816OriginalWire)return own32816WireSlot(this).lifecycle.getLastGameRequest();return this.lastRequest; }
     isRoundTerminalAction(action: string) { return action === 'SPIN'; }
     getExactFollowUpRequest(action: string) {
+if((this.game.sg as any).own32816OriginalWire)return own32816WireSlot(this).lifecycle.exact(action);
         if(this.game.gameId==='32778'&&this.game.sg.jinjiEndlessContract)return own32778Normal0Connection(this,this.game).exact(action);
         const own32771=own32771CoexistSlots.get(this);if(own32771?.connection.ownsCurrentRound())return own32771.connection.exact(action);
 if(this.game.gameId==='32772'){const s=own32772ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32772 private next');return s.connection.exact(action)}
@@ -2297,9 +2386,10 @@ if(this.game.gameId==='32751'){const s=own32751ProtocolSlots.get(this);assert(s?
         if(freeAccount) assert(this.game.sg.freeLogicCurrencyMultiplier==='1','AG integrity: SG own free currency binding');
         return `<GameRequest type="${event}">${stake?'<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData>':''}${header}${freeAccount?'<AccountData><CurrencyMultiplier>1</CurrencyMultiplier></AccountData>':''}${stake}</GameRequest>`;
     }
-    private async exchange(event:string,parameters:Record<string,any>,own32769Dispatch?:any,own32777Dispatch?:any):Promise<WireStep> {
+    private async exchange(event:string,parameters:Record<string,any>,own32769Dispatch?:any,own32777Dispatch?:any,own32816Dispatch?:any):Promise<WireStep> {
         assert(!this.closed,'AG integrity: SG session closed');
         const requestSessionID=this.session;
+        if((this.game.sg as any).own32816OriginalWire){const slot=own32816WireSlot(this);assert(this.game.gameId==='32816'&&!this.transport&&own32816Dispatch&&slot.currentDispatch===own32816Dispatch&&slot.consumed.has(own32816Dispatch)&&own32816Dispatch.event===event&&!own32769Dispatch&&!own32777Dispatch,'AG integrity: own32816 exclusive consumed original dispatch');}else assert(!own32816Dispatch,'AG integrity: own32816 foreign native dispatch');
         const own32771Slot=own32771CoexistSlots.get(this),own32771Owned=own32771Slot?.connection.ownsCurrentRound();let own32771Dispatch=own32771Owned?own32771Slot.connection.consumeOwned(event,parameters,requestSessionID):undefined;
  const own32772Slot=own32772ProtocolSlots.get(this),own32772Dispatch=own32772Slot?.connection.consume(event,parameters,requestSessionID);
  const own32767Slot=own32767ProtocolSlots.get(this),own32767Dispatch=own32767Slot?.connection.consume(event,parameters,requestSessionID);
@@ -2325,7 +2415,7 @@ if(this.game.gameId==='32751'){const s=own32751ProtocolSlots.get(this);assert(s?
         if(this.game.gameId==='32777' && event!=='Init')assert(own32777Dispatch,
             'AG integrity: own32777 current native request DATA required');
         else assert(!own32777Dispatch,'AG integrity: own32777 native dispatch game scope');
-        const payload=own32763Dispatch ? own32763Dispatch.requestPayload : own32787Dispatch ? own32787Dispatch.requestPayload : own32780Dispatch ? own32780Dispatch.requestPayload : own32801Dispatch ? own32801Dispatch.requestPayload : own32766Dispatch ? own32766Dispatch.requestPayload : own32771Dispatch ? own32771Dispatch.requestPayload : own32772Dispatch ? own32772Dispatch.requestPayload : own32767Dispatch ? own32767Dispatch.requestPayload : own32792Dispatch ? own32792Dispatch.requestPayload : own32757Dispatch ? own32757Dispatch.requestPayload : own32789Dispatch ? own32789Dispatch.requestPayload : own32765Dispatch ? own32765Dispatch.requestPayload : own32751Dispatch ? own32751Dispatch.requestPayload : own32777Dispatch
+        const payload=own32816Dispatch ? own32816Dispatch.requestPayload : own32763Dispatch ? own32763Dispatch.requestPayload : own32787Dispatch ? own32787Dispatch.requestPayload : own32780Dispatch ? own32780Dispatch.requestPayload : own32801Dispatch ? own32801Dispatch.requestPayload : own32766Dispatch ? own32766Dispatch.requestPayload : own32771Dispatch ? own32771Dispatch.requestPayload : own32772Dispatch ? own32772Dispatch.requestPayload : own32767Dispatch ? own32767Dispatch.requestPayload : own32792Dispatch ? own32792Dispatch.requestPayload : own32757Dispatch ? own32757Dispatch.requestPayload : own32789Dispatch ? own32789Dispatch.requestPayload : own32765Dispatch ? own32765Dispatch.requestPayload : own32751Dispatch ? own32751Dispatch.requestPayload : own32777Dispatch
             ? own32777ConsumeNativeDispatch(this,event,own32777Dispatch,requestSessionID) : own32769Dispatch
             ? own32769Dispatch.requestPayload : this.payload(event,parameters);
         if(own32771Slot&&!own32771Owned)own32771Dispatch=own32771Slot.connection.bindParentDispatch({event,parameters,requestPayload:payload,requestSessionID,roundScope:own32771Slot.connection.currentRoundScope()});
@@ -2363,14 +2453,18 @@ return step;
         } : {};
         this.evidence({phase:'intent',ordinal,event,payload,
             ...(['32769','32777','32765','32751','32789','32757','32792','32767','32772','32771','32780','32801','32766','32763','32787','32778'].includes(this.game.gameId)?{...own32769Journal,requestHeaders}: {})});
+        const own32816Headers=own32816Dispatch ? new Headers(own32816Dispatch.requestHeaders) : undefined;
+        if(own32816Headers&&this.cookies.size)own32816Headers.set('Cookie',[...this.cookies].map(([k,v])=>k+'='+v).join('; '));
+        if(own32816Dispatch)this.evidence({phase:'own32816-native-original-request-DATA',ordinal,event,payload,requestHeaders:Array.from(own32816Headers!.entries())});
         const start=Date.now(),deadline=sgRequestTimeoutMs(this.game);let response:Response | undefined,text:string;
         try {
             response=await fetch(this.game.sg.endpoint,{method:'POST',redirect:'error',signal:AbortSignal.timeout(deadline),
-                headers:requestHeaders,body:payload});
+                headers:own32816Headers||requestHeaders,body:payload});
             text=await response.text();
         } catch(error) {
             const fault=transportSourceFault(context);
             this.evidence({phase:'unknown',ordinal,event,...own32769Journal,...sourceFaultMetadata(fault),transportDiagnostic:sgTransportDiagnostic(error,start,deadline,Date.now(),response?.status)});
+            if(own32816Dispatch)own32816WireStop(this,fault);
             if(this.game.gameId==='32769')this.own32769ClosePreserving(fault);
             this.close();
             throw this.closedFaultForFutureSession(fault);
@@ -2382,12 +2476,15 @@ return step;
                 responseHeaders:Array.from(response.headers.entries()),
                 responseSetCookie:response.headers.getSetCookie?.() || []}:{}),
             ...(fault ? sourceFaultMetadata(fault) : {})});
+        if(own32816Dispatch)this.evidence({phase:'own32816-native-original-response-DATA',ordinal,event,httpStatus:response.status,responseHeaders:Array.from(response.headers.entries()),responseSetCookie:response.headers.getSetCookie?.()||[]});
+        if(fault&&own32816Dispatch)own32816WireStop(this,fault);
         if(fault){if(this.game.gameId==='32769')this.own32769ClosePreserving(fault);this.close();throw this.closedFaultForFutureSession(fault);}
         for(const cookie of response.headers.getSetCookie?.() || []) {const pair=cookie.split(';')[0],at=pair.indexOf('=');if(at>0)this.cookies.set(pair.slice(0,at),pair.slice(at+1));}
         const step: WireStep = {
             msgId:event,requestPayload:payload,responsePayload:text,
             elapsedMs:Date.now()-start
         };
+        if(own32816Dispatch)own32816WireSlot(this).wire.ownerHooks.rememberOriginalWire({dispatch:own32816Dispatch,step,response,ordinal,requestSessionID,actualRequestHeaders:own32816Headers});
         if(this.game.gameId==='32777')own32777RememberOriginalRaw(this,this.game,step,response,ordinal,requestSessionID,requestHeaders,this.journalPath,own32777Dispatch);
         if(event === 'Init' && this.game.gameId === '32769') {
             const frame: Own32769OriginalInitFrame = Object.freeze({
@@ -2488,6 +2585,7 @@ if(this.game.gameId==='32751')return own32751Hold(fault);
         const balances=list(r.Balances?.Balance).filter(b=>b.name==='CASH_BALANCE');assert(balances.length===1,'AG integrity: SG cash balance');
         this.balance=integer(balances[0].value,'cash balance');
         }this.session=r.Header.sessionID;
+        const own32816=own32816WireSlots.get(this);if(own32816){own32816.acceptedEnvelopes.set(step,r);own32816.wire.ownerHooks.commitAfterOriginalReadEnvelope(step,r);}
         const own32771=own32771CoexistSlots.get(this);if(own32771)own32771.route=own32771.connection.commitAfterOriginalReadEnvelope(step,r);
         const own32772=own32772ProtocolSlots.get(this);if(own32772)own32772.connection.commitAfterOriginalReadEnvelope(step,r);
         const own32767=own32767ProtocolSlots.get(this);if(own32767)own32767.connection.commitAfterOriginalReadEnvelope(step,r);
@@ -2640,6 +2738,8 @@ return r;
             money:{startBalanceRaw:this.startBalance,endBalanceRaw:this.balance,betRaw:this.game.sg.betRaw,totalWinRaw:this.totalWin}};
     }
     close() {
+        const own32816Slot=own32816WireSlots.get(this);
+        if(own32816Slot){own32816Slot.lifecycle?.close();own32816Slot.binding?.originalOwnerHooks.seal(new Error('Original session closed'));own32816Slot.wire.ownerHooks.seal(new Error('Original session closed'));own32816Slot.host?.timers.clear();}
 own32778Normal0Slots.get(this)?.seal();
 own32771CoexistSlots.get(this)?.connection.seal();
 own32772ProtocolSlots.get(this)?.connection.seal();
@@ -4970,20 +5070,34 @@ let pendingCrossLink=false;
    return{NextActionInfo:{nextAction:mapped.next?'FREE_SPIN':'SPIN'},PlayerBalanceInfo:{preWagerBalance:this.roundStart/100,balance:end/100,wager:this.game.sg.betRaw/100,resultAmount:win/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,startBalance:this.roundStart/100,endBalance:end/100,totalWin:win/100,stepCount:steps.length,msgIds:steps.map(x=>x.msgId),steps:structuredClone(steps),SGWireResponse:wire,SGDecodedResponseXML:step.responseXml,SGOwnSDKDecision:{ownSDKFileSHA256:ownKey32832Profile(this.game).cachedCoreSHA256,own32832SourceRequestFSLNextEnd:true,sourceControlReason:mapped.reason,noSyntheticTerminal:true},money:{startBalanceRaw:this.roundStart,endBalanceRaw:end,betRaw:this.game.sg.betRaw,totalWinRaw:win}};
   }catch(error){this.close();throw error;}
  }
- private async ownMountain32626Call(event:string,parameters:Record<string,any>|null){
-  assert(this.ownMountain32626&&!this.closed&&parameters,'AG integrity: own32626 closed/current fields');
-  try{
-   if(event==='BET'){assert(!this.ownMountain32626.status().pendingRetained,'AG integrity: own32626 prior round pending');const wanted=this.ownMountain32626.initial();assert.deepStrictEqual(parameters,wanted.parameters);this.roundStart=this.balance;this.rootFlowSteps=[];}
-   else{const wanted=this.ownMountain32626.exact();assert(event===wanted.event);assert.deepStrictEqual(parameters,wanted.parameters);}
-   assert(this.rootFlowSteps.length<10000,'AG integrity: own32626 finite original request budget');
-   this.lastRequest={event,parameters:{...parameters}};const step=await this.exchange(event,parameters),wire=this.decode(step,event),mapped=this.ownMountain32626.accept(event,parameters,step.responsePayload);
-   const end=gdmInteger(wire.B,'own32626 actual B'),available=gdmInteger(wire.AB,'own32626 actual AB'),win=gdmInteger(wire.TW,'own32626 actual cumulative TW');assert(end===mapped.balanceRaw&&win===mapped.totalWinRaw&&available===mapped.availableRaw,'AG integrity: own32626 original raw/parser association');
-   if(step.responseBalance!==undefined)assert(step.responseBalance===available,'AG integrity: own32626 actual captured available balance');
-   if(!mapped.next)assert(end===this.roundStart-this.game.sg.betRaw+win,'AG integrity: GDM original whole cash conservation');
-   this.balance=end;this.totalWin=win;this.rootFlowSteps.push({...step,responseBalance:end});const steps=mapped.next?this.rootFlowSteps.slice(-1):this.rootFlowSteps;
-   return{NextActionInfo:{nextAction:mapped.next?'FREE_SPIN':'SPIN'},PlayerBalanceInfo:{preWagerBalance:this.roundStart/100,balance:end/100,wager:this.game.sg.betRaw/100,resultAmount:win/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,startBalance:this.roundStart/100,endBalance:end/100,totalWin:win/100,stepCount:steps.length,msgIds:steps.map(x=>x.msgId),steps:structuredClone(steps),SGWireResponse:wire,SGDecodedResponseXML:step.responseXml,SGOwnSDKDecision:{ownSDKFileSHA256:ownMountain32626Profile(this.game).cachedCoreTableSHA256,own32626SourceRequestNFGNextEnd:true,sourceControlReason:mapped.reason,noSyntheticTerminal:true},money:{startBalanceRaw:this.roundStart,endBalanceRaw:end,betRaw:this.game.sg.betRaw,totalWinRaw:win}};
-  }catch(error){this.close();throw error;}
- }
+ private async ownMountain32626Call(event:string,parameters:Record<string,any>|null){
+
+  assert(this.ownMountain32626&&!this.closed&&parameters,'AG integrity: own32626 closed/current fields');
+
+  try{
+
+   if(event==='BET'){assert(!this.ownMountain32626.status().pendingRetained,'AG integrity: own32626 prior round pending');const wanted=this.ownMountain32626.initial();assert.deepStrictEqual(parameters,wanted.parameters);this.roundStart=this.balance;this.rootFlowSteps=[];}
+
+   else{const wanted=this.ownMountain32626.exact();assert(event===wanted.event);assert.deepStrictEqual(parameters,wanted.parameters);}
+
+   assert(this.rootFlowSteps.length<10000,'AG integrity: own32626 finite original request budget');
+
+   this.lastRequest={event,parameters:{...parameters}};const step=await this.exchange(event,parameters),wire=this.decode(step,event),mapped=this.ownMountain32626.accept(event,parameters,step.responsePayload);
+
+   const end=gdmInteger(wire.B,'own32626 actual B'),available=gdmInteger(wire.AB,'own32626 actual AB'),win=gdmInteger(wire.TW,'own32626 actual cumulative TW');assert(end===mapped.balanceRaw&&win===mapped.totalWinRaw&&available===mapped.availableRaw,'AG integrity: own32626 original raw/parser association');
+
+   if(step.responseBalance!==undefined)assert(step.responseBalance===available,'AG integrity: own32626 actual captured available balance');
+
+   if(!mapped.next)assert(end===this.roundStart-this.game.sg.betRaw+win,'AG integrity: GDM original whole cash conservation');
+
+   this.balance=end;this.totalWin=win;this.rootFlowSteps.push({...step,responseBalance:end});const steps=mapped.next?this.rootFlowSteps.slice(-1):this.rootFlowSteps;
+
+   return{NextActionInfo:{nextAction:mapped.next?'FREE_SPIN':'SPIN'},PlayerBalanceInfo:{preWagerBalance:this.roundStart/100,balance:end/100,wager:this.game.sg.betRaw/100,resultAmount:win/100},capturePlatform:'sg',gameId:this.game.sg.runtimeGameId,runtimeSlug:this.game.sg.runtimeSlug,startBalance:this.roundStart/100,endBalance:end/100,totalWin:win/100,stepCount:steps.length,msgIds:steps.map(x=>x.msgId),steps:structuredClone(steps),SGWireResponse:wire,SGDecodedResponseXML:step.responseXml,SGOwnSDKDecision:{ownSDKFileSHA256:ownMountain32626Profile(this.game).cachedCoreTableSHA256,own32626SourceRequestNFGNextEnd:true,sourceControlReason:mapped.reason,noSyntheticTerminal:true},money:{startBalanceRaw:this.roundStart,endBalanceRaw:end,betRaw:this.game.sg.betRaw,totalWinRaw:win}};
+
+  }catch(error){this.close();throw error;}
+
+ }
+
  async callGameData(event:string,parameters:Record<string,any>|null){
    if(this.ownMountain32626)return this.ownMountain32626Call(event,parameters);
    if(this.ownKey32832)return this.ownKey32832Call(event,parameters);
