@@ -17567,3 +17567,69 @@ games:
         total: 50
       own32766ProtocolDATA:
         contract: own32766-original-SG-protocol-private-v1
+  - provider: sg
+    gameId: '32763'
+    name: Dr. Jekyll Goes Wild
+    backendId: drjekyllgoeswild
+    dbName: sg_drjekyllgoeswild
+    serviceDir: sg_drjekyllgoeswild
+    rtpBuckets:
+      - 0
+      - 30
+      - 100
+      - 300
+      - 500
+      - 1000
+      - 2500
+      - 5000
+      - 10000
+      - 1001
+      - 2001
+      - 5001
+      - 10001
+    sg:
+      protocol: wms
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: '0'
+        ccyCode: ''
+        channel: I
+        freePlay: 'Y'
+        gameCodeRGI: drjekyllgoeswild
+        gameID: '20126'
+        glsID: '65535'
+        lang: en_US
+        promotions: 'N'
+        userID: 'null'
+        userType: C
+        versionID: 1_0
+      stake:
+        total: '100'
+        isBigBet: '0'
+      betRaw: 100
+      runtimeGameId: 32985
+      runtimeSlug: drjekyllgoeswild
+      omitsBaseRemaining: false
+      jekyllScatterMarkerContract: jekyll-own-no-feature-scatter-marker-v1
+      freeStake:
+        total: '100'
+        isBigBet: '0'
+      own32763ProtocolDATA:
+        contract: own32763-original-SG-protocol-private-v1
+  - provider: sg
+    gameId: '32787'
+    name: "Legend of the Pharaohs"
+    dbName: "sg_legend_of_the_pharaohs"
+    backendId: "legendofthepharaohs"
+    serviceDir: "sg_legend-of-the-pharaohs"
+    rtpBuckets: [0, 30, 100, 300, 500, 1000, 2500, 5000, 10000, 1001, 2001, 5001, 10001]
+    sg:
+      protocol: "wms"
+      endpoint: "https://gls.atc.casinarena.com/gls.rgsx"
+      header: {"affiliate": "0", "ccyCode": "", "channel": "I", "freePlay": "Y", "gameCodeRGI": "legendofthepharaohs", "gameID": "20118", "glsID": "65535", "lang": "en_US", "promotions": "N", "userID": "null", "userType": "C", "versionID": "1_0"}
+      stake: {"totalStake": "100", "isBigBet": "0"}
+      freeStake: {}
+      betRaw: 100
+      runtimeGameId: 33009
+      runtimeSlug: "legendofthepharaohs"
+      own32787ProtocolDATA: {"contract": "own32787-Free-Exchange-original-SG-private-v2", "scope": "normal stake100, FreeGameTrigger, FreeGame, Exchange explicit1/2 or native bypass, actual BaseGame/FreeGameEnd End only"}

@@ -1,0 +1,1 @@
+'use strict';const DOM=require('../own32769-node-dom.cjs'),vm=require('node:vm'),data=require('./own32787-Free-Exchange-protocol-DATA.json'),{createOwn32787FreeExchangeOriginalConnection:create}=require('./own32787-Free-Exchange-original-connection.cjs');exports.createOwn32787OriginalSGConnection=d=>create({...d,DOM,vm,data});

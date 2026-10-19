@@ -1,0 +1,228 @@
+{
+  "schema": "own32787-normal-original-SG-DATA-v1",
+  "leaves": {
+    "headerCtor": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\lib\\gls-comms\\gls-comms.js",
+      "byteWindowStart": 32000,
+      "startWithinWindow": 55,
+      "source": "function GLSRequestHeader(metadata, sessionData, gameDescription, glsServerSessionId, platformInitData) {\n            /** Any custom header value*/\n            this.customRequestHeaders = {};\n            // GLS identifiers for different partner backends\n            this.GLSID_CASINARENA = \"4\";\n            this.GLSID_FREEPLAY = \"65535\";\n            this.affiliate = sessionData.getContextID();\n            this.freePlay = !metadata.isRealMoney();\n            this.gameCodeRGI = metadata.getGameCode();\n            this.gameId = gameDescription.id;\n            this.glsId = (this.freePlay ? this.GLSID_FREEPLAY : this.GLSID_CASINARENA);\n            this.langCode = metadata.getLocale();\n            this.sessionId = glsServerSessionId;\n            this.userId = sessionData.getPlayerID();\n            this.version = gameDescription.version;\n            // Setting promotions to false. Value isn't currently passed in by any adaptors\n            this.promotions = false;\n            // channel and userType are set to predefined GLS values -- purpose and meaning unknown\n            this.channel = \"I\";\n            this.userType = \"C\";\n            // currencyCode is required to be present in the header but the value appears irrelevant\n            this.currencyCode = \"\";\n            if (platformInitData != null) {\n                this.currencyCode = platformInitData.getCurrencyFormat().name;\n            }\n        }",
+      "SHA256": "14c05694f13db23f5207acac79ddf4df0fb9236d11af8032733975fc9b644a79",
+      "marker": "function GLSRequestHeader("
+    },
+    "headerXML": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\lib\\gls-comms\\gls-comms.js",
+      "byteWindowStart": 34400,
+      "startWithinWindow": 193,
+      "source": "function () {\n            var xmlString = \"<Header\";\n            xmlString += \" affiliate=\\\"\" + this.affiliate + \"\\\"\";\n            xmlString += \" ccyCode=\\\"\" + this.currencyCode + \"\\\"\";\n            xmlString += \" channel=\\\"\" + this.channel + \"\\\"\";\n            xmlString += \" freePlay=\\\"\" + (this.freePlay ? \"Y\" : \"N\") + \"\\\"\";\n            xmlString += \" gameCodeRGI=\\\"\" + this.gameCodeRGI + \"\\\"\";\n            xmlString += \" gameID=\\\"\" + this.gameId + \"\\\"\";\n            xmlString += \" glsID=\\\"\" + this.glsId + \"\\\"\";\n            xmlString += \" lang=\\\"\" + this.langCode + \"\\\"\";\n            xmlString += \" promotions=\\\"\" + (this.promotions ? \"Y\" : \"N\") + \"\\\"\";\n            xmlString += \" sessionID=\\\"\" + this.sessionId + \"\\\"\";\n            xmlString += \" userID=\\\"\" + this.userId + \"\\\"\";\n            xmlString += \" userType=\\\"\" + this.userType + \"\\\"\";\n            xmlString += \" versionID=\\\"\" + this.version + \"\\\"\";\n            xmlString += this.customHeadersToXml();\n            xmlString += \"/>\";\n            return xmlString;\n        }",
+      "SHA256": "abedab5569545325d0fb0e57796ac07674c89cff1bf4fa591cf6ca129738f88f",
+      "marker": "GLSRequestHeader.prototype.toXMLString ="
+    },
+    "headerCustom": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\lib\\gls-comms\\gls-comms.js",
+      "byteWindowStart": 35500,
+      "startWithinWindow": 313,
+      "source": "function () {\n            var xmlString = \"\";\n            for (var key in this.customRequestHeaders) {\n                if (this.customRequestHeaders.hasOwnProperty(key)) {\n                    xmlString += \" \" + key + \"=\\\"\" + this.customRequestHeaders[key] + \"\\\"\";\n                }\n            }\n            return xmlString;\n        }",
+      "SHA256": "acd246c1780611482e8f4baa3d6679c9bb80f4db55024f9bdc4f2e70ca6c2473",
+      "marker": "GLSRequestHeader.prototype.customHeadersToXml ="
+    },
+    "requestCtor": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\lib\\gls-comms\\gls-comms.js",
+      "byteWindowStart": 68100,
+      "startWithinWindow": 343,
+      "source": "function GLSRequestData(requestType, header) {\n            this.requestType = requestType;\n            this.header = header;\n            this.customData = [];\n        }",
+      "SHA256": "74376338bb034d8da09431ce363382e2ceec4fb1b0509a40a31707e213eedf3c",
+      "marker": "function GLSRequestData("
+    },
+    "requestXML": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\lib\\gls-comms\\gls-comms.js",
+      "byteWindowStart": 68800,
+      "startWithinWindow": 395,
+      "source": "function () {\n            var xmlString = \"<GameRequest type=\\\"\" + this.requestType + \"\\\">\";\n            xmlString += this.header.toXMLString();\n            var numCustomData = this.customData.length;\n            var serializer = new XMLSerializer();\n            for (var i = 0; i < numCustomData; ++i) {\n                xmlString += serializer.serializeToString(this.customData[i].toXML());\n            }\n            xmlString += \"</GameRequest>\";\n            return xmlString;\n        }",
+      "SHA256": "a71219157e508f2f52077064d696cd2f254159434fc90cbc881d0a38dec93ba3",
+      "marker": "GLSRequestData.prototype.toXMLString ="
+    },
+    "currencyCtor": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\lib\\gls-comms\\gls-comms.js",
+      "byteWindowStart": 44050,
+      "startWithinWindow": 164,
+      "source": "function CurrencyMultiplierPayload(multiplier) {\n            this.multiplier = multiplier;\n        }",
+      "SHA256": "f2883cda719d19c567a5f784dffed62c80e6eb3f7e569d7b40f5e096b8007f61",
+      "marker": "function CurrencyMultiplierPayload("
+    },
+    "currencyXML": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\lib\\gls-comms\\gls-comms.js",
+      "byteWindowStart": 44300,
+      "startWithinWindow": 250,
+      "source": "function () {\n            var xmlDoc = document.implementation.createDocument(\"\", \"AccountData\", null);\n            var multiplierElement = xmlDoc.createElement(\"CurrencyMultiplier\");\n            multiplierElement.textContent = this.multiplier.toString();\n            xmlDoc.documentElement.appendChild(multiplierElement);\n            return xmlDoc;\n        }",
+      "SHA256": "bfbc58f91b9a2b310e5dd17993f2fea31dd8bd7c1a81d46c650e26ca029db034",
+      "marker": "CurrencyMultiplierPayload.prototype.toXML ="
+    },
+    "pageCtor": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\app\\legendofthepharaohs.js",
+      "byteWindowStart": 160200,
+      "startWithinWindow": 500,
+      "source": "function LOPInitCustomRequests(pagenum) {\n                this.pageNum = pagenum;\n            }",
+      "SHA256": "28a5e71df588fff465733c42b7de19e9514abe3a4475a7c96e0aa2564bc15978",
+      "marker": "function LOPInitCustomRequests("
+    },
+    "pageXML": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\app\\legendofthepharaohs.js",
+      "byteWindowStart": 160500,
+      "startWithinWindow": 348,
+      "source": "function () {\n                var xmlDoc = document.implementation.createDocument(\"\", \"Page\", null);\n                var pageNumAttr = xmlDoc.createAttribute(\"number\");\n                pageNumAttr.value = this.pageNum.toString();\n                xmlDoc.documentElement.attributes.setNamedItem(pageNumAttr);\n                return xmlDoc;\n            }",
+      "SHA256": "9b7dae1de780d0600a32884ffab47c666c9f89a31bc7b64acdc2e494e895e563",
+      "marker": "LOPInitCustomRequests.prototype.toXML ="
+    },
+    "wagerCtor": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\app\\legendofthepharaohs.js",
+      "byteWindowStart": 172900,
+      "startWithinWindow": 392,
+      "source": "function LOPWagerPayLoad(unitsBet, betPerUnit, isBigBet, pickIndex) {\n                if (pickIndex === void 0) { pickIndex = null; }\n                this.unitsBet = unitsBet;\n                this.betPerUnit = betPerUnit;\n                this.isBigBet = isBigBet;\n                this.pickIndex = pickIndex;\n            }",
+      "SHA256": "b720aff6f640aba7fb2502dfd030349cb92028bb9f01cbc5e183b4ccbedf6adb",
+      "marker": "function LOPWagerPayLoad("
+    },
+    "wagerXML": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\app\\legendofthepharaohs.js",
+      "byteWindowStart": 173500,
+      "startWithinWindow": 346,
+      "source": "function () {\n                var xmlDoc;\n                if (this.pickIndex == null) {\n                    xmlDoc = document.implementation.createDocument(\"\", \"WagerInfo\", null);\n                    var totalStakePerLineAttr = xmlDoc.createAttribute(\"totalStake\");\n                    totalStakePerLineAttr.value = (this.betPerUnit * this.unitsBet).toString();\n                    xmlDoc.documentElement.attributes.setNamedItem(totalStakePerLineAttr);\n                    var bigBetAtt = xmlDoc.createAttribute(\"isBigBet\");\n                    bigBetAtt.value = (this.isBigBet) ? \"1\" : \"0\";\n                    xmlDoc.documentElement.attributes.setNamedItem(bigBetAtt);\n                }\n                else {\n                    xmlDoc = document.implementation.createDocument(\"\", \"FreeGamePick\", null);\n                    var pickIndexAttr = xmlDoc.createAttribute(\"pickIndex\");\n                    pickIndexAttr.value = this.pickIndex.toString();\n                    xmlDoc.documentElement.attributes.setNamedItem(pickIndexAttr);\n                }\n                return xmlDoc;\n            }",
+      "SHA256": "ed464d06b8500ef4b9479c931667033462c246e852c2185e3e549f6aef5fb414",
+      "marker": "LOPWagerPayLoad.prototype.toXML ="
+    },
+    "normalState": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\app\\legendofthepharaohs.js",
+      "byteWindowStart": 122500,
+      "startWithinWindow": 170,
+      "source": "function (state, playData) {\n                var nextState = state;\n                switch (state) {\n                    case 0 /* BaseGame */:\n                        if (playData.getIsFreeSpin()) {\n                            nextState = 1 /* FreeGameTrigger */;\n                        }\n                        if (playData.getCustomData().gameInfoData.BigBet) {\n                            nextState = 5 /* BigBet */;\n                        }\n                        break;\n                    case 1 /* FreeGameTrigger */:\n                        nextState = 2 /* FreeGame */;\n                        break;\n                    case 2 /* FreeGame */:\n                        if (playData.getCustomData().freeSpinData.lastFreeSpin) {\n                            nextState = 4 /* FreeGameEnd */;\n                        }\n                        if (playData.getCustomData().exchangeData != null) {\n                            nextState = 3 /* Exchange */;\n                        }\n                        break;\n                    case 5 /* BigBet */:\n                        if (playData.getCustomData().gameInfoData.BigBetRemainingSpin == 0) {\n                            if (!playData.getIsFreeSpin() && playData.getCustomData().pharaohsBonusData == null)\n                                nextState = 6 /* BigBetSpinEnd */;\n                            else if (playData.getIsFreeSpin() && playData.getCustomData().pharaohsBonusData == null)\n                                nextState = 1 /* FreeGameTrigger */;\n                            else if (!playData.getIsFreeSpin() && playData.getCustomData().pharaohsBonusData != null)\n                                nextState = 7 /* PharaohsBonusTrigger */;\n                        }\n                        break;\n                    case 8 /* PharaohsBonus */:\n                        if (playData.getCustomData().pharaohsBonusData != null && playData.getCustomData().pharaohsBonusData.LastFreeSpin) {\n                            nextState = 5 /* BigBet */;\n                        }\n                        else {\n                            nextState = 1 /* FreeGameTrigger */;\n                        }\n                        break;\n                    default:\n                        break;\n                }\n                return nextState;\n            }",
+      "SHA256": "2d261acb647cadc2ad3c2faddc7e47ab26ff53838e3b2e5a71f44878f9f80f4f",
+      "marker": "Logic.prototype.getNextState ="
+    },
+    "cash": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\app\\legendofthepharaohs.js",
+      "byteWindowStart": 132500,
+      "startWithinWindow": 293,
+      "source": "function (gameInfoData, node) {\n                if (node.attributes.getNamedItem('totalWagerWin'))\n                    gameInfoData.TotalWagerWin = parseInt(node.attributes.getNamedItem('totalWagerWin').value, 10);\n                if (node.attributes.getNamedItem('totalBaseGameWin'))\n                    gameInfoData.TotalBaseWin = parseInt(node.attributes.getNamedItem('totalBaseGameWin').value, 10);\n                if (node.attributes.getNamedItem('totalFreeGameWin'))\n                    gameInfoData.TotalFreeSpinWin = parseInt(node.attributes.getNamedItem('totalFreeGameWin').value, 10);\n                if (node.attributes.getNamedItem(\"maxWinValue\") != null)\n                    gameInfoData.MaxWinValue = parseInt(node.attributes.getNamedItem(\"maxWinValue\").value, 10);\n                if (node.attributes.getNamedItem(\"isMaxWin\") != null)\n                    gameInfoData.MaxWin = (node.attributes.getNamedItem(\"isMaxWin\").value == \"Y\");\n                if (node.attributes.getNamedItem(\"isBigBet\") != null)\n                    gameInfoData.BigBet = (node.attributes.getNamedItem(\"isBigBet\").value == \"Y\");\n                if (node.attributes.getNamedItem(\"bbSpinsRemaining\") != null)\n                    gameInfoData.BigBetRemainingSpin = parseInt(node.attributes.getNamedItem(\"bbSpinsRemaining\").value, 10);\n                if (node.attributes.getNamedItem(\"bbNumScatters\") != null)\n                    gameInfoData.NumBigBetScatters = parseInt(node.attributes.getNamedItem(\"bbNumScatters\").value, 10);\n                if (node.attributes.getNamedItem(\"bbCurrScatter\") != null)\n                    gameInfoData.CurrentBigBetScatter = parseInt(node.attributes.getNamedItem(\"bbCurrScatter\").value, 10);\n                if (node.attributes.getNamedItem(\"totalPharoahsBonusWin\") != null)\n                    gameInfoData.TotalPharoahsBonusWin = parseInt(node.attributes.getNamedItem(\"totalPharoahsBonusWin\").value, 10);\n            }",
+      "SHA256": "de2cdcaece5881064432d2d0ea3805da5540ada3138c95950d8357ebec7ce2ae",
+      "marker": "LOPPlayResponseXMLParser.prototype.parseGameInfo ="
+    },
+    "cashCtor": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\app\\legendofthepharaohs.js",
+      "byteWindowStart": 291500,
+      "startWithinWindow": 142,
+      "source": "function GameWinInfo() {\n                this.totalBaseWin = this.totalWagerWin = this.totalFreeSpinWin = this.maxWinValue = this.bigBetRemaingSpin = 0;\n                this.bigBetScatters = this.currentBigBetScatters = 0;\n                this.isMaxWin = this.isBigBet = false;\n            }",
+      "SHA256": "a48567fb6a73b685c2bd850d1d99e62ea8cc37013426b85e462bc76bb3a734d7",
+      "marker": "function GameWinInfo("
+    },
+    "pageNext": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\app\\legendofthepharaohs.js",
+      "byteWindowStart": 138800,
+      "startWithinWindow": 245,
+      "source": "function () {\n                var payloads = [];\n                var customInitReq = new legendofthepharaohs.LOPInitCustomRequests(this.initResponse ? this.pageIndex + 1 : 0);\n                payloads.push(customInitReq);\n                return payloads;\n            }",
+      "SHA256": "4358548890295f0df132a586737454bd64b8e65ccb9b902e41bed05ba82ac8fa",
+      "marker": "LOPInitRequest.prototype.getInitPayLoad ="
+    },
+    "Init": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\lib\\gls-comms\\gls-comms.js",
+      "byteWindowStart": 57800,
+      "startWithinWindow": 241,
+      "source": "function (requestData) {\n            var _this = this;\n            if (requestData === void 0) { requestData = []; }\n            var glsHeader = new GLSRequestHeader(this.metadata, this.sessionData, this.glmDescription, this.glsServerSessionId, this.platformInitData);\n            var glsPayload = new GLSRequestData(this.MSG_INIT, glsHeader);\n            requestData.forEach(function (r) {\n                glsPayload.addCustomPayload(r);\n            });\n            return glsPayload;\n}",
+      "SHA256": "c647e600df06bc4d921e2068a736d353c45477e5f6239ed9d61a5727cb46dc1a",
+      "marker": "GLSRequestor.prototype.makeInitRequest =",
+      "originalFullSourceSHA256": "4c0a8768624fd093e3283abc4297d31d9c42e3febb965e5d6e41b55e5bed42a4",
+      "originalSource": "function (requestData) {\n            var _this = this;\n            if (requestData === void 0) { requestData = []; }\n            var glsHeader = new GLSRequestHeader(this.metadata, this.sessionData, this.glmDescription, this.glsServerSessionId, this.platformInitData);\n            var glsPayload = new GLSRequestData(this.MSG_INIT, glsHeader);\n            requestData.forEach(function (r) {\n                glsPayload.addCustomPayload(r);\n            });\n            var factory = new httpconnection.HttpConnectionFactory();\n            var connection = factory.createConnection(this.endPoint, glsPayload.toXMLString(), 1 /* POST */);\n            connection.getEvents().add({\n                onComplete: function (url, response, responseHeaders) {\n                    _this.requestObject = response;\n                    _this.processInitResponse(url, response.responseText, responseHeaders);\n                },\n                onFail: function (url, error, status) {\n                    _this.processError(url, error, status);\n                },\n                onProgress: null\n            });\n            connection.send();\n        }",
+      "purePrefixOnly": true
+    },
+    "Logic": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\lib\\gls-comms\\gls-comms.js",
+      "byteWindowStart": 59300,
+      "startWithinWindow": 234,
+      "source": "function (requestData, customHeaders) {\n            var _this = this;\n            if (requestData === void 0) { requestData = []; }\n            var glsHeader = new GLSRequestHeader(this.metadata, this.sessionData, this.glmDescription, this.glsServerSessionId, this.platformInitData);\n            glsHeader.addCustomHeaders(customHeaders);\n            var glsPayload = new GLSRequestData(this.MSG_PLAY, glsHeader);\n            glsPayload.addCustomPayload(new CurrencyMultiplierPayload(this.platformInitData.getCurrencyMultiplier()));\n            requestData.forEach(function (r) {\n                glsPayload.addCustomPayload(r);\n            });\n            return glsPayload;\n}",
+      "SHA256": "62d5b42d4b0fe8c7781d2d9f2179c7d99ec22c1168560523ae801f7cc432cdf9",
+      "marker": "GLSRequestor.prototype.makePlayRequest =",
+      "originalFullSourceSHA256": "9845ab09ff781745fa543f90959381627defd066bb78229cee51fdc19152b65f",
+      "originalSource": "function (requestData, customHeaders) {\n            var _this = this;\n            if (requestData === void 0) { requestData = []; }\n            var glsHeader = new GLSRequestHeader(this.metadata, this.sessionData, this.glmDescription, this.glsServerSessionId, this.platformInitData);\n            glsHeader.addCustomHeaders(customHeaders);\n            var glsPayload = new GLSRequestData(this.MSG_PLAY, glsHeader);\n            glsPayload.addCustomPayload(new CurrencyMultiplierPayload(this.platformInitData.getCurrencyMultiplier()));\n            requestData.forEach(function (r) {\n                glsPayload.addCustomPayload(r);\n            });\n            var factory = new httpconnection.HttpConnectionFactory();\n            var connection = factory.createConnection(this.endPoint, glsPayload.toXMLString(), 1 /* POST */);\n            connection.getEvents().add({\n                onComplete: function (url, response, responseHeaders) {\n                    _this.requestObject = response;\n                    _this.processPlayResponse(url, response.responseText, responseHeaders);\n                },\n                onFail: function (url, error, status) {\n                    _this.processError(url, error, status);\n                },\n                onProgress: null\n            });\n            connection.send();\n        }",
+      "purePrefixOnly": true
+    },
+    "EndGame": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\lib\\gls-comms\\gls-comms.js",
+      "byteWindowStart": 61000,
+      "startWithinWindow": 215,
+      "source": "function (requestData, customHeaders) {\n            var _this = this;\n            if (requestData === void 0) { requestData = []; }\n            var glsHeader = new GLSRequestHeader(this.metadata, this.sessionData, this.glmDescription, this.glsServerSessionId, this.platformInitData);\n            glsHeader.addCustomHeaders(customHeaders);\n            var glsPayload = new GLSRequestData(this.MSG_END, glsHeader);\n            requestData.forEach(function (r) {\n                glsPayload.addCustomPayload(r);\n            });\n            return glsPayload;\n}",
+      "SHA256": "da2caaffbf45cfcbe9a7b839f4ae6ac9f4087d291f3a21125b47b7968d9d30d4",
+      "marker": "GLSRequestor.prototype.makeEndRequest =",
+      "originalFullSourceSHA256": "ca1aac3a27872fb0f7cdcfc619b2ac883916f37f64186d6741f2a5922db6698c",
+      "originalSource": "function (requestData, customHeaders) {\n            var _this = this;\n            if (requestData === void 0) { requestData = []; }\n            var glsHeader = new GLSRequestHeader(this.metadata, this.sessionData, this.glmDescription, this.glsServerSessionId, this.platformInitData);\n            glsHeader.addCustomHeaders(customHeaders);\n            var glsPayload = new GLSRequestData(this.MSG_END, glsHeader);\n            requestData.forEach(function (r) {\n                glsPayload.addCustomPayload(r);\n            });\n            var factory = new httpconnection.HttpConnectionFactory();\n            var connection = factory.createConnection(this.endPoint, glsPayload.toXMLString(), 1 /* POST */);\n            connection.getEvents().add({\n                onComplete: function (url, response, responseHeaders) {\n                    _this.requestObject = response;\n                    _this.processEndResponse(url, response.responseText, responseHeaders);\n                },\n                onFail: function (url, error, status) {\n                    _this.processError(url, error, status);\n                },\n                onProgress: null\n            });\n            connection.send();\n        }",
+      "purePrefixOnly": true
+    },
+    "currencyFormat": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\lib\\gls-comms\\gls-comms.js",
+      "byteWindowStart": 51700,
+      "startWithinWindow": 261,
+      "source": "function (currencyInformation) {\n            var format = this.DEFAULT_FORMAT;\n            if (currencyInformation != null) {\n                var formatNodes = currencyInformation.childNodes;\n                var formatNodesLength = formatNodes.length;\n                for (var i = 0; i < formatNodesLength; ++i) {\n                    switch (formatNodes[i].nodeName) {\n                        case 'Currency':\n                            format.name = formatNodes[i].textContent;\n                            break;\n                        case 'ExchangeRate':\n                            format.exchangeRate = parseInt(formatNodes[i].textContent, 10);\n                            break;\n                        case 'CurrencySymbol':\n                            format.symbol = formatNodes[i].textContent;\n                            break;\n                        case 'Grouping':\n                            format.grouping = parseInt(formatNodes[i].textContent, 10);\n                            break;\n                        case 'GroupingSeparator':\n                            format.groupingSeparator = formatNodes[i].textContent;\n                            break;\n                        case 'FracDigits':\n                            format.fractionalDigits = parseInt(formatNodes[i].textContent, 10);\n                            break;\n                        case 'DecimalSeparator':\n                            format.fractionalSeparator = formatNodes[i].textContent;\n                            break;\n                        case 'CurrencyCodeSpacing':\n                            format.currencyCodeSpacing = parseInt(formatNodes[i].textContent, 10);\n                            break;\n                        case 'CodeBeforeAmount':\n                            format.currencyCodeBeforeAmount = (formatNodes[i].textContent == 'true');\n                            break;\n                        case 'CurrencySymbolSpacing':\n                            format.currencySymbolSpacing = parseInt(formatNodes[i].textContent, 10);\n                            break;\n                        case 'SymbolBeforeAmount':\n                            format.currencySymbolBeforeAmount = (formatNodes[i].textContent == 'true');\n                            break;\n                    }\n                }\n            }\n            return format;\n        }",
+      "SHA256": "c31f30a6fb01ffe86a2bf1382f0ab2a6c3e0f09c19789b12bf2faf5813e209c5",
+      "marker": "CurrencyFormatXMLParser.parse ="
+    },
+    "currencyFormatDefault": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\lib\\gls-comms\\gls-comms.js",
+      "byteWindowStart": 54500,
+      "source": "{\n            name: \"\",\n            symbol: \"\",\n            exchangeRate: 1,\n            grouping: 3,\n            groupingSeparator: \",\",\n            fractionalDigits: 2,\n            fractionalSeparator: \".\",\n            currencyCodeSpacing: 1,\n            currencyCodeBeforeAmount: false,\n            currencySymbolSpacing: 1,\n            currencySymbolBeforeAmount: false\n        }",
+      "SHA256": "10e201f8a9f77d9e419353ab6202ff5cf70fe62167f379c94233203138699ab5",
+      "marker": "CurrencyFormatXMLParser.DEFAULT_FORMAT"
+    }
+  },
+  "sourceAnchors": {
+    "ordinaryEnd": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\app\\legendofthepharaohs.js",
+      "byteWindowStart": 117500,
+      "startWithinWindow": 241,
+      "source": "case 0 /* BaseGame */:\n                        this.slot.getWinDisplayController().start();\n                        if (this.historyData == null) {\n                            this.glsRequestor.makeEndRequest();\n                        }\n                        break;\n                    case 1 /* FreeGameTrigger */:",
+      "SHA256": "69d2f299b6454fdff1e89a00898b584eae71ba38d36d7259c7c3538f0d959b70"
+    },
+    "pageField": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\resource.atc.casinarena.com\\resource-service\\content\\legendofthepharaohs\\app\\legendofthepharaohs.js",
+      "byteWindowStart": 150900,
+      "startWithinWindow": 227,
+      "source": "//Retrive Page number\n                var pageInfoNode = xml.getElementsByTagName(\"PageInfo\");\n                if (pageInfoNode != null)\n                    LOPInitDataHolder.getGameInitialResponse().getGameData().setPageCount(parseFloat(pageInfoNode[0].attributes.getNamedItem(\"pageCount\").value));\n                if (pageNode != null)\n                    LOPInitDataHolder.getGameInitialResponse().getGameData().setPageIndex(parseFloat(pageNode[0].attributes.getNamedItem(\"pageIndex\").value));\n                return LOPInitDataHolder.getGameInitialResponse();",
+      "SHA256": "7ef242bed4144c6e9fb81bf340af50a215fb1e0a97cd546bafc8c06c42e110a5"
+    }
+  },
+  "scope": "normal BigBetN/freeN/bonusN only; pick/exchange/Pharaohs/free/bigbet/max/recovery held",
+  "legacy": {
+    "six": [
+      {
+        "sourceFile": "remaining-db-git-preanalysis-20261010\\bounded-own-records-private.ejson",
+        "sourceSHA256": "edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789",
+        "recordSHA256": "d48f78c6a0c2c16c05811fee13ef07d5e745983a91520e00b8ad0ecc3ddcac7f"
+      },
+      {
+        "sourceFile": "remaining-db-git-preanalysis-20261010\\bounded-own-records-private.ejson",
+        "sourceSHA256": "edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789",
+        "recordSHA256": "cca90597f4d59914669760f496f01f5d9ac7fbab5528a5cce84f5f0ee820bb7e"
+      },
+      {
+        "sourceFile": "remaining-db-git-preanalysis-20261010\\bounded-own-records-private.ejson",
+        "sourceSHA256": "edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789",
+        "recordSHA256": "6ddf044966d51d4f47d228028282b2f034a4ed3ff23b97a2b0ebeb38a6cbc932"
+      },
+      {
+        "sourceFile": "remaining-db-git-preanalysis-20261010\\bounded-own-records-private.ejson",
+        "sourceSHA256": "edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789",
+        "recordSHA256": "a80d8609f46e44cec811904514c4bc88bdc7cfb0801fb75339b8af7b4212dd59"
+      },
+      {
+        "sourceFile": "remaining-db-git-preanalysis-20261010\\bounded-own-records-private.ejson",
+        "sourceSHA256": "edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789",
+        "recordSHA256": "83fbbfc5ae11298441a65f0548a85c6f8a5997a0ff2a7729042d77dfb4db925b"
+      },
+      {
+        "sourceFile": "remaining-db-git-preanalysis-20261010\\bounded-own-records-private.ejson",
+        "sourceSHA256": "edb05423f2f9821b33295faf8c656fbcc7ecc26ae6834686883002efbf6ad789",
+        "recordSHA256": "7400e091ce4069a546a32a68f13dd17422dce00c496e34779e16a160c7e4dbd6"
+      }
+    ],
+    "oldSameCampaignBaseline": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\bulk-wms-own-display-data-candidate-v2\\own-baseline-32787-result.json"
+  },
+  "pageData": {
+    "schema": "own32787-native-paged-init-v1"
+  }
+}

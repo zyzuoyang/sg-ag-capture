@@ -1,0 +1,28 @@
+'use strict';
+exports.createOwn32787FreeExchangeDATA=function({DOM,vm,data,game,need}){
+ const ctx=vm.createContext({legendofthepharaohs:{},gamedata:{},exports:{}}),ext=data.extensionLeaves;
+ const fn=k=>new vm.Script('('+ext[k].source+')').runInContext(ctx,{timeout:100});
+ ctx.__extends=fn('extends');ctx.gamedata.GamePlayData=fn('gameDataCtor');
+ for(const name of ['BonusInfo','FreeSpinData','ExchangeData','PharaohsBonusData','GameWinInfo','LOPPlayData','LOPFreeSpinXMLParser','PharaohsBonusXMLParser','BalanceData'])new vm.Script(ext[name].source).runInContext(ctx,{timeout:100});
+ const C=ctx.legendofthepharaohs,parseCash=new vm.Script('('+data.leaves.cash.source+')').runInContext(ctx,{timeout:100}),next=new vm.Script('('+data.leaves.normalState.source+')').runInContext(ctx,{timeout:100});
+ const actual=(node,a)=>{const v=node?.getAttribute(a);need(v!==null&&v!==''&&/^[0-9]+$/.test(v)&&Number.isSafeInteger(Number(v)),'actual '+a);return Number(v)};
+ function balance(d){const node=d.getElementsByTagName('Balances')[0];need(node,'actual Balances');const p=ctx.exports.BalanceData.parseXML(node).balances;need(Object.prototype.hasOwnProperty.call(p,'CASH_BALANCE')&&Number.isSafeInteger(p.CASH_BALANCE)&&p.CASH_BALANCE>=0,'actual CASH_BALANCE no default');return p.CASH_BALANCE}
+ function parse(d){const g=d.getElementsByTagName('GameResult')[0],w=d.getElementsByTagName('GameWinInfo')[0];need(g&&w,'own actual result and cash');const sourceStake=actual(g,'stake');const cash=actual(w,'totalWagerWin'),info=new C.GameWinInfo();parseCash(info,w);need(cash===info.TotalWagerWin,'native actual cumulative cash');const play=new C.LOPPlayData();
+ // Only the request-relevant assignment in native populateGameData/populateResults.
+ // Display symbols/paylines are neither executed nor used as admission lists.
+ for(const reelResults of Array.from(g.childNodes))if(reelResults.nodeName==='ReelResults')for(const spin of Array.from(reelResults.childNodes)){need(spin.attributes,'native spin attributes');const flag=spin.attributes.getNamedItem('freeSpin');if(flag!==null)play.setIsFreeSpin(flag.value==='Y')}
+ const free=new C.FreeSpinData();let exchange=null,pharaohs=null,pickIndexPresent=false;
+ for(const feature of Array.from(d.getElementsByTagName('Feature'))){const index=feature.attributes.getNamedItem('index'),name=feature.attributes.getNamedItem('name');need(index&&name,'native Feature attributes');if(index.value==='1'&&name.value==='FreeGame'){const n=feature.childNodes[0];need(n?.attributes,'native FreeGame first child');C.LOPFreeSpinXMLParser.populateFreeGameData(n,free);if(n.attributes.getNamedItem('pickIndex'))pickIndexPresent=true;if(feature.childNodes[1]!=null){need(feature.childNodes[1].attributes,'native Exchange second child');exchange=new C.ExchangeData();C.LOPFreeSpinXMLParser.populateExchangeData(feature.childNodes[1],exchange)}else exchange=null}else if(index.value==='3'&&name.value==='PharaohsBonusGame'){need(feature.childNodes[0]?.attributes,'native Pharaohs first child');pharaohs=new C.PharaohsBonusData();C.PharaohsBonusXMLParser.populatePharaohsBonusData(feature.childNodes[0],pharaohs)}}
+ const custom={gameInfoData:info,freeSpinData:free,exchangeData:exchange,pharaohsBonusData:pharaohs};play.getCustomData=()=>custom;return {play,custom,cash,sourceStake,pickIndexPresent};
+ }
+ function plan(p,previous,dispatch){const {play,custom,cash}=p,{gameInfoData:info,freeSpinData:free,exchangeData:exchange,pharaohsBonusData:pharaohs}=custom;
+ need(!info.BigBet&&pharaohs===null,'selected own bigBetWager missing; BigBet and Pharaohs held');
+ const out={...previous};if(play.getIsFreeSpin()){out.view=p;out.remaining=free.totalFreeSpinTriggered}if(exchange!==null){need(out.view?.custom.exchangeData,'native retained FreeSpin gameData Exchange');out.exchangeRemaining=out.view.custom.exchangeData.retriggerCount}
+ let event='Logic',action='FREE_SPIN',kind;
+ if(free.inPick){need(dispatch?.choiceIndex===1||dispatch?.choiceIndex===2,'inPick ACK must bind actual own menu dispatch');need(p.pickIndexPresent&&Number.isInteger(free.pickIndex),'actual provider pickIndex no constructor default');out.nativeState=2;if(free.pickIndex!==1){need(out.exchangeRemaining!==undefined,'actual retained exchange remaining');out.remaining=out.exchangeRemaining}kind='native-inPick-checkForNextSpin-provider-'+free.pickIndex}
+ else{out.nativeState=next(previous.nativeState,play);if(out.nativeState===0||out.nativeState===4){event='EndGame';action='PLAY';kind=out.nativeState===4?'native-FreeGameEnd-handleSpinComplete-End':'native-BaseGame-handleSpinComplete-End'}else if(out.nativeState===1){kind='native-FreeGameTrigger-local-presentation-then-onSpin'}else{need(out.nativeState===2||out.nativeState===3,'mapped normal FreeGame state');if(exchange!==null){const viewExchange=out.view?.custom.exchangeData;need(viewExchange,'native current exchange data');if(viewExchange.exchangeByPassed){out.nativeState=2;out.remaining=out.exchangeRemaining;kind='native-Exchange-bypass-retrigger-onSpin'}else{action='PICK';kind='native-Exchange-explicit-FreeGamePick-1-or-2'}}else{need(out.remaining>0&&!info.MaxWin,'native-local-outro-without-mapped-network-End-caller');kind='native-FreeGame-onWinDisplayComplete-onSpin'}}}
+ const metadata=(previous.nativeState!==0||out.nativeState!==0)&&out.remaining!==undefined?Object.freeze({freeSpinsRemaining:out.remaining,accumulativeWin:cash/100}):undefined;
+ return Object.freeze({event,action,kind,sourceProtocolKind:kind,sourceCumulativeWin:cash,sourceStake:p.sourceStake,free:metadata,nextState:out,requestNotSent:true,actualEndACK:false,displayPipelineExecuted:false});
+ }
+ return Object.freeze({parse,plan,balance});
+};
