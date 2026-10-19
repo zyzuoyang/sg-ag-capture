@@ -1845,6 +1845,14 @@ function own32801Hold(error:unknown):Error{return Object.assign(new Error('AG in
 function own32766Hold(error:unknown):Error{return Object.assign(new Error('AG integrity: own32766 original protocol outcome retained'),{cause:error,own32766DeterministicIntegrityStop:true,retryAllowed:false});}
 function own32765Hold(error:unknown):Error{return Object.assign(new Error('AG integrity: own32765 original protocol outcome retained'),{cause:error,own32765IntegrityHold:true,retryAllowed:false});}
 function own32751Hold(error:unknown):Error{return Object.assign(new Error('AG integrity: own32751 original protocol outcome retained'),{cause:error,own32751IntegrityHold:true,retryAllowed:false});}
+const own32778Normal0Slots=new WeakMap<object,any>();
+function own32778Normal0Connection(session:object,game:AGGameConfig){
+ assert(ownHealthyPaidBinding(game)==='jinji','AG integrity: own32778 normal0 scope');
+ let c=own32778Normal0Slots.get(session);
+ if(!c){c=require('./own32778-protocol-data/own32778-normal0-DATA.cjs').create(game);own32778Normal0Slots.set(session,c)}
+ return c;
+}
+function own32778Normal0Hold(error:unknown){return Object.assign(new Error('AG integrity: own32778 normal0 source held'),{cause:error,retryAllowed:false})}
 export class SGWmsSession {
     private balance = Number.NaN;
     private startBalance = Number.NaN;
@@ -2048,6 +2056,7 @@ export class SGWmsSession {
  }catch(error){slot.connection?.seal();this.close();throw own32751Hold(error)}
 }
 async callGameData(event:string,parameters:Record<string,any>|null){
+ if(this.game.gameId==='32778'&&this.game.sg.jinjiEndlessContract){try{return await this.callOriginalWmsGameData(event,parameters)}catch(error){own32778Normal0Slots.get(this)?.seal();this.close();throw own32778Normal0Hold(error)}}
         if(this.game.gameId==='32763'){const slot=own32763ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32763 private connection absent');try{const result=await this.callOriginalWmsGameData(event,parameters);return slot.connection.finishOriginalResult(event,result);}catch(error){slot.connection.seal(error);this.close();throw own32763Hold(error);}}
         if(this.game.gameId==='32787'){const slot=own32787ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32787 private connection absent');try{const result=await this.callOriginalWmsGameData(event,parameters);return slot.connection.finishOriginalResult(event,result);}catch(error){slot.connection.seal(error);this.close();throw own32787Hold(error);}}
         if(this.game.gameId==='32780'){const slot=own32780ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32780 private connection absent');try{const result=await this.callOriginalWmsGameData(event,parameters);return slot.connection.finishOriginalResult(event,result);}catch(error){slot.connection.seal(error);this.close();throw own32780Hold(error);}}
@@ -2171,6 +2180,7 @@ if(this.game.gameId==='32751'||(this.game.sg as any).own32751ProtocolDATA){asser
     getFallbackBet() { return this.game.sg.betRaw/100; }
     getSpinParams() { return {...this.game.sg.stake}; }
     getPickProtocol(action:string,response?:any) {
+        if(this.game.gameId==='32778'&&this.game.sg.jinjiEndlessContract)return own32778Normal0Connection(this,this.game).pickProtocol(action);
         const own32771=own32771CoexistSlots.get(this);if(own32771?.connection.ownsCurrentRound())return own32771.connection.pickProtocol(action);
         if(this.game.gameId==='32787'){const slot=own32787ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32787 private choice connection required');const menu=slot.connection.pickProtocol(action,response);return menu?Object.freeze({...menu,kind:'choice',event:'Logic'}):undefined;}
         if(this.game.gameId==='32780'){const slot=own32780ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32780 private choice connection required');return slot.connection.pickProtocol(action,response);}
@@ -2185,6 +2195,7 @@ if(this.game.gameId==='32751'||(this.game.sg as any).own32751ProtocolDATA){asser
         return {kind:'choice' as const,event:'Logic',options:[{pickIndex:1,requestPickIndex:1,requestParams:{__sgGoldenCollect:'1'}}]};
     }
     getPickParams(_index: number|string) {
+        if(this.game.gameId==='32778'&&this.game.sg.jinjiEndlessContract){assert(String(_index)==='0','AG integrity: own32778 native normal0 only');return own32778Normal0Connection(this,this.game).exact('PICK').parameters}
         const own32771=own32771CoexistSlots.get(this);if(own32771?.connection.ownsCurrentRound()){const menu=own32771.connection.pickProtocol('PICK'),options=menu.options.filter((o:any)=>String(o.requestPickIndex)===String(_index));assert(options.length===1,'AG integrity: own32771 explicit current native choice');return options[0].requestParams}
         if(this.game.gameId==='32789'){const s=own32789ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32789 current Pick parameters');const protocol=s.connection.pickProtocol('PICK'),option=protocol.options.find((row:any)=>String(row.requestPickIndex)===String(_index));assert(option,'AG integrity: own32789 native Pick unavailable');return option.requestParams}
         if(this.game.gameId==='32769') {
@@ -2213,6 +2224,7 @@ if(this.game.gameId==='32751'){const s=own32751ProtocolSlots.get(this);assert(s?
     getLastGameRequest() { return this.lastRequest; }
     isRoundTerminalAction(action: string) { return action === 'SPIN'; }
     getExactFollowUpRequest(action: string) {
+        if(this.game.gameId==='32778'&&this.game.sg.jinjiEndlessContract)return own32778Normal0Connection(this,this.game).exact(action);
         const own32771=own32771CoexistSlots.get(this);if(own32771?.connection.ownsCurrentRound())return own32771.connection.exact(action);
 if(this.game.gameId==='32772'){const s=own32772ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32772 private next');return s.connection.exact(action)}
 if(this.game.gameId==='32767'){const s=own32767ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32767 private next');return s.connection.exact(action)}
@@ -2253,6 +2265,11 @@ if(this.game.gameId==='32751'){const s=own32751ProtocolSlots.get(this);assert(s?
             return `<GameRequest type="Logic">${header}${data}<AccountData><CurrencyMultiplier>${this.ownGoldenCurrencyMultiplier}</CurrencyMultiplier></AccountData></GameRequest>`;
         }
 
+        if(this.game.gameId==='32778'&&this.game.sg.jinjiEndlessContract&&(event==='Logic'||event==='EndGame')){
+            const c=own32778Normal0Connection(this,this.game);
+            if(event==='Logic')return c.logicPayload(header,parameters,this.action);
+            c.beforeEnd(parameters);return `<GameRequest type="EndGame">${header}</GameRequest>`;
+        }
         if(this.game.sg.ownDCNextEndContract&&(event==='Logic'||event==='EndGame')){
             const c=ownDCFlowBinding(this.game);
             if(event==='Logic'){assert((this.action==='SPIN'||this.action==='FREE_SPIN'&&this.free&&this.free.freeSpinsRemaining>0)&&JSON.stringify(parameters)===JSON.stringify(this.game.sg.stake),'AG integrity: SG DC exact paid/free Logic request');return `<GameRequest type="Logic">${header}${c.logicRequestDataXML}</GameRequest>`;}
@@ -2345,7 +2362,7 @@ return step;
             nativeRequestDATA:!!own32769Dispatch
         } : {};
         this.evidence({phase:'intent',ordinal,event,payload,
-            ...(['32769','32777','32765','32751','32789','32757','32792','32767','32772','32771','32780','32801','32766','32763','32787'].includes(this.game.gameId)?{...own32769Journal,requestHeaders}: {})});
+            ...(['32769','32777','32765','32751','32789','32757','32792','32767','32772','32771','32780','32801','32766','32763','32787','32778'].includes(this.game.gameId)?{...own32769Journal,requestHeaders}: {})});
         const start=Date.now(),deadline=sgRequestTimeoutMs(this.game);let response:Response | undefined,text:string;
         try {
             response=await fetch(this.game.sg.endpoint,{method:'POST',redirect:'error',signal:AbortSignal.timeout(deadline),
@@ -2361,7 +2378,7 @@ return step;
         assert(response,'AG integrity: SG missing transport response');
         const fault=response.ok ? null : httpSourceFault({...context,httpStatus:response.status,responseSHA256:crypto.createHash('sha256').update(text).digest('hex')});
         this.evidence({phase:'response',ordinal,event,httpStatus:response.status,text,
-            ...(['32769','32777','32765','32751','32789','32757','32792','32767','32772','32771','32780','32801','32766','32763','32787'].includes(this.game.gameId)?{...own32769Journal,
+            ...(['32769','32777','32765','32751','32789','32757','32792','32767','32772','32771','32780','32801','32766','32763','32787','32778'].includes(this.game.gameId)?{...own32769Journal,
                 responseHeaders:Array.from(response.headers.entries()),
                 responseSetCookie:response.headers.getSetCookie?.() || []}:{}),
             ...(fault ? sourceFaultMetadata(fault) : {})});
@@ -2428,6 +2445,7 @@ return step;
 return step;
     }
     private closedFaultForFutureSession(fault:SGSourceFault):Error {
+        if(this.game.gameId==='32778'&&this.game.sg.jinjiEndlessContract)return own32778Normal0Hold(fault);
 if(this.game.gameId==='32772')return own32772Hold(fault);
 if(this.game.gameId==='32767')return own32767Hold(fault);
 if(this.game.gameId==='32792')return own32792Hold(fault);
@@ -2546,6 +2564,7 @@ return r;
             assert(!r.GameResult,'AG integrity: SG unexpected EndGame result');
             assert(this.balance===this.startBalance-this.game.sg.betRaw+this.totalWin,'AG integrity: SG final balance mismatch');
             this.action='SPIN';
+            if(this.game.gameId==='32778'&&this.game.sg.jinjiEndlessContract)own32778Normal0Connection(this,this.game).endSucceeded();
         } else {
             const g=r.GameResult;
             if(this.game.gameId==='32763'){const slot=own32763ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32763 FIRST private connection required');const mapped=slot.connection.currentOriginalMapping(g,first);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}else if(this.game.gameId==='32787'){const slot=own32787ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32787 FIRST private connection required');const mapped=slot.connection.currentOriginalMapping(g,first);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}else if(this.game.gameId==='32780'){const slot=own32780ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32780 mapping absent');const mapped=slot.connection.currentOriginalMapping(g,first);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}else if(this.game.gameId==='32801'){const slot=own32801ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32801 mapping absent');const mapped=slot.connection.currentOriginalMapping(g,first);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}else if(this.game.gameId==='32766'){const slot=own32766ProtocolSlots.get(this);assert(slot?.connection,'AG integrity: own32766 mapping absent');const mapped=slot.connection.currentOriginalMapping(g,first);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}else if(this.game.gameId==='32771'&&own32771CoexistSlots.get(this)?.route?.kind==='Gamble'){const s=own32771CoexistSlots.get(this),mapped=s.connection.currentOriginalMapping(g,first);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}else if(this.game.gameId==='32772'){const s=own32772ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32772 raw money mapping');const mapped=s.connection.currentOriginalMapping(g,first);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}else if(this.game.gameId==='32767'){const s=own32767ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32767 raw money mapping');const mapped=s.connection.currentOriginalMapping(g,first);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}else if(this.game.gameId==='32792'){const s=own32792ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32792 raw money mapping');const mapped=s.connection.currentOriginalMapping(g,first);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}else if(this.game.gameId==='32757'){const s=own32757ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32757 raw money mapping');const mapped=s.connection.currentOriginalMapping(g,first);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}else if(this.game.gameId==='32789'){const s=own32789ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32789 raw money mapping');const mapped=s.connection.currentOriginalMapping(g,first);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}else if(this.game.gameId==='32765'){const s=own32765ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32765 raw money mapping');const mapped=s.connection.currentOriginalMapping(g,first);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}else if(this.game.gameId==='32751'){const s=own32751ProtocolSlots.get(this);assert(s?.connection,'AG integrity: own32751 raw money mapping');const mapped=s.connection.currentOriginalMapping(g,first);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}else if(this.game.sg.ownDCNextEndContract){const mapped=validateOwnDCFlow(this.game,g,first,this.free,r);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}
@@ -2559,7 +2578,8 @@ return r;
             else if(this.game.sg.coolJewelsFreeContract){const mapped=validateCoolJewelsFreeData(this.game,g,first,this.free,this.coolJewelsBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.coolJewelsBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(first&&this.game.sg.coolJewelsPaidContract){this.totalWin=validateCoolJewelsPaidData(this.game,g);this.action='PLAY';}
             else if(first&&this.game.sg.fireQueenPaidContract){this.totalWin=validateFireQueenPaidData(this.game,g);this.action='PLAY';}
-            else if(first&&(this.game.sg.desertCatsContract||this.game.sg.jinjiEndlessContract)){this.totalWin=validateHealthyPaidData(this.game,g);this.action='PLAY';}
+            else if(this.game.sg.jinjiEndlessContract){const ordinary=first&&g&&g.DecisionInfo===undefined&&g.FSInfo===undefined;const originalPaidWin=ordinary?validateHealthyPaidData(this.game,g):undefined;const mapped=own32778Normal0Connection(this,this.game).accept(g,first,originalPaidWin);this.totalWin=mapped.win;this.free=mapped.free;this.action=mapped.next;}
+            else if(first&&this.game.sg.desertCatsContract){this.totalWin=validateHealthyPaidData(this.game,g);this.action='PLAY';}
             else if(this.game.sg.fudaFreeContract){const mapped=validateFudaOwnFreeData(this.game,g,first,this.free,this.fudaBase,this.totalWin);this.totalWin=mapped.win;this.free=mapped.free;this.fudaBase=mapped.base;this.action=this.free?.freeSpinsRemaining>0?'FREE_SPIN':'PLAY';}
             else if(first&&(this.game.sg.fudaPaidContract||this.game.sg.heidiPaidContract)){this.totalWin=validateOwnRequestVariantData(this.game,g);this.action='PLAY';}
             else {
@@ -2620,6 +2640,7 @@ return r;
             money:{startBalanceRaw:this.startBalance,endBalanceRaw:this.balance,betRaw:this.game.sg.betRaw,totalWinRaw:this.totalWin}};
     }
     close() {
+own32778Normal0Slots.get(this)?.seal();
 own32771CoexistSlots.get(this)?.connection.seal();
 own32772ProtocolSlots.get(this)?.connection.seal();
 own32767ProtocolSlots.get(this)?.connection.seal();
