@@ -187,6 +187,33 @@
       "source": "function(){function a(){}var c={};c.Ln={i:[f.Da({path:\".spinIndex\",type:f.Number})],target:a.prototype,j:void 0};c.XL={i:[f.Da({path:\".numSpins\",type:f.Number})],target:a.prototype,\nj:void 0};c.RTa={i:[f.Da({path:\".triggered\",type:f.Number})],target:a.prototype,j:void 0};c.ended={i:[f.Da({path:\".ended\",type:f.Number})],target:a.prototype,j:void 0};c.hB={i:[f.Da({path:\".bandsetIndex\",type:f.Number})],target:a.prototype,j:void 0};c.Ua={i:[f.Da({path:\".stopIndices\",type:f.Ml(f.Number)})],target:a.prototype,j:void 0};c.xl={i:[f.Da({path:\"DynamiteReels\",type:f.Array(f.qt(e),\"DynamiteReel\")})],target:a.prototype,j:void 0};c.Vx={i:[f.Da({path:\"DynamiteReels\",type:f.Array(f.qt(e),\"PreviousDynamiteReel\")})],\ntarget:a.prototype,j:void 0};B(c);return a=y([f.ea(\"DynamiteFeature\")],a)}",
       "SHA256": "c73cf5a711d78550ea63477db0a3a299e48bc2bfc9fa7241119818a1878e55c1",
       "marker": "h=function(){function a(){}var c={};c.Ln="
+    },
+    "wheelResult": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\d10ml311dd14ci.cloudfront.net\\5.0.4.1-1787670669\\resource-service\\content\\eurekareelsblastsuperlock\\js\\app.js",
+      "byteWindowStart": 981000,
+      "startWithinWindow": 88,
+      "source": "function(){function a(){}var c={};c.AG={i:[f.Da({path:\".stopIndex\",type:f.Number})],target:a.prototype,j:void 0};c.Tw={i:[f.Da({path:\".award\",type:f.Number})],target:a.prototype,j:void 0};B(c);return a}",
+      "SHA256": "c8c546869491222407a1ebf5ff27e1338eef8e6654bda82ecacd3ee434fc5808",
+      "marker": "function(){function a(){}var c={};c.AG=",
+      "newlyAffectedWheelDependencyOnly": true
+    },
+    "wheelAward": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\d10ml311dd14ci.cloudfront.net\\5.0.4.1-1787670669\\resource-service\\content\\eurekareelsblastsuperlock\\js\\app.js",
+      "byteWindowStart": 1077100,
+      "startWithinWindow": 25,
+      "source": "function(){function a(){}\nvar c={};c.index={i:[f.Da({path:\".index\",type:f.Number})],target:a.prototype,j:void 0};c.value={i:[f.Da({path:\".value\",type:f.Number})],target:a.prototype,j:void 0};c.type={i:[f.Da({path:\".type\",type:f.Number})],target:a.prototype,j:void 0};c.description={i:[f.Da({path:\".description\",type:f.String})],target:a.prototype,j:void 0};B(c);return a}",
+      "SHA256": "e230795a4cfa4f1f41c7f5a3c20856fd7569de2d3acbb3094e7bad24144f4cc1",
+      "marker": "function(){function a(){}\nvar c={};c.index=",
+      "newlyAffectedWheelDependencyOnly": true
+    },
+    "wheelMenu": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\d10ml311dd14ci.cloudfront.net\\5.0.4.1-1787670669\\resource-service\\content\\eurekareelsblastsuperlock\\js\\app.js",
+      "byteWindowStart": 1077400,
+      "startWithinWindow": 113,
+      "source": "function(){function a(){}var c={};c.gB={i:[f.Da({path:\"\",type:f.Array(f.qt(d),\"Award\")})],target:a.prototype,j:void 0};B(c);return a}",
+      "SHA256": "4c6585ba82d338af80c780c61fe5f69c2b55368f1d79445a8edc59d84c0a3c9c",
+      "marker": "function(){function a(){}var c={};c.gB=",
+      "newlyAffectedWheelDependencyOnly": true
     }
   },
   "leaves": {
@@ -285,6 +312,24 @@
       "source": "function(a){var b=!1;a=a.mm.sq;1===a.RTa?b=!0:1===a.ended&&0===a.Vx.length&&(b=!0);return b}",
       "SHA256": "5a9ee5c4abe721c0063d6b72b45eb1142e6b866c061663af168a31898e581dd4",
       "marker": "d.prototype.CJa="
+    },
+    "wheelTypes": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\d10ml311dd14ci.cloudfront.net\\5.0.4.1-1787670669\\resource-service\\content\\eurekareelsblastsuperlock\\js\\app.js",
+      "byteWindowStart": 1149800,
+      "startWithinWindow": 105,
+      "source": "function(a){a[a.EN=0]=\"Credits\";a[a.gc=1]=\"FreeSpins\";a[a.eO=2]=\"MiniJackpot\";a[a.fO=3]=\"MinorJackpot\";a[a.cO=4]=\"MajorJackpot\";a[a.PN=5]=\"GrandJackpot\";a[a.yO=6]=\"SuperLockJackpot\";a[a.Oy=7]=\"LockItLinkFeature\"}",
+      "SHA256": "cf815125aa695571faeb296b05d18cc98758f614f4f7cde3d384d19e526a3f69",
+      "marker": "function(a){a[a.EN=0]=",
+      "newlyAffectedWheelDependencyOnly": true
+    },
+    "wheelOrder": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\d10ml311dd14ci.cloudfront.net\\5.0.4.1-1787670669\\resource-service\\content\\eurekareelsblastsuperlock\\js\\app.js",
+      "byteWindowStart": 982000,
+      "startWithinWindow": 1707,
+      "source": "{0:16,1:1,2:18,3:2,4:23,5:3,6:4,7:5,8:6,9:7,10:21,11:8,12:0,13:9,14:22,15:10,16:11,17:12,18:13,19:14,20:17,21:19,22:15,23:20}",
+      "SHA256": "11055ecaf41ae13c072a844aa7e8a8602a9ae7307c25b387c011efc28b66d70d",
+      "marker": "{0:16,1:1,2:18,3:2,4:23,5:3,6:4,7:5,8:6,9:7,10:21,11:8,12:0,13:9,14:22,15:10,16:11,17:12,18:13,19:14,20:17,21:19,22:15,23:20}",
+      "newlyAffectedWheelDependencyOnly": true
     }
   },
   "wireBindings": {
@@ -386,5 +431,15 @@
       "verificationKey": "8e024279cb054807c64629fc7811cb2f0ed43364b3bd5d52a7bc2f980c177698"
     }
   ],
-  "scope": "Own normal FSInfo and Dynamite automatic Logic; BonusWheel root remains specific complex boundary; no source admission claimed"
+  "scope": "Own normal FSInfo/Dynamite and accepted Init-bound BonusWheel native terminal lookup; unresolved native next branches hold; no source admission or future End ACK claimed",
+  "wheelDeltaScope": {
+    "realAcceptedInitRequired": true,
+    "nativeAwardIndexLookup": true,
+    "nativeTerminalAndCloseLeavesUnchanged": true,
+    "displayActorsExecuted": false,
+    "syntheticEndOrChoiceOrMoney": false,
+    "actualSourceRun": 39195275166,
+    "baselineRepeated": false,
+    "previousScope": "Own normal FSInfo and Dynamite automatic Logic; BonusWheel root remains specific complex boundary; no source admission claimed"
+  }
 }
