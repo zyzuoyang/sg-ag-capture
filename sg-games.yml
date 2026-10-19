@@ -17633,3 +17633,51 @@ games:
       runtimeGameId: 33009
       runtimeSlug: "legendofthepharaohs"
       own32787ProtocolDATA: {"contract": "own32787-Free-Exchange-original-SG-private-v2", "scope": "normal stake100, FreeGameTrigger, FreeGame, Exchange explicit1/2 or native bypass, actual BaseGame/FreeGameEnd End only"}
+
+  - provider: sg
+    gameId: '32780'
+    name: "King of Babylon Action Spins"
+    backendId: "kingofbabylonactionspins"
+    dbName: "sg_kingofbabylonactionspins"
+    serviceDir: "sg_kingofbabylonactionspins"
+    rtpBuckets: [0, 30, 100, 300, 500, 1000, 2500, 5000, 10000, 1001, 2001, 5001, 10001]
+    sg:
+      protocol: "wms"
+      endpoint: "https://gls.atc.casinarena.com/gls.rgsx"
+      header: {"affiliate": "0", "ccyCode": "", "channel": "I", "freePlay": "Y", "gameCodeRGI": "kingofbabylonactionspins", "gameID": "20402", "glsID": "65535", "lang": "en_US", "promotions": "N", "userID": "null", "userType": "C", "versionID": "1_0"}
+      stake: {"total": "200"}
+      freeStake: {}
+      betRaw: 200
+      runtimeGameId: 33002
+      runtimeSlug: "kingofbabylonactionspins"
+      own32780ProtocolDATA: {"contract": "own32780-original-SG-protocol-private-v1", "scope": "known ordinary only; KingBonus/ActionSpins/FS/max/recovery held"}
+
+  - provider: sg
+    gameId: '32801'
+    name: RRFreeSpins
+    dbName: sg_rrfreespins
+    backendId: rrfreespins
+    rtpBuckets: [0, 30, 100, 300, 500, 1000, 2500, 5000, 10000, 1001, 2001, 5001, 10001]
+    sg:
+      protocol: wms
+      runtimeGameId: 33161
+      runtimeSlug: rrfreespins
+      endpoint: https://gls.atc.casinarena.com/gls.rgsx
+      header:
+        affiliate: "0"
+        ccyCode: ""
+        channel: "I"
+        freePlay: "Y"
+        gameCodeRGI: "rrfreespins"
+        gameID: "20116"
+        glsID: "65535"
+        lang: "en_US"
+        promotions: "N"
+        userID: "null"
+        userType: "C"
+        versionID: "1_0"
+      betRaw: 200
+      stake:
+        total: '200'
+      own32801ProtocolDATA:
+        contract: own32801-original-SG-protocol-private-v1

@@ -1,0 +1,134 @@
+{
+  "schema": "own32780-normal-original-SG-DATA-v1",
+  "nativeLeaves": {
+    "freeCounter": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/d10ml311dd14ci.cloudfront.net/5.0.4.1-1787670669/resource-service/content/kingofbabylonactionspins/js/app.js",
+      "byteWindowStart": 930800,
+      "startWithinWindow": 152,
+      "source": "function(a){this.I.yb.ik=(null!=a.e4?\na.e4:a.eRa)||0;this.I.yb.Of=0<this.I.yb.ik;this.I.yb.Xg=(null!=a.Tia?a.Tia-this.I.yb.ik:a.dRa)||0;this.I.yb.winAmount=a.IHa;this.I.yb.Gp=a.Gp||0}",
+      "SHA256": "9ba01aa89efcdf71b31682e130a7e625b745e0d0ccdf02963c60f6dbd89ecc5e",
+      "marker": "e.prototype.f7="
+    },
+    "closeGate": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/d10ml311dd14ci.cloudfront.net/5.0.4.1-1787670669/resource-service/content/kingofbabylonactionspins/js/app.js",
+      "byteWindowStart": 930000,
+      "startWithinWindow": 183,
+      "source": "function(){return this.Coa.ng||0<this.I.yb.Xg&&!this.I.state.Sg?!1:!0}",
+      "SHA256": "fd012bf9c323c62c6ed3a401d32c80bf8c784110865ebb80ec2e5136e8a3d29b",
+      "marker": "e.prototype.oW="
+    },
+    "maxGate": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/d10ml311dd14ci.cloudfront.net/5.0.4.1-1787670669/resource-service/content/kingofbabylonactionspins/js/app.js",
+      "byteWindowStart": 1108400,
+      "startWithinWindow": 97,
+      "source": "function(a){var b=null!=a.ZT?a.ZT.Sg:!1;return F.Jb.get().$t!==F.Bm.ib&&(a.bC.Sg||b)}",
+      "SHA256": "38dd1117716f5a2eef47d6e5b2f9409691324d5809ef832f79dbc41cc2da3964",
+      "marker": "e.prototype.dC="
+    },
+    "endRequest": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/d10ml311dd14ci.cloudfront.net/5.0.4.1-1787670669/resource-service/content/kingofbabylonactionspins/js/app.js",
+      "byteWindowStart": 266000,
+      "startWithinWindow": 625,
+      "source": "function(){var a=new b.Am;a.Vi=this.b3();return a}",
+      "SHA256": "21a281750e42b0f3b65357297742d58f1b37def040ff2ac290287bb25accc552",
+      "marker": "b.prototype.Hr="
+    },
+    "paidRequest": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/d10ml311dd14ci.cloudfront.net/5.0.4.1-1787670669/resource-service/content/kingofbabylonactionspins/js/app.js",
+      "byteWindowStart": 1104000,
+      "startWithinWindow": 288,
+      "source": "function(a){var b=e.prototype.Hr.call(this,a);b.po=null;a.eM&&(b.Sr=this.nT(),this.dM(b.Sr,a.eM));return b}",
+      "SHA256": "ae2fbedd4ebc1c70f44e6f4c9f64e0acc5b452e1d4bed577a6911bd4f5c6a54f",
+      "marker": "d.prototype.Hr="
+    },
+    "clearCounter": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/d10ml311dd14ci.cloudfront.net/5.0.4.1-1787670669/resource-service/content/kingofbabylonactionspins/js/app.js",
+      "byteWindowStart": 276370,
+      "startWithinWindow": 82,
+      "source": "function(a){a.Of=!1;a.ik=null;a.Xg=null;a.winAmount=null;a.Gp=null}",
+      "SHA256": "116269619a27e60e39703c3e1225b9ed2c86fe8cc20ae323a955d461472f7849",
+      "marker": "a.clear="
+    },
+    "resultCounter": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/d10ml311dd14ci.cloudfront.net/5.0.4.1-1787670669/resource-service/content/kingofbabylonactionspins/js/app.js",
+      "byteWindowStart": 931000,
+      "startWithinWindow": 220,
+      "source": "function(a){this.WNa(a);F.ha.ta.Rd.clear(this.I.yb);a.ZT&&this.f7(a.ZT);this.RNa(a)}",
+      "SHA256": "6ebc3dc4d8be5ae2e8e574c4538ee1a7b11c15da09472f973abf1123aa64e296",
+      "marker": "e.prototype.ONa="
+    },
+    "nativeClose": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/d10ml311dd14ci.cloudfront.net/5.0.4.1-1787670669/resource-service/content/kingofbabylonactionspins/js/app.js",
+      "byteWindowStart": 255900,
+      "startWithinWindow": 18,
+      "source": "function(){return h(this,void 0,void 0,function(){var a,c,k;return m(this,function(b){switch(b.label){case 0:if(!this.oW())return this.I.state.state=this.mi=F.ta.ea.fa.cg,[2,{$f:!1,request:null}];if(!F.tX.connected.value)return this.I.error.type=\nF.ta.Error.fa.Ju,this.I.error.title=f.ma.aA.nd,this.I.error.message=f.ma.aA.ei,this.I.error.options=[{type:F.ta.Error.Mh.Yu,text:f.ma.aA.rI}],[2,{$f:!0,request:null}];a=new this.settings.RDa(this.op,this.Ni);b.label=1;case 1:return b.Gf.push([1,3,,4]),[4,a.send({})];case 2:return c=b.Z(),[3,4];case 3:return k=b.Z(),this.AG(k),[2,{$f:!0,request:a}];case 4:if(c.error)return this.parseError(c.error),[2,c];this.I.error.type=F.ta.Error.fa.ib;this.Ni.Al=c.Vi.Al;this.I.state.state=this.mi=F.ta.ea.fa.cg;\nthis.lV.ka(c);return[2,c]}})})}",
+      "SHA256": "5409469b873af9d834e220bc14893d735654a0ec64ea787dc8a4758882a01e52",
+      "marker": "d.prototype.close="
+    },
+    "basePaid": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/d10ml311dd14ci.cloudfront.net/5.0.4.1-1787670669/resource-service/content/kingofbabylonactionspins/js/app.js",
+      "byteWindowStart": 269600,
+      "startWithinWindow": 234,
+      "source": "function(c){var k=new b.Am;k.Vi=this.b3();k.Nz=c.Um.value;c.eM&&(k.Sr=this.nT(),this.dM(k.Sr,c.eM));c.sh&&(k.Az=this.g3(),this.W3(k.Az,c.sh));null!=\nc.Od&&(k.uj=new a.pD,k.uj.Od=c.Od);return k}",
+      "SHA256": "7db5dfa8973633f2d8aff14cc1ad0aeb01fdaf540804c9d2c79e42932efb539f",
+      "marker": "b.prototype.Hr="
+    },
+    "baseInit": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/d10ml311dd14ci.cloudfront.net/5.0.4.1-1787670669/resource-service/content/kingofbabylonactionspins/js/app.js",
+      "byteWindowStart": 268500,
+      "startWithinWindow": 304,
+      "source": "function(a){var c=new b.Am;c.Vi=this.b3();a.sh&&(c.Az=this.g3(),this.W3(c.Az,a.sh));return c}",
+      "SHA256": "8398fe573e18f8027c6dffef7267b884ac921803e97f9e0e6bccd209eae56e39",
+      "marker": "b.prototype.Hr="
+    },
+    "header": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/d10ml311dd14ci.cloudfront.net/5.0.4.1-1787670669/resource-service/content/kingofbabylonactionspins/js/app.js",
+      "byteWindowStart": 263700,
+      "startWithinWindow": 699,
+      "source": "function(){var d=new a.OX;d.dL=this.km.dL.toString();d.dT=this.ps.Jr;d.channel=this.km.channel;d.oG=this.ps.oG;d.KHa=this.km.JHa;d.Ry=this.km.Ry;d.oU=this.km.oU;d.lang=this.ps.language;d.POa=!1;d.Al=this.ps.Al;d.Sw=this.ps.Sw;d.n9=this.km.n9;d.r9=this.km.r9;return d}",
+      "SHA256": "5efb228a3f274fff8ce56040919744a33e42812c2771542ffbf321ac0ef3e07c",
+      "marker": "e.prototype.b3="
+    },
+    "currency": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/d10ml311dd14ci.cloudfront.net/5.0.4.1-1787670669/resource-service/content/kingofbabylonactionspins/js/app.js",
+      "byteWindowStart": 259000,
+      "startWithinWindow": 460,
+      "source": "function(a){this.I.rd.Jr=a.Vi.dT||\"GBP\";this.I.rd.Od=1;var b=a.uj;if(b&&b.Qha){b=b.Qha;var k=F.K.eQ.oY,d;for(d in b)F.J.yc(b[d])&&(b[d]=b[d].replace(/\\s/g,k));this.I.rd.eG={name:b.currency,Le:b.i3||\"\",N3:b.N3,rU:b.rU,ie:b.ie,gM:b.xHa,Be:b.PFa,rT:b.rT,Pha:b.SDa,Qi:b.Qi,Kr:b.RRa,Od:b.Od,\nHT:null!=b.i3,kia:null==b.i3};this.Ni.Od=b.Od;this.Ni.Jr=a.Vi.dT}else this.I.rd.eG=x(x({},F.K.PL[this.I.rd.Jr]||F.K.PL.GBP),{HT:!1}),this.Ni.Od=1,this.Ni.Jr=\"\";this.ll.ng&&(this.I.rd.eG.HT=!1,this.I.rd.eG.Od=1)}",
+      "SHA256": "413558f7248d2b6bd6fc7351f62495977e1af90cc33e6b01c8e8148c5d9bf623",
+      "marker": "d.prototype.MJa="
+    },
+    "midPaid": {
+      "file": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/d10ml311dd14ci.cloudfront.net/5.0.4.1-1787670669/resource-service/content/kingofbabylonactionspins/js/app.js",
+      "byteWindowStart": 941700,
+      "startWithinWindow": 263,
+      "source": "function(a){var b=e.prototype.Hr.call(this,a);b.po=a.po;return b}",
+      "SHA256": "5063b04e4e350fa112c4fe04624706c1a5d40808a51018a3b31bb4aa2aa6f9ca",
+      "marker": "d.prototype.Hr="
+    },
+    "ownFreeCounterOverride": {
+      "source": "function(a){f.prototype.f7.call(this,a);this.I.pf.Of.value=0<=a.e4}",
+      "SHA256": "e51fa2eafa60f9a7fe16a2b35a0e368b055d8cdcacdba4cbba0a5607f3dbe367",
+      "originalThinSource": {
+        "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\d10ml311dd14ci.cloudfront.net\\5.0.4.1-1787670669\\resource-service\\content\\kingofbabylonactionspins\\js\\app.js",
+        "byteStart": 1108583,
+        "SHA256": "4463e63b44c89cc3ffe0b8824d25dce8eb04da2f98132c85d038e012f9e23487"
+      }
+    }
+  },
+  "scope": "Own mapped FS numeric continuation or native MAX/zero remaining End; ordinary prior qualification retained; KingBonus/ActionSpins/recovery/unmapped selectors held. No complete-sample or display-lifecycle gate.",
+  "nativeOrdinaryProof": {
+    "sourcePath": "E:/platform-sync/api_new_docker/api_new/client/game/sg/static/d10ml311dd14ci.cloudfront.net/5.0.4.1-1787670669/resource-service/content/kingofbabylonactionspins/js/app.js",
+    "closeRequest": "F.ha.Ib...playFinished.Uga -> native KT -> H.Hd.close -> SG.Jc.$d.Ed.close -> settings.RDa.send",
+    "noDisplayCallbacksSynthesized": true,
+    "exactNativeEndLeaves": true
+  },
+  "originalLegacyProof": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\all-remaining-matched-intake-batch-20261010-v1\\original-AG-replay-negative-bound-result.json",
+  "newFSOwnSourceProof": {
+    "sourceFile": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\d10ml311dd14ci.cloudfront.net\\5.0.4.1-1787670669\\resource-service\\content\\kingofbabylonactionspins\\js\\app.js",
+    "nativeCaller": "own S7 -> Hd.zu(r4) -> SG.Zu -> SG(a) -> settings.ZQa.send(Iia(a)); own ZQa=f.av, RDa=SG.Jc.RH",
+    "nativeMoney": "BGInfo.totalWagerWin -> bC.wqa -> Lga, no addition of FSInfo.fsWinnings",
+    "requiredActualFields": "BGInfo.totalWagerWin; actual native played freeSpinNumber/spinsUsed and remaining freeSpinsTotal/spinsRemaining unless actual MAX already determines End",
+    "noMissingMoneyOrFreeZeroDefaults": true,
+    "noDisplayCallbacksOrActualACKSynthesized": true
+  }
+}
