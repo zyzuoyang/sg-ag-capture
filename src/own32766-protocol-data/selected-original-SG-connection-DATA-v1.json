@@ -431,7 +431,7 @@
       "verificationKey": "8e024279cb054807c64629fc7811cb2f0ed43364b3bd5d52a7bc2f980c177698"
     }
   ],
-  "scope": "Own normal FSInfo/Dynamite and accepted Init-bound BonusWheel native terminal lookup; unresolved native next branches hold; no source admission or future End ACK claimed",
+  "scope": "Own accepted Init-bound BonusWheel with native LockItLink entry model transition; original terminal/close/request leaves unchanged. No subsequent Logic/End ACK or full LockItLink lifecycle claimed.",
   "wheelDeltaScope": {
     "realAcceptedInitRequired": true,
     "nativeAwardIndexLookup": true,
@@ -441,5 +441,27 @@
     "actualSourceRun": 39195275166,
     "baselineRepeated": false,
     "previousScope": "Own normal FSInfo and Dynamite automatic Logic; BonusWheel root remains specific complex boundary; no source admission claimed"
+  },
+  "wheelFeatureEntry": {
+    "awardEnumKey": "Oy",
+    "assignments": {
+      "Bh": true,
+      "Vu": true,
+      "tq": false,
+      "uq": 0,
+      "Vx": []
+    },
+    "source": {
+      "file": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\d10ml311dd14ci.cloudfront.net\\5.0.4.1-1787670669\\resource-service\\content\\eurekareelsblastsuperlock\\js\\app.js",
+      "byteWindowStart": 1167100,
+      "startWithinWindow": 238,
+      "source": "a.I.K.Bh=!0,a.I.K.Vu=!0,a.I.K.tq=!1,a.I.K.uq=0,a.I.K.Vx=[]",
+      "SHA256": "fc0383660ca0b4d87b16bd08e5fdb6e8b5eeda3e47e5a6a401d8deef4fb0540b",
+      "nativeBranch": "Own qb.iEa switch case l.Oy => case21, after real Init-bound wheel award, before existing close gate/next request.",
+      "excludedRendererOperations": "Components.kf, Kr.una(0), waits/audio/background and Kd animation calls are not protocol DATA and are not executed."
+    },
+    "rawDynamiteEndedUnchanged": true,
+    "moneyOrFreeCountersAssigned": false,
+    "SDKActorConstructed": false
   }
 }
