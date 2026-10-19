@@ -1995,7 +1995,7 @@ export class SGWmsSession {
         const slot=own32787ProtocolSlots.get(this);assert(this.game.gameId==='32787'&&slot?.connection&&step.msgId==='Init','AG integrity: own32787 native current Init');
         const r=xml.parse(step.responsePayload)?.GameResponse;assert(r&&r.type==='Init'&&r.Header&&!r.Error&&!r.Errors&&String(r.Header.gameID)==='20118','AG integrity: own32787 Init envelope');
         assert(typeof r.Header.sessionID==='string'&&r.Header.sessionID.length>0,'AG integrity: own32787 Init response cursor');
-        this.session=r.Header.sessionID;const actualCash=slot.connection.cashForOriginalReadEnvelope(step);assert(Number.isSafeInteger(actualCash)&&actualCash>=0,'AG integrity: own32787 native actual Init cash');this.balance=actualCash;slot.connection.commitAfterOriginalReadEnvelope(step,r);return r;
+        this.session=r.Header.sessionID;const actualCash=slot.connection.cashForOriginalInitReadEnvelope(step);if(actualCash!==undefined){assert(Number.isSafeInteger(actualCash)&&actualCash>=0,'AG integrity: own32787 native actual Init cash');this.balance=actualCash}else assert(Number.isSafeInteger(this.balance)&&this.balance>=0,'AG integrity: own32787 actual Page0 cash retained through Init control');slot.connection.commitAfterOriginalReadEnvelope(step,r);return r;
     }
 
     private async connectOwn32780Protocol(): Promise<void> {
