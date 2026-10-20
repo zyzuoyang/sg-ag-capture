@@ -59,7 +59,7 @@ export function childEnvironment(game: RollingGame, kind: TaskKind, index: numbe
         CAPTURE_WORKER_INDEX: String(index), CAPTURE_OWNER_ID: owner,
         CAPTURE_LEASE_ID: `gh_${game.campaignId}_${kind}_${index}`,
         AG_SIMULATE_COLLECTION: stagingCollectionName(game.dbName, game.campaignId, index, kind,capturePlatform(inherited)),
-        SPIN_LIMIT: String(quota), CONCURRENT_PER_GAME: kind === 'canary' ? '1' : '8' };
+        SPIN_LIMIT: String(quota), CONCURRENT_PER_GAME: kind === 'canary' || (capturePlatform(inherited) === 'sg' && game.gameId === '32816') ? '1' : '8' };
 }
 
 export async function runLane(payload: RollingPayload, lane: number, runId: string, deps: RunnerDependencies): Promise<boolean> {

@@ -51,7 +51,8 @@ function validatePaidJackpot0(g,win) {
   // when no actual free budget or pending decision exists. BG cash already includes it.
   hold(g.BGInfo.jackpotAwarded==='1'&&g.FSInfo===undefined&&g.DecisionInfo===undefined,'actual paid jackpot scope');
   const jp=obj(g.JackpotInfo,'actual JackpotInfo');
-  hold(uint(jp.jackpotType,'actual jackpotType')===0,'unmapped jackpot type');
+  // Native aS indexes the four declared mini/minor/major/grand payout types.
+  hold(uint(jp.jackpotType,'actual jackpotType')<4,'unmapped jackpot type');
   const jackpot=uint(jp.jackpotWinnings,'actual jackpotWinnings');
   const spins=g.ReelResults.ReelSpin,rows=Array.isArray(spins)?spins:[spins];
   hold(g.ReelResults.numSpins==='1'&&rows.length===1,'actual paid jackpot reel count');
