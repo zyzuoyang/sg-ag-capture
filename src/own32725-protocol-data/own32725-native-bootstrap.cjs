@@ -29,7 +29,7 @@ function createBootstrap(nativeGameConfig){
   acceptInit(raw,statusCode){
    if(phase!=='await-init')fail('INIT_ALREADY_CONSUMED');
    const fields=rawMarkers(raw,'INIT',statusCode),balance=numeric(fields,'B');
-   if(numeric(fields,'R')!==0)fail('RECOVERY_REQUIRES_OWN_NATIVE_RECOVERY_PATH');
+   if(fields.has('R')&&numeric(fields,'R')!==0)fail('RECOVERY_REQUIRES_OWN_NATIVE_RECOVERY_PATH');
    const denomination=numeric(fields,'BDD'),rawMenu=fields.get('BD');
    if(typeof rawMenu!=='string'||!rawMenu.endsWith('|'))fail('ACTUAL_NATIVE_DENOMINATION_MENU_REQUIRED');
    const menu=rawMenu.slice(0,-1).split('|');
