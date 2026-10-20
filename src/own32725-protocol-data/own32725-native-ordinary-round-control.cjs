@@ -62,6 +62,59 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
  intro.show=()=>{intro.visible=true;later(()=>intro.startFreeGames(),0)};
  vm.runInContext(continuationLeaf('canShowSSIntro'),context,{timeout:1000});
 
+ function installOriginalRespinTerminalSummary(){
+  const data=require('./respin-terminal-summary-functions.json');
+  const original=name=>{const f=data.leaves.find(x=>x.name===name)?.source;need(typeof f==='string','ORIGINAL_RESPIN_SUMMARY_LEAF_'+name);return f};
+  const cancel=token=>{if(token!==undefined){clearTimeout(token);timers.delete(token)}};
+  // Only the original summary's drawing Tween/Timeline ABI is ported here.
+  // Original callback pointers/scopes and literal timing arguments are retained.
+  function summaryTween(target,seconds,options){
+   let duration=seconds,startToken,endToken;
+   const delay=options.delay||0,port={
+    duration(value){if(value===undefined)return duration;need(Number.isFinite(value)&&value>=0,'ORIGINAL_SUMMARY_TWEEN_DURATION');duration=value;return port},
+    updateTo(values){Object.assign(target,values);return port},
+    restart(includeDelay){cancel(startToken);cancel(endToken);const wait=includeDelay?delay:0;
+     if(typeof options.onStart==='function')startToken=later(()=>options.onStart.apply(options.callbackScope,options.onStartParams||[]),wait*1000);
+     if(typeof options.onComplete==='function')endToken=later(()=>options.onComplete.apply(options.callbackScope,options.onCompleteParams||[]),(wait+duration)*1000);
+     return port},
+    pause(){cancel(startToken);cancel(endToken);startToken=endToken=undefined;return port},
+    progress(){return port}
+   };return port;
+  }
+  function SummaryPopupTimeline(options){
+   let end=0,reverseToken;const labels=new Map();
+   const position=value=>{
+    if(value===undefined)return end;
+    if(typeof value==='number'){need(Number.isFinite(value)&&value>=0,'ORIGINAL_SUMMARY_TIMELINE_POSITION');return value}
+    if(typeof value==='string'&&/^\+=\d+(?:\.\d+)?$/.test(value))return end+Number(value.slice(2));
+    need(typeof value==='string'&&labels.has(value),'ORIGINAL_SUMMARY_TIMELINE_LABEL');return labels.get(value);
+   };
+   const port={
+    to(target,seconds,viewValues,at){end=Math.max(end,position(at)+seconds);return port},
+    staggerTo(targets,seconds,viewValues,stagger,at){end=Math.max(end,position(at)+seconds+Math.max(0,targets.length-1)*stagger);return port},
+    addLabel(name,at){const time=position(at);labels.set(name,time);end=Math.max(end,time);return port},
+    set(target,viewValues,at){end=Math.max(end,position(at));return port},
+    restart(){cancel(reverseToken);reverseToken=undefined;return port},
+    reverse(label){cancel(reverseToken);const seconds=position(label);need(typeof options.onReverseComplete==='function','ORIGINAL_SUMMARY_REVERSE_CALLBACK');reverseToken=later(()=>options.onReverseComplete.call(options.callbackScope),seconds*1000);return port}
+   };return port;
+  }
+  function SummaryText(text){this.text=text;this.setShadow=noop}
+  function SummaryNumber(viewOptions){Object.assign(this,viewOptions);this.cfgs={',':{},'.':{}}}
+  // Coordinates/labels are presentation-only. No financial or protocol field is supplied.
+  game.layout.center={x:0,y:0};game.layout.designScale=1;
+  game.rollupProps=structuredClone(data.originalRollupProps);
+  game.flares.start=noop;game.multiplierText.hide=noop;game.reelBorder.toBaseGame={restart:noop};
+  if(!game.ui)game.ui={};if(!game.ui.inGameBet)game.ui.inGameBet={};
+  context.ownRespinSummaryViewPorts={TextContainer:SummaryText,NumberSheet:SummaryNumber,
+   TweenMax:{to:summaryTween,delayedCall:context.TweenMax.delayedCall},TimelineMax:SummaryPopupTimeline,
+   Back:{easeOut:{config:()=>noop}}};
+  const expression='(function(TextContainer,NumberSheet,TweenMax,TimelineMax,Back,TXT_FGS_1,TXT_FGS_2,TXT_FGS_3,TXT_FGS_4){'+original('SummaryBanner')+';'+
+   'SummaryBanner.prototype.respinSummary=('+original('summaryRespin')+');SummaryBanner.prototype.onComplete=('+original('summaryComplete')+');SummaryBanner.prototype.hide=('+original('summaryHide')+');SummaryBanner.prototype.onEnd=('+original('summaryEnd')+');return new SummaryBanner;'+
+   '})(ownRespinSummaryViewPorts.TextContainer,ownRespinSummaryViewPorts.NumberSheet,ownRespinSummaryViewPorts.TweenMax,ownRespinSummaryViewPorts.TimelineMax,ownRespinSummaryViewPorts.Back,"","","","")';
+  try{context.summaryBanner=vm.runInContext(expression,context,{timeout:1000})}finally{delete context.ownRespinSummaryViewPorts}
+  vm.runInContext('game.initWinRollupSound=('+original('nativeInitWinRollupSound')+');game.playWinSounds=('+original('nativePlayWinSounds')+');game.api_lastFreeGameFinish=('+original('nativeLastFreeGameFinish')+');',context,{timeout:1000});
+ }
+
  function seal(){sealed=true;for(const t of timers)clearTimeout(t);timers.clear()}
  return Object.freeze({
   begin(){need(!started&&!sealed,'ONE_INITIAL_NATIVE_ROUND');startBalance=game.account.balance;wager=game.account.getBetAmount();need(Number.isSafeInteger(startBalance)&&Number.isSafeInteger(wager)&&wager>0,'ACTUAL_NATIVE_ACCOUNT_WAGER');const n=requests.length;vm.runInContext('game.setState(SS_SPINNING);',context,{timeout:1000});need(game.roundActive&&requests.length===n+1&&events.some(x=>x.name==='ROUND'&&x.value===1),'ORIGINAL_START_AND_REQUEST');started=true;return requests.at(-1)},
@@ -116,11 +169,19 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
    // Original parser free-mode types; no table of observed response combinations.
    // Original native callbacks still choose and emit the actual next request.
    const nativeFreeModes=[context.FG_BASE,context.FG_RESPIN,context.FG_SUPERSPIN];
-   need(r.IFG&&Number.isSafeInteger(r.freeGamesMode)&&nativeFreeModes.includes(r.freeGamesMode)&&Number.isSafeInteger(r.nextRoundFreeGamesMode)&&nativeFreeModes.includes(r.nextRoundFreeGamesMode)&&r.getFreeGamesLeft()>0&&!(r.winType&64),'ACTUAL_BASE_FREE_NEXT_SCOPE');
+   const nativeContinue=Number.isSafeInteger(r.nextRoundFreeGamesMode)&&nativeFreeModes.includes(r.nextRoundFreeGamesMode)&&r.getFreeGamesLeft()>0;
+   const nativeRespinTerminal=r.freeGamesMode===context.FG_RESPIN&&r.nextRoundFreeGamesMode===context.FG_NONE&&r.getFreeGamesLeft()===0;
+   need(r.IFG&&Number.isSafeInteger(r.freeGamesMode)&&nativeFreeModes.includes(r.freeGamesMode)&&(nativeContinue||nativeRespinTerminal)&&!(r.winType&64),'ACTUAL_BASE_FREE_NEXT_SCOPE');
    need(frame.actualBalance===startBalance-wager+frame.actualCumulativeWin,'ACTUAL_FREE_CUMULATIVE_CASH');
+   if(nativeRespinTerminal)installOriginalRespinTerminalSummary();
    currentFrame=controlFrame=frame;const before=requests.length;let tickAt=Date.now();const deadline=tickAt+14000;
    vm.runInContext('game.api_updateReelFromMsg();game.setState(SS_SPINNING_STOPPED);',context,{timeout:1000});
-   while(requests.length===before&&!ended){need(Date.now()<deadline,'FINITE_ORIGINAL_FREE_CONTINUE_CALLBACK_BUDGET');const now=Date.now();context.ownFreeFrameDelta=Math.max(1,now-tickAt);tickAt=now;vm.runInContext('game.updateGame(ownFreeFrameDelta);',context,{timeout:1000});if(requests.length===before&&!ended)await new Promise(resolve=>later(resolve,16))}
+   const awaitingNativeEnd=()=>!ended||(nativeRespinTerminal&&context.summaryBanner.visible);
+   while(requests.length===before&&awaitingNativeEnd()){need(Date.now()<deadline,'FINITE_ORIGINAL_FREE_CONTINUE_CALLBACK_BUDGET');const now=Date.now();context.ownFreeFrameDelta=Math.max(1,now-tickAt);tickAt=now;vm.runInContext('game.updateGame(ownFreeFrameDelta);',context,{timeout:1000});if(requests.length===before&&awaitingNativeEnd())await new Promise(resolve=>later(resolve,16))}
+   if(nativeRespinTerminal){
+    need(ended&&!game.roundActive&&requests.length===before&&!context.summaryBanner.visible&&game.account.balance===frame.actualBalance,'ORIGINAL_RESPIN_TERMINAL_ROUND_AND_CASH');
+    seal();return Object.freeze({actualNativeRoundCallback:true,rawResponse:frame.raw,balance:frame.actualBalance,cumulativeWin:frame.actualCumulativeWin,sourceNativeState:game.gameState,sourceCallbacks:events.slice(),noProviderEndResponseSynthesized:true});
+   }
    need(!ended&&game.roundActive&&requests.length===before+1,'ONE_NATIVE_FREE_NEXT_WITHOUT_END');const next=requests.at(-1);need(new URLSearchParams(next).get('MSGID')==='FREE_GAME','ACTUAL_FREE_CONTINUE_WRITER');
    return Object.freeze({actualNativeRoundCallback:false,nextNativeRequest:next,rawResponse:frame.raw,balance:frame.actualBalance,cumulativeWin:frame.actualCumulativeWin,noProviderEndResponseSynthesized:true});
   },

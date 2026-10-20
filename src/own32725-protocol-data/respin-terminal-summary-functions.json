@@ -1,0 +1,59 @@
+{
+  "gameId": "32725",
+  "fixedSource": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\ogs-cdn-usnj.nyxop.net\\html5\\medusahq\\game_min.js",
+  "leaves": [
+    {
+      "name": "SummaryBanner",
+      "source": "function SummaryBanner(){this.congratsText=new TextContainer(TXT_FGS_1,\"summary_title_1\");this.congratsText.x=game.layout.center.x;this.congratsText.y=game.layout.center.y-220;this.congratsText.scaleX=0.5;this.congratsText.scaleY=0.5;this.congratsText.setShadow(6);this.congratsText.alpha=0;this.freeGamesText=new TextContainer(TXT_FGS_2,\"summary_title_2_total\");this.freeGamesText.x=game.layout.center.x-200;this.freeGamesText.y=170;this.freeGamesText.scaleX=0.5;this.freeGamesText.scaleY=0.5;this.freeGamesText.setShadow(6);\nthis.freeGamesText.alpha=0;this.superSpinText=new TextContainer(TXT_FGS_3,\"summary_title_2_total\");this.superSpinText.x=game.layout.center.x-200;this.superSpinText.y=250;this.superSpinText.scaleX=0.5;this.superSpinText.scaleY=0.5;this.superSpinText.setShadow(6);this.superSpinText.alpha=0;this.totalWinText=new TextContainer(TXT_FGS_4,\"summary_title_2_total\");this.totalWinText.x=game.layout.center.x;this.totalWinText.y=330;this.totalWinText.scaleX=0.5;this.totalWinText.scaleY=0.5;this.totalWinText.setShadow(6);\nthis.totalWinText.alpha=0;this.rollupMeter=new NumberSheet({x:game.layout.center.x,y:380,nbrWidth:140,nbrHeight:90,dotWidth:65,dotHeight:90,commaWidth:65,commaHeight:90,scale:0.6,alpha:0,showUsedSpace:!1,suffix:\"_big\",useCurrency:!0,visible:!1,designScale:game.layout.designScale});this.fgRollupMeter=new NumberSheet({x:650,y:180,nbrWidth:70,nbrHeight:180,dotWidth:35,dotHeight:92,commaWidth:38,commaHeight:92,scale:0.5,alpha:0,showUsedSpace:!1,suffix:\"_small\",useCurrency:!0,visible:!1,designScale:game.layout.designScale});\nthis.ssRollupMeter=new NumberSheet({x:650,y:260,nbrWidth:70,nbrHeight:180,dotWidth:35,dotHeight:92,commaWidth:38,commaHeight:92,scale:0.5,alpha:0,showUsedSpace:!1,suffix:\"_small\",useCurrency:!0,visible:!1,designScale:game.layout.designScale});isStandardQuality?(this.rollupMeter.cfgs[\",\"].dX=-40,this.rollupMeter.cfgs[\",\"].dY=5,this.rollupMeter.cfgs[\".\"].dX=-40):(this.rollupMeter.cfgs[\",\"].dX=-5,this.rollupMeter.cfgs[\",\"].dY=10,this.rollupMeter.cfgs[\".\"].dX=-10,this.rollupMeter.cfgs[\".\"].dY=-15);this.visible=\n!1;this.visibleObjs=[this.congratsText,this.freeGamesText,this.superSpinText,this.totalWinText];this.rollupTween=TweenMax.to(this.rollupMeter,6,{startAt:{value:0},value:10,useFrames:!1,paused:!0,delay:0.3,callbackScope:this,onComplete:this.onComplete,ease:Linear.easeNone});this.ssRollup=TweenMax.to(this.ssRollupMeter,3,{startAt:{value:0},value:10,useFrames:!1,paused:!0,ease:Linear.easeNone,callbackScope:game,onStart:game.playSound,onStartParams:[\"summary\"]});this.fgRollup=TweenMax.to(this.fgRollupMeter,\n3,{startAt:{value:0},value:10,useFrames:!1,paused:!0,delay:0.3,callbackScope:this.ssRollup,onComplete:this.ssRollup.restart,ease:Linear.easeNone});this.popupTL=(new TimelineMax({useFrames:!1,paused:!0,ease:Linear.easeNone,callbackScope:this,onReverseComplete:this.onEnd})).to(game,0.5,{reelTintAlpha:0.6,ease:Power0.easeOut},0.01).staggerTo(this.visibleObjs,1,{scaleX:1,scaleY:1,alpha:1,ease:Back.easeOut.config(2)},0.2,0.01).to([this.rollupMeter,this.ssRollupMeter,this.fgRollupMeter],0.5,{alpha:1},0.4).addLabel(\"showText\",\n\"+=0\").set({},{},3)}",
+      "originalToken": "function SummaryBanner(",
+      "originalTokenOffset": 707597
+    },
+    {
+      "name": "summaryRespin",
+      "source": "function(a){this.fgRollupMeter.value=0;this.fgRollupMeter.nbrAsString=\"\";this.ssRollupMeter.value=0;this.ssRollupMeter.nbrAsString=\"\";this.rollupMeter.value=0;this.rollupMeter.nbrAsString=\"0.00\";this.superSpinText.visible=!1;this.freeGamesText.visible=!1;this.totalWinText.y=380;this.rollupMeter.y=240;this.visible=!0;game.flares.start(5);game.fadeOutSound(getCurrentAmbientSound(),\"summary\",300);this.rollupTween.duration(3).updateTo({value:a}).restart();this.popupTL.restart()}",
+      "originalToken": "SummaryBanner.prototype.respinSummary=",
+      "originalTokenOffset": 710943
+    },
+    {
+      "name": "summaryComplete",
+      "source": "function(){TweenMax.delayedCall(2,this.hide,null,this)}",
+      "originalToken": "SummaryBanner.prototype.onComplete=",
+      "originalTokenOffset": 712148
+    },
+    {
+      "name": "summaryHide",
+      "source": "function(){game.flares.stop();game.freeGames.m_bInFreeGames=!1;game.bShowFreeSpinBg=!1;this.popupTL.reverse(\"showText\")}",
+      "originalToken": "SummaryBanner.prototype.hide=",
+      "originalTokenOffset": 712813
+    },
+    {
+      "name": "summaryEnd",
+      "source": "function(){game.slotResult.freeGamesMode>FG_RESPIN?(game.reelMan.updateSymbolBackgrounds(),game.superSpinText.hide(),game.api_freeSpinBgChangeAction(),game.slotResult.freeGamesMode=FG_NONE):(game.reelBorder.inTransition=!1,isStandardQuality&&(game.ui.inGameBet.featureEnabled=!0),game.slotResult.freeGamesMode=FG_RESPIN_END);game.multiplierText.hide();game.reelBorder.toBaseGame.restart();game.playSound(\"ambienceloop\");this.visible=!1;this.fgRollup.pause().progress(0);this.ssRollup.pause().progress(0);\nthis.rollupTween.pause().progress(0)}",
+      "originalToken": "SummaryBanner.prototype.onEnd=",
+      "originalTokenOffset": 712240
+    },
+    {
+      "name": "nativeLastFreeGameFinish",
+      "source": "function(){if(!this.slotResult.pickBonus){var a=this.WIN_METER_DISPLAY_TIME*0.001;if(bigWinTitle.visible)a=bigWinTitle.celebration.totalDuration();else if(this.slotResult.pickBonus||game.slotResult.winType==0)a=0.01;game.slotResult.freeGamesMode==FG_RESPIN?TweenMax.delayedCall(a,summaryBanner.respinSummary,[game.slotResult.winAmount],summaryBanner,false):TweenMax.delayedCall(a,summaryBanner.show,[game.slotResult.winAmount-game.slotResult.superSpinsWin,game.slotResult.superSpinsWin],\nsummaryBanner,false)}}",
+      "originalToken": "game.api_lastFreeGameFinish=",
+      "originalTokenOffset": 697192
+    },
+    {
+      "name": "nativeInitWinRollupSound",
+      "source": "function(){var a=0;game.rollupProps.sound=\"\";game.rollupProps.duration=0;game.slotResult.freeGamesMode>FG_NONE?(game.rollupProps.sound=\"freegamesrollup\",game.rollupProps.duration=2E3):game.playScatterWinSound?(game.rollupProps.sound=\"scatterpay\",game.rollupProps.duration=2E3):game.playScatterTriggerSound?(game.rollupProps.sound=\"scatter_featuretrigger\",game.rollupProps.duration=2E3):0.8>game.slotResult.betWinRatio?(a=randomInt(1,game.winRollupSounds[0].length)-1,game.rollupProps.sound=\ngame.winRollupSounds[0][a],game.rollupProps.duration=0):0.8<=game.slotResult.betWinRatio&&2>game.slotResult.betWinRatio?(a=randomInt(1,game.winRollupSounds[1].length)-1,game.rollupProps.sound=game.winRollupSounds[1][a],game.rollupProps.duration=2E3):2<=game.slotResult.betWinRatio&&6>game.slotResult.betWinRatio?(game.rollupProps.sound=game.winRollupSounds[2][0],game.rollupProps.duration=3E3):6<=game.slotResult.betWinRatio&&15>game.slotResult.betWinRatio&&(game.rollupProps.sound=game.winRollupSounds[3][0],\ngame.rollupProps.duration=5E3);0<game.rollupProps.duration?(game.WIN_ROLLUP_TIME=game.rollupProps.duration,game.WIN_METER_DISPLAY_TIME=game.WIN_ROLLUP_TIME+1500,game.WIN_SNAP_DELAY=1E3):(game.WIN_METER_DISPLAY_TIME=3E3,game.WIN_SNAP_DELAY=2E3)}",
+      "originalToken": "game.initWinRollupSound=",
+      "originalTokenOffset": 570760
+    },
+    {
+      "name": "nativePlayWinSounds",
+      "source": "function(){game.initWinRollupSound();game.rollupProps.sound.length>0&&game.playSound(game.rollupProps.sound)}",
+      "originalToken": "game.playWinSounds=",
+      "originalTokenOffset": 698769
+    }
+  ],
+  "originalRollupProps": {
+    "sound": "",
+    "duration": 0
+  },
+  "purpose": "Original RESPIN terminal summary callbacks and timings only; no invented response, amount or end."
+}
