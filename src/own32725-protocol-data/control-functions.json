@@ -1,0 +1,47 @@
+{
+  "leaves": [
+    {
+      "name": "nativeGameSetState",
+      "start": 466914,
+      "end": 470014,
+      "source": "function(a){if(a!=this.gameState){var c=this.gameState;this.gameState=a;this.redraw=1;switch(this.gameState){case SS_STOPPED:this.autoPlayTimer=this.AUTOPLAY_DELAY;this.reelMan.showSymbols(true,4294967295);this.reelMan.stopAnims();this.api_stopWinAnims();this.showLines(false);this.setBShowFreeSpinBg(false);this.freeRounds.requestOutro||this.checkLowBalance();this.idleTextTimer=this.idleTextDelay;this.startIdleMessages();\nthis.freeRounds.outro();if(this.roundActive){valueChanged(\"ROUND\",0);valueChanged(\"BALANCE\",this.opt_balance);valueChanged(\"TOTAL_WIN\",this.slotResult.winAmount);this.roundActive=false}this.account.syncBalance();break;case SS_STOPPED_FREEGAMES:this.setGamesRemainingString();this.reelMan.showSymbols(true,4294967295);this.reelMan.stopAnims();this.api_stopWinAnims();this.showLines(false);this.freeRounds.outro();this.account.syncBalance();break;case SS_SPINNING:this.reelMan.showSymbols(true,4294967295);\nthis.reelMan.stopAnims();this.api_stopWinAnims();this.showLines(false);this.reelMan.startReels();if(this.slotResult.numFreeGames==0){this.account.clearWin();this.freeRounds.inFreeRounds||this.account.takeBet();this.messageBar.m_Text=TXT_SPIN_MSG;this.api_switchReels(false)}else{this.api_switchReels(true);this.freeGames.m_bInFreeGames=true;this.setGamesRemainingString()}this.playSpinSound();this.api_spinStarted();this.lowbalanceDialogPrompted=false;if(!this.roundActive){valueChanged(\"ROUND\",1);this.useUI3&&\nthis.ui.autoPlayMan.startRound();this.roundActive=true}sendSpinMsg();clearPresetField();break;case SS_SPINNING_STOPPED:this.api_runSpinningStoppedFeature();break;case SS_WIN_PAYLINE:this.gCurrentFlash=this.gWinFlashTime=0;if(c==SS_FREEGAME_SUMMARY&&this.slotResult.paylineWins.length>0||c==SS_WIN_PAYLINE_FREEGAMES)this.gNumCycles=1;else this.gCurrentPaylineIndex=this.gNumCycles=0;this.reelMan.animateWins();this.api_animateWins();this.api_isMetersUpdateableOnPayline()&&this.account.addWin(this.slotResult.winAmount);\nif(this.slotResult.winType&WT_PICK_FEATURE_TRIGGER){if(this.api_IsBonusFeatureTriggered())this.messageBar.m_Text=TXT_PICK_BONUS}else{this.startIdleMessages();this.checkLowBalance();if(this.roundActive){valueChanged(\"ROUND\",0);this.roundActive=false}}break;case SS_WIN_PAYLINE_FREEGAMES:this.gCurrentPaylineIndex=this.gNumCycles=this.gCurrentFlash=this.gWinFlashTime=0;this.setGamesRemainingString();this.api_isMetersUpdateableOnPayline()&&this.account.addWin(this.slotResult.winAmount);this.reelMan.animateWins();\nthis.api_animateWins();break;case SS_PICK_FEATURE:this.reelMan.showSymbols(true,4294967295);this.api_stopReelAnims()&&this.reelMan.stopAnims();this.api_stopWinAnims();this.showLines(false);this.api_featureStart();break;case SS_FREEGAME_SUMMARY:this.gCurrentPaylineIndex=this.gNumCycles=this.gCurrentFlash=this.gWinFlashTime=this.freeGames.m_RespinTimer=0;this.reelMan.animateWins();this.api_animateWins();this.account.addWin(this.slotResult.winAmount);this.api_lastFreeGameFinish();this.startIdleMessages();\nthis.freeRounds.outro();break;case SS_FREEGAME_INTRO:this.setBShowFreeSpinBg(true);this.api_beforeFirstFreeGame()}}}"
+    },
+    {
+      "name": "nativeGameUpdateGame",
+      "start": 473691,
+      "end": 476900,
+      "source": "function(a){if(loaded){this.commsState!=CS_INIT_1&&this.updateHTMLMeters();this.clock.update(a);this.allowBetUI();this.api_featureUpdate(a);this.updateWinMeter(a);this.updateFGAlpha(a);this.account.update(a);this.useUI3&&this.ui.update(a);switch(this.gameState){case SS_STOPPED:if(this.autoPlay&&!this.api_autoDelayAfterFeature()&&\n!this.autoPlayPaused){this.autoPlayTimer=this.autoPlayTimer-a;if(this.autoPlayTimer<=0){this.autoPlayTimer=0;var c=false;this.useUI3&&(c=this.ui.autoPlayMan.shouldAutoPlayStop());if(this.account.canBet()&&!this.requestToStopAutoPlay&&this.autoPlayGames>0&&!c){this.startSpin();this.autoPlayGames--;this.ui.setMeterText(\"autoGame\",this.autoPlayGames)}else{this.useUI3&&this.ui.autoPlayMan.endSession();this.requestToStopAutoPlay=this.autoPlay=false;this.ui.autoPlayMode=this.ui.AUTO_OFF;this.autoPlayGames=\n0}}}this.updateIdleMessage(a);break;case SS_STOPPED_FREEGAMES:this.freeGames.m_RespinTimer=this.freeGames.m_RespinTimer-a;if(this.freeGames.m_RespinTimer<=0&&!this.historyMode){this.setGamesRemainingString();this.startSpin()}break;case SS_SPINNING:this.reelMan.isStopped()&&this.setState(SS_SPINNING_STOPPED);break;case SS_SPINNING_STOPPED:if(this.api_spinningFeatureStopped()){valueChanged(\"REEL_STOPPED\",\"\");if(this.slotResult.winType==0){if(this.slotResult.getFreeGamesLeft())this.setState(SS_STOPPED_FREEGAMES);\nelse if(this.freeGames.m_bInFreeGames){this.setState(SS_FREEGAME_SUMMARY);this.winMeterLastAmount=0;this.freeRounds.updateTotalWin()}else{this.setState(SS_STOPPED);this.winMeterLastAmount=0}this.api_afterAllReelsStopNoWin()}else{if(this.slotResult.getFreeGamesLeft()){this.playWinSounds();this.setState(SS_WIN_PAYLINE_FREEGAMES);this.startWinMeter(0,this.slotResult.currentSpinWinAmount)}else{if(this.freeGames.m_bInFreeGames){this.playWinSounds();this.setState(SS_FREEGAME_SUMMARY);this.startWinMeter(0,\nthis.slotResult.currentSpinWinAmount)}else{this.playWinSounds();this.setState(SS_WIN_PAYLINE);this.startWinMeter(0,this.account.winAmount)}this.winMeterLastAmount=0}this.api_resetWinMeterTimer()}this.setFreeGameWonMessage()}break;case SS_WIN_PAYLINE:if(!this.account.canBet()&&!(this.slotResult.winType&WT_PICK_FEATURE_TRIGGER)){this.requestToStopAutoPlay=this.autoPlay=false;this.ui.autoPlayMode=this.ui.AUTO_OFF;this.autoPlayGames=0}this.GDMUpdateWin(a);this.updateIdleMessage(a);break;case SS_WIN_PAYLINE_FREEGAMES:this.GDMUpdateWin(a);\nbreak;case SS_PICK_FEATURE:if(!this.api_inFeature())if(this.slotResult.getFreeGamesLeft())this.setState(SS_WIN_PAYLINE_FREEGAMES);else{this.setState(SS_WIN_PAYLINE);this.setBShowFreeSpinBg(false)}break;case SS_FREEGAME_SUMMARY:this.freeGames.m_RespinTimer=this.freeGames.m_RespinTimer-a;if(this.freeGames.m_RespinTimer<=0)if(this.slotResult.winType==0){if(!this.freeGames.m_bInFreeGames){this.setState(SS_STOPPED);this.setBShowFreeSpinBg(false)}}else{this.GDMUpdateWin(a);if(!this.freeGames.m_bInFreeGames){this.setState(SS_WIN_PAYLINE);\nthis.setBShowFreeSpinBg(false)}}}this.reelMan.update(a);this.reelMan.isReelManagerStopping()&&this.api_detectReelStop();if(this.paylineShowDelay>0){this.paylineShowDelay=this.paylineShowDelay-a;if(this.paylineShowDelay<=0){this.showLines(false);this.paylineShowDelay=0}}}}"
+    },
+    {
+      "name": "ownSpinningFeatureStopped",
+      "start": 565364,
+      "end": 565558,
+      "source": "function(){updateReelStrips(this.slotResult.nextRoundFreeGamesMode||FG_NONE);return ssIntro.visible?!1:game.playWildSound?(game.wildSoundChoreo.isActive()||game.wildSoundChoreo.restart(),!1):!0}"
+    },
+    {
+      "name": "ownUpdateReelStrips",
+      "start": 698551,
+      "end": 698769,
+      "source": "function updateReelStrips(a){for(var b=\"reelStrip\",b=a==FG_NONE?\"reelStrip\":a==FG_SUPERSPIN?\"reelStripSuperSpins\":a==FG_RESPIN?\"reelStripRespin\":\"reelStripFreeGame\",a=0;a<3;a++)game.reelMan.setReelStrip(a,window[b+a])}"
+    },
+    {
+      "name": "ownUpdateReelFromMsg",
+      "start": 569079,
+      "end": 570639,
+      "source": "function(){game.reelMan.hasSRS=!1;if(game.slotResult.freeGamesMode!=FG_RESPIN){for(var a=0,a=[],b=-1,c=0,d=0,e=0,f=[],h=0;h<game.reelMan.reels.length;h++)if(a=parseInt(game.slotResult.stops[h])-1,0>a&&(a=game.reelMan.reels[h].reelStrip.length-1),a=game.reelMan.reels[h].reelStrip.slice(a,a+3),3>a.length&&(a=a.concat(game.reelMan.reels[h].reelStrip.slice(0,3-a.length))),b=a.indexOf(10),0<=a.indexOf(10)&&(d++,3>h?(game.reelMan.reels[h].srsRow=b+1,game.reelMan.hasSRS=!0):d>\nh-2&&(game.reelMan.reels[h].srsRow=b+1,game.reelMan.hasSRS=!0),game.reelMan.reels[h].srsSound=\"scattersrs\"+d),b=a.indexOf(11),0<=b&&(e++,e==h&&(game.reelMan.reels[h].srsRow=b+1,game.reelMan.hasSRS=!0,game.reelMan.reels[h].srsSound=3==e?\"pegasusfeatureloop\":\"pegasussrs\"+e)),!(game.slotResult.freeGamesMode>FG_NONE))b=a.indexOf(0),0<=b&&(c++,f.push({reel:h,row:b}),c==h&&(game.reelMan.reels[h].srsRow=b+1,game.reelMan.hasSRS=!0,game.reelMan.reels[h].srsSound=\"medusasrs\"+c));game.playWildSound=!1;game.playScatterWinSound=\n2==d&&5>game.slotResult.betWinRatio;game.playScatterTriggerSound=3<=d;if(2==c){c=[];for(h=0;h<game.slotResult.winningPaylines.length;h++)if(c=game.slotResult.winningPaylines[h].split(\";\").slice(2,7),parseInt(c[f[0].reel])==f[0].row&&parseInt(c[f[1].reel])==f[1].row){game.playWildSound=!0;game.wildSoundChoreo.clear().call(game.playSound,[\"wild\"],game,0).call(game.reelMan.animateSymbol,[f[0].row+1,f[0].reel],game.reelMan,0).call(game.reelMan.animateSymbol,[f[1].row+1,f[1].reel],game.reelMan,0).call(game.resetPlayWildSoundFlag,\nnull,game,1.7).pause();break}}}}"
+    },
+    {
+      "name": "ownResetWildSound",
+      "start": 572554,
+      "end": 572587,
+      "source": "function(){game.playWildSound=!1}"
+    },
+    {
+      "name": "ownMetersUpdateable",
+      "start": 576074,
+      "end": 576127,
+      "source": "function(){return!featureController.endFeatureRollup}"
+    }
+  ],
+  "stateDeclarations": "var SS_STOPPED=1,SS_SPINNING=2,SS_WIN_PAYLINE=3,SS_STOPPED_FREEGAMES=4,SS_WIN_PAYLINE_FREEGAMES=5,SS_PICK_FEATURE=6,SS_FREEGAME_INTRO=7,SS_FREEGAME_SUMMARY=8,SS_SPINNING_STOPPED=9,CS_INIT_0=0,CS_INIT_1=1,CS_INIT_2=2,CS_INITIALISED=3,CS_ERROR=4;"
+}

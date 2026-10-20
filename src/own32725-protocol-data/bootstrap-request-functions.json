@@ -1,0 +1,10 @@
+{
+  "gameId": "32725",
+  "stateDeclarations": "var SS_STOPPED=1,SS_SPINNING=2,SS_WIN_PAYLINE=3,SS_STOPPED_FREEGAMES=4,SS_WIN_PAYLINE_FREEGAMES=5,SS_PICK_FEATURE=6,SS_FREEGAME_INTRO=7,SS_FREEGAME_SUMMARY=8,SS_SPINNING_STOPPED=9,CS_INIT_0=0,CS_INIT_1=1,CS_INIT_2=2,CS_INITIALISED=3,CS_ERROR=4;",
+  "nativeSetCommsState": "function(a){if(a!=this.commsState){this.commsState=a;switch(this.commsState){case CS_INIT_1:globalMessageIndex++;\ntry{windowObj.wrapperAPI(\"METRICS\",METRICS.getString())}catch(c){}windowObj.sendMsgToServer(\"&MSGID=INIT&MSGINDEX=\"+globalMessageIndex+\"&\");break;case CS_INIT_2:globalMessageIndex++;try{windowObj.wrapperAPI(\"METRICS\",METRICS.getString())}catch(d){}windowObj.sendMsgToServer(\"&MSGID=REELSTRIP&MSGINDEX=\"+globalMessageIndex+\"&\");break;case CS_INITIALISED:serverInitialised=true;start();break;case CS_ERROR:alert(\"Comms Error\")}}}",
+  "nativeInitialMessageIndex": 0,
+  "nativeInitialPaylines": [
+    25,
+    25
+  ]
+}

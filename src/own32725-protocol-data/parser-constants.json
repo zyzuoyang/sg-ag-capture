@@ -1,0 +1,8 @@
+{
+  "originalConstants": {
+    "source": "var WT_SMALL_WIN=1,WT_MEDIUM_WIN=2,WT_LARGE_WIN=4,WT_SCATTER_WIN=8,WT_SUBSTITUTE_WIN=16,WT_FEATURE_TRIGGER=32,WT_PICK_FEATURE_TRIGGER=64;var FG_NONE=0,FG_RESPIN=1,FG_BASE=2,FG_SUPERSPIN=3,FG_RESPIN_END=4;"
+  },
+  "newBitfieldLeaf": {
+    "source": "function(a,b,c,d,e){var f=Array(4);f[0]=[1,2,4,8,16];f[1]=[32,64,128,256,512];f[2]=[1024,2048,4096,8192,16384];f[3]=[32768,65536,131072,262144,524288];var h=0;-1!=a&&(h|=f[a][0]);-1!=b&&(h|=f[b][1]);-1!=c&&(h|=f[c][2]);-1!=d&&(h|=f[d][3]);-1!=e&&(h|=f[e][4]);return h}"
+  }
+}

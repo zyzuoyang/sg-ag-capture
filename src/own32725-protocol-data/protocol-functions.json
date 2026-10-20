@@ -1,0 +1,101 @@
+{
+  "gameId": "32725",
+  "leaves": [
+    {
+      "name": "SlotResult",
+      "start": 367488,
+      "end": 368221,
+      "bytes": 733,
+      "SHA256": "2e967668104d996129c653a436d1a4fa1c48e77a353669f7382946b269ccc002",
+      "source": "function SlotResult(){this.currentSpinWinAmount=this.currentWinAmount=this.winAmount=this.winType=0;this.numReels=5;this.stops=[];this.totalNumFreeGames=this.freeGamesWon=this.numFreeGames=this.numWinningPaylines=0;this.bProcessed=!0;this.reelsBet=this.linesBet=this.betPerLine=0;this.IFG=!1;this.paylineWins=[];this.paylineWins2=[];this.winningPaylines=[];this.getFreeGamesLeft=function(){return this.numFreeGames};this.clear=function(){this.currentSpinWinAmount=this.currentWinAmount=this.winAmount=\nthis.winType=0;this.numReels=5;this.totalNumFreeGames=this.freeGamesWon=this.numFreeGames=this.numWinningPaylines=0;this.paylineWins.length=0;this.paylineWins2.length=0;this.bProcessed=!0;this.IFG=!1;this.winningPaylines.length=0}}"
+    },
+    {
+      "name": "FeatureController",
+      "start": 669884,
+      "end": 670182,
+      "bytes": 298,
+      "SHA256": "7653cabfd069201e464cc975ec1d1963f8f351397cf5996e045d8d9f33a21aec",
+      "source": "function FeatureController(){this.horse=Array(3);this.sstwExp=RegExp(\"SSTW~([\\\\d]+)\",\"g\");this.horseAnimTime=0;this.prizes=[];this.picksMade=0;this.picks=[-1,-1,-1];this.winAll=this.started=!1;this.checkEnd=0;this.visible=!1;this.pickedIdx=-1;this.endFeatureRollup=this.pickable=this.inRecovery=!1}"
+    },
+    {
+      "name": "baseProcessMsg",
+      "start": 482268,
+      "end": 484791,
+      "bytes": 2523,
+      "SHA256": "503160f30e2c06fcd14c84a89676ac7e02588b689271a351ba13a178fe456a44",
+      "source": "function(a){var c=new SlotResult;c.clear();var d=0,e=0,\nf=0,h=0,l=0,n=0,w=0,u=0,s=0,q=0,j=0,k=false;this.featureStarted=false;for(var o=0,A=0,H=0,y=[],z=false,r=false,t=false,C=[],M=0,E=[],x=[],l=0;l<a.length;l++){var m=a[l].split(\"=\");switch(m[0]){case \"B\":this.account.newBalance=Number(m[1]);break;case \"BPL\":n=Number(m[1]);break;case \"LB\":w=Number(m[1]);break;case \"BPR\":n=Number(m[1]);break;case \"RB\":u=Number(m[1]);break;case \"RS\":c.stops=m[1].split(\"|\");break;case \"TW\":d=Number(m[1]);break;case \"CW\":e=Number(m[1]);f=Number(m[1]);break;case \"WC\":j=m[1].split(\"|\");\ns=Number(j[0]);q=Number(j[1]);j=Number(j[2]);break;case \"WS\":y=m[1].split(\"|\");break;case \"NFG\":o=Number(m[1]);break;case \"TFG\":H=Number(m[1]);break;case \"FGT\":A=Number(m[1]);break;case \"SSS\":this.api_parseSSS(m[1]);break;case \"FS_0\":case \"FS_1\":case \"FS_2\":case \"FS_3\":case \"FS_4\":case \"FS_5\":case \"FS_6\":case \"FS_7\":case \"FS_8\":if(m[1]==1)this.featureStarted=true;break;case \"FTV_0\":case \"FTV_1\":case \"FTV_2\":case \"FTV_3\":case \"FTV_4\":case \"FTV_5\":case \"FTV_6\":case \"FTV_7\":case \"FTV_8\":k=true;this.api_parseFeaturePrizes(m[1]);\nbreak;case \"FPM_0\":case \"FPM_1\":case \"FPM_2\":case \"FPM_3\":case \"FPM_4\":case \"FPM_5\":case \"FPM_6\":case \"FPM_7\":case \"FPM_8\":this.api_parseFPM(m[1]);break;case \"CFP_0\":case \"CFP_1\":case \"CFP_2\":case \"CFP_3\":case \"CFP_4\":case \"CFP_5\":case \"CFP_6\":case \"CFP_7\":case \"CFP_8\":this.api_parseCFP(m[1]);break;case \"IFG\":t=Number(m[1])==1?true:false;break;case \"ABPM\":this.api_getABPM(m[1])}}l=gameConfig.way243?n*(this.account.way243BetMultiplier[u-1]+this.account.superbet):n*(w+this.account.superbet);e==0&&(e=\nd);s>0&&(0<e&&e<=l*5?h=h|WT_SMALL_WIN:l*5<e&&e<=l*25?h=h|WT_MEDIUM_WIN:e>l*25&&(h=h|WT_LARGE_WIN));e>=l*2&&(z=true);e>=l*5&&(r=true);q&&(h=h|WT_SCATTER_WIN);j&&(h=h|WT_FEATURE_TRIGGER);k&&(h=h|WT_PICK_FEATURE_TRIGGER);c.numWinningPaylines=q?s+1:s;for(l=0;l<y.length-1;l++){a=y[l].split(\";\");k=convertToBitfield(a[2],a[3],a[4],a[5],a[6]);if(a[0]==-1)M=k;else if(a[0]!=-2){C.push(a[0]);E.push(k);x.push(0)}}if(q){c.paylineWins.push({first:-1,second:M});c.paylineWins2.push({first:-1,second:M})}if(s>0)for(l=\n0;l<s;l++){c.paylineWins.push({first:C[l],second:E[l]});c.paylineWins2.push({first:C[l],second:x[l]})}c.linesBet=w;c.reelsBet=u;c.betPerLine=n;c.numFreeGames=o;c.freeGamesWon=A;c.totalNumFreeGames=H;c.winAmount=d;c.currentWinAmount=e;c.currentSpinWinAmount=f;c.winType=h;c.verySmallWin=z;c.smallWin=r;c.bProcessed=false;c.IFG=t;c.winningPaylines=y;this.api_processMsgEnd(c);this.api_processResult(c);return c}"
+    },
+    {
+      "name": "ownProcessMsg",
+      "start": 693059,
+      "end": 695359,
+      "bytes": 2300,
+      "SHA256": "88b546c1dff640daeb80aa84cc570bc92251f69c4e1cfe0a28ee8a6dfb49babb",
+      "source": "function(a,b){for(var c=0,d=false,e=false,f=0;f<a.length;f++){var h=a[f].indexOf(\"=\"),l=a[f].substr(0,h),h=a[f].substr(h+1);switch(l){case \"MUL\":c=parseInt(h);break;case \"IFG\":d=h==\"1\";break;case \"FTV_0\":case \"FTV_1\":e=true}}for(var n=false,f=0;f<a.length;f++){h=a[f].indexOf(\"=\");l=a[f].substr(0,h);h=a[f].substr(h+1);if(l==\"WS\"){h=h.split(\"|\");for(l=0;l<h.length;l++)if(h[l]!=\"\"&&h[l].split(\";\")[0]==\"-2\"&&(c==3||c==5)&&d&&!e){n=true;break}if(n){h.splice(l,1);a[f]=\"WS=\"+h.join(\"|\");\nbreak}}}a[f]==\"WS=\"&&a.splice(f,1);for(f=0;f<a.length&&n;f++){h=a[f].indexOf(\"=\");l=a[f].substr(0,h);h=a[f].substr(h+1);if(l==\"WC\"){l=h.split(\"|\");l[2]=\"0\";a[f]=\"WC=\"+l.join(\"|\")}}n=overridenFunctions.processMsg.call(this,a,b);n.expandedReelNumber=-1;n.superSpinsTotal=-1;n.specRow=-1;n.superSpinsAwarded=0;n.freeGamesMode=FG_NONE;n.nextRoundFreeGamesMode=FG_NONE;n.currentFreeGame=0;n.fgCurrentWin=0;n.pickBonus=n.winType&WT_PICK_FEATURE_TRIGGER;for(f=0;f<a.length;f++){h=a[f].indexOf(\"=\");l=a[f].substr(0,\nh);h=a[f].substr(h+1);switch(l){case \"GSD\":c=h.split(\"#\");for(l=0;l<c.length;l++){d=c[l].split(\"~\")[0];e=c[l].split(\"~\")[1];switch(d){case \"TSS\":n.superSpinsTotal=parseInt(e);break;case \"ERN\":n.expandedReelNumber=parseInt(e);n.freeGamesMode=FG_RESPIN;break;case \"SSS\":d=e.split(\";\");if(d.length>1){n.specRow=parseInt(d[1]);n.superSpinsAwarded=parseInt(d[2])}break;case \"FGTW\":n.freeGamesWin=parseInt(e);break;case \"SSTW\":n.superSpinsWin=parseInt(e)}}break;case \"WS\":c=h.split(\"|\");for(l=0;l<c.length;l++){d=\nc[l].split(\";\");if(d[0]==\"-2\")n.bonusLine=[Number(d[2]),Number(d[3]),Number(d[4]),Number(d[5]),Number(d[6])]}break;case \"MUL\":n.multiplier=parseInt(h);n.freeGamesMode=n.multiplier==5?FG_SUPERSPIN:n.multiplier==3?FG_RESPIN:n.multiplier==2?FG_BASE:FG_NONE;n.nextRoundFreeGamesMode=n.getFreeGamesLeft()==0?FG_NONE:n.freeGamesMode;break;case \"CFGG\":n.currentFreeGame=parseInt(h);break;case \"CW\":n.fgCurrentWin=parseInt(h)}}if(n.IFG&&n.nextRoundFreeGamesMode==FG_BASE&&n.currentFreeGame==0)n.nextRoundFreeGamesMode=\nFG_SUPERSPIN;if(!n.IFG){n.freeGamesMode=FG_NONE;n.nextRoundFreeGamesMode=n.getFreeGamesLeft()==3?FG_RESPIN:n.getFreeGamesLeft()==10?FG_BASE:FG_NONE}n.betWinRatio=(n.freeGamesMode===FG_NONE?n.currentWinAmount:n.fgCurrentWin)/game.account.getBetAmount();game.api_processResult(n);return n}"
+    },
+    {
+      "name": "sendSpinMsg",
+      "start": 494433,
+      "end": 495044,
+      "bytes": 611,
+      "SHA256": "fcfdcf7b6dc5fd386e168f3df7293957f0d148e6079d8309f7d888e4ebb212f8",
+      "source": "function(){var a=document.forms.debugform,b;if(a)b=a.elements.stops.value;if(game.slotResult.numFreeGames==0){try{METRICS.addSpin(game.autoPlay?1:0);\nMETRICS.takeBet(parseInt(game.account.getBetAmount()))}catch(c){}a=\"&MSGID=BET\"}else{try{METRICS.addSpin(2)}catch(d){}a=\"&MSGID=FREE_GAME\"}b&&(a=a+\"&PRESET=\"+b);a=gameConfig.way243?a+\"&BPR=\"+game.account.getBetPerLine()+\"&RB=\"+game.account.reelsSelected+\"&\":a+\"&BPL=\"+game.account.getBetPerLine()+\"&LB=\"+game.account.paylinesSelected+\"&\";a=game.api_extendSpinMsg(a);try{windowObj.wrapperAPI(\"METRICS\",METRICS.getString())}catch(e){}windowObj.sendMsgToServer(a)}"
+    },
+    {
+      "name": "baseExtendSpinMsg",
+      "start": 443409,
+      "end": 443430,
+      "bytes": 21,
+      "SHA256": "8ac7a6cd37d830e8ee8d11f9a33b962498484ac808374861adac584432de9b12",
+      "source": "function(a){return a}"
+    },
+    {
+      "name": "featurePrizes",
+      "start": 670550,
+      "end": 670712,
+      "bytes": 162,
+      "SHA256": "d90669d0d6c7a596daa3d2f3ac04982d23153337e66ede116e1da6bda46b7970",
+      "source": "function(a){if(!(2>a.length)){this.prizes.splice(0);var a=a.slice(0,-2).split(\";\"),b=Number(a[1]);this.prizes=a.slice(7);this.winAll=1==b&&3==this.prizes.length}}"
+    },
+    {
+      "name": "featurePicksMade",
+      "start": 673693,
+      "end": 673844,
+      "bytes": 151,
+      "SHA256": "cc72ee8c134d3df3bcbf22b2b6309c4125a204e44fdf628d8b064de8ceade9f9",
+      "source": "function(a){a=a.slice(0,-2);if(!(1>a.length)){a=a.split(\";\");this.picksMade=a.length;for(var b=0;b<this.picksMade;b++)this.picks[a[b]]=this.prizes[b]}}"
+    },
+    {
+      "name": "featureProcessMsg",
+      "start": 670760,
+      "end": 671216,
+      "bytes": 456,
+      "SHA256": "26a05643ab695ec78f3f6ee1a18142eac60e3493e5b044c29fc243f02647fdfc",
+      "source": "function(a,b){var c=!1;switch(a){case \"FEATURE_PICK\":if(1>this.prizes.length-this.picksMade||this.winAll)this.checkEnd|=2,this.checkFeatureEnd();c=!0;break;case \"FEATURE_START\":c=!0;break;case \"FEATURE_END\":var d=b.join(\"&\"),c=this.sstwExp.exec(d),d=/AB=(\\d+)/g.exec(d);null!=c&&(game.slotResult.superSpinsWin=parseInt(c[1]));game.account.newBalance=parseInt(d[1]);game.account.targetOnScreenBalance=game.account.newBalance;this.endFeature();c=!0}return c}"
+    },
+    {
+      "name": "featureCheckEnd",
+      "start": 675933,
+      "end": 676035,
+      "bytes": 102,
+      "SHA256": "9989e918fe714c831f800cfe12bde3be1adc0a9850cbaab118fb4cc3b4df99f8",
+      "source": "function(){3==this.checkEnd&&(windowObj.sendMsgToServer(\"&MSGID=FEATURE_END&CFG=0&\"),this.checkEnd=0)}"
+    },
+    {
+      "name": "featureDoPick",
+      "start": 673881,
+      "end": 674429,
+      "bytes": 548,
+      "SHA256": "ef1a9edadc6d299b887a83a20308fbc0ae07c0feb378c488194a881619653812",
+      "source": "function(a){this.pickedIdx=a;for(var b=this.picksMade+1<this.prizes.length&&!this.winAll,c=0==this.picksMade&&this.winAll,d=!0,e=0;e<this.horse.length;e++)e==a?(game.playSound(\"pegasussym\"),this.horse[e].showPrize(this.prizes[this.picksMade],b,c),this.picks[e]=this.prizes[this.picksMade]):this.horse[e].pause();TweenMax.delayedCall(c?0.5:this.horseAnimTime,this.onAnimComplete,[!c],this);this.picksMade++;this.winAll&&1<this.picksMade&&(d=!1);d&&windowObj.sendMsgToServer(\"&MSGID=FEATURE_PICK&CFG=0&FP=1|\"+\nthis.picksMade+\"|\"+this.pickedIdx+\"|&\")}"
+    },
+    {
+      "name": "featureBegin",
+      "start": 671458,
+      "end": 672245,
+      "bytes": 787,
+      "SHA256": "daf50932fec5c37c5bbbcba830ac457be55605e9c3e3fcc3b71a135cdc05632a",
+      "source": "function(){if(!this.started){this.pickedIdx=-1;this.checkEnd=0;this.visible=this.started=!0;TweenMax.to(game,1,{reelTintAlpha:0.6,ease:Power0.easeOut});for(var a=this.picksMade+1<=this.prizes.length&&!this.winAll,a=this.inRecovery&&!a||this.winAll&&0<this.picksMade,b=0;b<this.horse.length;b++)this.horse[b].winAmount.value=0,this.horse[b].y=game.slotResult.bonusLine[b+1]*game.layout.symbolHeight,0<this.picks[b]?(this.horse[b].recover(this.picks[b],game.featureStarted&&\nthis.winAll),this.pickedIdx=b):this.horse[b].start(a);this.pickable=!0;this.ambientSound=getCurrentAmbientSound();game.playSound(\"pegasussym\");game.featureStarted?a&&(this.checkEnd|=2,TweenMax.delayedCall(this.horseAnimTime,this.onAnimComplete,[!1],this)):windowObj.sendMsgToServer(\"&MSGID=FEATURE_START&CFG=0&\")}}"
+    }
+  ]
+}
