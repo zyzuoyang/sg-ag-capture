@@ -1857,8 +1857,41 @@ function own32778Normal0Hold(error:unknown){return Object.assign(new Error('AG i
 const own32816WireSlots=new WeakMap<object,any>();
 function own32816WireSlot(session:object){const slot=own32816WireSlots.get(session);assert(slot,'AG integrity: own32816 original private slot missing');return slot;}
 function own32816WireStop(session:any,error:unknown):never{
- const slot=own32816WireSlots.get(session),failure=Object.assign(new Error('AG integrity: own32816 original native wire held'),{cause:error,own32816DeterministicIntegrityStop:true,retryAllowed:false});
- if(slot){slot.error=failure;try{slot.binding?.originalOwnerHooks.seal(error);}catch{}try{slot.wire.ownerHooks.seal(error);}catch{}}
+ const slot=own32816WireSlots.get(session);
+ const read=(value:any,key:string)=>{try{return value==null?undefined:value[key];}catch{return undefined;}};
+ const text=(value:any,limit:number)=>{try{return String(value).slice(0,limit);}catch{return '[unavailable]';}};
+ const describe=(value:any)=>{
+  const name=read(value,'name'),message=read(value,'message'),stack=read(value,'stack');
+  return {name:typeof name==='string'?name.slice(0,128):'Error',
+   message:text(message===undefined?value:message,16384),
+   ...(typeof stack==='string'?{stack:stack.slice(0,32768)}:{})};
+ };
+ const chain:ReturnType<typeof describe>[]=[],seen=new Set<any>();let cursor:any=error;
+ for(let n=0;cursor!=null&&n<8&&!seen.has(cursor);n++){
+  seen.add(cursor);chain.push(describe(cursor));cursor=read(cursor,'cause');
+ }
+ const host=slot?.host,hostErrors=Array.isArray(host?.errors)?host.errors.slice(0,8).map(describe):[];
+ const publicNames=new Set(['Error','TypeError','RangeError','ReferenceError','SyntaxError','AssertionError','AggregateError','AbortError','TimeoutError','RuntimeError']);
+ const labels=[...chain].reverse().concat(hostErrors).map(item=>{
+  const name=publicNames.has(item.name)?item.name:'Error';
+  const reason=/^(OWN32816_(?:NATIVE_SELECTOR_[A-Z0-9_]{1,100}|ORIGINAL_LIFECYCLE_[A-Z0-9_]{1,100}|NATIVE_SHOW_ERROR))(?=$|\s)/.exec(item.message);
+  return name+(reason?':'+reason[1]:'');
+ });
+ // Preserve the original AG non-retryable hold behavior: its retry classifier
+ // matches these two literal spellings. Original names remain in private data.
+ const summary=Array.from(new Set(labels)).slice(0,6).join('|')
+  .replace(/RuntimeError/gi,'Runtime_Error').replace(/MalformedRequest/gi,'Malformed_Request')||'Error';
+ const failure=Object.assign(new Error('AG integrity: own32816 original native wire held [native='+summary+']'),
+  {cause:error,own32816DeterministicIntegrityStop:true,retryAllowed:false});
+ if(slot)slot.error=failure;
+ // Existing private SG journal only; no console output or request/header copy.
+ // Capture before seal/close clears host state. A failed journal cannot replace
+ // the original cause or allow another provider operation.
+ try{session.evidence({phase:'own32816-native-private-fault-DATA',ordinal:session.ordinal,
+  errorChain:chain,hostErrors,nativeState:{phase:typeof host?.phase==='string'?host.phase.slice(0,256):undefined,
+   now:Number.isFinite(host?.now)?host.now:undefined,
+   pendingEvents:Array.isArray(host?.pending)?host.pending.slice(0,8).map((p:any)=>text(read(p,'event'),64)):[]}});}catch{}
+ if(slot){try{slot.binding?.originalOwnerHooks.seal(error);}catch{}try{slot.wire.ownerHooks.seal(error);}catch{}}
  session.close();throw failure;
 }
 export class SGWmsSession {
