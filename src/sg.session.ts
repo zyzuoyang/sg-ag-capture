@@ -1253,7 +1253,7 @@ export function validateHealthyPaidData(game:AGGameConfig,g:any):number {
  ownPaidKeys(g.BGInfo,desert?'totalWagerWin|bgWinnings|baseGameSpinsRemaining|isBigBet|isMaxWin':'totalWagerWin|bgWinnings|baseGameSpinsRemaining|isMaxWin|goldChanceAwarded|jackpotAwarded|gameMode',label+' base');
  assert(g.BGInfo.baseGameSpinsRemaining==='0'&&g.BGInfo.isMaxWin==='0',`AG integrity: SG ${label} remaining action`);
  if(desert)assert(g.BGInfo.isBigBet==='0',`AG integrity: SG ${label} paid mode`);
- else assert(g.BGInfo.goldChanceAwarded==='0'&&g.BGInfo.jackpotAwarded==='0'&&g.BGInfo.gameMode==='0',`AG integrity: SG ${label} feature needs own mapping`);
+ else assert((g.BGInfo.goldChanceAwarded==='0'||g.BGInfo.goldChanceAwarded==='1')&&g.BGInfo.jackpotAwarded==='0'&&g.BGInfo.gameMode==='0',`AG integrity: SG ${label} feature needs own mapping`);
  ownPaidKeys(g.ReelResults,'numSpins|ReelSpin',label+' reels');const reels=list(g.ReelResults.ReelSpin);assert(g.ReelResults.numSpins==='1'&&reels.length===1,`AG integrity: SG ${label} current reel count`);const r=reels[0];
  ownPaidKeys(r,desert?'spinIndex|reelsetIndex|winCountPL|winCountSC|spinWins|freeSpin|bonusAwarded|ReelStops'+(r.PaylineWin!==undefined?'|PaylineWin':''):'spinIndex|reelsetIndex|anywayWins|scatterWinCount|totalSpinWin|freeSpin|bonusAwarded|ReelStops'+(r.AnywayWin!==undefined?'|AnywayWin':''),label+' spin');
  assert(r.spinIndex==='0'&&r.reelsetIndex==='0'&&r.freeSpin==='N'&&r.bonusAwarded==='N'&&(desert?r.winCountSC:r.scatterWinCount)==='0',`AG integrity: SG ${label} unclassified feature`);

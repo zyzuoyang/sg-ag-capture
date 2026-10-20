@@ -24,7 +24,7 @@ function decision(g) {
   if(has(d,'pickType'))hold(uint(d.pickType,'pickType')===0,'unmapped TopUp/other actual choice');
   return {raw:d,pending};
 }
-function scopeAndCash(g,choiceACK=false,paidJackpot=false) {
+function scopeAndCash(g,choiceACK=false,paidJackpot=false,paidGoldDisplay=false) {
   obj(g,'GameResult');
   // Preserve unknown display DATA. Only explicit new control branches are held.
   for(const k of ['Feature','PickerInfo','GambleInfo','NextActionInfo'])
@@ -37,7 +37,7 @@ function scopeAndCash(g,choiceACK=false,paidJackpot=false) {
   const bg=obj(g.BGInfo,'BGInfo');
   hold(bg.gameMode==='0','actual normal mode required');
   hold(bg.isMaxWin==='0','unmapped maximum-win result');
-  if(has(bg,'goldChanceAwarded'))hold(bg.goldChanceAwarded==='0','unmapped goldChanceAwarded');
+  if(has(bg,'goldChanceAwarded'))hold(bg.goldChanceAwarded==='0'||paidGoldDisplay&&bg.goldChanceAwarded==='1','unmapped goldChanceAwarded');
   if(has(bg,'jackpotAwarded'))hold(bg.jackpotAwarded===(paidJackpot?'1':'0'),'unmapped jackpotAwarded');
   if(has(bg,'baseGameSpinsRemaining'))hold(uint(bg.baseGameSpinsRemaining,'base remaining')===0,'unmapped base continuation');
   if(g.FSInfo!==undefined) {
@@ -105,7 +105,10 @@ function create(game) {
     live();hold(['await-base','await-choice','await-free'].includes(phase),'response without consumed request');
     hold(first===(phase==='await-base'),'original round association');
     const d=decision(g),choiceACK=phase==='await-choice',paidJackpot=phase==='await-base'&&g.JackpotInfo!==undefined;
-    const win=scopeAndCash(g,choiceACK,paidJackpot);
+    // Native Asa is local symbol presentation; K2 still ends a paid result
+    // without actual free/decision/JP control. Original paid cash validation stays required.
+    const paidGoldDisplay=phase==='await-base'&&!paidJackpot&&g.FSInfo===undefined&&d===undefined;
+    const win=scopeAndCash(g,choiceACK,paidJackpot,paidGoldDisplay);
     if(phase==='await-choice') {
       // Actual ACK type is mandatory. No missing pickType -> selected0 fallback.
       hold(d && has(d.raw,'pickType') && uint(d.raw.pickType,'actual ACK pickType')===selectedType,'actual choice ACK mismatch/missing');
