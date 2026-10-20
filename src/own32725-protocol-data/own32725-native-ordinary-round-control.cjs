@@ -116,6 +116,44 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
   vm.runInContext('game.initWinRollupSound=('+original('nativeInitWinRollupSound')+');game.playWinSounds=('+original('nativePlayWinSounds')+');game.api_lastFreeGameFinish=('+original('nativeLastFreeGameFinish')+');',context,{timeout:1000});
  }
 
+ let nativeSuperIntro;
+ function installOriginalSuperSpinIntro(){
+  if(nativeSuperIntro){need(context.ssIntro===nativeSuperIntro,'PINNED_ORIGINAL_SUPER_INTRO');return}
+  need(context.ssIntro&&context.ssIntro.visible===false,'ORIGINAL_SUPER_INTRO_NOT_ALREADY_VISIBLE');
+  const data=require('./superspin-intro-functions.json');
+  const original=name=>{const f=data.leaves.find(x=>x.name===name)?.source;need(typeof f==='string','ORIGINAL_SUPER_INTRO_LEAF_'+name);return f};
+  const cancel=token=>{if(token!==undefined){clearTimeout(token);timers.delete(token)}};
+  // This port only advances the original SSIntro popup's display timeline.
+  // Original hide/onEnd callbacks retain every native mode/state/count decision.
+  function SuperIntroPopup(options){
+   let end=0,scale=1,forwardToken,reverseToken;const labels=new Map();
+   const position=value=>{
+    if(value===undefined)return end;
+    if(typeof value==='number'){need(Number.isFinite(value)&&value>=0,'ORIGINAL_SUPER_INTRO_POSITION');return value}
+    if(typeof value==='string'&&/^\+=\d+(?:\.\d+)?$/.test(value))return end+Number(value.slice(2));
+    need(typeof value==='string'&&labels.has(value),'ORIGINAL_SUPER_INTRO_LABEL');return labels.get(value);
+   };
+   const port={
+    to(target,seconds,viewValues,at){end=Math.max(end,position(at)+seconds);return port},
+    staggerTo(targets,seconds,viewValues,stagger,at){end=Math.max(end,position(at)+seconds+Math.max(0,targets.length-1)*stagger);return port},
+    addLabel(name,at){const time=position(at);labels.set(name,time);end=Math.max(end,time);return port},
+    set(target,viewValues,at){end=Math.max(end,position(at));return port},
+    timeScale(value){need(Number.isFinite(value)&&value>0,'ORIGINAL_SUPER_INTRO_TIME_SCALE');scale=value;return port},
+    restart(){cancel(forwardToken);cancel(reverseToken);need(typeof options.onComplete==='function','ORIGINAL_SUPER_INTRO_FORWARD_CALLBACK');forwardToken=later(()=>options.onComplete.call(options.callbackScope),end/scale*1000);return port},
+    reverse(label){cancel(forwardToken);cancel(reverseToken);const seconds=position(label);need(typeof options.onReverseComplete==='function','ORIGINAL_SUPER_INTRO_REVERSE_CALLBACK');reverseToken=later(()=>options.onReverseComplete.call(options.callbackScope),seconds/scale*1000);return port}
+   };return port;
+  }
+  function IntroText(text){this.text=text;this.setShadow=noop}
+  game.layout.center={x:0,y:0};game.layout.designScale=1;
+  game.flares.start=noop;game.multiplierText.update=noop;game.superSpinText.update=noop;
+  game.snakeCharmer.hide=noop;game.reelBorder.toSuperSpins={restart:noop};game.reelMan.updateSymbolBackgrounds=noop;
+  context.medusaShadow={start:noop};
+  context.ownSuperIntroViewPorts={TextContainer:IntroText,TimelineMax:SuperIntroPopup,Back:{easeOut:{config:()=>noop}}};
+  const expression='(function(TextContainer,TimelineMax,Back,TXT_SSI_1,TXT_SSI_2,TXT_SSI_3,TXT_SSI_4,TXT_SSI_5){'+original('SSIntro')+';SSIntro.prototype.show=('+original('introShow')+');SSIntro.prototype.hide=('+original('introHide')+');SSIntro.prototype.onEnd=('+original('introEnd')+');return new SSIntro;'+
+   '})(ownSuperIntroViewPorts.TextContainer,ownSuperIntroViewPorts.TimelineMax,ownSuperIntroViewPorts.Back,"","","","","")';
+  try{nativeSuperIntro=context.ssIntro=vm.runInContext(expression,context,{timeout:1000})}finally{delete context.ownSuperIntroViewPorts}
+ }
+
  function seal(){sealed=true;for(const t of timers)clearTimeout(t);timers.clear()}
  return Object.freeze({
   begin(){need(!started&&!sealed,'ONE_INITIAL_NATIVE_ROUND');startBalance=game.account.balance;wager=game.account.getBetAmount();need(Number.isSafeInteger(startBalance)&&Number.isSafeInteger(wager)&&wager>0,'ACTUAL_NATIVE_ACCOUNT_WAGER');const n=requests.length;vm.runInContext('game.setState(SS_SPINNING);',context,{timeout:1000});need(game.roundActive&&requests.length===n+1&&events.some(x=>x.name==='ROUND'&&x.value===1),'ORIGINAL_START_AND_REQUEST');started=true;return requests.at(-1)},
@@ -174,6 +212,7 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
    const nativeFreeTerminal=r.nextRoundFreeGamesMode===context.FG_NONE&&r.getFreeGamesLeft()===0;
    need(r.IFG&&Number.isSafeInteger(r.freeGamesMode)&&nativeFreeModes.includes(r.freeGamesMode)&&(nativeContinue||nativeFreeTerminal)&&!(r.winType&64),'ACTUAL_BASE_FREE_NEXT_SCOPE');
    need(frame.actualBalance===startBalance-wager+frame.actualCumulativeWin,'ACTUAL_FREE_CUMULATIVE_CASH');
+   if(r.freeGamesMode===context.FG_BASE&&r.nextRoundFreeGamesMode===context.FG_SUPERSPIN)installOriginalSuperSpinIntro();
    if(nativeFreeTerminal)installOriginalFreeTerminalSummary();
    currentFrame=controlFrame=frame;const before=requests.length;let tickAt=Date.now();const deadline=tickAt+14000;
    vm.runInContext('game.api_updateReelFromMsg();game.setState(SS_SPINNING_STOPPED);',context,{timeout:1000});

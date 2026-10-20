@@ -1,0 +1,31 @@
+{
+  "gameId": "32725",
+  "fixedSource": "E:\\platform-sync\\api_new_docker\\api_new\\client\\game\\sg\\static\\ogs-cdn-usnj.nyxop.net\\html5\\medusahq\\game_min.js",
+  "purpose": "Original SSIntro constructor/show/hide/onEnd business callback chain and original literal timeline timing; display ports do not choose mode or requests.",
+  "leaves": [
+    {
+      "name": "SSIntro",
+      "source": "function SSIntro(){this.playingText=new TextContainer(TXT_SSI_1,\"ssi_title1\");this.playingText.x=game.layout.center.x;this.playingText.y=game.layout.center.y-200;this.playingText.scaleX=0.5;this.playingText.scaleY=0.5;this.playingText.setShadow(7);this.playingText.alpha=0;this.awardText=new TextContainer(\"\",\"ssi_title2\");this.awardText.x=game.layout.center.x;this.awardText.y=game.layout.center.y-150;this.awardText.scaleX=0.5;this.awardText.scaleY=0.5;this.awardText.setShadow(7);this.awardText.alpha=\n0;this.superSpinsText=new TextContainer(TXT_SSI_2,\"ssi_title3\");this.superSpinsText.x=game.layout.center.x;this.superSpinsText.y=game.layout.center.y-50;this.superSpinsText.scaleX=0.5;this.superSpinsText.scaleY=0.5;this.superSpinsText.setShadow(7);this.superSpinsText.alpha=0;this.allPrizesText=new TextContainer(TXT_SSI_3,\"ssi_title4\");this.allPrizesText.x=game.layout.center.x;this.allPrizesText.y=game.layout.center.y+20;this.allPrizesText.scaleX=0.5;this.allPrizesText.scaleY=0.5;this.allPrizesText.setShadow(7);\nthis.allPrizesText.alpha=0;this.multiplierText=new TextContainer(TXT_SSI_4,\"ssi_title5\");this.multiplierText.x=game.layout.center.x;this.multiplierText.y=game.layout.center.y+80;this.multiplierText.scaleX=0.5;this.multiplierText.scaleY=0.5;this.multiplierText.setShadow(7);this.multiplierText.alpha=0;this.goodLuckText=new TextContainer(TXT_SSI_5,\"ssi_btn\");this.goodLuckText.x=game.layout.center.x;this.goodLuckText.y=game.layout.center.y+160;this.goodLuckText.scaleX=0.5;this.goodLuckText.scaleY=0.5;\nthis.goodLuckText.setShadow(7);this.goodLuckText.alpha=0;this.visible=!1;this.visibleObjs=[this.playingText,this.awardText,this.superSpinsText,this.allPrizesText,this.multiplierText,this.goodLuckText];this.popupTL=(new TimelineMax({useFrames:!1,paused:!0,ease:Linear.easeNone,callbackScope:this,onComplete:this.hide,onReverseComplete:this.onEnd})).to(game,0.5,{reelTintAlpha:0.6,ease:Power0.easeOut},0).staggerTo(this.visibleObjs,1,{scaleX:0.95,scaleY:0.95,alpha:1,ease:Back.easeOut.config(2)},0.2,0).addLabel(\"textTween\",\n\"+=0\").set({},{},\"+=4\")}",
+      "originalToken": "function SSIntro(",
+      "originalTokenOffset": 712964
+    },
+    {
+      "name": "introShow",
+      "source": "function(a){game.flares.start(4);this.awardText.text=a;this.visible=!0;this.popupTL.timeScale(1).restart();game.reelBorder.toSuperSpins.restart();game.reelMan.updateSymbolBackgrounds();game.fadeOutSound(\"freegamesloop\",\"superfreegamesloop\",1500);medusaShadow.start()}",
+      "originalToken": "SSIntro.prototype.show=",
+      "originalTokenOffset": 715158
+    },
+    {
+      "name": "introHide",
+      "source": "function(){game.flares.stop();this.popupTL.timeScale(1.5).reverse(\"textTween\")}",
+      "originalToken": "SSIntro.prototype.hide=",
+      "originalTokenOffset": 715449
+    },
+    {
+      "name": "introEnd",
+      "source": "function(){this.visible=!1;game.slotResult.freeGamesMode=FG_SUPERSPIN;game.slotResult.winType=0;game.setState(SS_SPINNING_STOPPED);game.freeGames.m_RespinTimer=-1501}",
+      "originalToken": "SSIntro.prototype.onEnd=",
+      "originalTokenOffset": 715553
+    }
+  ]
+}
