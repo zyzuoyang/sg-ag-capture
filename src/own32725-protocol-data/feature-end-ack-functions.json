@@ -1,0 +1,11 @@
+{
+  "gameId": "32725",
+  "originalSourcePinReused": true,
+  "wholeSDKASTRepeated": false,
+  "leaves": [
+    {
+      "name": "featureEnd",
+      "source": "function(){for(var a=0;a<this.picks.length;a++)this.picks[a]=-1;this.prizes.splice(0);this.picksMade=0;game.slotResult.betWinRatio=game.slotResult.winAmount/game.account.getBetAmount();game.slotResult.winType^=WT_PICK_FEATURE_TRIGGER|WT_FEATURE_TRIGGER;(a=15<=game.slotResult.betWinRatio)?(game.freeGames.m_RespinTimer=13E3,game.stopSound(\"pegasusfeatureloop\"),bigWinTitle.start(game.slotResult.winAmount)):(TweenMax.to(game,1,{reelTintAlpha:0,ease:Power0.easeOut}),\ngame.fadeOutSound(\"pegasusfeatureloop\",this.ambientSound,1E3));-1<game.slotResult.specRow&&(a||(game.freeGames.m_RespinTimer=game.freeGames.RESPIN_TIMER_DELAY+1500),isStandardQuality||(game.ui.btnContinue.isDisabled=!0),TweenMax.delayedCall(bigWinTitle.celebration.totalDuration()-1.2,game.snakeCharmer.bite,[game.slotResult.specRow,game.slotResult.superSpinsAwarded],game.snakeCharmer));game.slotResult.nextRoundFreeGamesMode==FG_NONE&&game.slotResult.freeGamesMode==FG_SUPERSPIN&&TweenMax.delayedCall(2,\ngame.setState,[SS_FREEGAME_SUMMARY],game);game.slotResult.freeGamesMode==FG_SUPERSPIN&&1>game.slotResult.getFreeGamesLeft()&&(game.slotResult.pickBonus=!1,game.setState(SS_SPINNING_STOPPED));game.account.balance=game.account.newBalance;game.account.currentOnScreenBalance=game.account.newBalance;game.account.startOnScreenBalance=game.account.newBalance;this.endFeatureRollup=!0;this.started=!1}"
+    }
+  ]
+}

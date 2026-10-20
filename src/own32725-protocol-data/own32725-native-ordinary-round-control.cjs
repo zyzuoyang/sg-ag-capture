@@ -38,6 +38,7 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
  context.TweenMax.delayedCall=(seconds,fn,args,scope)=>{need(typeof fn==='function'&&Number.isFinite(seconds)&&seconds>=0,'ACTUAL_NATIVE_FEATURE_CALLBACK');if(fn===context.featureController.onAnimComplete){need(!pendingFeatureAnimation,'ONE_NATIVE_PICK_ANIMATION_CALLBACK');const pending={fn,args,scope},before=requests.length;pendingFeatureAnimation=pending;later(()=>{if(pendingFeatureAnimation===pending&&requests.length===before){pendingFeatureAnimation=null;later(()=>fn.apply(scope,args||[]),seconds*1000)}},0);return}return later(()=>fn.apply(scope,args||[]),seconds*1000)};
  vm.runInContext('featureController.processMsg=('+featureLeaf('featureProcessMsg')+');featureController.doPick=('+featureLeaf('featureDoPick')+');featureController.checkFeatureEnd=('+featureLeaf('featureCheckEnd')+');featureController.onAnimComplete=('+featureLeaf('featureOnAnimComplete')+');',context,{timeout:1000});
 
+ const endSource=require('./feature-end-ack-functions.json');vm.runInContext('featureController.endFeature=('+endSource.leaves.find(x=>x.name==='featureEnd').source+');',context,{timeout:1000});game.fadeOutSound=noop;game.stopSound=noop;
  const animation=()=>({pause(){return this},progress(){return this},restart:noop});
  for(const horse of context.featureController.horse)Object.assign(horse,continuationSource.horseStateConstants,{state:continuationSource.horseStateConstants.STATE_INIT,movie:{visible:false,start:noop},pickAnim:animation(),pickAgainAnim:animation(),pickMeText:{visible:false},winAllText:{visible:false},winAmount:{value:0},rollup:{updateTo:noop,isActive:()=>false},fadeOutMovie:animation()});
  context.ownContinuationLeaves=continuationSource;
@@ -95,7 +96,7 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
    need(Number.isInteger(frame.httpStatus)&&frame.httpStatus>=200&&frame.httpStatus<300,'SUCCESSFUL_FEATURE_START_ACK');
    const f=new URLSearchParams(frame.raw);need(f.get('MSGID')==='FEATURE_START'&&f.get('IFG')==='0','ACTUAL_FEATURE_START_ACK');
    for(const key of ['B','TW'])need(f.has(key)&&/^(0|[1-9]\d*)$/.test(f.get(key))&&Number.isSafeInteger(Number(f.get(key))),'ACTUAL_FEATURE_FINANCIAL_'+key);
-   const balance=Number(f.get('B')),win=Number(f.get('TW'));need(balance===controlFrame.actualBalance+win,'NATIVE_FEATURE_START_CASH_BINDING');
+   const balance=Number(f.get('B')),win=Number(f.get('TW'));need(win>=controlFrame.actualCumulativeWin&&balance===startBalance-wager+win,'NATIVE_FEATURE_START_CASH_BINDING');
    context.actualFeatureStartFields=frame.raw.split('&');
    need(vm.runInContext('featureController.processMsg("FEATURE_START",actualFeatureStartFields.slice());',context,{timeout:1000})===true,'ORIGINAL_FEATURE_ACK_CONSUMED');
    const feature=context.featureController;need(feature.pickable&&feature.prizes.length>feature.picksMade,'ACTUAL_NATIVE_PICK_AVAILABLE');
@@ -138,6 +139,22 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
    need(!ended&&game.roundActive&&requests.length===before+1,'ONE_NATIVE_PICK_NEXT_WITHOUT_END');need(game.slotResult.winAmount===win,'ORIGINAL_NATIVE_PICK_WIN_MATCHES_ACTUAL_ACK');
    const next=requests.at(-1),event=new URLSearchParams(next).get('MSGID');need(['FEATURE_PICK','FEATURE_END'].includes(event),'ACTUAL_NATIVE_PICK_NEXT_WRITER');
    return Object.freeze({actualNativeRoundCallback:false,nextNativeRequest:next,rawResponse:frame.raw,balance,cumulativeWin:win,noProviderEndResponseSynthesized:true});
+  },
+
+  async advanceFeatureEnd(frame){
+   need(started&&!sealed&&!ended&&game.roundActive&&context.featureController.started&&!pendingFeatureAnimation,'CURRENT_NATIVE_FEATURE_END_ACK');
+   need(Number.isInteger(frame.httpStatus)&&frame.httpStatus>=200&&frame.httpStatus<300,'SUCCESSFUL_FEATURE_END_ACK');
+   const f=new URLSearchParams(frame.raw);need(f.get('MSGID')==='FEATURE_END'&&f.get('IFG')==='0','ACTUAL_FEATURE_END_ACK');
+   for(const k of ['B','AB','TW'])need(f.has(k)&&/^(0|[1-9]\d*)$/.test(f.get(k))&&Number.isSafeInteger(Number(f.get(k))),'ACTUAL_FEATURE_END_FINANCIAL_'+k);
+   const balance=Number(f.get('B')),win=Number(f.get('TW'));need(Number(f.get('AB'))===balance&&balance===startBalance-wager+win&&game.slotResult.winAmount===win,'ACTUAL_FEATURE_END_CASH_BINDING');
+   const r=game.slotResult;need(!r.IFG&&r.freeGamesMode===context.FG_NONE&&r.nextRoundFreeGamesMode===context.FG_NONE&&r.getFreeGamesLeft()===0&&r.specRow===-1&&r.superSpinsAwarded===0&&win/game.account.getBetAmount()<15,'ACTUAL_BASE_FEATURE_END_SCOPE');
+   context.actualFeatureEndFields=frame.raw.split('&');const before=requests.length;
+   need(vm.runInContext('featureController.processMsg("FEATURE_END",actualFeatureEndFields.slice());',context,{timeout:1000})===true,'ORIGINAL_FEATURE_END_ACK_CONSUMED');
+   need(!context.featureController.started&&game.account.newBalance===balance,'ORIGINAL_FEATURE_END_NATIVE_BALANCE');
+   const deadline=Date.now()+6000;
+   while(!ended){need(Date.now()<deadline,'FINITE_ORIGINAL_FEATURE_END_CALLBACK_BUDGET');vm.runInContext('game.updateGame(16);',context,{timeout:1000});if(!ended)await new Promise(resolve=>later(resolve,16))}
+   need(requests.length===before&&!game.roundActive&&game.account.balance===balance,'ORIGINAL_FEATURE_END_ROUND_AND_CASH');
+   seal();return Object.freeze({actualNativeRoundCallback:true,rawResponse:frame.raw,balance,cumulativeWin:win,sourceNativeState:game.gameState,sourceCallbacks:events.slice(),noProviderEndResponseSynthesized:true});
   },
   seal
  });
