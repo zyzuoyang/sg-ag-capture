@@ -60,7 +60,17 @@ exports.createOwn32816OriginalMainSelector = function(d) {
     }
   });
 
-  function stop(error) { freeIntroInput.seal(); sealed = true; phase = 'sealed'; throw error; }
+  const paylineInput=require('./own32816-payline-native-input-v1.cjs').createOwn32816PaylineNativeInput({
+    readHost:()=>host().h,
+    assertOriginalOpen:()=>{need(!sealed,'PAYLINE_SELECTOR_OPEN');d.assertOriginalOpen();},
+    assertActiveOriginalPaidIntent:intent=>need(phase==='round-active'&&roundIntent===intent&&paidStarts===acceptedEnds+1,'PAYLINE_CURRENT_PAID_SCOPE'),
+    assertCurrentAcceptedLogic:delivery=>{
+      need(phase==='round-active'&&roundIntent&&lastDispatchEvent==='Logic'&&delivery===lastAcceptedLogicDelivery&&usedDeliveries.has(delivery)&&lastAcceptedLogicSID===d.readOriginalSessionID(),'PAYLINE_CURRENT_LOGIC_SCOPE');
+      d.assertOriginalAcceptedDelivery(delivery,'Logic',d.readOriginalSessionID());
+    }
+  });
+
+  function stop(error) { paylineInput.seal(); freeIntroInput.seal(); sealed = true; phase = 'sealed'; throw error; }
   async function next() {
     try {
       const until = d.wallNow() + d.timeoutMs; let localTicks = 0;
@@ -90,6 +100,8 @@ exports.createOwn32816OriginalMainSelector = function(d) {
           need(false,'FINITE_NEXT_BUDGET '+JSON.stringify(detail));
         }
         if(lastAcceptedLogicDelivery) {
+          const payline=paylineInput.tryMouseDown({paidIntent:roundIntent,delivery:lastAcceptedLogicDelivery});
+          if(payline.status==='dispatched'){localTicks++;ticks++;await d.yieldNative();continue;}
           const input=freeIntroInput.tryMouseDown({paidIntent:roundIntent,delivery:lastAcceptedLogicDelivery});
           if(input.status==='dispatched') {localTicks++;ticks++;await d.yieldNative();continue;}
           if(input.status==='wait') {
@@ -147,8 +159,8 @@ exports.createOwn32816OriginalMainSelector = function(d) {
           nextAction: request.event === 'EndGame' ? 'PLAY' : 'FREE_SPIN', actualEndACK: false });
       } catch (error) { return stop(error); }
     },
-    seal() { freeIntroInput.seal(); sealed = true; phase = 'sealed'; },
+    seal() { paylineInput.seal(); freeIntroInput.seal(); sealed = true; phase = 'sealed'; },
     status() { return { gameId: '32816', phase, sealed, paidStarts, acceptedEnds, ticks,
-      physicalTransportIncluded: false, terminalSynthesized: false, freeIntroInput: freeIntroInput.status(), productionReady: false }; }
+      physicalTransportIncluded: false, terminalSynthesized: false, freeIntroInput: freeIntroInput.status(), paylineInput:paylineInput.status(), productionReady: false }; }
   });
 };
