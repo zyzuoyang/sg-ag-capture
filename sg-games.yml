@@ -17683,3 +17683,4 @@ games:
         total: '200'
       own32801ProtocolDATA:
         contract: own32801-original-SG-protocol-private-v1
+  - {"gameId":"32477","name":"Cherry 8","dbName":"sg_cherryeight96","serviceDir":"sg_cherryeight96","backendId":"cherryeight96","provider":"sg","sg":{"protocol":"gdm","endpoint":"https://ogs-gdm-usnj.nyxop.net/nextgen/","runtimeGameId":33029,"runtimeSlug":"cherryeight96","betRaw":96,"requestParams":{"GN":"cherryeight96","BPL":"12","LB":"8"},"ownCherry32477NativeDATA":"own32477-original-native-ordinary-v1","ownGDMContract":{"version":"own32477-original-native-ordinary-v1","gameId":"32477","dbName":"sg_cherryeight96","runtimeGameId":33029,"runtimeSlug":"cherryeight96","ownSDKFileSHA256":"70c7867c030764795984e66b56976072ab632bfb8ab7c21737813124c217810a","betRaw":96,"balanceScale":1,"winScale":1}},"rtpBuckets":[0,30,100,300,500,1000,2500,5000,10000,1001,2001,5001,10001]}
