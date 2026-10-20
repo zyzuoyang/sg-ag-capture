@@ -113,7 +113,10 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
   async advanceFree(frame){
    need(started&&!sealed&&!ended&&game.roundActive&&currentFrame===controlFrame&&frame.result===game.slotResult,'CURRENT_NATIVE_FREE_ACK');
    const f=new URLSearchParams(frame.raw),r=frame.result;need(f.get('MSGID')==='FREE_GAME'&&f.get('IFG')==='1'&&f.has('MUL'),'ACTUAL_FREE_ACK_FIELDS');
-   need(r.IFG&&r.freeGamesMode===context.FG_BASE&&r.nextRoundFreeGamesMode===context.FG_BASE&&r.getFreeGamesLeft()>0&&!(r.winType&64),'ACTUAL_BASE_FREE_NEXT_SCOPE');
+   // The original zero-win stopped-free path selects the next FREE_GAME itself.
+   // This observed BASE -> SUPERSPIN branch does not enter the SSIntro win path.
+   const originalZeroWinBaseToSuper=r.nextRoundFreeGamesMode===context.FG_SUPERSPIN&&r.currentFreeGame===0&&r.winType===0;
+   need(r.IFG&&r.freeGamesMode===context.FG_BASE&&(r.nextRoundFreeGamesMode===context.FG_BASE||originalZeroWinBaseToSuper)&&r.getFreeGamesLeft()>0&&!(r.winType&64),'ACTUAL_BASE_FREE_NEXT_SCOPE');
    need(frame.actualBalance===startBalance-wager+frame.actualCumulativeWin,'ACTUAL_FREE_CUMULATIVE_CASH');
    currentFrame=controlFrame=frame;const before=requests.length;let tickAt=Date.now();const deadline=tickAt+14000;
    vm.runInContext('game.api_updateReelFromMsg();game.setState(SS_SPINNING_STOPPED);',context,{timeout:1000});
