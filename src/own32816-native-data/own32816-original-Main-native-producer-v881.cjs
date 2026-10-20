@@ -38,18 +38,37 @@ exports.createOwn32816NativeProducer = function createOwn32816NativeProducer(d) 
     return id;
   };
   z.runDue = function() {
+    // Per due group only; no startup or previous-group maximum is retained.
+    try { z.own32816LastRunDueCallback = undefined; } catch {}
     if (z.disposed) throw Error('OWN32816_DISPOSED');
     const all = Array.from(z.timers.values()).sort((a,b) => a.due-b.due || a.id-b.id);
     if (!all.length) return false;
     const due = all[0].due;
     z.now = due;
-    for (const t of all.filter(t => t.due <= due)) {
+    const sameDue = all.filter(t => t.due <= due);
+    let slowestCallback;
+    for (const t of sameDue) {
       if (z.timers.get(t.id) !== t) continue;
       if (t.repeat) t.due = due + Math.max(1, t.delay);
       else z.timers.delete(t.id);
-      if (typeof t.fn === 'function') t.fn.apply(z.context, t.raf ? [z.now] : t.args);
-      else new vm.Script(String(t.fn), {filename:'own32816-original-string-timer.js'})
-        .runInContext(z.context, {timeout:10000});
+      let callbackBegan; try { callbackBegan = performance.now(); } catch {}
+      try {
+        if (typeof t.fn === 'function') t.fn.apply(z.context, t.raf ? [z.now] : t.args);
+        else new vm.Script(String(t.fn), {filename:'own32816-original-string-timer.js'})
+          .runInContext(z.context, {timeout:10000});
+      } finally {
+        try {
+          const elapsedMs = performance.now() - callbackBegan;
+          if (Number.isFinite(elapsedMs) && elapsedMs >= 0 &&
+              (!slowestCallback || elapsedMs > slowestCallback.elapsedMs)) {
+            const name = typeof t.fn === 'function' ? t.fn.name : '';
+            slowestCallback = {id:t.id,raf:t.raf,repeat:t.repeat,delay:t.delay,
+              sameDueCount:sameDue.length,elapsedMs,
+              fnName:typeof name === 'string' && /^[A-Za-z_$][A-Za-z0-9_$]{0,79}$/.test(name) ? name : 'anonymous'};
+            z.own32816LastRunDueCallback = slowestCallback;
+          }
+        } catch {}
+      }
     }
     return true;
   };

@@ -80,7 +80,16 @@ exports.createOwn32816OriginalMainSelector = function(d) {
       function observedRunDue(h) {
         let began;try {began=performance.now();} catch {}
         try {return h.runDue();}
-        finally {try {const elapsed=performance.now()-began;if(Number.isFinite(elapsed)){progress.runDueCalls++;progress.runDueTotalMs+=elapsed;progress.maxRunDueMs=Math.max(progress.maxRunDueMs,elapsed);}}catch {progress.observationUnavailable=true;}}
+        finally {try {
+          const elapsed=performance.now()-began;
+          if(Number.isFinite(elapsed)){progress.runDueCalls++;progress.runDueTotalMs+=elapsed;progress.maxRunDueMs=Math.max(progress.maxRunDueMs,elapsed);}
+          const callback=h.own32816LastRunDueCallback;
+          if(callback && Number.isFinite(callback.elapsedMs) && callback.elapsedMs>=0 &&
+             (!progress.maxRunDueCallback || callback.elapsedMs>progress.maxRunDueCallback.elapsedMs)) {
+            progress.maxRunDueCallback={id:callback.id,raf:callback.raf,repeat:callback.repeat,delay:callback.delay,
+              sameDueCount:callback.sameDueCount,elapsedMs:callback.elapsedMs,fnName:callback.fnName};
+          }
+        }catch {progress.observationUnavailable=true;}}
       }
       async function observedYield(h) {
         let began,jobsBefore;try {began=performance.now();jobsBefore=h.audioPort?.jobs?.size||0;} catch {}
