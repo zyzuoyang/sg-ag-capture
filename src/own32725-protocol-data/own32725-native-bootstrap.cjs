@@ -19,7 +19,7 @@ function createBootstrap(nativeGameConfig){
  if(!nativeGameConfig||typeof nativeGameConfig.way243!=='boolean')fail('OWN_NATIVE_GAME_CONFIG_REQUIRED');
  // Native currency formatting is optional. It never authorizes response/round completion.
  const game={api_processGSDMsg:function(){},ui:{}};
- const context=vm.createContext({game,gameConfig:nativeGameConfig,$:{trim:value=>String(value).trim()}});
+ const context=vm.createContext({game,gameConfig:nativeGameConfig,windowObj:{},$:{trim:value=>String(value).trim()}});
  vm.runInContext(nativeSource,context,{timeout:1000});
  let phase='await-init',acceptedInitRaw,acceptedReelstripRaw;
  return Object.freeze({
