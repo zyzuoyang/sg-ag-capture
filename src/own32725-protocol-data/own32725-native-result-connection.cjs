@@ -21,7 +21,7 @@ function createNativeResultConnection({bootstrap,leaves,cachedEvaluation}){
  function guarded(fn){open();try{return fn()}catch(e){fault=e;throw e}}
  function build(){const count=requests.length;vm.runInContext('sendSpinMsg();',context,{timeout:1000});if(requests.length!==count+1)fail('ONE_ORIGINAL_NATIVE_SPIN_REQUEST');return requests.at(-1)}
  return Object.freeze({
-  connectOriginalOrdinaryControl(sourceData){return guarded(()=>{if(initialBuilt||ordinaryControl)fail('CONTROL_MUST_CONNECT_BEFORE_NATIVE_ROUND');ordinaryControl=require('./own32725-native-ordinary-round-control.cjs').installNativeOrdinaryControl({context,game,bootstrap,requests,sourceData});return {originalNativeControlConnected:true,freeOrFeatureControlConnected:false}})},
+  connectOriginalOrdinaryControl(sourceData){return guarded(()=>{if(initialBuilt||ordinaryControl)fail('CONTROL_MUST_CONNECT_BEFORE_NATIVE_ROUND');ordinaryControl=require('./own32725-native-ordinary-round-control.cjs').installNativeOrdinaryControl({context,game,bootstrap,requests,sourceData,featureData:leaves});return {originalNativeControlConnected:true,freeOrFeatureControlConnected:false}})},
   initialNativeRequest(){return guarded(()=>{if(initialBuilt||current)fail('INITIAL_ALREADY_BUILT');initialBuilt=true;return ordinaryControl?ordinaryControl.begin():build()})},
   acceptNativeSpin(raw,httpStatus){return guarded(()=>{
    rawHistory.push(Object.freeze({raw,httpStatus}));
@@ -39,6 +39,8 @@ function createNativeResultConnection({bootstrap,leaves,cachedEvaluation}){
   currentNativeSpinRequest(){return guarded(()=>{if(!current)fail('CURRENT_ACCEPTED_RESULT_REQUIRED');return build()})},
   currentNativeResult(){open();return current?.result},
   async completeOriginalOrdinaryFrame(){open();try{if(!ordinaryControl||!current)fail('ACTUAL_CURRENT_NATIVE_CONTROL_REQUIRED');return await ordinaryControl.advance(current)}catch(e){fault=e;ordinaryControl?.seal();throw e}},
+  async acceptOriginalFeatureStart(raw,httpStatus){open();try{if(!ordinaryControl||!current)fail('ACTUAL_TRIGGER_BEFORE_FEATURE_ACK');return await ordinaryControl.advanceFeatureStart({raw,httpStatus})}catch(e){fault=e;ordinaryControl?.seal();throw e}},
+  seal(){ordinaryControl?.seal()},
   nativeFeatureState(){open();return context.featureController},
   retainedRaw(){return rawHistory.slice()},
   status(){return {acceptedNativeSpinResponses:rawHistory.length,sealed:!!fault,nativeRequestsConstructed:requests.length,wholeNextOrEndConnected:false,roundComplete:false,sourceDispatched:false}}

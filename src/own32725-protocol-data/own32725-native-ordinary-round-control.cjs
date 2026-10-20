@@ -1,10 +1,11 @@
 'use strict';
 const vm=require('node:vm');
-exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,sourceData}){
+exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,sourceData,featureData}){
  const need=(x,s)=>{if(!x)throw Error('MEDUSA32725_NATIVE_CONTROL_'+s)};
  const leaf=name=>{const s=sourceData.leaves.find(x=>x.name===name)?.source;need(s,'OWN_SOURCE_'+name);return s};
  const pickerSource=require('./picker-start-functions.json');const pickerLeaf=n=>{const f=pickerSource.leaves.find(x=>x.name===n)?.source;need(f,'OWN_PICKER_START_SOURCE_'+n);return f};
  const freeSource=require('./free-start-functions.json');const freeLeaf=n=>{const f=freeSource.leaves.find(x=>x.name===n)?.source;need(f,'OWN_FREE_START_SOURCE_'+n);return f};
+ const ackSource=require('./feature-start-ack-functions.json');const featureLeaf=n=>{const f=featureData.leaves.find(x=>x.name===n)?.source||ackSource.leaves.find(x=>x.name===n)?.source;need(f,'OWN_FEATURE_ACK_SOURCE_'+n);return f};
  const noop=()=>{},timers=new Set(),events=[],stripWrites=[],soundCalls=[];
  let ended=false,started=false,sealed=false,currentFrame=null,startBalance,wager,controlFrame=null;
  const later=(fn,ms)=>{const t=setTimeout(()=>{timers.delete(t);if(!sealed)fn()},ms);timers.add(t);return t};
@@ -31,6 +32,10 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
  Object.assign(context,{Power0:{easeOut:noop},TweenMax:{to:noop},getCurrentAmbientSound:noop});
  Object.assign(game,{api_featureStart:noop,api_winLineChoreography:noop,FLASH_DELAY:250,NUM_FLASHES_PER_PAYLINE:6,NUM_FLASHES_ALL_LINE:1});
  vm.runInContext('featureController.horse=Array.from({length:featureController.horse.length},()=>({winAmount:{},start:function(){},recover:function(){}}));featureController.beginFeature=('+pickerLeaf('featureBegin')+');game.startFeature=('+pickerLeaf('nativeStartFeature')+');game.api_fastFeatureTransition=('+pickerLeaf('ownFastFeatureTransition')+');game.api_IsBonusFeatureTriggered=('+pickerLeaf('nativeBonusTriggered')+');game.api_stopReelAnims=('+pickerLeaf('nativeStopReelAnims')+');game.api_featureStart=('+pickerLeaf('nativeFeatureStart')+');game.api_beginFeature=featureController.beginFeature.bind(featureController);game.api_inFeature=function(){return featureController.started};game.GDMUpdateWin=('+pickerLeaf('ownGDMUpdateWin')+');',context,{timeout:1000});
+ // Native prize/state/request functions remain exact. Horse methods only draw the view.
+ for(const horse of context.featureController.horse){horse.showPrize=noop;horse.pause=noop}
+ context.TweenMax.delayedCall=(seconds,fn,args,scope)=>{need(typeof fn==='function'&&Number.isFinite(seconds)&&seconds>=0,'ACTUAL_NATIVE_FEATURE_CALLBACK');return later(()=>fn.apply(scope,args||[]),seconds*1000)};
+ vm.runInContext('featureController.processMsg=('+featureLeaf('featureProcessMsg')+');featureController.doPick=('+featureLeaf('featureDoPick')+');featureController.checkFeatureEnd=('+featureLeaf('featureCheckEnd')+');featureController.onAnimComplete=('+featureLeaf('featureOnAnimComplete')+');',context,{timeout:1000});
  // Continue controls from the original intro callbacks. View objects carry
  // no result, remaining count, wager, prize or terminal decision.
  const lineView={showLine:noop,disable:noop};game.paylines=new Proxy({},{get:()=>lineView});game.api_winLineDirection=noop;game.api_symbolAnimation=noop;context.objWinLineDetails={getWinSymbolPositionsForWinLine:()=>[]};
@@ -77,6 +82,24 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
     need(!game.roundActive&&game.account.balance===frame.actualBalance,'NATIVE_END_CASH_COMMITTED');
     return Object.freeze({actualNativeRoundCallback:true,rawResponse:frame.raw,balance:frame.actualBalance,cumulativeWin:frame.actualCumulativeWin,sourceNativeState:game.gameState,sourceCallbacks:events.slice(),wildPresentationCallbacks:soundCalls.slice(),nativeReelStripWrites:stripWrites.slice(),noProviderEndResponseSynthesized:true,notIndependentCompletion:true});
    }catch(e){seal();throw e}
+  },
+  async advanceFeatureStart(frame){
+   need(started&&!sealed&&!ended&&currentFrame===controlFrame&&game.roundActive&&context.featureController.started,'ACTUAL_ACTIVE_NATIVE_PICKER');
+   need(Number.isInteger(frame.httpStatus)&&frame.httpStatus>=200&&frame.httpStatus<300,'SUCCESSFUL_FEATURE_START_ACK');
+   const f=new URLSearchParams(frame.raw);need(f.get('MSGID')==='FEATURE_START'&&f.get('IFG')==='0','ACTUAL_FEATURE_START_ACK');
+   for(const key of ['B','TW'])need(f.has(key)&&/^(0|[1-9]\d*)$/.test(f.get(key))&&Number.isSafeInteger(Number(f.get(key))),'ACTUAL_FEATURE_FINANCIAL_'+key);
+   const balance=Number(f.get('B')),win=Number(f.get('TW'));need(balance===controlFrame.actualBalance+win,'NATIVE_FEATURE_START_CASH_BINDING');
+   context.actualFeatureStartFields=frame.raw.split('&');
+   need(vm.runInContext('featureController.processMsg("FEATURE_START",actualFeatureStartFields.slice());',context,{timeout:1000})===true,'ORIGINAL_FEATURE_ACK_CONSUMED');
+   const feature=context.featureController;need(feature.pickable&&feature.prizes.length>feature.picksMade,'ACTUAL_NATIVE_PICK_AVAILABLE');
+   const choice=feature.picks.findIndex(value=>value<0);need(choice>=0&&choice<feature.horse.length,'ACTUAL_UNPICKED_NATIVE_HORSE');
+   const before=requests.length;context.ownNativeHorseChoice=choice;vm.runInContext('featureController.doPick(ownNativeHorseChoice);',context,{timeout:1000});
+   need(requests.length===before+1&&!ended&&game.roundActive,'ONE_NATIVE_PICK_WITHOUT_END');
+   const next=requests.at(-1),fields=new URLSearchParams(next);need(fields.get('MSGID')==='FEATURE_PICK','ACTUAL_NATIVE_FEATURE_PICK_WRITER');
+   // This bridge stops at the next real ACK. Suspend only queued view animation;
+   // no following response, prize rollup, checkEnd bit or ROUND end is invented.
+   seal();
+   return Object.freeze({actualNativeRoundCallback:false,nextNativeRequest:next,rawResponse:frame.raw,balance,cumulativeWin:win,sourceNativeHorseChoice:choice,noProviderEndResponseSynthesized:true,followingActualPickACKStillUnmapped:true});
   },
   seal
  });

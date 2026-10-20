@@ -1,0 +1,14 @@
+{
+  "gameId": "32725",
+  "originalSourcePinReused": true,
+  "existingSourcePinReference": "C:\\Users\\xxx\\Documents\\Codex\\2026-10-07\\zhe\\work\\ag-reuse-sg\\Medusa32725-protocol-DATA-20261018\\own32725-protocol-source-leaves-private.json",
+  "leaves": [
+    {
+      "name": "featureOnAnimComplete",
+      "source": "function(a){var b=0<this.prizes.length-this.picksMade,c=-1;a&&(a=parseInt(this.prizes[this.picksMade-1]),this.addWin(a));for(a=0;a<this.horse.length;a++)if(b)if(this.horse[a].waitForPick)if(this.winAll){c=a;break}else this.horse[a].pickMeText.visible=!0,this.horse[a].pickAnim.restart();else{if(this.winAll&&0>this.picks[a]){c=a;break}}else if(this.horse[a].isWinAll()){c=a;break}else this.horse[a].finished();this.pickedIdx=-1;b?this.winAll?TweenMax.delayedCall(2,\nthis.doPick,[c],this):this.pickable=!0:this.winAll?TweenMax.delayedCall(2,this.finalWinAllRollup,[c],this):this.finish()}",
+      "SHA256": "7f041ef350bade65f7aeb65d754e4da59937b32fe7c60f53d53a1a4bc3bf3f80"
+    }
+  ],
+  "wholeSDKASTRepeated": false,
+  "scope": "actual FEATURE_START ACK to native first FEATURE_PICK only"
+}
