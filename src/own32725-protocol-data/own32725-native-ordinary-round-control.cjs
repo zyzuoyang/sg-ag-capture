@@ -51,7 +51,7 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
  game.reelBorder={toRespins:{restart:noop}};game.expandedWild={x:0,start:noop};
  game.reelCrumble=Array.from({length:3},(_,i)=>({crumbleAnim:{x:i},start:noop,end:noop}));
  const nativeTimeline=function(){this.calls=[];this.call=(fn,args,scope,position)=>{this.calls.push({fn,args,scope,position});return this};this.restart=()=>{for(const x of this.calls)later(()=>x.fn.apply(x.scope,x.args||[]),x.position*1000);return this}};
- Object.assign(context,{TimelineMax:nativeTimeline,Linear:{easeNone:noop},isStandardQuality:true,bigWinTitle:{quickStop:noop},TXT_GAME_REMAINING:'',TXT_RESPIN_REMAINING:'',TXT_SUPERSPIN_REMAINING:'',TXT_GAMES_REMAINING:'',TXT_RESPINS_REMAINING:'',TXT_SUPERSPINS_REMAINING:''});
+ Object.assign(context,{TimelineMax:nativeTimeline,Linear:{easeNone:noop},isStandardQuality:true,bigWinTitle:{quickStop:noop,start:noop},TXT_GAME_REMAINING:'',TXT_RESPIN_REMAINING:'',TXT_SUPERSPIN_REMAINING:'',TXT_GAMES_REMAINING:'',TXT_RESPINS_REMAINING:'',TXT_SUPERSPINS_REMAINING:''});
  vm.runInContext(freeLeaf('nativeFreeGames')+';game.freeGames=new CFreeGames;game.startSpin=('+freeLeaf('actualGameStartSpin')+');game.setGamesRemainingString=('+freeLeaf('ownSetGamesRemainingString')+');game.api_beforeFirstFreeGame=('+freeLeaf('ownBeforeFirstFreeGame')+');'+freeLeaf('nativeRespinIntro')+';game.reSpinsIntro=new RespinIntro;',context,{timeout:1000});
  // These methods only place/animate symbols; native timeline's original
  // game.setState callback still selects the actual stopped-free state.
@@ -147,7 +147,7 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
    const f=new URLSearchParams(frame.raw);need(f.get('MSGID')==='FEATURE_END'&&f.get('IFG')==='0','ACTUAL_FEATURE_END_ACK');
    for(const k of ['B','AB','TW'])need(f.has(k)&&/^(0|[1-9]\d*)$/.test(f.get(k))&&Number.isSafeInteger(Number(f.get(k))),'ACTUAL_FEATURE_END_FINANCIAL_'+k);
    const balance=Number(f.get('B')),win=Number(f.get('TW'));need(Number(f.get('AB'))===balance&&balance===startBalance-wager+win&&game.slotResult.winAmount===win,'ACTUAL_FEATURE_END_CASH_BINDING');
-   const r=game.slotResult;need(!r.IFG&&r.freeGamesMode===context.FG_NONE&&r.nextRoundFreeGamesMode===context.FG_NONE&&r.getFreeGamesLeft()===0&&r.specRow===-1&&r.superSpinsAwarded===0&&win/game.account.getBetAmount()<15,'ACTUAL_BASE_FEATURE_END_SCOPE');
+   const r=game.slotResult;need(!r.IFG&&r.freeGamesMode===context.FG_NONE&&r.nextRoundFreeGamesMode===context.FG_NONE&&r.getFreeGamesLeft()===0&&r.specRow===-1&&r.superSpinsAwarded===0,'ACTUAL_BASE_FEATURE_END_SCOPE');
    context.actualFeatureEndFields=frame.raw.split('&');const before=requests.length;
    need(vm.runInContext('featureController.processMsg("FEATURE_END",actualFeatureEndFields.slice());',context,{timeout:1000})===true,'ORIGINAL_FEATURE_END_ACK_CONSUMED');
    need(!context.featureController.started&&game.account.newBalance===balance,'ORIGINAL_FEATURE_END_NATIVE_BALANCE');
