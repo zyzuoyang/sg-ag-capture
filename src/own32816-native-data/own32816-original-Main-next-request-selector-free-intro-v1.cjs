@@ -74,6 +74,20 @@ exports.createOwn32816OriginalMainSelector = function(d) {
   async function next() {
     try {
       const until = d.wallNow() + d.timeoutMs; let localTicks = 0;
+      const progress={runDueCalls:0,runDueTotalMs:0,maxRunDueMs:0,yieldCalls:0,yieldTotalMs:0,maxYieldMs:0,yieldsStartingWithAudio:0,yieldWithAudioMs:0,maxYieldJobsBefore:0,maxYieldJobsAfter:0};
+      let monotonicStart,cpuStart;
+      try {monotonicStart=performance.now();cpuStart=process.cpuUsage();} catch {progress.observationUnavailable=true;}
+      function observedRunDue(h) {
+        let began;try {began=performance.now();} catch {}
+        try {return h.runDue();}
+        finally {try {const elapsed=performance.now()-began;if(Number.isFinite(elapsed)){progress.runDueCalls++;progress.runDueTotalMs+=elapsed;progress.maxRunDueMs=Math.max(progress.maxRunDueMs,elapsed);}}catch {progress.observationUnavailable=true;}}
+      }
+      async function observedYield(h) {
+        let began,jobsBefore;try {began=performance.now();jobsBefore=h.audioPort?.jobs?.size||0;} catch {}
+        try {return await d.yieldNative();}
+        finally {try {const elapsed=performance.now()-began,jobsAfter=h.audioPort?.jobs?.size||0;if(Number.isFinite(elapsed)){progress.yieldCalls++;progress.yieldTotalMs+=elapsed;if(jobsBefore>0){progress.yieldsStartingWithAudio++;progress.yieldWithAudioMs+=elapsed;}if(elapsed>progress.maxYieldMs){progress.maxYieldMs=elapsed;progress.maxYieldJobsBefore=jobsBefore;progress.maxYieldJobsAfter=jobsAfter;}}}catch {progress.observationUnavailable=true;}}
+      }
+
       while (true) {
         const x = host();
         const request = d.providerData.captureCurrentNative();
@@ -91,6 +105,8 @@ exports.createOwn32816OriginalMainSelector = function(d) {
             localTicks,maxTicks:d.maxTicks,wallBudgetExceeded:!(wallNow<until),tickBudgetExceeded:!(localTicks<d.maxTicks)};
           try {
             const state=x.model.getCurrentState(),subgame=x.model.getSubGame();
+            try {progress.stageMonotonicElapsedMs=performance.now()-monotonicStart;if(cpuStart){const cpu=process.cpuUsage(cpuStart);progress.processUserCpuUs=cpu.user;progress.processSystemCpuUs=cpu.system;}detail.nativeProgressTimings=progress;}catch {detail.nativeProgressTimingsUnavailable=true;}
+
             if(typeof state?.stateName==='string')detail.state=state.stateName;
             if(typeof subgame==='string')detail.subgame=subgame;
             if(Number.isSafeInteger(x.h.timers?.size))detail.timerCount=x.h.timers.size;
@@ -101,16 +117,16 @@ exports.createOwn32816OriginalMainSelector = function(d) {
         }
         if(lastAcceptedLogicDelivery) {
           const payline=paylineInput.tryMouseDown({paidIntent:roundIntent,delivery:lastAcceptedLogicDelivery});
-          if(payline.status==='dispatched'){localTicks++;ticks++;await d.yieldNative();continue;}
+          if(payline.status==='dispatched'){localTicks++;ticks++;await observedYield(x.h);continue;}
           const input=freeIntroInput.tryMouseDown({paidIntent:roundIntent,delivery:lastAcceptedLogicDelivery});
-          if(input.status==='dispatched') {localTicks++;ticks++;await d.yieldNative();continue;}
+          if(input.status==='dispatched') {localTicks++;ticks++;await observedYield(x.h);continue;}
           if(input.status==='wait') {
-            x.h.runDue();localTicks++;ticks++;await d.yieldNative();continue;
+            observedRunDue(x.h);localTicks++;ticks++;await observedYield(x.h);continue;
           }
         }
-        need(x.h.runDue(), 'NO_MAPPED_NATIVE_CONTINUATION');
+        need(observedRunDue(x.h), 'NO_MAPPED_NATIVE_CONTINUATION');
         localTicks++; ticks++;
-        await d.yieldNative();
+        await observedYield(x.h);
       }
     } catch (error) { return stop(error); }
   }
