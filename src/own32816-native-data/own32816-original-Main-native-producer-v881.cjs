@@ -65,6 +65,10 @@ exports.createOwn32816NativeProducer = function createOwn32816NativeProducer(d) 
             slowestCallback = {id:t.id,raf:t.raf,repeat:t.repeat,delay:t.delay,
               sameDueCount:sameDue.length,elapsedMs,
               fnName:typeof name === 'string' && /^[A-Za-z_$][A-Za-z0-9_$]{0,79}$/.test(name) ? name : 'anonymous'};
+            // Only slow RAF source text, never timer strings or closed-over values.
+            if(t.raf && elapsedMs >= 100 && typeof t.fn === 'function') {
+              try {slowestCallback.fnSource = Function.prototype.toString.call(t.fn).slice(0,512);} catch {}
+            }
             z.own32816LastRunDueCallback = slowestCallback;
           }
         } catch {}

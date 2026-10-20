@@ -49,11 +49,26 @@
       "source": "function(){game.initWinRollupSound();game.rollupProps.sound.length>0&&game.playSound(game.rollupProps.sound)}",
       "originalToken": "game.playWinSounds=",
       "originalTokenOffset": 698769
+    },
+    {
+      "name": "summaryShow",
+      "source": "function(a,b){this.ssRollupMeter.value=0;this.ssRollupMeter.nbrAsString=\"0.00\";this.fgRollupMeter.value=0;this.fgRollupMeter.nbrAsString=\"0.00\";this.rollupMeter.value=0;this.rollupMeter.nbrAsString=\"0.00\";this.rollupMeter.y=380;this.totalWinText.y=330;this.superSpinText.visible=!0;this.visible=this.freeGamesText.visible=!0;game.reelBorder.inTransition=!0;isStandardQuality&&(game.ui.inGameBet.featureEnabled=!1);game.flares.start(5);game.fadeOutSound(getCurrentAmbientSound(),\n\"summary\",100);this.fgRollup.updateTo({value:a}).restart();this.ssRollup.updateTo({value:b});this.rollupTween.duration(6).updateTo({value:a+b}).restart();this.popupTL.restart()}",
+      "originalToken": "SummaryBanner.prototype.show=",
+      "originalTokenOffset": 711462
     }
   ],
   "originalRollupProps": {
     "sound": "",
     "duration": 0
   },
-  "purpose": "Original RESPIN terminal summary callbacks and timings only; no invented response, amount or end."
+  "purpose": "Original free-terminal summary callbacks and timings. Original source selects respinSummary or show from the parsed free mode.",
+  "addedViewPorts": {
+    "reelMan.updateSymbolBackgrounds": "Drawing only",
+    "superSpinText.hide": "Text only",
+    "api_freeSpinBgChangeAction": {
+      "originalToken": "game.api_freeSpinBgChangeAction=",
+      "originalTokenOffset": 564804,
+      "meaning": "Original override changes body CSS classes and a delayed CSS removal only; no game mode, account or ROUND decision."
+    }
+  }
 }
