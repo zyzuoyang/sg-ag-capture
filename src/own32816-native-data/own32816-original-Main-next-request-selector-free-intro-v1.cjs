@@ -73,7 +73,22 @@ exports.createOwn32816OriginalMainSelector = function(d) {
           lastDispatchEvent = request.event;
           return request;
         }
-        need(d.wallNow() < until && localTicks < d.maxTicks, 'FINITE_NEXT_BUDGET');
+        const wallNow=d.wallNow();
+        if(!(wallNow < until && localTicks < d.maxTicks)) {
+          // Same finite guard; details are retained only by the existing private
+          // cause record. The public stop summary keeps the symbolic reason only.
+          const detail={stage:'next',elapsedMs:wallNow-(until-d.timeoutMs),timeoutMs:d.timeoutMs,
+            localTicks,maxTicks:d.maxTicks,wallBudgetExceeded:!(wallNow<until),tickBudgetExceeded:!(localTicks<d.maxTicks)};
+          try {
+            const state=x.model.getCurrentState(),subgame=x.model.getSubGame();
+            if(typeof state?.stateName==='string')detail.state=state.stateName;
+            if(typeof subgame==='string')detail.subgame=subgame;
+            if(Number.isSafeInteger(x.h.timers?.size))detail.timerCount=x.h.timers.size;
+            if(Number.isSafeInteger(x.h.audioPort?.jobs?.size))detail.audioJobCount=x.h.audioPort.jobs.size;
+            detail.pendingEvents=x.h.pending.map(p=>p.event);
+          } catch {detail.snapshotUnavailable=true;}
+          need(false,'FINITE_NEXT_BUDGET '+JSON.stringify(detail));
+        }
         if(lastAcceptedLogicDelivery) {
           const input=freeIntroInput.tryMouseDown({paidIntent:roundIntent,delivery:lastAcceptedLogicDelivery});
           if(input.status==='dispatched') {localTicks++;ticks++;await d.yieldNative();continue;}
