@@ -1,0 +1,47 @@
+{
+  "gameId": "32725",
+  "originalSourcePinReused": true,
+  "wholeSDKASTRepeated": false,
+  "leaves": [
+    {
+      "name": "featureAddWin",
+      "source": "function(a){game.account.currentOnScreenBalance=game.account.newBalance;game.account.startOnScreenBalance=game.account.currentOnScreenBalance;game.account.targetOnScreenBalance=game.account.currentOnScreenBalance+a;game.account.startOnScreenWinAmount=game.slotResult.winAmount;game.account.targetOnScreenWinAmount=game.slotResult.winAmount+a;game.slotResult.winAmount=game.account.targetOnScreenWinAmount;game.account.rollUpCounter=0}"
+    },
+    {
+      "name": "featureFinish",
+      "source": "function(a){this.checkEnd|=1;0<a&&this.addWin(a);TweenMax.delayedCall(1.5,this.checkFeatureEnd,null,this)}"
+    },
+    {
+      "name": "featureFinalWinAllRollup",
+      "source": "function(a){var b=parseInt(this.picks[a]);game.playSound(\"pegasussym\");this.horse[a].showPrize(b,!1,!1);TweenMax.delayedCall(this.horseAnimTime,this.finish,[b],this)}"
+    },
+    {
+      "name": "horseStart",
+      "source": "function(a){this.state=a?this.STATE_NO_PRIZE:this.STATE_INIT;this.visible=!0;this.movie.start()}"
+    },
+    {
+      "name": "horseShowPrize",
+      "source": "function(a,b,c){this.visible=!0;this.pickAnim.pause().progress(0);this.pickMeText.visible=!1;this.winAllText.visible=!1;this.movie.start();this.rollup.updateTo({value:a});this.winAmount.value=0;this.state=!0===c?this.STATE_WIN_ALL:!0===b?this.STATE_PICK_AGAIN:this.STATE_SHOW_PRIZE}"
+    },
+    {
+      "name": "horseIsWinAll",
+      "source": "function(){return this.state==this.STATE_WIN_ALL}"
+    },
+    {
+      "name": "horseFinished",
+      "source": "function(){this.pickAnim.pause().progress(0);this.pickMeText.visible=!1;this.movie.visible&&(!this.rollup.isActive()&&!this.isWinAll())&&this.fadeOutMovie.restart()}"
+    },
+    {
+      "name": "canShowSSIntro",
+      "source": "function canShowSSIntro(){return game.slotResult.freeGamesMode==FG_BASE&&game.slotResult.nextRoundFreeGamesMode==FG_SUPERSPIN&&!bigWinTitle.visible&&!ssIntro.visible?(isStandardQuality||(game.ui.btnContinue.isDisabled=!0),game.freeGames.m_RespinTimer+=15E3,game.multiplierText.update(\"x5\"),game.superSpinText.update(game.slotResult.superSpinsTotal),ssIntro.show(game.slotResult.superSpinsTotal),game.snakeCharmer.hide(),!0):!1}"
+    }
+  ],
+  "horseStateConstants": {
+    "STATE_INIT": 0,
+    "STATE_PICK_ME": 1,
+    "STATE_PICK_AGAIN": 2,
+    "STATE_SHOW_PRIZE": 3,
+    "STATE_WIN_ALL": 4,
+    "STATE_NO_PRIZE": 5
+  }
+}

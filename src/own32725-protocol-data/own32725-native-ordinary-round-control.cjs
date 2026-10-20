@@ -6,6 +6,7 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
  const pickerSource=require('./picker-start-functions.json');const pickerLeaf=n=>{const f=pickerSource.leaves.find(x=>x.name===n)?.source;need(f,'OWN_PICKER_START_SOURCE_'+n);return f};
  const freeSource=require('./free-start-functions.json');const freeLeaf=n=>{const f=freeSource.leaves.find(x=>x.name===n)?.source;need(f,'OWN_FREE_START_SOURCE_'+n);return f};
  const ackSource=require('./feature-start-ack-functions.json');const featureLeaf=n=>{const f=featureData.leaves.find(x=>x.name===n)?.source||ackSource.leaves.find(x=>x.name===n)?.source;need(f,'OWN_FEATURE_ACK_SOURCE_'+n);return f};
+ const continuationSource=require('./continuation-ack-functions.json');const continuationLeaf=n=>{const f=continuationSource.leaves.find(x=>x.name===n)?.source;need(f,'ACTUAL_ACK_LEAF_'+n);return f};let pendingFeatureAnimation=null;
  const noop=()=>{},timers=new Set(),events=[],stripWrites=[],soundCalls=[];
  let ended=false,started=false,sealed=false,currentFrame=null,startBalance,wager,controlFrame=null;
  const later=(fn,ms)=>{const t=setTimeout(()=>{timers.delete(t);if(!sealed)fn()},ms);timers.add(t);return t};
@@ -34,8 +35,13 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
  vm.runInContext('featureController.horse=Array.from({length:featureController.horse.length},()=>({winAmount:{},start:function(){},recover:function(){}}));featureController.beginFeature=('+pickerLeaf('featureBegin')+');game.startFeature=('+pickerLeaf('nativeStartFeature')+');game.api_fastFeatureTransition=('+pickerLeaf('ownFastFeatureTransition')+');game.api_IsBonusFeatureTriggered=('+pickerLeaf('nativeBonusTriggered')+');game.api_stopReelAnims=('+pickerLeaf('nativeStopReelAnims')+');game.api_featureStart=('+pickerLeaf('nativeFeatureStart')+');game.api_beginFeature=featureController.beginFeature.bind(featureController);game.api_inFeature=function(){return featureController.started};game.GDMUpdateWin=('+pickerLeaf('ownGDMUpdateWin')+');',context,{timeout:1000});
  // Native prize/state/request functions remain exact. Horse methods only draw the view.
  for(const horse of context.featureController.horse){horse.showPrize=noop;horse.pause=noop}
- context.TweenMax.delayedCall=(seconds,fn,args,scope)=>{need(typeof fn==='function'&&Number.isFinite(seconds)&&seconds>=0,'ACTUAL_NATIVE_FEATURE_CALLBACK');return later(()=>fn.apply(scope,args||[]),seconds*1000)};
+ context.TweenMax.delayedCall=(seconds,fn,args,scope)=>{need(typeof fn==='function'&&Number.isFinite(seconds)&&seconds>=0,'ACTUAL_NATIVE_FEATURE_CALLBACK');if(fn===context.featureController.onAnimComplete){need(!pendingFeatureAnimation,'ONE_NATIVE_PICK_ANIMATION_CALLBACK');const pending={fn,args,scope},before=requests.length;pendingFeatureAnimation=pending;later(()=>{if(pendingFeatureAnimation===pending&&requests.length===before){pendingFeatureAnimation=null;later(()=>fn.apply(scope,args||[]),seconds*1000)}},0);return}return later(()=>fn.apply(scope,args||[]),seconds*1000)};
  vm.runInContext('featureController.processMsg=('+featureLeaf('featureProcessMsg')+');featureController.doPick=('+featureLeaf('featureDoPick')+');featureController.checkFeatureEnd=('+featureLeaf('featureCheckEnd')+');featureController.onAnimComplete=('+featureLeaf('featureOnAnimComplete')+');',context,{timeout:1000});
+
+ const animation=()=>({pause(){return this},progress(){return this},restart:noop});
+ for(const horse of context.featureController.horse)Object.assign(horse,continuationSource.horseStateConstants,{state:continuationSource.horseStateConstants.STATE_INIT,movie:{visible:false,start:noop},pickAnim:animation(),pickAgainAnim:animation(),pickMeText:{visible:false},winAllText:{visible:false},winAmount:{value:0},rollup:{updateTo:noop,isActive:()=>false},fadeOutMovie:animation()});
+ context.ownContinuationLeaves=continuationSource;
+ vm.runInContext('featureController.addWin=('+continuationLeaf('featureAddWin')+');featureController.finish=('+continuationLeaf('featureFinish')+');featureController.finalWinAllRollup=('+continuationLeaf('featureFinalWinAllRollup')+');for(const horse of featureController.horse){horse.start=('+continuationLeaf('horseStart')+');horse.showPrize=('+continuationLeaf('horseShowPrize')+');horse.isWinAll=('+continuationLeaf('horseIsWinAll')+');horse.finished=('+continuationLeaf('horseFinished')+');}',context,{timeout:1000});
  // Continue controls from the original intro callbacks. View objects carry
  // no result, remaining count, wager, prize or terminal decision.
  const lineView={showLine:noop,disable:noop};game.paylines=new Proxy({},{get:()=>lineView});game.api_winLineDirection=noop;game.api_symbolAnimation=noop;context.objWinLineDetails={getWinSymbolPositionsForWinLine:()=>[]};
@@ -53,6 +59,7 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
  const intro={visible:false};context.fgIntro=intro;
  vm.runInContext('fgIntro.startFreeGames=('+freeLeaf('freeIntroStart')+');',context,{timeout:1000});
  intro.show=()=>{intro.visible=true;later(()=>intro.startFreeGames(),0)};
+ vm.runInContext(continuationLeaf('canShowSSIntro'),context,{timeout:1000});
 
  function seal(){sealed=true;for(const t of timers)clearTimeout(t);timers.clear()}
  return Object.freeze({
@@ -98,8 +105,39 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
    const next=requests.at(-1),fields=new URLSearchParams(next);need(fields.get('MSGID')==='FEATURE_PICK','ACTUAL_NATIVE_FEATURE_PICK_WRITER');
    // This bridge stops at the next real ACK. Suspend only queued view animation;
    // no following response, prize rollup, checkEnd bit or ROUND end is invented.
-   seal();
-   return Object.freeze({actualNativeRoundCallback:false,nextNativeRequest:next,rawResponse:frame.raw,balance,cumulativeWin:win,sourceNativeHorseChoice:choice,noProviderEndResponseSynthesized:true,followingActualPickACKStillUnmapped:true});
+   need(pendingFeatureAnimation,'ACTUAL_PICK_ANIMATION_SUSPENDED_UNTIL_ACK');
+   return Object.freeze({actualNativeRoundCallback:false,nextNativeRequest:next,rawResponse:frame.raw,balance,cumulativeWin:win,sourceNativeHorseChoice:choice,noProviderEndResponseSynthesized:true});
+  },
+
+  async advanceFree(frame){
+   need(started&&!sealed&&!ended&&game.roundActive&&currentFrame===controlFrame&&frame.result===game.slotResult,'CURRENT_NATIVE_FREE_ACK');
+   const f=new URLSearchParams(frame.raw),r=frame.result;need(f.get('MSGID')==='FREE_GAME'&&f.get('IFG')==='1'&&f.has('MUL'),'ACTUAL_FREE_ACK_FIELDS');
+   need(r.IFG&&r.freeGamesMode===context.FG_BASE&&r.nextRoundFreeGamesMode===context.FG_BASE&&r.getFreeGamesLeft()>0&&!(r.winType&64),'ACTUAL_BASE_FREE_NEXT_SCOPE');
+   need(frame.actualBalance===startBalance-wager+frame.actualCumulativeWin,'ACTUAL_FREE_CUMULATIVE_CASH');
+   currentFrame=controlFrame=frame;const before=requests.length;let tickAt=Date.now();const deadline=tickAt+14000;
+   vm.runInContext('game.api_updateReelFromMsg();game.setState(SS_SPINNING_STOPPED);',context,{timeout:1000});
+   while(requests.length===before&&!ended){need(Date.now()<deadline,'FINITE_ORIGINAL_FREE_CONTINUE_CALLBACK_BUDGET');const now=Date.now();context.ownFreeFrameDelta=Math.max(1,now-tickAt);tickAt=now;vm.runInContext('game.updateGame(ownFreeFrameDelta);',context,{timeout:1000});if(requests.length===before&&!ended)await new Promise(resolve=>later(resolve,16))}
+   need(!ended&&game.roundActive&&requests.length===before+1,'ONE_NATIVE_FREE_NEXT_WITHOUT_END');const next=requests.at(-1);need(new URLSearchParams(next).get('MSGID')==='FREE_GAME','ACTUAL_FREE_CONTINUE_WRITER');
+   return Object.freeze({actualNativeRoundCallback:false,nextNativeRequest:next,rawResponse:frame.raw,balance:frame.actualBalance,cumulativeWin:frame.actualCumulativeWin,noProviderEndResponseSynthesized:true});
+  },
+  async advanceFeaturePick(frame){
+   need(started&&!sealed&&!ended&&game.roundActive&&context.featureController.started&&pendingFeatureAnimation,'CURRENT_NATIVE_PICK_ACK');
+   need(Number.isInteger(frame.httpStatus)&&frame.httpStatus>=200&&frame.httpStatus<300,'SUCCESSFUL_FEATURE_PICK_ACK');
+   const f=new URLSearchParams(frame.raw);need(f.get('MSGID')==='FEATURE_PICK'&&f.get('IFG')==='0','ACTUAL_FEATURE_PICK_ACK');
+   for(const k of ['B','TW'])need(f.has(k)&&/^(0|[1-9]\d*)$/.test(f.get(k))&&Number.isSafeInteger(Number(f.get(k))),'ACTUAL_PICK_FINANCIAL_'+k);
+   const balance=Number(f.get('B')),win=Number(f.get('TW'));need(balance===startBalance-wager+win,'ACTUAL_PICK_CUMULATIVE_CASH');
+   context.actualFeaturePickFields=frame.raw.split('&');need(vm.runInContext('featureController.processMsg("FEATURE_PICK",actualFeaturePickFields.slice());',context,{timeout:1000})===true,'ORIGINAL_PICK_ACK_CONSUMED');
+   const before=requests.length;context.ownPendingFeatureAnimation=pendingFeatureAnimation;pendingFeatureAnimation=null;
+   vm.runInContext('ownPendingFeatureAnimation.fn.apply(ownPendingFeatureAnimation.scope,ownPendingFeatureAnimation.args||[]);',context,{timeout:1000});
+   const feature=context.featureController,deadline=Date.now()+14000;
+   while(requests.length===before&&!ended){
+    need(Date.now()<deadline,'FINITE_NATIVE_PICK_ACK_CALLBACK_BUDGET');
+    if(!feature.winAll&&feature.pickable&&feature.prizes.length>feature.picksMade){const choice=feature.picks.findIndex(v=>v<0);need(choice>=0&&choice<feature.horse.length,'ACTUAL_UNPICKED_HORSE_AFTER_ACK');context.ownNativeHorseChoice=choice;vm.runInContext('featureController.doPick(ownNativeHorseChoice);',context,{timeout:1000})}
+    if(requests.length===before&&!ended)await new Promise(resolve=>later(resolve,16));
+   }
+   need(!ended&&game.roundActive&&requests.length===before+1,'ONE_NATIVE_PICK_NEXT_WITHOUT_END');need(game.slotResult.winAmount===win,'ORIGINAL_NATIVE_PICK_WIN_MATCHES_ACTUAL_ACK');
+   const next=requests.at(-1),event=new URLSearchParams(next).get('MSGID');need(['FEATURE_PICK','FEATURE_END'].includes(event),'ACTUAL_NATIVE_PICK_NEXT_WRITER');
+   return Object.freeze({actualNativeRoundCallback:false,nextNativeRequest:next,rawResponse:frame.raw,balance,cumulativeWin:win,noProviderEndResponseSynthesized:true});
   },
   seal
  });

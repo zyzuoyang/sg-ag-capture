@@ -38,8 +38,9 @@ function createNativeResultConnection({bootstrap,leaves,cachedEvaluation}){
   // The remaining native spin/feature/ROUND callbacks must drive the eventual SG connection.
   currentNativeSpinRequest(){return guarded(()=>{if(!current)fail('CURRENT_ACCEPTED_RESULT_REQUIRED');return build()})},
   currentNativeResult(){open();return current?.result},
-  async completeOriginalOrdinaryFrame(){open();try{if(!ordinaryControl||!current)fail('ACTUAL_CURRENT_NATIVE_CONTROL_REQUIRED');return await ordinaryControl.advance(current)}catch(e){fault=e;ordinaryControl?.seal();throw e}},
+  async completeOriginalOrdinaryFrame(){open();try{if(!ordinaryControl||!current)fail('ACTUAL_CURRENT_NATIVE_CONTROL_REQUIRED');return await (new URLSearchParams(current.raw).get('MSGID')==='FREE_GAME'?ordinaryControl.advanceFree(current):ordinaryControl.advance(current))}catch(e){fault=e;ordinaryControl?.seal();throw e}},
   async acceptOriginalFeatureStart(raw,httpStatus){open();try{if(!ordinaryControl||!current)fail('ACTUAL_TRIGGER_BEFORE_FEATURE_ACK');return await ordinaryControl.advanceFeatureStart({raw,httpStatus})}catch(e){fault=e;ordinaryControl?.seal();throw e}},
+  async acceptOriginalFeaturePick(raw,httpStatus){open();try{if(!ordinaryControl||!current)fail('ACTUAL_TRIGGER_BEFORE_PICK_ACK');return await ordinaryControl.advanceFeaturePick({raw,httpStatus})}catch(e){fault=e;ordinaryControl?.seal();throw e}},
   seal(){ordinaryControl?.seal()},
   nativeFeatureState(){open();return context.featureController},
   retainedRaw(){return rawHistory.slice()},
