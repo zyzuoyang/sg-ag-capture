@@ -24,25 +24,48 @@ function decision(g) {
   if(has(d,'pickType'))hold(uint(d.pickType,'pickType')===0,'unmapped TopUp/other actual choice');
   return {raw:d,pending};
 }
-function scopeAndCash(g) {
+function scopeAndCash(g,choiceACK=false,paidJackpot=false) {
   obj(g,'GameResult');
   // Preserve unknown display DATA. Only explicit new control branches are held.
   for(const k of ['Feature','PickerInfo','GambleInfo','NextActionInfo'])
     hold(g[k]===undefined,'unmapped control branch '+k);
-  const reels=obj(g.ReelResults,'actual ReelResults').ReelSpin;
-  hold(reels && (Array.isArray(reels)?reels.length>0:typeof reels==='object'),'actual ReelSpin required');
+  if(g.ReelResults!==undefined) {
+    const reels=obj(g.ReelResults,'actual ReelResults').ReelSpin;
+    hold(reels && (Array.isArray(reels)?reels.length>0:typeof reels==='object'),'actual ReelSpin required');
+  } else hold(choiceACK,'actual ReelResults');
   if(g.stake!==undefined)hold(uint(g.stake,'stake')===16,'changed stake');
   const bg=obj(g.BGInfo,'BGInfo');
   hold(bg.gameMode==='0','actual normal mode required');
   hold(bg.isMaxWin==='0','unmapped maximum-win result');
-  for(const k of ['goldChanceAwarded','jackpotAwarded'])
-    if(has(bg,k))hold(bg[k]==='0','unmapped '+k);
+  if(has(bg,'goldChanceAwarded'))hold(bg.goldChanceAwarded==='0','unmapped goldChanceAwarded');
+  if(has(bg,'jackpotAwarded'))hold(bg.jackpotAwarded===(paidJackpot?'1':'0'),'unmapped jackpotAwarded');
   if(has(bg,'baseGameSpinsRemaining'))hold(uint(bg.baseGameSpinsRemaining,'base remaining')===0,'unmapped base continuation');
   if(g.FSInfo!==undefined) {
     obj(g.FSInfo,'FSInfo');
     if(has(g.FSInfo,'isMaxWin'))hold(g.FSInfo.isMaxWin==='0','unmapped free maximum-win result');
   }
   return uint(bg.totalWagerWin,'actual totalWagerWin');
+}
+function validatePaidJackpot0(g,win) {
+  // Cached own LL handles sF as a local jackpot display; K2 still selects End
+  // when no actual free budget or pending decision exists. BG cash already includes it.
+  hold(g.BGInfo.jackpotAwarded==='1'&&g.FSInfo===undefined&&g.DecisionInfo===undefined,'actual paid jackpot scope');
+  const jp=obj(g.JackpotInfo,'actual JackpotInfo');
+  hold(uint(jp.jackpotType,'actual jackpotType')===0,'unmapped jackpot type');
+  const jackpot=uint(jp.jackpotWinnings,'actual jackpotWinnings');
+  const spins=g.ReelResults.ReelSpin,rows=Array.isArray(spins)?spins:[spins];
+  hold(g.ReelResults.numSpins==='1'&&rows.length===1,'actual paid jackpot reel count');
+  const spin=obj(rows[0],'actual paid jackpot spin');
+  hold(spin.spinIndex==='0'&&spin.reelsetIndex==='0'&&spin.freeSpin==='N'&&spin.bonusAwarded==='N'&&
+    spin.scatterWinCount==='0','unmapped paid jackpot spin');
+  const wins=spin.AnywayWin===undefined?[]:Array.isArray(spin.AnywayWin)?spin.AnywayWin:[spin.AnywayWin];
+  hold(wins.length===uint(spin.anywayWins,'actual ways count'),'actual paid jackpot ways');
+  const indices=new Set();let line=0;
+  for(const w of wins){obj(w,'actual way');const index=uint(w.winIndex,'actual way index');hold(!indices.has(index),'duplicate way');
+    indices.add(index);hold(uint(w.ways,'actual ways')>0,'actual positive ways');uint(w.awardIndex,'actual award');line+=uint(w.winVal,'actual line win');}
+  hold(Number.isSafeInteger(line)&&line===uint(spin.totalSpinWin,'actual spin win')&&
+    line+jackpot===uint(g.totalWin,'actual current win')&&line+jackpot===uint(g.BGInfo.bgWinnings,'actual base win')&&
+    line+jackpot===win,'actual jackpot cash components');
 }
 function sourceLocalUsed(f) {
   // Cached SG.Oc.Sb.LL clears rb before k4. k4 chooses Vfa, else VPa,
@@ -81,7 +104,8 @@ function create(game) {
   function accept(g,first,ordinaryWin) {
     live();hold(['await-base','await-choice','await-free'].includes(phase),'response without consumed request');
     hold(first===(phase==='await-base'),'original round association');
-    const win=scopeAndCash(g),d=decision(g);
+    const d=decision(g),choiceACK=phase==='await-choice',paidJackpot=phase==='await-base'&&g.JackpotInfo!==undefined;
+    const win=scopeAndCash(g,choiceACK,paidJackpot);
     if(phase==='await-choice') {
       // Actual ACK type is mandatory. No missing pickType -> selected0 fallback.
       hold(d && has(d.raw,'pickType') && uint(d.raw.pickType,'actual ACK pickType')===selectedType,'actual choice ACK mismatch/missing');
@@ -99,7 +123,8 @@ function create(game) {
     }
     if(phase==='await-base') {
       hold(g.FSInfo===undefined && d===undefined,'unmapped direct feature/recovery intro');
-      hold(Number.isSafeInteger(ordinaryWin) && ordinaryWin===win,'original paid validation required');
+      if(paidJackpot)validatePaidJackpot0(g,win);
+      else hold(Number.isSafeInteger(ordinaryWin) && ordinaryWin===win,'original paid validation required');
       free=undefined;phase='end-ready';return mapped(win,'PLAY');
     }
     const f=obj(g.FSInfo,'actual free response FSInfo'),played=sourceLocalUsed(f);
