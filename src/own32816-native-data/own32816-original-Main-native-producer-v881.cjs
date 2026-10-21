@@ -36,13 +36,14 @@ exports.createOwn32816NativeProducer = function createOwn32816NativeProducer(d) 
   let frameRAF, frameScope, framePhasesInstalled = false;
   function newFrameRAF() {
     const phase=()=>({calls:0,totalMs:0,maxMs:0});
-    return {installed:framePhasesInstalled,frameCount:0,tick:phase(),draw:phase(),enterFrame:phase(),drawImage:phase()};
+    return {installed:framePhasesInstalled,frameCount:0,tick:phase(),draw:phase(),enterFrame:phase(),drawImage:phase(),textDraw:phase()};
   }
   function installOwn32816ThreeFramePhases() {
     if(framePhasesInstalled)return;
     const rendering=z.context.rendering, nativeStage=z.context.createjs?.Stage?.prototype;
     const stage=rendering?.Stage?.prototype;
-    if(!stage||!nativeStage)return;
+    const textPrototype=z.context.createjs?.Text?.prototype;
+    if(!stage||!nativeStage||!textPrototype)return;
     const descriptor=(object,key)=>{
       for(let owner=object;owner;owner=Object.getPrototypeOf(owner)) {
         const found=Object.getOwnPropertyDescriptor(owner,key);
@@ -51,8 +52,9 @@ exports.createOwn32816NativeProducer = function createOwn32816NativeProducer(d) 
     };
     const render=descriptor(stage,'render'),tick=descriptor(nativeStage,'tick');
     const draw=descriptor(nativeStage,'draw'),dispatch=descriptor(stage,'dispatchEvent');
+    const textDraw=descriptor(textPrototype,'draw');
     const event=Object.getOwnPropertyDescriptor(rendering.DisplayEvent,'ENTER_FRAME');
-    if(![render,tick,draw,dispatch].every(x=>x&&typeof x.value==='function')||
+    if(![render,tick,draw,dispatch,textDraw].every(x=>x&&typeof x.value==='function')||
        !event||event.value!=='DisplayEvent_ENTER_FRAME')return;
     const invoke=Reflect.apply, now=performance.now.bind(performance);
     function measured(key,original,receiver,args,enabled) {
@@ -82,7 +84,7 @@ exports.createOwn32816NativeProducer = function createOwn32816NativeProducer(d) 
         if(frameRAF.frameCount>1)frameRAF.multipleFrames=true;
         const native=Object.getOwnPropertyDescriptor(this,'_native');
         if(!previous&&native&&Object.prototype.hasOwnProperty.call(native,'value')) {
-          frameScope={record:frameRAF,stage:this,native:native.value,busy:{tick:false,draw:false,enterFrame:false}};
+          frameScope={record:frameRAF,stage:this,native:native.value,busy:{tick:false,draw:false,enterFrame:false,textDraw:false}};
           changed=true;
         } else if(previous)frameRAF.nestedRender=true;
       } catch {frameRAF.unavailable=true;}
@@ -91,6 +93,7 @@ exports.createOwn32816NativeProducer = function createOwn32816NativeProducer(d) 
     };
     const tickWrapper=function(...args) {return measured('tick',tick.value,this,args,!!frameScope&&this===frameScope.native);};
     const drawWrapper=function(...args) {return measured('draw',draw.value,this,args,!!frameScope&&this===frameScope.native);};
+    const textDrawWrapper=function(...args) {return measured('textDraw',textDraw.value,this,args,!!frameRAF&&!!frameScope&&frameScope.record===frameRAF&&frameScope.busy.draw);};
     const dispatchWrapper=function(...args) {
       let enabled=false;
       try {
@@ -101,7 +104,8 @@ exports.createOwn32816NativeProducer = function createOwn32816NativeProducer(d) 
     };
     // Install together before any Stage instance is constructed; rollback on observation failure.
     const changes=[[stage,'render',renderWrapper,render],[nativeStage,'tick',tickWrapper,tick],
-      [nativeStage,'draw',drawWrapper,draw],[stage,'dispatchEvent',dispatchWrapper,dispatch]];
+      [nativeStage,'draw',drawWrapper,draw],[stage,'dispatchEvent',dispatchWrapper,dispatch],
+      [textPrototype,'draw',textDrawWrapper,textDraw]];
     const installed=[];
     try {
       for(const [owner,key,value,original] of changes) {
