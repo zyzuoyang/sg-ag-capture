@@ -32,6 +32,93 @@ exports.createOwn32816NativeProducer = function createOwn32816NativeProducer(d) 
   };
   if (!Number.isFinite(z.epoch)) throw Error('OWN32816_EXPLICIT_CLOCK_REQUIRED');
 
+  // Diagnostic only: three original direct phases, scoped to the actual RAF callback.
+  let frameRAF, frameScope, framePhasesInstalled = false;
+  function newFrameRAF() {
+    const phase=()=>({calls:0,totalMs:0,maxMs:0});
+    return {installed:framePhasesInstalled,frameCount:0,tick:phase(),draw:phase(),enterFrame:phase()};
+  }
+  function installOwn32816ThreeFramePhases() {
+    if(framePhasesInstalled)return;
+    const rendering=z.context.rendering, nativeStage=z.context.createjs?.Stage?.prototype;
+    const stage=rendering?.Stage?.prototype;
+    if(!stage||!nativeStage)return;
+    const descriptor=(object,key)=>{
+      for(let owner=object;owner;owner=Object.getPrototypeOf(owner)) {
+        const found=Object.getOwnPropertyDescriptor(owner,key);
+        if(found)return found;
+      }
+    };
+    const render=descriptor(stage,'render'),tick=descriptor(nativeStage,'tick');
+    const draw=descriptor(nativeStage,'draw'),dispatch=descriptor(stage,'dispatchEvent');
+    const event=Object.getOwnPropertyDescriptor(rendering.DisplayEvent,'ENTER_FRAME');
+    if(![render,tick,draw,dispatch].every(x=>x&&typeof x.value==='function')||
+       !event||event.value!=='DisplayEvent_ENTER_FRAME')return;
+    const invoke=Reflect.apply, now=performance.now.bind(performance);
+    function measured(key,original,receiver,args,enabled) {
+      const scope=frameScope;
+      if(!enabled||!scope||scope.busy[key])return invoke(original,receiver,args);
+      const metric=scope.record[key]; let began;
+      try {scope.busy[key]=true;began=now();} catch {scope.record.unavailable=true;}
+      try {return invoke(original,receiver,args);}
+      finally {
+        try {
+          const elapsed=now()-began;
+          if(Number.isFinite(elapsed)&&elapsed>=0) {
+            if(metric.calls<1000000)metric.calls++;else scope.record.saturated=true;
+            const total=metric.totalMs+elapsed;
+            if(Number.isFinite(total))metric.totalMs=total;else scope.record.unavailable=true;
+            metric.maxMs=Math.max(metric.maxMs,elapsed);
+          } else scope.record.unavailable=true;
+        } catch {scope.record.unavailable=true;}
+        finally {scope.busy[key]=false;}
+      }
+    }
+    const renderWrapper=function(...args) {
+      if(!frameRAF)return invoke(render.value,this,args);
+      const previous=frameScope;let changed=false;
+      try {
+        frameRAF.frameCount=Math.min(2,frameRAF.frameCount+1);
+        if(frameRAF.frameCount>1)frameRAF.multipleFrames=true;
+        const native=Object.getOwnPropertyDescriptor(this,'_native');
+        if(!previous&&native&&Object.prototype.hasOwnProperty.call(native,'value')) {
+          frameScope={record:frameRAF,stage:this,native:native.value,busy:{tick:false,draw:false,enterFrame:false}};
+          changed=true;
+        } else if(previous)frameRAF.nestedRender=true;
+      } catch {frameRAF.unavailable=true;}
+      try {return invoke(render.value,this,args);}
+      finally {if(changed)frameScope=previous;}
+    };
+    const tickWrapper=function(...args) {return measured('tick',tick.value,this,args,!!frameScope&&this===frameScope.native);};
+    const drawWrapper=function(...args) {return measured('draw',draw.value,this,args,!!frameScope&&this===frameScope.native);};
+    const dispatchWrapper=function(...args) {
+      let enabled=false;
+      try {
+        const name=args[0]&&Object.getOwnPropertyDescriptor(args[0],'eventName');
+        enabled=!!frameScope&&this===frameScope.stage&&!!name&&name.value===event.value;
+      } catch {if(frameRAF)frameRAF.unavailable=true;}
+      return measured('enterFrame',dispatch.value,this,args,enabled);
+    };
+    // Install together before any Stage instance is constructed; rollback on observation failure.
+    const changes=[[stage,'render',renderWrapper,render],[nativeStage,'tick',tickWrapper,tick],
+      [nativeStage,'draw',drawWrapper,draw],[stage,'dispatchEvent',dispatchWrapper,dispatch]];
+    const installed=[];
+    try {
+      for(const [owner,key,value,original] of changes) {
+        const prior=Object.getOwnPropertyDescriptor(owner,key);
+        if(prior&&!prior.configurable)throw Error('OWN32816_DIAGNOSTIC_METHOD_NOT_CONFIGURABLE');
+        Object.defineProperty(owner,key,{value,writable:original.writable,enumerable:original.enumerable,configurable:true});
+        installed.push([owner,key,prior]);
+      }
+      framePhasesInstalled=true;
+    } catch {
+      for(let i=installed.length-1;i>=0;i--) {
+        const [owner,key,prior]=installed[i];
+        if(prior)Object.defineProperty(owner,key,prior);else delete owner[key];
+      }
+    }
+  }
+
   z.timer = function(fn, delay, args, repeat, raf) {
     const id = ++z.serial, ms = Math.max(0, Number(delay) || 0);
     z.timers.set(id, {id, fn, delay: ms, due: z.now + ms, args, repeat, raf});
@@ -52,11 +139,13 @@ exports.createOwn32816NativeProducer = function createOwn32816NativeProducer(d) 
       if (t.repeat) t.due = due + Math.max(1, t.delay);
       else z.timers.delete(t.id);
       let callbackBegan; try { callbackBegan = performance.now(); } catch {}
+      try {frameRAF=t.raf?newFrameRAF():undefined;frameScope=undefined;} catch {frameRAF=undefined;frameScope=undefined;}
       try {
         if (typeof t.fn === 'function') t.fn.apply(z.context, t.raf ? [z.now] : t.args);
         else new vm.Script(String(t.fn), {filename:'own32816-original-string-timer.js'})
           .runInContext(z.context, {timeout:10000});
       } finally {
+        const callbackFramePhases=frameRAF;frameRAF=undefined;frameScope=undefined;
         try {
           const elapsedMs = performance.now() - callbackBegan;
           if (Number.isFinite(elapsedMs) && elapsedMs >= 0 &&
@@ -69,6 +158,7 @@ exports.createOwn32816NativeProducer = function createOwn32816NativeProducer(d) 
             if(t.raf && elapsedMs >= 100 && typeof t.fn === 'function') {
               try {slowestCallback.fnSource = Function.prototype.toString.call(t.fn).slice(0,512);} catch {}
             }
+            if(t.raf && callbackFramePhases)slowestCallback.framePhases=callbackFramePhases;
             z.own32816LastRunDueCallback = slowestCallback;
           }
         } catch {}
@@ -404,6 +494,9 @@ exports.createOwn32816NativeProducer = function createOwn32816NativeProducer(d) 
       const file=z.ownFile(url),source=d.readSource(file);
       z.files.push({moduleName,url,file,bytes:Buffer.byteLength(source)});
       run(source,file);
+      if(path.relative(root,file).split(path.sep).join('/')==='lib/borg/rendering_createjs/rendering.js') {
+        try {installOwn32816ThreeFramePhases();} catch {}
+      }
       context.completeLoad(moduleName);
     };
     run(d.entry.metadata,'own32816/unchanged/zeus3_prt.metadatabundle.js');

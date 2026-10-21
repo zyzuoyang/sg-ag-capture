@@ -210,7 +210,8 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
    const nativeFreeModes=[context.FG_BASE,context.FG_RESPIN,context.FG_SUPERSPIN];
    const nativeContinue=Number.isSafeInteger(r.nextRoundFreeGamesMode)&&nativeFreeModes.includes(r.nextRoundFreeGamesMode)&&r.getFreeGamesLeft()>0;
    const nativeFreeTerminal=r.nextRoundFreeGamesMode===context.FG_NONE&&r.getFreeGamesLeft()===0;
-   need(r.IFG&&Number.isSafeInteger(r.freeGamesMode)&&nativeFreeModes.includes(r.freeGamesMode)&&(nativeContinue||nativeFreeTerminal)&&!(r.winType&64),'ACTUAL_BASE_FREE_NEXT_SCOPE');
+   const nativeFeaturePending=!!(r.winType&64);
+   need(r.IFG&&Number.isSafeInteger(r.freeGamesMode)&&nativeFreeModes.includes(r.freeGamesMode)&&(nativeContinue||(nativeFreeTerminal&&!nativeFeaturePending)),'ACTUAL_BASE_FREE_NEXT_SCOPE');
    need(frame.actualBalance===startBalance-wager+frame.actualCumulativeWin,'ACTUAL_FREE_CUMULATIVE_CASH');
    if(r.freeGamesMode===context.FG_BASE&&r.nextRoundFreeGamesMode===context.FG_SUPERSPIN)installOriginalSuperSpinIntro();
    if(nativeFreeTerminal)installOriginalFreeTerminalSummary();
@@ -222,7 +223,8 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
     need(ended&&!game.roundActive&&requests.length===before&&!context.summaryBanner.visible&&game.account.balance===frame.actualBalance,'ORIGINAL_RESPIN_TERMINAL_ROUND_AND_CASH');
     seal();return Object.freeze({actualNativeRoundCallback:true,rawResponse:frame.raw,balance:frame.actualBalance,cumulativeWin:frame.actualCumulativeWin,sourceNativeState:game.gameState,sourceCallbacks:events.slice(),noProviderEndResponseSynthesized:true});
    }
-   need(!ended&&game.roundActive&&requests.length===before+1,'ONE_NATIVE_FREE_NEXT_WITHOUT_END');const next=requests.at(-1);need(new URLSearchParams(next).get('MSGID')==='FREE_GAME','ACTUAL_FREE_CONTINUE_WRITER');
+   need(!ended&&game.roundActive&&requests.length===before+1,'ONE_NATIVE_FREE_NEXT_WITHOUT_END');const next=requests.at(-1),nextEvent=new URLSearchParams(next).get('MSGID');
+   need(nativeFeaturePending?['FEATURE_START','FEATURE_PICK','FEATURE_END'].includes(nextEvent):nextEvent==='FREE_GAME','ACTUAL_FREE_CONTINUE_WRITER');
    return Object.freeze({actualNativeRoundCallback:false,nextNativeRequest:next,rawResponse:frame.raw,balance:frame.actualBalance,cumulativeWin:frame.actualCumulativeWin,noProviderEndResponseSynthesized:true});
   },
   async advanceFeaturePick(frame){

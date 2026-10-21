@@ -90,6 +90,8 @@ exports.createOwn32816OriginalMainSelector = function(d) {
               sameDueCount:callback.sameDueCount,elapsedMs:callback.elapsedMs,fnName:callback.fnName};
             if(typeof callback.fnSource === 'string' && callback.fnSource.length <= 512)
               progress.maxRunDueCallback.fnSource = callback.fnSource;
+            if(callback.raf && callback.framePhases)
+              progress.maxRunDueCallback.framePhases = callback.framePhases;
           }
         }catch {progress.observationUnavailable=true;}}
       }
