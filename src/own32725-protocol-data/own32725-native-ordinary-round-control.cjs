@@ -234,7 +234,11 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
   async advanceFeaturePick(frame){
    need(started&&!sealed&&!ended&&game.roundActive&&context.featureController.started&&pendingFeatureAnimation,'CURRENT_NATIVE_PICK_ACK');
    need(Number.isInteger(frame.httpStatus)&&frame.httpStatus>=200&&frame.httpStatus<300,'SUCCESSFUL_FEATURE_PICK_ACK');
-   const f=new URLSearchParams(frame.raw);need(f.get('MSGID')==='FEATURE_PICK'&&f.get('IFG')==='0','ACTUAL_FEATURE_PICK_ACK');
+   const f=new URLSearchParams(frame.raw),trigger=controlFrame.result;
+   const nativeFreeModes=[context.FG_BASE,context.FG_RESPIN,context.FG_SUPERSPIN];
+   const actualCounter=key=>f.has(key)&&/^(0|[1-9]\d*)$/.test(f.get(key))&&Number.isSafeInteger(Number(f.get(key)));
+   const ownFreeFeatureACK=f.get('IFG')==='1'&&trigger.IFG&&nativeFreeModes.includes(trigger.freeGamesMode)&&trigger.getFreeGamesLeft()>0&&actualCounter('NFG')&&Number(f.get('NFG'))===trigger.getFreeGamesLeft()&&actualCounter('CFGG')&&Number(f.get('CFGG'))===trigger.currentFreeGame;
+   need(f.get('MSGID')==='FEATURE_PICK'&&(f.get('IFG')==='0'||ownFreeFeatureACK),'ACTUAL_FEATURE_PICK_ACK');
    for(const k of ['B','TW'])need(f.has(k)&&/^(0|[1-9]\d*)$/.test(f.get(k))&&Number.isSafeInteger(Number(f.get(k))),'ACTUAL_PICK_FINANCIAL_'+k);
    const balance=Number(f.get('B')),win=Number(f.get('TW'));need(balance===startBalance-wager+win,'ACTUAL_PICK_CUMULATIVE_CASH');
    context.actualFeaturePickFields=frame.raw.split('&');need(vm.runInContext('featureController.processMsg("FEATURE_PICK",actualFeaturePickFields.slice());',context,{timeout:1000})===true,'ORIGINAL_PICK_ACK_CONSUMED');
