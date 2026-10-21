@@ -258,13 +258,26 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
   async advanceFeatureEnd(frame){
    need(started&&!sealed&&!ended&&game.roundActive&&context.featureController.started&&!pendingFeatureAnimation,'CURRENT_NATIVE_FEATURE_END_ACK');
    need(Number.isInteger(frame.httpStatus)&&frame.httpStatus>=200&&frame.httpStatus<300,'SUCCESSFUL_FEATURE_END_ACK');
-   const f=new URLSearchParams(frame.raw);need(f.get('MSGID')==='FEATURE_END'&&f.get('IFG')==='0','ACTUAL_FEATURE_END_ACK');
+   const f=new URLSearchParams(frame.raw),r=game.slotResult;
+   const nativeFreeModes=[context.FG_BASE,context.FG_RESPIN,context.FG_SUPERSPIN];
+   const actualCounter=key=>f.has(key)&&/^(0|[1-9]\d*)$/.test(f.get(key))&&Number.isSafeInteger(Number(f.get(key)));
+   const ownFreeFeatureACK=f.get('IFG')==='1'&&r.IFG&&nativeFreeModes.includes(r.freeGamesMode)&&nativeFreeModes.includes(r.nextRoundFreeGamesMode)&&r.getFreeGamesLeft()>0&&actualCounter('NFG')&&Number(f.get('NFG'))===r.getFreeGamesLeft()&&actualCounter('CFGG')&&Number(f.get('CFGG'))===r.currentFreeGame;
+   need(f.get('MSGID')==='FEATURE_END'&&(f.get('IFG')==='0'||ownFreeFeatureACK),'ACTUAL_FEATURE_END_ACK');
    for(const k of ['B','AB','TW'])need(f.has(k)&&/^(0|[1-9]\d*)$/.test(f.get(k))&&Number.isSafeInteger(Number(f.get(k))),'ACTUAL_FEATURE_END_FINANCIAL_'+k);
-   const balance=Number(f.get('B')),win=Number(f.get('TW'));need(Number(f.get('AB'))===balance&&balance===startBalance-wager+win&&game.slotResult.winAmount===win,'ACTUAL_FEATURE_END_CASH_BINDING');
-   const r=game.slotResult;need(!r.IFG&&r.freeGamesMode===context.FG_NONE&&r.nextRoundFreeGamesMode===context.FG_NONE&&r.getFreeGamesLeft()===0&&r.specRow===-1&&r.superSpinsAwarded===0,'ACTUAL_BASE_FEATURE_END_SCOPE');
+   const balance=Number(f.get('B')),win=Number(f.get('TW')),nativeBalance=Number(f.get('AB'));need((ownFreeFeatureACK||nativeBalance===balance)&&balance===startBalance-wager+win&&r.winAmount===win,'ACTUAL_FEATURE_END_CASH_BINDING');
+   need((ownFreeFeatureACK||(!r.IFG&&r.freeGamesMode===context.FG_NONE&&r.nextRoundFreeGamesMode===context.FG_NONE&&r.getFreeGamesLeft()===0))&&r.specRow===-1&&r.superSpinsAwarded===0,'ACTUAL_BASE_FEATURE_END_SCOPE');
    context.actualFeatureEndFields=frame.raw.split('&');const before=requests.length;
    need(vm.runInContext('featureController.processMsg("FEATURE_END",actualFeatureEndFields.slice());',context,{timeout:1000})===true,'ORIGINAL_FEATURE_END_ACK_CONSUMED');
-   need(!context.featureController.started&&game.account.newBalance===balance,'ORIGINAL_FEATURE_END_NATIVE_BALANCE');
+   need(!context.featureController.started&&game.account.newBalance===nativeBalance,'ORIGINAL_FEATURE_END_NATIVE_BALANCE');
+   if(ownFreeFeatureACK){
+    // The original FEATURE_END parser/featureEnd use actual AB for the native account.
+    // Wire B/TW retain their separate original AG cumulative cash binding above.
+    let tickAt=Date.now();const deadline=tickAt+14000;
+    while(requests.length===before&&!ended){need(Date.now()<deadline,'FINITE_ORIGINAL_FREE_FEATURE_END_CALLBACK_BUDGET');const now=Date.now();context.ownFreeFrameDelta=Math.max(1,now-tickAt);tickAt=now;vm.runInContext('game.updateGame(ownFreeFrameDelta);',context,{timeout:1000});if(requests.length===before&&!ended)await new Promise(resolve=>later(resolve,16))}
+    need(!ended&&game.roundActive&&requests.length===before+1&&game.account.balance===nativeBalance,'ORIGINAL_FREE_FEATURE_END_CONTINUATION_AND_CASH');
+    const next=requests.at(-1);need(new URLSearchParams(next).get('MSGID')==='FREE_GAME','ACTUAL_FREE_AFTER_FEATURE_END_WRITER');
+    return Object.freeze({actualNativeRoundCallback:false,nextNativeRequest:next,rawResponse:frame.raw,balance,cumulativeWin:win,sourceCallbacks:events.slice(),noProviderEndResponseSynthesized:true});
+   }
    const deadline=Date.now()+6000;
    while(!ended){need(Date.now()<deadline,'FINITE_ORIGINAL_FEATURE_END_CALLBACK_BUDGET');vm.runInContext('game.updateGame(16);',context,{timeout:1000});if(!ended)await new Promise(resolve=>later(resolve,16))}
    need(requests.length===before&&!game.roundActive&&game.account.balance===balance,'ORIGINAL_FEATURE_END_ROUND_AND_CASH');

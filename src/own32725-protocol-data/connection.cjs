@@ -34,9 +34,10 @@ exports.createConnection=function({game,exchange}){
    if(event==='FEATURE_END'){
     const p=fields(step.responsePayload),end=integer(p.B,'feature-end balance'),win=integer(p.TW,'feature-end cumulative win');
     assert(Number.isSafeInteger(roundWin)&&win>=roundWin,'Medusa32725 actual feature-end cumulative cash');const delta=win-roundWin;
-    const r=await control.acceptOriginalFeatureEnd(step.responsePayload,step.httpStatus);assert(r.actualNativeRoundCallback&&!r.nextNativeRequest,'Medusa32725 original native feature-end ROUND callback');assert.equal(end,r.balance);assert.equal(win,r.cumulativeWin);assert.equal(end,start+delta,'Medusa32725 original AG feature-end cash conservation');
-    balance=end;roundWin=win;prepared=null;control=null;
-    return{NextActionInfo:{nextAction:'SPIN'},PlayerBalanceInfo:{balance:end/100,wager:0,resultAmount:delta/100},capturePlatform:'sg',gameId:game.sg.runtimeGameId,runtimeSlug:game.sg.runtimeSlug,startBalance:start/100,endBalance:end/100,totalWin:delta/100,stepCount:1,msgIds:[step.msgId],steps:[structuredClone({...step,responseBalance:end})],SGWireResponse:p,SGDecodedResponseXML:step.responseXml,SGOwnSDKDecision:{actualNativeRoundClose:true,originalNativeCallback:true},money:{startBalanceRaw:start,endBalanceRaw:end,betRaw:0,totalWinRaw:delta}};
+    const r=await control.acceptOriginalFeatureEnd(step.responsePayload,step.httpStatus),terminal=r.actualNativeRoundCallback===true;
+    assert(terminal?!r.nextNativeRequest:r.nextNativeRequest&&r.actualNativeRoundCallback===false,'Medusa32725 actual feature-end ROUND or free continuation required');assert.equal(end,r.balance);assert.equal(win,r.cumulativeWin);assert.equal(end,start+delta,'Medusa32725 original AG feature-end cash conservation');
+    balance=end;roundWin=win;prepared=terminal?null:nativeRequest(r.nextNativeRequest,'FREE_GAME');if(terminal)control=null;
+    return{NextActionInfo:{nextAction:terminal?'SPIN':'FREE_SPIN'},PlayerBalanceInfo:{...(terminal?{}:{preWagerBalance:start/100}),balance:end/100,wager:0,resultAmount:delta/100},capturePlatform:'sg',gameId:game.sg.runtimeGameId,runtimeSlug:game.sg.runtimeSlug,startBalance:start/100,endBalance:end/100,totalWin:delta/100,stepCount:1,msgIds:[step.msgId],steps:[structuredClone({...step,responseBalance:end})],SGWireResponse:p,SGDecodedResponseXML:step.responseXml,SGOwnSDKDecision:{actualNativeRoundClose:terminal,originalNativeCallback:true},money:{startBalanceRaw:start,endBalanceRaw:end,betRaw:0,totalWinRaw:delta}};
    }
    if(event==='FEATURE_START'){
     const r=await control.acceptOriginalFeatureStart(step.responsePayload,step.httpStatus),p=fields(step.responsePayload),end=integer(p.B,'feature balance'),win=integer(p.TW,'feature win');
