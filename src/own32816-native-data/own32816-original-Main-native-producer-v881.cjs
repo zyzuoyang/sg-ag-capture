@@ -36,7 +36,7 @@ exports.createOwn32816NativeProducer = function createOwn32816NativeProducer(d) 
   let frameRAF, frameScope, framePhasesInstalled = false;
   function newFrameRAF() {
     const phase=()=>({calls:0,totalMs:0,maxMs:0});
-    return {installed:framePhasesInstalled,frameCount:0,tick:phase(),draw:phase(),enterFrame:phase()};
+    return {installed:framePhasesInstalled,frameCount:0,tick:phase(),draw:phase(),enterFrame:phase(),drawImage:phase()};
   }
   function installOwn32816ThreeFramePhases() {
     if(framePhasesInstalled)return;
@@ -261,7 +261,29 @@ exports.createOwn32816NativeProducer = function createOwn32816NativeProducer(d) 
         if (type !== '2d') return null;
         if (!contexts.has(type)) {
           const ctx=cpu.getContext(type), draw=ctx.drawImage.bind(ctx), pattern=ctx.createPattern.bind(ctx);
-          ctx.drawImage=(s,...a)=>draw(s?.__cpuCanvas || s?.__cpuImage || s,...a);
+          ctx.drawImage=(s,...a)=>{
+            // Same unwrap and bound native call. Observe only inside this RAF's original Stage.draw.
+            const image=s?.__cpuCanvas || s?.__cpuImage || s;
+            let record,metric,began;
+            try {
+              if(frameRAF&&frameScope?.record===frameRAF&&frameScope.busy.draw) {
+                record=frameRAF;metric=record.drawImage;
+                if(metric.calls<1000000)metric.calls++;else record.saturated=true;
+                began=performance.now();
+              }
+            } catch {if(record)record.unavailable=true;}
+            try {return draw(image,...a);}
+            finally {
+              if(metric)try {
+                const elapsed=performance.now()-began;
+                if(Number.isFinite(elapsed)&&elapsed>=0) {
+                  const total=metric.totalMs+elapsed;
+                  if(Number.isFinite(total))metric.totalMs=total;else record.unavailable=true;
+                  metric.maxMs=Math.max(metric.maxMs,elapsed);
+                } else record.unavailable=true;
+              } catch {record.unavailable=true;}
+            }
+          };
           ctx.createPattern=(s,...a)=>pattern(s?.__cpuCanvas || s?.__cpuImage || s,...a);
           contexts.set(type,ctx);
         }
