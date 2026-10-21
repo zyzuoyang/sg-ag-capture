@@ -186,7 +186,11 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
   async advanceFeatureStart(frame){
    need(started&&!sealed&&!ended&&currentFrame===controlFrame&&game.roundActive&&context.featureController.started,'ACTUAL_ACTIVE_NATIVE_PICKER');
    need(Number.isInteger(frame.httpStatus)&&frame.httpStatus>=200&&frame.httpStatus<300,'SUCCESSFUL_FEATURE_START_ACK');
-   const f=new URLSearchParams(frame.raw);need(f.get('MSGID')==='FEATURE_START'&&f.get('IFG')==='0','ACTUAL_FEATURE_START_ACK');
+   const f=new URLSearchParams(frame.raw),trigger=controlFrame.result;
+   const nativeFreeModes=[context.FG_BASE,context.FG_RESPIN,context.FG_SUPERSPIN];
+   const actualCounter=key=>f.has(key)&&/^(0|[1-9]\d*)$/.test(f.get(key))&&Number.isSafeInteger(Number(f.get(key)));
+   const ownFreeFeatureACK=f.get('IFG')==='1'&&trigger.IFG&&nativeFreeModes.includes(trigger.freeGamesMode)&&trigger.getFreeGamesLeft()>0&&actualCounter('NFG')&&Number(f.get('NFG'))===trigger.getFreeGamesLeft()&&actualCounter('CFGG')&&Number(f.get('CFGG'))===trigger.currentFreeGame;
+   need(f.get('MSGID')==='FEATURE_START'&&(f.get('IFG')==='0'||ownFreeFeatureACK),'ACTUAL_FEATURE_START_ACK');
    for(const key of ['B','TW'])need(f.has(key)&&/^(0|[1-9]\d*)$/.test(f.get(key))&&Number.isSafeInteger(Number(f.get(key))),'ACTUAL_FEATURE_FINANCIAL_'+key);
    const balance=Number(f.get('B')),win=Number(f.get('TW'));need(win>=controlFrame.actualCumulativeWin&&balance===startBalance-wager+win,'NATIVE_FEATURE_START_CASH_BINDING');
    context.actualFeatureStartFields=frame.raw.split('&');
@@ -211,7 +215,7 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
    const nativeContinue=Number.isSafeInteger(r.nextRoundFreeGamesMode)&&nativeFreeModes.includes(r.nextRoundFreeGamesMode)&&r.getFreeGamesLeft()>0;
    const nativeFreeTerminal=r.nextRoundFreeGamesMode===context.FG_NONE&&r.getFreeGamesLeft()===0;
    const nativeFeaturePending=!!(r.winType&64);
-   need(r.IFG&&Number.isSafeInteger(r.freeGamesMode)&&nativeFreeModes.includes(r.freeGamesMode)&&(nativeContinue||(nativeFreeTerminal&&!nativeFeaturePending)),'ACTUAL_BASE_FREE_NEXT_SCOPE');
+   need(r.IFG&&Number.isSafeInteger(r.freeGamesMode)&&nativeFreeModes.includes(r.freeGamesMode)&&(nativeContinue||nativeFreeTerminal),'ACTUAL_BASE_FREE_NEXT_SCOPE');
    need(frame.actualBalance===startBalance-wager+frame.actualCumulativeWin,'ACTUAL_FREE_CUMULATIVE_CASH');
    if(r.freeGamesMode===context.FG_BASE&&r.nextRoundFreeGamesMode===context.FG_SUPERSPIN)installOriginalSuperSpinIntro();
    if(nativeFreeTerminal)installOriginalFreeTerminalSummary();
@@ -219,7 +223,7 @@ exports.installNativeOrdinaryControl=function({context,game,bootstrap,requests,s
    vm.runInContext('game.api_updateReelFromMsg();game.setState(SS_SPINNING_STOPPED);',context,{timeout:1000});
    const awaitingNativeEnd=()=>!ended||(nativeFreeTerminal&&context.summaryBanner.visible);
    while(requests.length===before&&awaitingNativeEnd()){need(Date.now()<deadline,'FINITE_ORIGINAL_FREE_CONTINUE_CALLBACK_BUDGET');const now=Date.now();context.ownFreeFrameDelta=Math.max(1,now-tickAt);tickAt=now;vm.runInContext('game.updateGame(ownFreeFrameDelta);',context,{timeout:1000});if(requests.length===before&&awaitingNativeEnd())await new Promise(resolve=>later(resolve,16))}
-   if(nativeFreeTerminal){
+   if(nativeFreeTerminal&&!nativeFeaturePending){
     need(ended&&!game.roundActive&&requests.length===before&&!context.summaryBanner.visible&&game.account.balance===frame.actualBalance,'ORIGINAL_RESPIN_TERMINAL_ROUND_AND_CASH');
     seal();return Object.freeze({actualNativeRoundCallback:true,rawResponse:frame.raw,balance:frame.actualBalance,cumulativeWin:frame.actualCumulativeWin,sourceNativeState:game.gameState,sourceCallbacks:events.slice(),noProviderEndResponseSynthesized:true});
    }
